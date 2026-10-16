@@ -25,9 +25,3 @@ IMPORTANTE PARA SUBIR DESDE IPHONE: todos los archivos de esta versión están e
 NUEVO: colores orientativos para glucosa; recordatorios web para medicamentos y agua mientras la app está activa; configuración y registro de agua; gráficas de presión y glucosa en reportes diarios, semanales y mensuales. Los avisos web no son alarmas garantizadas cuando iOS suspende/cierra la app. Los rangos de glucosa son referencias frecuentes para adultos con diabetes y no diagnostican.
 
 ACTUALIZACIÓN DE CABECERA: selector de idioma ES/EN/FR, botón de ayuda con instrucciones y botón de inicio. El selector traduce la cabecera, la navegación y el panel de ayuda; los formularios y el resto del contenido todavía se muestran principalmente en español.
-
-
-Versión v10: el registro de paciente incluye padecimientos conocidos, alergias a medicamentos, alergias alimentarias y medicamentos indicados actualmente. Los datos siguen guardándose localmente en este navegador.
-
-
-VERSION 12: incluye etiqueta visible de versión, selección de idioma ES/EN/FR aplicada al iniciar y una estrategia de actualización de PWA que prioriza la versión publicada en red para páginas HTML.
