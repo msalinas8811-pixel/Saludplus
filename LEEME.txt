@@ -1,27 +1,42 @@
-SALUD 360 — PROTOTIPO WEB PWA
+SaludPlus PWA — versión 23 (control de exámenes + barra de presión)
 
-Archivos:
-- index.html: aplicación web interactiva
-- manifest.json y sw.js: base para instalación PWA y caché sin conexión
-- icons/: iconos
+NOVEDADES DE LA VERSIÓN 23
+- Barra vertical tipo tensiómetro (sistólica y diastólica) en Hoy y en Presión: marcador del promedio sobre colores Normal / Elevada / Etapa 1 / Etapa 2 / Crisis. Es orientativa, no un diagnóstico.
+- Nueva pestaña Mi salud > Exámenes, organizada por GRUPOS: «Exámenes rutinarios», «Exámenes por receta médica», «Control de diabetes», etc. Al crear un grupo aparece el catálogo de exámenes por categorías (hematología, glucosa, colesterol, riñón, hígado, tiroides, vitaminas, orina, etc.): marcas los que quieras, con buscador, o agregas uno propio. Cada examen del catálogo ya trae la unidad habitual de los laboratorios (mg/dL, %, U/L…), que se rellena sola al anotar el resultado; también trae el RANGO NORMAL orientativo para adultos (con valores distintos para hombre/mujer según el sexo del Perfil); al escribir el resultado se compara y se sugiere Normal/Alterado (editable). Los rangos cambian según laboratorio, edad y sexo: si tu informe trae otro, escríbelo en «Rango normal», su frecuencia (cada 6 o 12 meses, etc.) y estados Al día / Próximo (30 días) / Vencido y sugerencias para empezar. Al guardar un resultado, la próxima fecha se recalcula sola.
+- Al registrar un resultado aparece el título del grupo, la lista de sus exámenes y, para cada uno, un campo de resultado, unidad y estado (normal/alterado). Se puede agregar un examen extra. Además: PDF o fotos adjuntas y gráfica de evolución por examen. Los archivos se guardan SOLO en este dispositivo (no entran en el respaldo JSON; guarda copia aparte).
+- El asistente puede leer un resultado: en Asistente elige «Leer un resultado de examen…» (o adjunta un archivo), marca la autorización y pregunta. El PDF/foto viaja a TU servidor y de ahí a la IA solo para esa consulta (store:false); no se guarda. Opcional: incluir el calendario y resumen de exámenes en el modo «Con mis registros».
+- Reportes > Exámenes: pantalla con los resultados (valor, unidad, rango normal y estado por examen), filtros por grupo y periodo, y botón «Descargar PDF» (se genera dentro de la app, sin conexión). El PDF lleva paciente, resumen, tablas con colores y, como anexos, las fotos del informe del laboratorio; los PDF adjuntos se conservan en la app y el documento los menciona. También hay «Imprimir».
+- Soporte del laboratorio: al registrar un resultado se adjunta el informe (PDF o fotos, hasta 4 archivos de 8 MB) y se puede agregar más archivos después con «Agregar archivo».
+- Normal/Alterado automático: al escribir el valor se compara con el rango normal (numérico o texto como «Negativo») y el estado se sugiere solo; puedes cambiarlo.
+- El reporte clínico incluye la sección 8 (control de exámenes).
+- IMPORTANTE: debes volver a subir backend/server.js (y reiniciar el servicio) para que el chat acepte adjuntos. Sube también los archivos nuevos exams.js y examreport.js.
+- No hay lector de PDF en el navegador: el PDF lo lee la IA directamente. Los PDF escaneados o fotos dependen de que el modelo configurado acepte archivos/imágenes (gpt-4.1-mini y superiores lo hacen). Máximo 6 MB por PDF en el chat.
 
-Para probar:
-1. Descomprime el ZIP.
-2. Abre index.html para una vista previa básica. Algunas funciones PWA solo trabajan cuando se publica por HTTPS o localhost.
-3. Para instalar como PWA, publica todos los archivos en un hosting HTTPS (por ejemplo, un servicio de hosting estático).
-4. Los datos se guardan en el almacenamiento local del navegador del dispositivo. No se sincronizan automáticamente entre dispositivos.
-5. Usa Backup para descargar un JSON y Restaurar para importar el archivo en otro dispositivo.
+QUÉ CAMBIÓ EN LA VERSIÓN 22
+- Navegación nueva: barra inferior en el celular y menú lateral en computadora (Hoy, Controles, Mi salud, Asistente, Reportes). Dentro de cada grupo hay pestañas (por ejemplo Controles: Presión, Glucosa, Agua, Evolución).
+- Pantalla Hoy: presión y promedio, glucosa, anillo de agua, próxima toma de medicamento (con botón "Marcar como tomada"), próximas citas y ficha de emergencia con botón para llamar al contacto. Los promedios por fecha, la tabla y el calendario de citas quedan plegados.
+- Diseño con los colores del logo, modo oscuro automático, botones más grandes y confirmaciones dentro de la app (sin ventanas del navegador).
+- El logo es el mismo (saludplus-logo.svg, icon-192.png e icon-512.png sin cambios).
+- Código separado en archivos: index.html, styles.css, app.js, exams.js, chat.js, i18n.js.
+- Tus datos NO se pierden: se usa la misma clave de almacenamiento de versiones anteriores. Aun así, exporta un respaldo antes de reemplazar los archivos.
 
-Limitaciones importantes:
-- Las alarmas reales no están implementadas en esta primera versión; se guardan horarios y puede marcarse una toma.
-- Adjuntos de receta se guardan localmente en el navegador y se incluyen en el backup.
-- No usar datos médicos reales sensibles hasta implementar seguridad, cifrado y un mecanismo de almacenamiento fiable.
-- Los promedios son descriptivos y no constituyen diagnóstico médico.
-\nActualización: incluye módulo de reportes semanales (últimos 7 días) y mensuales (mes calendario), resumen de presión y glucosa, detalle por medición, exportación CSV e impresión/Guardar PDF desde el navegador. Los reportes son descriptivos y no diagnósticos.\n
-Identidad visual actualizada: SaludPlus, logo de gota y hojas en azul, turquesa y verde. Eslogan: Control hoy, bienestar mañana.
+ASISTENTE DE SALUD CON IA
+- Modo General (no envía tus registros) y modo "Con mis registros" (requiere marcar la autorización; envía solo las últimas mediciones, medicamentos y citas, y el perfil únicamente si lo marcas).
+- Respuestas con formato, indicador de escritura, preguntas sugeridas y aviso rojo inmediato si la pregunta describe una posible urgencia (por ejemplo dolor de pecho). Las conversaciones no se guardan en el dispositivo.
+- El chat habla solo con tu servidor (carpeta backend/). La clave de OpenAI vive únicamente allí. Guía en backend/README.md.
+- Cambios en el servidor: varios orígenes permitidos separados por coma, idioma de respuesta (ES/EN), instrucciones de urgencia, límite de tiempo y corrección del formato del historial para la API Responses.
 
-IMPORTANTE PARA SUBIR DESDE IPHONE: todos los archivos de esta versión están en la raíz del repositorio. Los iconos y el logo se referencian desde la raíz para que funcionen con GitHub Upload Files en iOS.
+ERRORES CORREGIDOS
+- La glucosa del resumen podía mostrar la etiqueta "<small>" como texto.
+- El CSV empezaba con el texto "﻿" en vez de la marca para Excel.
+- Al cambiar de idioma, el resumen podía volver a valores viejos; ahora solo se traducen los textos de la interfaz.
+- Si una foto o PDF no cabía en el almacenamiento, la app fallaba sin avisar; ahora muestra un mensaje.
 
-NUEVO: colores orientativos para glucosa; recordatorios web para medicamentos y agua mientras la app está activa; configuración y registro de agua; gráficas de presión y glucosa en reportes diarios, semanales y mensuales. Los avisos web no son alarmas garantizadas cuando iOS suspende/cierra la app. Los rangos de glucosa son referencias frecuentes para adultos con diabetes y no diagnostican.
+INSTALACIÓN / ACTUALIZACIÓN
+1. Antes de reemplazar archivos, abre la app actual y exporta un respaldo (Reportes > Respaldo).
+2. Descomprime este ZIP y sube TODOS los archivos a la raíz del sitio, conservando los nombres (incluida la carpeta backend si vas a usar el chat).
+3. Abre el sitio, cierra la pestaña y vuelve a abrirla. Si ves la versión anterior, recarga una vez más.
+4. Para el chat: despliega backend/ siguiendo backend/README.md, pega la dirección en Asistente > Conexión con el servidor de IA y pulsa Probar conexión.
 
-ACTUALIZACIÓN DE CABECERA: selector de idioma ES/EN/FR, botón de ayuda con instrucciones y botón de inicio. El selector traduce la cabecera, la navegación y el panel de ayuda; los formularios y el resto del contenido todavía se muestran principalmente en español.
+PRIVACIDAD Y LÍMITES
+Los registros se guardan en este navegador y no se sincronizan. Las alarmas web solo funcionan mientras la página está abierta. La app y el asistente no diagnostican ni sustituyen a un profesional sanitario. Para uso real con pacientes hace falta autenticación, política de privacidad y revisión legal y clínica.
