@@ -40,3 +40,9 @@ INSTALACIÓN / ACTUALIZACIÓN
 
 PRIVACIDAD Y LÍMITES
 Los registros se guardan en este navegador y no se sincronizan. Las alarmas web solo funcionan mientras la página está abierta. La app y el asistente no diagnostican ni sustituyen a un profesional sanitario. Para uso real con pacientes hace falta autenticación, política de privacidad y revisión legal y clínica.
+
+
+v24 · Leer informes de laboratorio con IA
+- En «Registrar resultado», sube el PDF o fotos del informe y pulsa «Leer informe con IA». Verás una pantalla con cada examen, su valor, unidad y rango; marca lo que quieras y pulsa «Aplicar». También funciona en resultados ya guardados.
+- Requiere actualizar el servidor (backend/server.js): agrega la ruta /api/extract. Vuelve a desplegarlo en tu hosting.
+- Si Chrome se queda congelado tras subir cambios: abre reset.html una vez.

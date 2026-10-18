@@ -335,3 +335,14 @@ dialog.sheet h3{margin:0 0 14px}
 .repentry .rr b{font-size:15px;font-variant-numeric:tabular-nums}.repentry .rr b span{font-weight:500;color:var(--muted);font-size:12px}
 .repentry.bad .rr b{color:var(--bad)}
 .repentry .bp-status{margin:0}
+
+/* v24 · lectura del informe */
+.readlist{display:grid;gap:8px;max-height:46vh;overflow:auto;padding-right:2px}
+.readrow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);cursor:pointer}
+.readrow input{grid-row:1/4;width:20px;height:20px;accent-color:var(--brand)}
+.readrow .rd-main{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.readrow .rd-val{font-weight:750;font-variant-numeric:tabular-nums}
+.readrow .rd-sub{font-size:12px;color:var(--muted)}
+.readrow .rflag{justify-self:start;margin-top:2px}
+.readrow.ok{border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
+.readrow.bad{border-color:color-mix(in srgb,var(--bad) 60%,var(--line));background:var(--bad-bg)}

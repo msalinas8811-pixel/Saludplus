@@ -199,7 +199,7 @@ function renderExams() {
     const lines = es.length ? `<ul class="entrylist">${es.map(en => `<li class="${en.status === 'altered' ? 'alt' : en.status === 'normal' ? 'nor' : ''}">${esc(t(en.name))}: <strong>${esc(en.value || '—')}${en.unit ? ' ' + esc(en.unit) : ''}</strong>${en.status ? ` · ${esc(t(EXAM_STATUS[en.status]))}` : ''}${en.ref ? ` <small>· ${esc(t('Rango normal'))}: ${esc(en.ref)}</small>` : ''}</li>`).join('')}</ul>` : '';
     const sub = [`${fmtDate(r.date)}${r.lab ? ' · ' + esc(r.lab) : ''}`, r.summary ? esc(r.summary) : ''].filter(Boolean).join('\n');
     const canAsk = (r.files && r.files.length) || r.text || r.summary || es.length;
-    return `<div class="item"><div style="min-width:0;flex:1"><strong>${esc(r.name)} ${resPill(r.status)}</strong><p>${sub}</p>${lines}${files ? `<div class="chipline">${files}</div>` : ''}</div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
+    return `<div class="item"><div style="min-width:0;flex:1"><strong>${esc(r.name)} ${resPill(r.status)}</strong><p>${sub}</p>${lines}${files ? `<div class="chipline">${files}</div>` : ''}</div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
   }).join('') : `<div class="empty">${esc(t('Aún no hay resultados guardados.'))}</div>`;
 
   renderExamTrend();
@@ -402,6 +402,124 @@ function askAboutResult(id) {
 }
 
 /* ---------- Informe: sección 8 ---------- */
+/* ---------- Leer el informe del laboratorio con IA y revisarlo en pantalla ---------- */
+const statusFor = (value, ref) => { const j = judge(value, ref); return j ? ((j === 'ok' || j === 'tok') ? 'normal' : 'altered') : ''; };
+const JFLAG = { ok: 'Dentro del rango', low: 'Por debajo del rango', high: 'Por encima del rango', tok: 'Dentro de lo esperado', tbad: 'Revisar con tu médico' };
+let readCtx = null; // { target: 'form' | id del resultado, files: [{blob,name}], text, items, lab, date, busy }
+
+/* Envía el informe a tu servidor de IA y devuelve { readable, lab, date, items:[{name,value,unit,ref}] }. */
+async function aiExtract(files, text) {
+  const base = typeof aiBase === 'function' ? aiBase() : '';
+  if (!base) throw new Error(t('Falta conectar el servidor de IA. Abre «Conexión con el servidor de IA», en el Asistente, y pega su dirección.'));
+  const items = [];
+  for (const f of files) items.push(await prepareAiFile(f.blob, f.name));
+  if (text) items.push({ type: 'text', name: 'texto del resultado', text });
+  if (!items.length) throw new Error(t('Adjunta primero un PDF, una foto o pega el texto del informe.'));
+  const known = EXAM_CATALOG.flatMap(g => g.items.map(x => x[0]));
+  const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 110000);
+  let res;
+  try { res = await fetch(base + '/api/extract', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attachments: items, known }), signal: ctrl.signal }); }
+  catch (e) { throw new Error(e.name === 'AbortError' ? t('El servidor tardó demasiado en responder. Inténtalo de nuevo.') : t('No se pudo conectar con el servidor de IA.')); }
+  finally { clearTimeout(timer); }
+  let body = {}; try { body = await res.json(); } catch (e) { /* sin JSON */ }
+  if (!res.ok) throw new Error(body.error || `${t('El servidor respondió con código')} ${res.status}`);
+  return body;
+}
+
+function readDialogShow(state, msg) {
+  $('readConsentBox').hidden = state !== 'consent';
+  $('readBusy').hidden = state !== 'busy';
+  $('readResult').hidden = state !== 'done';
+  $('readGo').hidden = state !== 'consent';
+  $('readApply').hidden = state !== 'done';
+  $('readErr').textContent = msg || '';
+  $('readGo').disabled = false;
+}
+function openReadDialog(ctx) {
+  readCtx = ctx;
+  const names = ctx.files.map(f => `<span class="filechip" style="padding:3px 10px">${esc(f.name)}</span>`).join('') + (ctx.text ? `<span class="filechip" style="padding:3px 10px">${esc(t('Texto del resultado'))}</span>` : '');
+  $('readSources').innerHTML = names;
+  $('readConsent').checked = false;
+  readDialogShow('consent');
+  openSheet('readDialog');
+}
+function readFromForm() {
+  const f = $('resultForm').elements;
+  if (!pendingFiles.length && !f.text.value.trim()) { $('resultErr').textContent = t('Adjunta primero un PDF, una foto o pega el texto del informe.'); return; }
+  $('resultErr').textContent = '';
+  openReadDialog({ target: 'form', files: pendingFiles.map(x => ({ blob: x, name: x.name })), text: f.text.value.trim() });
+}
+async function readSavedResult(id) {
+  const r = data.examResults.find(x => x.id === id); if (!r) return;
+  const files = [];
+  for (const f of (r.files || []).slice(0, 4)) { const blob = await FileStore.get(f.id); if (blob) files.push({ blob, name: f.name }); }
+  if (!files.length && !r.text) { toast(t('No se encontró el archivo en este dispositivo. Vuelve a agregarlo.')); return; }
+  openReadDialog({ target: id, files, text: r.text || '' });
+}
+async function runRead() {
+  if (!readCtx || readCtx.busy) return;
+  if (!$('readConsent').checked) { $('readErr').textContent = t('Marca la autorización para enviar el informe a la IA. No se ha enviado nada.'); return; }
+  readCtx.busy = true; readDialogShow('busy');
+  try {
+    const out = await aiExtract(readCtx.files, readCtx.text);
+    readCtx.items = (out.items || []).map(x => {
+      const ref = x.ref || refFor(x.name), unit = x.unit || unitFor(x.name);
+      return { name: x.name, value: x.value, unit, ref, refFromLab: !!x.ref, on: true };
+    });
+    readCtx.lab = out.lab || ''; readCtx.date = out.date || '';
+    if (!out.readable || !readCtx.items.length) { readDialogShow('consent', t('No se pudieron leer resultados en este archivo. Prueba con un PDF con texto o una foto más nítida.')); }
+    else { renderReadResult(); readDialogShow('done'); }
+  } catch (e) { readDialogShow('consent', e.message || t('No se pudo leer el informe.')); }
+  finally { readCtx.busy = false; }
+}
+function renderReadResult() {
+  const c = readCtx, its = c.items;
+  const bad = its.filter(x => statusFor(x.value, x.ref) === 'altered').length, ok = its.filter(x => statusFor(x.value, x.ref) === 'normal').length;
+  $('readMeta').innerHTML = `<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kpi"><span>${esc(t('Leídos'))}</span><strong>${its.length}</strong></div><div class="kpi"><span>${esc(t('Normales'))}</span><strong style="color:var(--ok)">${ok}</strong></div><div class="kpi"><span>${esc(t('Alterados'))}</span><strong style="color:var(--bad)">${bad}</strong></div></div>` +
+    ((c.lab || c.date) ? `<p class="fine" style="margin:8px 0 0">${c.lab ? esc(t('Laboratorio')) + ': <strong>' + esc(c.lab) + '</strong>' : ''}${c.lab && c.date ? ' · ' : ''}${c.date ? esc(t('Fecha del informe')) + ': <strong>' + esc(fmtDate(c.date)) + '</strong>' : ''}</p>` : '');
+  $('readList').innerHTML = its.map((x, i) => {
+    const j = judge(x.value, x.ref), st = statusFor(x.value, x.ref);
+    return `<label class="readrow ${st === 'altered' ? 'bad' : st === 'normal' ? 'ok' : ''}"><input type="checkbox" data-i="${i}" ${x.on ? 'checked' : ''} aria-label="${esc(x.name)}"><span class="rd-main"><strong>${esc(t(x.name))}</strong><span class="rd-val">${esc(x.value)}${x.unit ? ' ' + esc(x.unit) : ''}</span></span><span class="rd-sub">${x.ref ? esc(t('Rango normal')) + ': ' + esc(x.ref) + (x.refFromLab ? ' · ' + esc(t('del informe')) : '') : esc(t('Sin rango de referencia'))}</span>${j ? `<span class="rflag ${st === 'normal' ? 'ok' : 'bad'}">${esc(t(JFLAG[j]))}</span>` : `<span class="rflag">${esc(t('Pendiente de revisión'))}</span>`}</label>`;
+  }).join('');
+  $('readList').querySelectorAll('input[type=checkbox]').forEach(cb => cb.addEventListener('change', () => { readCtx.items[+cb.dataset.i].on = cb.checked; $('readApply').disabled = !readCtx.items.some(x => x.on); }));
+  $('readApply').disabled = !its.some(x => x.on);
+}
+const sameName = (a, b) => { a = fold(a); b = fold(b); return a === b || (Math.min(a.length, b.length) >= 4 && (a.includes(b) || b.includes(a))); };
+function applyReadToForm(items, c) {
+  const f = $('resultForm').elements, box = $('resultRows');
+  let rows = [...box.querySelectorAll('.resrow')];
+  const nameOf = r => r.querySelector('[data-f="name"]').value;
+  for (const it of items) {
+    let row = rows.find(r => fold(nameOf(r)) === fold(it.name)) || rows.find(r => nameOf(r).trim() && sameName(nameOf(r), it.name));
+    if (!row) row = rows.find(r => !nameOf(r).trim() && !r.querySelector('[data-f="value"]').value);
+    if (row && !row.querySelector('[data-f="name"]').value.trim()) row.querySelector('[data-f="name"]').value = it.name;
+    if (!row) { box.insertAdjacentHTML('beforeend', rowHtml(it.name, false)); bindRowDelete(box); row = box.lastElementChild; rows.push(row); }
+    const g = k => row.querySelector(`[data-f="${k}"]`);
+    g('value').value = it.value; g('unit').value = it.unit || ''; g('ref').value = it.ref || ''; g('status').dataset.manual = ''; updateRow(row);
+  }
+  if (c.date) f.date.value = c.date;
+  if (c.lab && !f.lab.value.trim()) f.lab.value = c.lab;
+}
+function applyReadToResult(r, items, c) {
+  const es = resultEntries(r).map(x => ({ ...x }));
+  for (const it of items) {
+    const en = es.find(x => sameName(x.name, it.name)), status = statusFor(it.value, it.ref);
+    if (en) Object.assign(en, { value: it.value, unit: it.unit || en.unit || '', ref: it.ref || en.ref || '', status });
+    else es.push({ name: it.name, value: it.value, unit: it.unit || '', ref: it.ref || '', status });
+  }
+  r.entries = es;
+  r.status = es.some(x => x.status === 'altered') ? 'altered' : (es.length && es.every(x => x.status === 'normal')) ? 'normal' : 'review';
+  if (c.lab && !r.lab) r.lab = c.lab;
+  save(); renderExams();
+}
+function applyRead() {
+  const c = readCtx; if (!c || !c.items) return;
+  const items = c.items.filter(x => x.on); if (!items.length) return;
+  if (c.target === 'form') { applyReadToForm(items, c); toast(t('Lectura aplicada. Revisa los valores y guarda el resultado.')); }
+  else { const r = data.examResults.find(x => x.id === c.target); if (r) { applyReadToResult(r, items, c); toast(t('Lectura guardada en el resultado.')); } }
+  closeSheet('readDialog'); readCtx = null;
+}
+
 function examReportSection(section, tbl) {
   examsNormalize();
   const plans = [...data.examPlans].sort((a, b) => (a.nextDate || '9').localeCompare(b.nextDate || '9'));
@@ -432,5 +550,8 @@ function bindExams() {
   $('resultFile').addEventListener('change', e => { pickResultFiles([...e.target.files]); e.target.value = ''; });
   document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeSheet(b.dataset.close)));
   $('examTrendSel').addEventListener('change', renderExamTrend);
+  $('readFormBtn').addEventListener('click', readFromForm);
+  $('readGo').addEventListener('click', runRead);
+  $('readApply').addEventListener('click', applyRead);
 }
-Object.assign(window, { addFilesToResult, openPlanDialog, openResultDialog, removeExamPlan, removeExamResult, askAboutResult });
+Object.assign(window, { addFilesToResult, openPlanDialog, openResultDialog, removeExamPlan, removeExamResult, askAboutResult, readSavedResult });

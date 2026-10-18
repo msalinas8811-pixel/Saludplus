@@ -1,0 +1,11 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SaludPlus – Reparar</title>
+<style>body{font-family:system-ui,sans-serif;max-width:480px;margin:40px auto;padding:0 16px;line-height:1.5}button{font-size:16px;padding:12px 18px;border-radius:10px;border:0;background:#0f766e;color:#fff}</style></head><body>
+<h1>Reparar SaludPlus</h1><p>Esto borra la caché y el service worker viejos. <b>No borra tus datos de salud.</b></p>
+<button id="b">Reparar ahora</button><p id="m"></p>
+<script>
+document.getElementById('b').onclick=async function(){var m=document.getElementById('m');try{
+if(navigator.serviceWorker){var r=await navigator.serviceWorker.getRegistrations();for(var i=0;i<r.length;i++)await r[i].unregister();}
+if(window.caches){var k=await caches.keys();for(var j=0;j<k.length;j++)await caches.delete(k[j]);}
+m.textContent='Listo. Abriendo la app…';setTimeout(function(){location.href='./index.html?r='+Date.now();},900);
+}catch(e){m.textContent='Error: '+e.message;}};
+</script></body></html>

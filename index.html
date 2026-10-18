@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=23">
+<link rel="stylesheet" href="styles.css?v=24">
 </head>
 <body>
 
@@ -470,6 +470,26 @@
    </form>
   </dialog>
 
+
+  <dialog id="readDialog" class="sheet" aria-labelledby="readTitle">
+   <form method="dialog" onsubmit="return false">
+    <h3 id="readTitle" data-i18n>Lectura del informe</h3>
+    <div id="readSources" class="chipline" style="margin:0 0 10px"></div>
+    <div id="readConsentBox">
+     <p class="fine" data-i18n>Para leerlo, el informe se envía a tu servidor de IA, que lo procesa sin guardarlo. La lectura puede tener errores: compara siempre con el documento original.</p>
+     <label style="display:flex;gap:10px;align-items:flex-start;margin-top:8px;font-size:13px"><input type="checkbox" id="readConsent" style="width:20px;height:20px;margin-top:1px;flex:none"> <span data-i18n>Autorizo enviar este informe a la IA para leerlo.</span></label>
+    </div>
+    <div id="readBusy" hidden><p class="muted" role="status" data-i18n>Leyendo el informe… puede tardar hasta un minuto.</p><div class="typing" aria-hidden="true"><i></i><i></i><i></i></div></div>
+    <div id="readResult" hidden>
+     <div id="readMeta"></div>
+     <p class="fine" style="margin:10px 0 6px" data-i18n>Desmarca lo que no quieras aplicar. Los estados se calculan con el rango normal; son orientativos y no son un diagnóstico.</p>
+     <div id="readList" class="readlist"></div>
+    </div>
+    <p class="fine" id="readErr" role="alert" style="color:var(--bad);margin-top:8px"></p>
+    <div class="form-actions" style="justify-content:flex-end"><button class="btn ghost" type="button" data-close="readDialog" data-i18n>Cancelar</button><button class="btn" type="button" id="readGo" data-i18n>Leer informe</button><button class="btn" type="button" id="readApply" hidden data-i18n>Aplicar lo seleccionado</button></div>
+   </form>
+  </dialog>
+
   <dialog id="resultDialog" class="sheet" aria-labelledby="resultDialogTitle">
    <form id="resultForm" method="dialog">
     <h3 id="resultDialogTitle" data-i18n>Registrar resultado</h3>
@@ -490,7 +510,9 @@
      <div class="field full"><label data-i18n>Soporte: informe del laboratorio (PDF o fotos)</label>
       <input id="resultFile" type="file" accept="application/pdf,.pdf,image/*" multiple>
       <p class="fine" style="margin-top:4px" data-i18n>Sube el informe del laboratorio como soporte de lo que anotas: PDF o fotos (hasta 4 archivos de 8 MB).</p>
-      <div id="pendingFiles" class="chipline"></div></div>
+      <div id="pendingFiles" class="chipline"></div>
+      <button type="button" class="btn secondary small" id="readFormBtn" style="margin-top:8px" data-i18n>Leer informe con IA</button>
+      <p class="fine" style="margin-top:4px" data-i18n>La IA lee el informe y llena los valores, unidades y rangos por ti. Siempre podrás revisarlos antes de guardar.</p></div>
      <div class="field full"><label data-i18n>Texto del resultado (opcional)</label><textarea name="text" maxlength="8000" placeholder="Si quieres, pega aquí el texto completo del resultado. El asistente podrá leerlo si lo autorizas."></textarea></div>
     </div>
     <p class="fine" id="resultErr" role="alert" style="color:var(--bad);margin-top:8px"></p>
@@ -503,10 +525,10 @@
  <nav class="tabbar" data-nav="tab" aria-label="Navegación principal"></nav>
 </div>
 
-<script src="i18n.js?v=23"></script>
-<script src="app.js?v=23"></script>
-<script src="exams.js?v=23"></script>
-<script src="examreport.js?v=23"></script>
-<script src="chat.js?v=23"></script>
+<script src="i18n.js?v=24"></script>
+<script src="app.js?v=24"></script>
+<script src="exams.js?v=24"></script>
+<script src="examreport.js?v=24"></script>
+<script src="chat.js?v=24"></script>
 </body>
 </html>
