@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=24">
+<link rel="stylesheet" href="styles.css?v=25">
 </head>
 <body>
 
@@ -386,6 +386,7 @@
     <details class="fold" id="aiSettings">
      <summary><span><span class="dot" id="aiDot"></span><span data-i18n>Conexión con el servidor de IA</span></span><svg class="i"><use href="#i-chev"/></svg></summary>
      <div class="fold-body">
+      <div id="fbBox" hidden style="margin-bottom:14px"><p class="fine" id="fbStatus" aria-live="polite"></p><div class="form-actions"><button class="btn secondary" type="button" id="testFbBtn" data-i18n>Probar la IA de Firebase</button></div><p class="fine" style="margin-top:6px" data-i18n>Con Firebase configurado no necesitas servidor propio. Abajo puedes usar uno alternativo.</p></div>
       <p class="muted" style="font-size:13px;margin-bottom:12px" data-i18n>Pega la dirección pública de tu servidor. Nunca pegues claves secretas en esta aplicación.</p>
       <div class="field"><label for="aiServerUrl" data-i18n>Dirección del servidor</label><input id="aiServerUrl" type="url" placeholder="https://tu-servidor.onrender.com" autocomplete="url"></div>
       <div class="form-actions"><button class="btn secondary" type="button" id="saveAiServerBtn" data-i18n>Guardar dirección</button><button class="btn secondary" type="button" id="testAiServerBtn" data-i18n>Probar conexión</button></div>
@@ -525,10 +526,12 @@
  <nav class="tabbar" data-nav="tab" aria-label="Navegación principal"></nav>
 </div>
 
-<script src="i18n.js?v=24"></script>
-<script src="app.js?v=24"></script>
-<script src="exams.js?v=24"></script>
-<script src="examreport.js?v=24"></script>
-<script src="chat.js?v=24"></script>
+<script src="i18n.js?v=25"></script>
+<script src="app.js?v=25"></script>
+<script src="exams.js?v=25"></script>
+<script src="examreport.js?v=25"></script>
+<script src="firebase-config.js?v=25"></script>
+<script src="ai-firebase.js?v=25"></script>
+<script src="chat.js?v=25"></script>
 </body>
 </html>

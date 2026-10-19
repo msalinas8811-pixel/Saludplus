@@ -4,6 +4,11 @@
 'use strict';
 
 const EN = {
+  'Firebase configurado': 'Firebase configured',
+  'Probando la IA…': 'Testing the AI…',
+  'Conexión correcta. La IA respondió': 'Connection OK. The AI replied',
+  'Probar la IA de Firebase': 'Test Firebase AI',
+  'Con Firebase configurado no necesitas servidor propio. Abajo puedes usar uno alternativo.': 'With Firebase set up you do not need your own server. You can use one below as an alternative.',
   'En esta vista de prueba solo se leen fotos o texto. Los PDF se leen en la app instalada con tu servidor de IA.': 'In this preview only photos or text can be read. PDFs are read in the installed app with your AI server.',
   'Esta vista no permite leer fotos ahora. Pega el texto del informe.': 'This preview cannot read photos right now. Paste the report text.',
   'No se pudo interpretar la lectura del informe. Inténtalo de nuevo.': 'Could not interpret the report reading. Try again.',

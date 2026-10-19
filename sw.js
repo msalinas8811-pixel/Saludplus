@@ -1,9 +1,9 @@
-/* SaludPlus v24 · service worker
+/* SaludPlus v25 · service worker
    - Páginas: red primero (para recibir actualizaciones) y copia local si no hay conexión.
    - Archivos estáticos: copia local primero y se refrescan en segundo plano. */
-const CACHE = 'saludplus-v24';
+const CACHE = 'saludplus-v25';
 const FILES = [
-  './', './index.html', './styles.css?v=24', './i18n.js?v=24', './app.js?v=24', './exams.js?v=24', './examreport.js?v=24', './chat.js?v=24',
+  './', './index.html', './styles.css?v=25', './i18n.js?v=25', './app.js?v=25', './exams.js?v=25', './examreport.js?v=25', './chat.js?v=25', './firebase-config.js?v=25', './ai-firebase.js?v=25',
   './manifest.json', './icon-192.png', './icon-512.png', './saludplus-logo.svg'
 ];
 
@@ -19,6 +19,10 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // el servidor de IA nunca pasa por la caché
+  if (url.pathname.endsWith('/firebase-config.js')) { // la configuración se actualiza al instante
+    e.respondWith(fetch(req, { cache: 'no-store' }).then(r => { if (r.ok) { const c = r.clone(); caches.open(CACHE).then(x => x.put(req, c)); } return r; }).catch(() => caches.match(req)));
+    return;
+  }
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req, { cache: 'no-store' }).then(r => {
       const copy = r.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); return r;

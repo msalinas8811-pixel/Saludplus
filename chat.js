@@ -20,6 +20,7 @@ const CHIPS = {
   personal: ['¿Cómo han estado mis mediciones últimamente?', '¿Hay algo en mis registros que deba comentar con mi médico?', 'Ayúdame a preparar mi próxima consulta', '¿Cómo va mi consumo de agua?']
 };
 
+const fbOn = () => !!(window.SP_AI && window.SP_AI.configured());
 const aiBase = () => (localStorage.getItem(AI_URL_KEY) || '').trim().replace(/\/$/, '');
 
 function renderMarkdown(text) {
@@ -157,7 +158,7 @@ async function sendAiMessage() {
   if (RED_FLAGS.some(r => r.test(q))) {
     chatAdd('assistant', '', { plain: true, html: `<div class="alert-red"><svg class="i"><use href="#i-alert"/></svg><span>${esc(t('Lo que describes puede ser una urgencia. Llama ahora al número de emergencias de tu país o acude al servicio de urgencias más cercano. No esperes una respuesta de este chat.'))}</span></div>` });
   }
-  if (!base) {
+  if (!base && !fbOn()) {
     chatAdd('assistant', t('Falta conectar el servidor de IA. Abre «Conexión con el servidor de IA», más abajo, y pega su dirección.'), { error: true });
     $('aiSettings').open = true; return;
   }
@@ -168,12 +169,16 @@ async function sendAiMessage() {
     if (chatMode === 'personal') payload.healthContext = compactHealthContext($('includeProfile').checked, $('includeExams').checked);
     const pack = await buildAttachments();
     if (pack && (pack.items.length || pack.notes)) { payload.attachments = pack.items; payload.examNotes = pack.notes; }
-    const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), pack && pack.items.length ? 100000 : 45000);
-    let res;
-    try { res = await fetch(base + '/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal }); }
-    finally { clearTimeout(timer); }
-    let body = {}; try { body = await res.json(); } catch (e) { /* respuesta sin JSON */ }
-    if (!res.ok) throw new Error(body.error || `${t('El servidor respondió con código')} ${res.status}`);
+    let body = {};
+    if (fbOn()) { body.answer = await SP_AI.chat(payload); }
+    else {
+      const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), pack && pack.items.length ? 100000 : 45000);
+      let res;
+      try { res = await fetch(base + '/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal }); }
+      finally { clearTimeout(timer); }
+      try { body = await res.json(); } catch (e) { /* respuesta sin JSON */ }
+      if (!res.ok) throw new Error(body.error || `${t('El servidor respondió con código')} ${res.status}`);
+    }
     if (!body.answer) throw new Error(t('El servidor no devolvió una respuesta.'));
     chatHistory.push({ role: 'user', content: q }, { role: 'assistant', content: body.answer });
     pending.querySelector('.bubble').innerHTML = renderMarkdown(body.answer);
@@ -204,12 +209,18 @@ async function testServer() {
 function chatOnShow() {
   refreshExamPick();
   if (!$('chatLog').children.length) chatWelcome();
-  if (!aiBase()) $('aiSettings').open = true;
+  if (!aiBase() && !fbOn()) $('aiSettings').open = true;
   setTimeout(() => $('chatInput').focus({ preventScroll: true }), 150);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   $('aiServerUrl').value = aiBase();
+  if (fbOn()) { $('fbBox').hidden = false; $('fbStatus').textContent = `${t('Firebase configurado')}: ${SP_AI.projectId()} · ${SP_AI.model()}`; $('aiDot').className = 'dot on'; }
+  $('testFbBtn').addEventListener('click', async () => {
+    const st = $('fbStatus'); st.textContent = t('Probando la IA…'); $('aiDot').className = 'dot';
+    try { const r = await SP_AI.test(); st.textContent = `${t('Conexión correcta. La IA respondió')}: «${r.slice(0, 40)}»`; $('aiDot').className = 'dot on'; }
+    catch (e) { st.textContent = e.message; $('aiDot').className = 'dot off'; }
+  });
   $('aiDot').className = 'dot';
   document.querySelectorAll('#modeSeg button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
   $('chatForm').addEventListener('submit', e => { e.preventDefault(); sendAiMessage(); });

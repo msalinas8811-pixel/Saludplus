@@ -409,13 +409,15 @@ let readCtx = null; // { target: 'form' | id del resultado, files: [{blob,name}]
 
 /* Envía el informe a tu servidor de IA y devuelve { readable, lab, date, items:[{name,value,unit,ref}] }. */
 async function aiExtract(files, text) {
+  const useFb = !!(window.SP_AI && window.SP_AI.configured());
   const base = typeof aiBase === 'function' ? aiBase() : '';
-  if (!base) throw new Error(t('Falta conectar el servidor de IA. Abre «Conexión con el servidor de IA», en el Asistente, y pega su dirección.'));
+  if (!base && !useFb) throw new Error(t('Falta conectar el servidor de IA. Abre «Conexión con el servidor de IA», en el Asistente, y pega su dirección.'));
   const items = [];
   for (const f of files) items.push(await prepareAiFile(f.blob, f.name));
   if (text) items.push({ type: 'text', name: 'texto del resultado', text });
   if (!items.length) throw new Error(t('Adjunta primero un PDF, una foto o pega el texto del informe.'));
   const known = EXAM_CATALOG.flatMap(g => g.items.map(x => x[0]));
+  if (useFb) return SP_AI.extract(items, known);
   const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 110000);
   let res;
   try { res = await fetch(base + '/api/extract', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attachments: items, known }), signal: ctrl.signal }); }

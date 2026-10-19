@@ -1,0 +1,59 @@
+SALUDPLUS v25 · IA con Firebase + GitHub Pages (paso a paso)
+=============================================================
+La app habla directo con Firebase AI Logic (Gemini) desde el navegador. No necesitas servidor ni claves secretas.
+
+⚠ ANTES DE EMPEZAR (importante, son datos de salud)
+- Plan GRATUITO (Spark) de la API de Gemini: según los términos de Google, usa lo que envías para mejorar sus productos, personas
+  pueden leerlo y piden NO enviar información sensible o personal. Para PRUEBAS con datos de ejemplo está bien.
+- Para uso REAL con datos de salud, activa facturación (plan Blaze) en Firebase: en el nivel de pago Google dice que no usa tus datos
+  para mejorar sus productos. Pon un presupuesto con alertas (ej. 5 USD) para no llevarte sorpresas.
+- Los términos de la API de Gemini también dicen que no se use para práctica clínica ni consejo médico, y que solo la usen mayores de 18.
+  SaludPlus es informativa; la app ya avisa que no diagnostica. Si piensas venderla, consulta los términos vigentes.
+- Verifica estos términos en https://ai.google.dev/gemini-api/terms (pueden cambiar).
+
+PASO 1 · Crear el proyecto
+1. Entra a https://console.firebase.google.com con tu cuenta de Google.
+2. «Crear un proyecto» → ponle nombre (ej. saludplus) → puedes desactivar Google Analytics.
+
+PASO 2 · Activar la IA
+1. En el menú izquierdo: «Compilación» (Build) → «AI Logic» → «Comenzar».
+2. Elige «Gemini Developer API» y activa. (Si te pide plan Blaze, es por lo que explico arriba.)
+
+PASO 3 · Registrar la app web y copiar los datos
+1. Rueda ⚙ → «Configuración del proyecto» → en «Tus apps» pulsa el icono web «</>».
+2. Nombre: SaludPlus. NO marques «Firebase Hosting» (usarás GitHub Pages). Pulsa «Registrar app».
+3. Copia el bloque firebaseConfig: apiKey, authDomain, projectId, appId.
+4. En tu repositorio de GitHub abre el archivo firebase-config.js → lápiz ✏ (Edit) → pega cada dato entre las comillas → «Commit changes».
+
+PASO 4 · Proteger tu proyecto (hazlo ANTES de publicar el enlace)
+A) App Check (evita que otros usen tu IA). Google retiró reCAPTCHA «clásico»: usa Fraud Defense (antes reCAPTCHA Enterprise).
+   1. Firebase → Seguridad → App Check → Apps → tu app → «Fraud Defense (formerly reCAPTCHA Enterprise)» → te pide la clave del sitio.
+   2. Crea la clave en Google Cloud (mismo proyecto): busca «Fraud Defense» o «reCAPTCHA Enterprise», habilita la API si te la pide,
+      «Crear clave» → tipo WEB → dominio msalinas8811-pixel.github.io → SIN casilla (no marcar «checkbox challenge») → copia la clave.
+   3. Pega esa clave en Firebase (App Check → Save) y también en firebase-config.js, en appCheckSiteKey.
+   4. Nivel gratis de Google: hasta 10 000 evaluaciones al mes en la capa Essentials; un nivel superior pide facturación.
+   5. App Check → pestaña APIs → Firebase AI Logic → Enforce (Aplicar).
+B) Restringir la clave de API por dominio
+   1. https://console.cloud.google.com/apis/credentials (mismo proyecto) → abre la «Browser key».
+   2. «Restricciones de aplicaciones» → «Sitios web» → agrega:  https://msalinas8811-pixel.github.io/*
+   3. Guardar.
+C) Presupuesto: Facturación → «Presupuestos y alertas» → crea uno con aviso por correo.
+
+PASO 5 · Probar
+1. Espera 1-2 minutos a que GitHub Pages publique.
+2. Abre https://msalinas8811-pixel.github.io/Saludplus/reset.html → «Reparar ahora» (limpia la copia vieja).
+3. En la app: Asistente → «Conexión con el servidor de IA» → «Probar la IA de Firebase». Debe decir «Conexión correcta».
+4. Prueba una pregunta y, en Exámenes, «Leer informe con IA» con un PDF.
+
+SI ALGO FALLA (mensajes de la app)
+- «App Check rechazó la solicitud»: revisa la clave del sitio reCAPTCHA y que el dominio esté registrado.
+  Para probar en tu computadora pon appCheckDebug: true, abre la consola del navegador, copia el token de depuración y regístralo en
+  App Check → Administrar tokens de depuración. Vuelve a ponerlo en false al publicar.
+- «Firebase no autorizó la solicitud»: revisa que AI Logic esté activo y las restricciones de la clave (el dominio debe ser exacto).
+- «No se encontró el modelo»: cambia model en firebase-config.js por un modelo Gemini vigente (mira la lista en la documentación de
+  Firebase AI Logic). Los nombres cambian con el tiempo.
+- «Límite de uso»: espera unos minutos o revisa tu plan.
+
+NOTA TÉCNICA
+- Si firebase-config.js está vacío, la app usa tu servidor propio (backend/) como antes.
+- Los PDF se envían a la IA en base64 (máx. ~6 MB por archivo en la app).

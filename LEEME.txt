@@ -46,3 +46,6 @@ v24 · Leer informes de laboratorio con IA
 - En «Registrar resultado», sube el PDF o fotos del informe y pulsa «Leer informe con IA». Verás una pantalla con cada examen, su valor, unidad y rango; marca lo que quieras y pulsa «Aplicar». También funciona en resultados ya guardados.
 - Requiere actualizar el servidor (backend/server.js): agrega la ruta /api/extract. Vuelve a desplegarlo en tu hosting.
 - Si Chrome se queda congelado tras subir cambios: abre reset.html una vez.
+
+v25 · IA con Firebase
+- Nuevo: firebase-config.js y ai-firebase.js. Rellena firebase-config.js siguiendo FIREBASE-PASO-A-PASO.txt y la IA (chat y lectura de informes) funciona desde GitHub Pages sin servidor.
