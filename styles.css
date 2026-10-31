@@ -441,3 +441,52 @@ dialog.sheet h3{margin:0 0 14px}
 @media (prefers-reduced-motion: reduce) {
   .shortcut-card { transition:none; }
 }
+
+
+/* SaludPlus v28: navegación simple, avisos y velocímetros semicirculares */
+.sidebar, #subnav { display:none !important; }
+.main-col { margin-left:0 !important; width:100% !important; }
+.app { display:block !important; }
+.appbar { position:sticky; top:0; z-index:30; }
+.tabbar { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+.tabbar button { min-height:68px; }
+.notice-list { display:grid; gap:10px; margin-top:12px; }
+.notice-item {
+ display:flex; align-items:center; gap:14px; padding:16px;
+ border:1px solid #e3eaf0; border-radius:17px; background:#fbfdff;
+}
+.notice-item-icon { width:48px;height:48px; flex:0 0 48px; display:grid;place-items:center;
+ border-radius:15px;background:#eaf3fb;font-size:25px; }
+.notice-visit .notice-item-icon { background:#fff1e8; }
+.notice-medicine .notice-item-icon { background:#fff5df; }
+.notice-item strong { display:block;font-size:17px;line-height:1.25;color:var(--ink,#172033); }
+.notice-item p { margin:4px 0;color:var(--muted,#617386);font-size:14px; }
+.notice-item small { color:#557087;font-size:13px;font-weight:700; }
+.notice-settings-card { border-left:5px solid #315f9b; }
+.bp-speed-wrap { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:center; }
+.speed-gauge { min-width:0;text-align:center;padding:8px 4px 4px; }
+.speed-title { color:var(--muted,#617386);font-weight:750;font-size:15px;margin-bottom:0; }
+.speed-gauge svg { display:block;width:100%;max-width:245px;margin:0 auto -3px;overflow:visible; }
+.speed-value { margin-top:-2px;font-size:clamp(27px,4vw,38px);font-weight:850;color:var(--ink,#172033);line-height:1.05; }
+.speed-value small { font-size:13px;font-weight:650;color:var(--muted,#617386); }
+.speed-scale { display:flex;justify-content:space-between;max-width:190px;margin:5px auto 0;color:#738597;font-size:12px; }
+.glucose-gauge-card { background:linear-gradient(145deg,#f5fcfd,#fff); }
+.glucose-gauge-card .speed-gauge { max-width:340px;margin:0 auto; }
+.glucose-gauge-card .speed-gauge svg { max-width:300px; }
+@media(max-width:560px) {
+ .bp-speed-wrap { gap:4px; }
+ .speed-title { font-size:13px; }
+ .speed-value { font-size:29px; }
+ .notice-item { padding:13px; }
+ .notice-item strong { font-size:16px; }
+ .tabbar button { font-size:12px; }
+}
+
+.tabbar .notice-count {
+ position:absolute; top:4px; right:calc(50% - 31px);
+ min-width:19px;height:19px;padding:0 5px;border-radius:20px;
+ display:inline-flex;align-items:center;justify-content:center;
+ background:#d94b52;color:#fff;font-size:11px;font-weight:800;
+}
+.tabbar .notice-count[hidden] { display:none; }
+.tabbar button { position:relative; }

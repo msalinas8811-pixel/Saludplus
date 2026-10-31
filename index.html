@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=27">
+<link rel="stylesheet" href="styles.css?v=28">
 </head>
 <body>
 
@@ -20,6 +20,7 @@
  <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16b8ef"/><stop offset="1" stop-color="#21b978"/></linearGradient></defs>
  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-6h4v6"/></symbol>
  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+ <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-8-4.9-8-11A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5c0 6.1-8 11-8 11z"/></symbol>
  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20.5 12a8 8 0 0 1-11.7 7.1L3.5 20.5l1.4-5A8 8 0 1 1 20.5 12z"/></symbol>
  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h6"/></symbol>
@@ -260,6 +261,10 @@
    <section id="glucosa" class="view">
     <div class="page-head"><div><h2 data-i18n>Control de glucosa</h2><p data-i18n>Anota el resultado y las circunstancias de la medición.</p></div></div>
     <div class="stack">
+     <div class="card glucose-gauge-card">
+      <div id="glucoseGauge" aria-live="polite"></div>
+      <p class="fine" data-i18n>El velocímetro solo muestra la escala visual del registro. La interpretación depende del momento de medición y de los objetivos acordados con tu profesional de salud.</p>
+     </div>
      <div class="card"><h3 data-i18n>Nueva medición</h3>
       <form id="glucoseForm"><div class="formgrid">
        <div class="field"><label data-i18n>Fecha</label><input name="date" type="date" required></div>
@@ -349,6 +354,7 @@
       <form id="visitForm"><div class="formgrid">
        <div class="field"><label data-i18n>Fecha de consulta</label><input name="date" type="date" required></div>
        <div class="field"><label data-i18n>Próxima cita (si aplica)</label><input name="nextDate" type="date"></div>
+       <div class="field"><label data-i18n>Hora de próxima cita</label><input name="nextTime" type="time"></div>
        <div class="field"><label data-i18n>Médico</label><input name="doctor" placeholder="Nombre del médico"></div>
        <div class="field"><label data-i18n>Especialidad</label><input name="specialty" placeholder="Ej. cardiología"></div>
        <div class="field full"><label data-i18n>Motivo / notas</label><textarea name="notes" placeholder="Motivo, indicaciones y seguimiento"></textarea></div>
@@ -401,6 +407,31 @@
       <div class="field full"><label data-i18n>Otros datos médicos importantes (opcional)</label><textarea name="medicalNotes" placeholder="Ej. profesional de referencia, dispositivos médicos u otra información útil en una emergencia"></textarea></div>
      </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar datos del paciente</button><button class="btn ghost" type="button" id="patientClear" data-i18n>Limpiar formulario</button></div></form></div>
      <p class="notice" data-i18n>Privacidad: los datos se guardan en este navegador y dispositivo; no se sincronizan automáticamente. Protege el dispositivo y exporta un respaldo seguro.</p>
+    </div>
+   </section>
+
+   <section id="avisos" class="view">
+    <div class="page-head"><div><h2 data-i18n>Avisos y recordatorios</h2><p data-i18n>Consulta tus mediciones programadas y próximas citas.</p></div></div>
+    <div class="card notice-settings-card">
+     <h3 data-i18n>Recordatorios para medir la presión</h3>
+     <p class="muted" data-i18n>Configura hasta dos horarios diarios. Puedes cambiarlos cuando lo necesites.</p>
+     <form id="bpReminderForm">
+      <div class="formgrid">
+       <div class="field"><label data-i18n>Primer recordatorio</label><input name="morning" type="time"></div>
+       <div class="field"><label data-i18n>Segundo recordatorio</label><input name="evening" type="time"></div>
+      </div>
+      <div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar horarios</button><button class="btn secondary" type="button" id="noticePermissionBtn" data-i18n>Activar notificaciones</button></div>
+     </form>
+     <p class="fine" data-i18n>Los avisos dentro de SaludPlus se revisan mientras la aplicación está abierta. Las notificaciones del navegador pueden depender de permisos y del sistema; no sustituyen una alarma médica o del teléfono.</p>
+    </div>
+    <div class="card">
+     <div class="row between wrap"><h3 data-i18n>Próximos avisos</h3><span class="muted" id="noticeCount"></span></div>
+     <div id="noticeList" class="notice-list" aria-live="polite"><div class="empty">No tienes avisos programados.</div></div>
+    </div>
+    <div class="card">
+     <h3 data-i18n>Cómo agregar otros avisos</h3>
+     <p class="muted" data-i18n>Los horarios de medicinas se toman de Medicinas y las citas se muestran desde Consultas. Usa las tarjetas de Inicio para administrar esos datos.</p>
+     <div class="form-actions"><button class="btn secondary" type="button" onclick="showView('medicamentos')" data-i18n>Administrar medicinas</button><button class="btn secondary" type="button" onclick="showView('consultas')" data-i18n>Administrar consultas</button></div>
     </div>
    </section>
 
@@ -577,12 +608,12 @@
  <nav class="tabbar" data-nav="tab" aria-label="Navegación principal"></nav>
 </div>
 
-<script src="i18n.js?v=27"></script>
-<script src="app.js?v=27"></script>
-<script src="exams.js?v=27"></script>
-<script src="examreport.js?v=27"></script>
-<script src="firebase-config.js?v=27"></script>
-<script src="ai-firebase.js?v=27"></script>
-<script src="chat.js?v=27"></script>
+<script src="i18n.js?v=28"></script>
+<script src="app.js?v=28"></script>
+<script src="exams.js?v=28"></script>
+<script src="examreport.js?v=28"></script>
+<script src="firebase-config.js?v=28"></script>
+<script src="ai-firebase.js?v=28"></script>
+<script src="chat.js?v=28"></script>
 </body>
 </html>

@@ -1,15 +1,17 @@
-/* SaludPlus v22 · lógica principal
+/* SaludPlus v28 · lógica principal
    Los datos usan la misma clave de almacenamiento que las versiones anteriores, así que no se pierden al actualizar. */
 'use strict';
 
 const KEY = 'salud360_pwa_v1';
-const emptyData = () => ({ bp: [], glucose: [], pulse: [], weight: [], meds: [], visits: [], patient: {}, examPlans: [], examResults: [], water: { goal: 2000, interval: 60, logs: [] } });
+const emptyData = () => ({ bp: [], glucose: [], pulse: [], weight: [], meds: [], visits: [], patient: {}, examPlans: [], examResults: [], reminders: { bpTimes: ['08:00', '20:00'] }, water: { goal: 2000, interval: 60, logs: [] } });
 let data = loadData();
 
 function loadData() {
   try {
     const x = { ...emptyData(), ...JSON.parse(localStorage.getItem(KEY) || '{}') };
     x.patient = x.patient || {};
+    x.reminders = { ...emptyData().reminders, ...(x.reminders || {}) };
+    x.reminders.bpTimes = Array.isArray(x.reminders.bpTimes) ? x.reminders.bpTimes : ['08:00', '20:00'];
     ['bp', 'glucose', 'pulse', 'weight', 'meds', 'visits'].forEach(k => { x[k] = Array.isArray(x[k]) ? x[k] : []; });
     x.examPlans = Array.isArray(x.examPlans) ? x.examPlans : []; x.examResults = Array.isArray(x.examResults) ? x.examResults : [];
     x.water = { ...emptyData().water, ...(x.water || {}) };
@@ -64,8 +66,7 @@ function askConfirm(msg, okLabel) {
 /* ---------- Navegación ---------- */
 const NAV = [
   { id: 'inicio', label: 'Inicio', icon: 'home', views: ['inicio'] },
-  { id: 'controles', label: 'Controles', icon: 'activity', views: ['presion', 'glucosa', 'agua', 'graficas'] },
-  { id: 'misalud', label: 'Mi salud', icon: 'heart', views: ['medicamentos', 'consultas', 'examenes', 'paciente'] },
+  { id: 'avisos', label: 'Avisos', icon: 'bell', views: ['avisos'] },
   { id: 'asistente', label: 'Asistente', icon: 'chat', views: ['asistente'] },
   { id: 'reportes', label: 'Reportes', icon: 'file', views: ['reportes', 'examrep', 'respaldo'] }
 ];
@@ -74,8 +75,8 @@ let currentView = 'inicio';
 const groupOf = (view) => NAV.find(g => g.views.includes(view)) || NAV[0];
 
 function buildNav() {
-  const mk = (g, side) => `<button type="button" class="${side ? '' : 'tab'}" data-group="${g.id}"><span class="${side ? '' : 'ico'}"><svg class="i"><use href="#i-${g.icon}"/></svg></span><span data-i18n>${g.label}</span></button>`;
-  document.querySelector('[data-nav="side"]').innerHTML = NAV.map(g => mk(g, true)).join('');
+  const mk = (g, side) => `<button type="button" class="${side ? '' : 'tab'}" data-group="${g.id}"><span class="${side ? '' : 'ico'}"><svg class="i"><use href="#i-${g.icon}"/></svg></span><span data-i18n>${g.label}</span>${g.id === 'avisos' ? '<b class="notice-count" hidden></b>' : ''}</button>`;
+  document.querySelector('[data-nav="side"]').innerHTML = '';
   document.querySelector('[data-nav="tab"]').innerHTML = NAV.map(g => mk(g, false)).join('');
   document.querySelectorAll('[data-group]').forEach(b => b.addEventListener('click', () => {
     const g = NAV.find(x => x.id === b.dataset.group);
@@ -95,6 +96,7 @@ function showView(id) {
     sub.querySelectorAll('button').forEach(b => b.addEventListener('click', () => showView(b.dataset.sub)));
   } else { sub.hidden = true; sub.innerHTML = ''; }
   if (id === 'medicamentos') refreshPrescriptionOptions();
+  if (id === 'avisos') renderNotices();
   if (id === 'graficas') renderCharts();
   if (id === 'examenes') renderExams();
   if (id === 'examrep') renderExamReport();
@@ -131,11 +133,30 @@ function gaugeBar(kind, value) {
   }
   return `<div class="gcol"><span class="gtitle">${esc(t(g.title))}${badge}</span><div class="gwrap"><div class="gticks">${ticks}</div><div class="gbar">${segs}${mark}</div></div></div>`;
 }
+
+function speedGauge(value, min, max, title, unit, color, ranges = false) {
+  const has = Number.isFinite(value), v = has ? Math.max(min, Math.min(max, value)) : min;
+  const angle = has ? 180 - ((v - min) / (max - min)) * 180 : 180;
+  const rad = angle * Math.PI / 180, cx = 100, cy = 94, r = 70;
+  const nx = cx + Math.cos(rad) * 55, ny = cy - Math.sin(rad) * 55;
+  const arc = (a1,a2,stroke,w=12) => {
+    const p1={x:cx+r*Math.cos(a1*Math.PI/180),y:cy-r*Math.sin(a1*Math.PI/180)};
+    const p2={x:cx+r*Math.cos(a2*Math.PI/180),y:cy-r*Math.sin(a2*Math.PI/180)};
+    return `<path d="M ${p1.x} ${p1.y} A ${r} ${r} 0 0 1 ${p2.x} ${p2.y}" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round"/>`;
+  };
+  let arcs = ranges
+    ? arc(180,120,'#36A66B') + arc(120,90,'#E5B83E') + arc(90,60,'#E58B37') + arc(60,0,'#D94B52')
+    : arc(180,0,'#DCE7EF');
+  const needle = has ? `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#20394D" stroke-width="4" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="6" fill="#20394D"/>` : '';
+  return `<div class="speed-gauge"><div class="speed-title">${esc(t(title))}</div><svg viewBox="0 0 200 116" role="img" aria-label="${esc(t(title))}: ${has ? Math.round(value)+' '+unit : t('Sin registros')}">${arcs}${needle}</svg><div class="speed-value">${has ? Math.round(value) : '—'} <small>${esc(unit)}</small></div><div class="speed-scale">${min} <span>${max}</span></div></div>`;
+}
 function bpGauge(s, d) {
   const has = Number.isFinite(s) && Number.isFinite(d), c = has ? classifyBP(s, d) : null;
   const label = c ? `${t('Presión arterial')} ${Math.round(s)}/${Math.round(d)} mmHg: ${t(c.label)}` : t('Sin registros');
-  const lg = [['green', 'Normal'], ['yellow', 'Elevada'], ['orange', 'Etapa 1'], ['red', 'Etapa 2'], ['crisis', 'Crisis']].map(([k, l]) => `<span><i class="gs g-${k}"></i>${esc(t(l))}</span>`).join('');
-  return `<div class="bpgauge${has ? '' : ' off'}" role="img" aria-label="${esc(label)}"><div class="gcols">${gaugeBar('sys', has ? s : NaN)}${gaugeBar('dia', has ? d : NaN)}</div><div class="glegend">${lg}</div></div>`;
+  return `<div class="bp-speed-wrap" role="group" aria-label="${esc(label)}">${speedGauge(s, 80, 200, 'Sistólica', 'mmHg', '#315F9B', true)}${speedGauge(d, 40, 130, 'Diastólica', 'mmHg', '#315F9B', true)}</div>`;
+}
+function glucoseGauge(value) {
+  return speedGauge(value, 0, 300, 'Última glucosa', 'mg/dL', '#168F9C', false);
 }
 
 function setBPStatus(cardId, statusId, adviceId, s, d) {
@@ -255,6 +276,7 @@ function render() {
     removeBtn('bp', x.id))).join('') : empty('Aún no hay mediciones.');
 
   $('glucoseAvg').textContent = gl.length ? `${t('Promedio de registros')}: ${Math.round(average(gl.map(x => +x.value)))} mg/dL` : `${t('Promedio')}: —`;
+  if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN);
   $('glucoseList').innerHTML = gl.length ? gl.map(x => listItem(`${esc(x.value)} mg/dL · ${fmtDate(x.date)} ${esc(x.time)}`, `${esc(t(x.when || ''))}${x.notes ? '\n' + esc(x.notes) : ''}`, removeBtn('glucose', x.id))).join('') : empty('Aún no hay mediciones.');
 
   $('medList').innerHTML = data.meds.length ? data.meds.map(x => {
@@ -270,7 +292,7 @@ function render() {
     `${x.fileData ? `<button class="btn secondary small" type="button" onclick="openAttachment('${x.id}')">${esc(t('Ver archivo'))}</button>` : ''}${removeBtn('visits', x.id)}`)).join('') : empty('No hay consultas registradas.');
 
   $('backupStats').textContent = `${data.bp.length} ${t('mediciones de presión')} · ${data.glucose.length} ${t('registros de glucosa')} · ${data.meds.length} ${t('medicamentos')} · ${data.visits.length} ${t('consultas')} · ${(data.examPlans || []).length} ${t('exámenes programados')} · ${(data.examResults || []).length} ${t('resultados')}`;
-  renderPatient(); renderWater(); renderAlarms(); renderHome(); renderExams();
+  renderPatient(); renderWater(); renderAlarms(); renderNotices(); renderHome(); renderExams();
   refreshPrescriptionOptions();
   if (currentView === 'graficas') renderCharts();
   if (currentView === 'examrep') renderExamReport();
@@ -381,7 +403,7 @@ function bindForms() {
       if (file.size > 8 * 1024 * 1024) { toast(t('El archivo supera 8 MB. Elige un archivo más pequeño.')); return; }
       fileData = await toDataURL(file); fileName = file.name;
     }
-    data.visits.push({ id: uid(), date: f.get('date'), nextDate: f.get('nextDate'), doctor: f.get('doctor'), specialty: f.get('specialty'), notes: f.get('notes'), fileData, fileName });
+    data.visits.push({ id: uid(), date: f.get('date'), nextDate: f.get('nextDate'), nextTime: f.get('nextTime'), doctor: f.get('doctor'), specialty: f.get('specialty'), notes: f.get('notes'), fileData, fileName });
     form.reset(); setDefaults(); save(); toast(t('Consulta guardada.'));
   });
   $('extraControlForm').addEventListener('submit', e => {
@@ -469,6 +491,8 @@ function fireReminder(title, body, key) {
 function checkReminders() {
   if (document.visibilityState !== 'visible') return;
   const now = nowTime(), day = today();
+  (data.reminders?.bpTimes || []).forEach(tm => { if (tm === now) fireReminder(t('Hora de medir la presión'), t('Es momento de registrar tu presión arterial.'), 'bp_' + tm); });
+  data.visits.forEach(v => { if (v.nextDate === day && (v.nextTime ? v.nextTime === now : now === '08:00')) fireReminder(t('Tienes una consulta pendiente'), `${v.doctor || t('Consulta médica')}${v.specialty ? ' · ' + v.specialty : ''}`, 'visit_' + v.id); });
   data.meds.forEach(m => { if (m.time === now && (!m.start || m.start <= day) && (!m.end || m.end >= day)) fireReminder(t('Recordatorio de medicamento'), `${m.name} · ${m.dose}. ${t('Sigue la indicación de tu receta.')}`, 'med_' + m.id + '_' + now); });
   const w = data.water || {};
   if (w.interval && now !== '00:00') {
@@ -478,6 +502,51 @@ function checkReminders() {
       if (!last || mins - (+last.time.split(':')[0] * 60 + +last.time.split(':')[1]) >= +w.interval) fireReminder(t('Hora de hidratarte'), t('Si no tienes restricción de líquidos, considera registrar agua.'), 'water_' + now);
     }
   }
+}
+
+function renderNotices() {
+  const box = $('noticeList');
+  if (!box) return;
+  const now = today(), items = [];
+  (data.reminders?.bpTimes || []).forEach(tm => items.push({ date: now, time: tm, title: 'Medición de presión arterial', detail: 'Recordatorio configurado', kind: 'pressure' }));
+  data.meds.forEach(m => {
+    if ((!m.start || m.start <= now) && (!m.end || m.end >= now) && m.time)
+      items.push({ date: now, time: m.time, title: 'Medicamento: ' + m.name, detail: m.dose || 'Sigue la indicación de tu receta', kind: 'medicine' });
+  });
+  data.visits.forEach(v => {
+    if (v.nextDate && v.nextDate >= now)
+      items.push({ date: v.nextDate, time: v.nextTime || '', title: 'Próxima consulta médica', detail: [v.doctor, v.specialty].filter(Boolean).join(' · ') || 'Cita pendiente', kind: 'visit' });
+    else if (v.date && v.date >= now)
+      items.push({ date: v.date, time: '', title: 'Consulta médica', detail: [v.doctor, v.specialty].filter(Boolean).join(' · ') || 'Consulta registrada', kind: 'visit' });
+  });
+  items.sort((a,b) => (a.date + a.time).localeCompare(b.date + b.time));
+  const count = items.filter(x => x.date === now).length;
+  const countLabel = $('noticeCount'); if (countLabel) countLabel.textContent = `${items.length} ${t('avisos programados')}`;
+  const badge = document.querySelector('[data-group="avisos"] .notice-count');
+  if (badge) { badge.textContent = count ? String(count) : ''; badge.hidden = !count; }
+  if (!items.length) { box.innerHTML = empty('No tienes avisos programados.'); }
+  else box.innerHTML = items.map(x => {
+    const icon = x.kind === 'pressure' ? '♥' : x.kind === 'medicine' ? '💊' : '📅';
+    const when = `${fmtDate(x.date)}${x.time ? ' · ' + esc(x.time) : ''}`;
+    return `<div class="notice-item notice-${x.kind}"><span class="notice-item-icon">${icon}</span><div><strong>${esc(t(x.title))}</strong><p>${esc(t(x.detail))}</p><small>${when}</small></div></div>`;
+  }).join('');
+  const f = $('bpReminderForm');
+  if (f && document.activeElement?.form !== f) {
+    f.elements.morning.value = data.reminders?.bpTimes?.[0] || '';
+    f.elements.evening.value = data.reminders?.bpTimes?.[1] || '';
+  }
+}
+function bindNoticeSettings() {
+  const permissionBtn = $('noticePermissionBtn');
+  if (permissionBtn) permissionBtn.addEventListener('click', async () => { if (!('Notification' in window)) { toast(t('Este navegador no admite notificaciones web.')); return; } try { const p = await Notification.requestPermission(); toast(p === 'granted' ? t('Notificaciones autorizadas.') : t('Permiso de notificaciones no concedido.')); } catch (e) { toast(t('No fue posible solicitar el permiso.')); } });
+  const f = $('bpReminderForm');
+  if (f) f.addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(f);
+    data.reminders = data.reminders || {};
+    data.reminders.bpTimes = [String(fd.get('morning') || ''), String(fd.get('evening') || '')].filter(Boolean);
+    save(); toast(t('Recordatorios de presión guardados.'));
+  });
 }
 function bindWaterAndAlarms() {
   document.querySelectorAll('[data-water]').forEach(b => b.addEventListener('click', () => addWater(b.dataset.water)));
@@ -625,7 +694,7 @@ function bindBackup() {
 
 /* ---------- Arranque ---------- */
 function init() {
-  buildNav(); bindForms(); bindWaterAndAlarms(); bindReports(); bindBackup(); bindExams(); bindExamReport();
+  buildNav(); bindForms(); bindWaterAndAlarms(); bindNoticeSettings(); bindReports(); bindBackup(); bindExams(); bindExamReport();
   const d = new Date(); $('chartStart').value = ''; $('chartEnd').value = '';
   setDefaults();
   const f = $('extraControlForm'); f.elements.date.value = today(); f.elements.time.value = nowTime();
