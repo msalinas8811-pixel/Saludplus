@@ -603,3 +603,30 @@ dialog.sheet h3{margin:0 0 14px}
 
 /* v36 perfil clínico */
 .age-clinical-card{border:1px solid var(--line,#dce5ed)}.clinical-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0 10px}.clinical-metric{min-width:0;border-radius:14px;padding:13px;background:var(--surface,#f3f7fa);border:1px solid transparent}.clinical-metric small,.clinical-metric span{display:block;color:var(--muted,#64748b);font-size:12px}.clinical-metric strong{display:block;font-size:clamp(20px,4vw,27px);margin:7px 0;overflow-wrap:anywhere}.clinical-metric.status-normal{background:#eaf7ef;border-color:#a8d9b8}.clinical-metric.status-low{background:#eaf2fb;border-color:#b7d0ed}.clinical-metric.status-high{background:#fff5df;border-color:#f0d28a}.clinical-metric.status-very-high{background:#ffeded;border-color:#efb0b0}.clinical-metric.status-unknown{background:var(--surface,#f3f7fa)}.clinical-metric.status-normal strong{color:#167443}.clinical-metric.status-low strong{color:#245e9b}.clinical-metric.status-high strong{color:#986000}.clinical-metric.status-very-high strong{color:#b42318}@media(max-width:560px){.clinical-metrics{grid-template-columns:1fr}.clinical-metric{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 10px}.clinical-metric strong{grid-column:2;grid-row:1/3;margin:0}.clinical-metric span{grid-column:1}}
+
+/* v37 — captura de presión tipo tensiómetro, accesible en móvil */
+.bp-entry-card{padding:clamp(16px,3vw,26px)}
+.bp-entry-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.bp-entry-title h3{font-size:22px;margin:4px 0}.bp-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--muted)}
+.bp-device-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:#e8f3ff;color:#1768aa;font-size:25px}
+.patient-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--line,#dbe4ec);border-radius:15px;background:var(--surface,#f6f9fc);margin-bottom:18px}
+.patient-summary strong,.patient-summary span{display:block}.patient-summary strong{font-size:16px}.patient-summary span{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+.bp-device{max-width:720px;margin:0 auto 16px;padding:13px;border-radius:25px;background:linear-gradient(145deg,#e5e9ed,#cbd2d9);border:1px solid #aab4bd;box-shadow:inset 0 2px 5px #fff,0 8px 20px #10203018}
+.bp-device-brand{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 12px;color:#253746;font-weight:800}.bp-device-brand small{font-size:9px;letter-spacing:.08em}
+.bp-device-screen{background:#dce9d7;border:2px solid #879a83;border-radius:15px;padding:clamp(12px,3vw,22px);box-shadow:inset 0 2px 8px #1b34251c}
+.bp-arm-select{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:13px;font-weight:700;color:#30452f}
+.bp-arm-select select{min-height:42px;width:auto;min-width:140px;font-size:16px;background:#f8fff5;border:1px solid #9aaa94;border-radius:10px;padding:8px}
+.bp-big-inputs{display:grid;grid-template-columns:1fr 1fr .8fr;gap:10px}
+.bp-reading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:13px 8px;border-radius:12px;background:#f4fbef;border:1px solid #a8b7a0;color:#263c2a}
+.bp-reading span{font-size:10px;letter-spacing:.08em;font-weight:900;text-align:center}
+.bp-reading input{width:100%;min-width:0;text-align:center;font-size:clamp(30px,7vw,48px);font-weight:800;line-height:1.2;color:#1d3425;background:transparent;border:0;border-bottom:2px solid #aab99f;border-radius:0;padding:5px 0;min-height:60px;box-shadow:none;font-variant-numeric:tabular-nums}
+.bp-reading input:focus{outline:2px solid #3e7950;outline-offset:2px;border-radius:5px}
+.bp-reading small{font-size:11px;color:#526b54;margin-top:4px}
+.bp-reading.bp-pulse input{font-size:clamp(26px,6vw,38px)}
+.bp-second-arm{margin-top:14px;border-top:1px solid #9fb09a;padding-top:12px;color:#30452f}
+.bp-second-arm summary{cursor:pointer;font-size:13px;font-weight:700;padding:8px 2px}
+.bp-second-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.bp-second-grid .field{min-width:0}.bp-second-grid input{width:100%;min-height:48px;font-size:18px}
+.bp-meta-grid{margin-top:14px}.bp-meta-grid input,.bp-meta-grid select{min-height:50px;font-size:16px}
+.bp-entry-card .form-actions{margin-top:16px}.bp-entry-card .form-actions .btn{min-height:54px;font-size:17px;flex:1}
+@media(max-width:560px){.patient-summary{align-items:flex-start;flex-direction:column}.bp-big-inputs{grid-template-columns:1fr 1fr}.bp-reading.bp-pulse{grid-column:1/-1;flex-direction:row;gap:12px}.bp-reading.bp-pulse input{max-width:130px}.bp-second-grid{grid-template-columns:1fr}.bp-device{padding:9px;border-radius:20px}.bp-reading{padding:12px 5px}.bp-reading input{min-height:56px}}

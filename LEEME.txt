@@ -61,3 +61,12 @@ NOVEDADES v27
 - Se actualizó la versión de caché del service worker para cargar los archivos nuevos.
 
 VERSIÓN 36 — Perfil clínico por edad. Se agrega estatura y fecha de actualización; panel de presión dinámico. Menores de 13: no se inventan percentiles; requiere valoración profesional. 13–17: referencia AAP 2017. Adultos: umbral domiciliario ESC 2024 ≥135 sistólica y/o ≥85 diastólica en promedio. PAM y pulso sin categorías universales automáticas. Se conserva localStorage salud360_pwa_v1.
+
+
+VERSIÓN 37 — REGISTRO TIPO TENSIÓMETRO
+- La pantalla de presión coloca el nuevo registro al inicio.
+- Resumen de paciente: nombre, edad calculada, sexo, hipertensión y padecimientos registrados.
+- Captura principal tipo tensiómetro con campos grandes para sistólica, diastólica y pulso.
+- Se elige brazo principal; el segundo brazo es opcional.
+- Fecha y hora, número de toma y notas permanecen disponibles.
+- Se mantiene compatibilidad con registros antiguos y clave localStorage existente.

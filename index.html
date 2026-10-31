@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=36">
+<link rel="stylesheet" href="styles.css?v=37">
 </head>
 <body>
 
@@ -269,19 +269,36 @@
       <div><h3 data-i18n>Mapa de presión</h3><p class="muted" data-i18n>Organiza las lecturas domiciliarias por hora y observa su evolución diaria.</p></div>
       <button class="btn secondary" type="button" onclick="showView('mapa-presion')" data-i18n>Abrir mapa</button>
      </div></div>
-     <div class="card"><h3 data-i18n>Nueva medición</h3>
-      <form id="bpForm"><div class="formgrid">
+     <div class="card bp-entry-card">
+      <div class="bp-entry-title"><div><span class="bp-kicker">NUEVO REGISTRO</span><h3>Ingresa tu medición</h3><p class="muted">Completa los valores que muestra tu tensiómetro.</p></div><span class="bp-device-icon" aria-hidden="true">♥</span></div>
+      <div class="patient-summary" id="bpPatientSummary"><div><strong id="bpPatientName">Paciente sin configurar</strong><span id="bpPatientDetails">Completa el perfil clínico para mostrar sus datos aquí.</span></div><button type="button" class="btn secondary small" onclick="showView('perfil')">Editar perfil</button></div>
+      <form id="bpForm"><div class="bp-device">
+       <div class="bp-device-brand"><span>SaludPlus</span><small>TENSIÓMETRO DIGITAL · REGISTRO</small></div>
+       <div class="bp-device-screen">
+        <div class="bp-arm-select"><label for="bpArm">Brazo principal de la medición</label><select id="bpArm" name="primaryArm"><option value="left">Izquierdo</option><option value="right">Derecho</option></select></div>
+        <div class="bp-big-inputs">
+         <label class="bp-reading"><span>SISTÓLICA</span><input name="primarySys" type="number" inputmode="numeric" min="50" max="300" placeholder="120" required><small>mmHg</small></label>
+         <label class="bp-reading"><span>DIASTÓLICA</span><input name="primaryDia" type="number" inputmode="numeric" min="30" max="200" placeholder="80" required><small>mmHg</small></label>
+         <label class="bp-reading bp-pulse"><span>PULSO</span><input name="primaryPulse" type="number" inputmode="numeric" min="20" max="250" placeholder="72"><small>lpm</small></label>
+        </div>
+        <details class="bp-second-arm"><summary>Agregar lectura del otro brazo (opcional)</summary><div class="bp-second-grid">
+         <label class="field"><span id="bpOtherArmLabel">Brazo derecho · sistólica</span><input name="otherSys" type="number" inputmode="numeric" min="50" max="300" placeholder="120"></label>
+         <label class="field"><span>Diastólica · mmHg</span><input name="otherDia" type="number" inputmode="numeric" min="30" max="200" placeholder="80"></label>
+         <label class="field"><span>Pulso · lpm</span><input name="otherPulse" type="number" inputmode="numeric" min="20" max="250" placeholder="72"></label>
+        </div></details>
+       </div>
+      </div>
+      <div class="formgrid bp-meta-grid">
+       <div class="field"><label>Fecha</label><input name="date" type="date" required></div>
+       <div class="field"><label>Hora</label><input name="time" type="time" required></div>
+       <div class="field"><label>N.º de toma</label><select name="take"><option>1</option><option>2</option><option>3</option></select></div>
+       <div class="field"><label>Condición / notas</label><input name="notes" placeholder="Ej. reposo, mañana"></div>
+      </div>
        <div class="field"><label data-i18n>Fecha</label><input name="date" type="date" required></div>
        <div class="field"><label data-i18n>Hora</label><input name="time" type="time" required></div>
        <div class="field"><label data-i18n>N.º de toma</label><select name="take"><option>1</option><option>2</option><option>3</option></select></div>
        <div class="field"><label data-i18n>Condición / notas</label><input name="notes" placeholder="Ej. reposo, mañana"></div>
-       <div class="field"><label data-i18n>Izquierdo: sistólica</label><input name="ls" type="number" inputmode="numeric" min="50" max="300" placeholder="mmHg" required></div>
-       <div class="field"><label data-i18n>Izquierdo: diastólica</label><input name="ld" type="number" inputmode="numeric" min="30" max="200" placeholder="mmHg" required></div>
-       <div class="field"><label data-i18n>Izquierdo: pulso</label><input name="lp" type="number" inputmode="numeric" min="20" max="250" placeholder="lpm"></div>
-       <div class="field"><label data-i18n>Derecho: sistólica</label><input name="rs" type="number" inputmode="numeric" min="50" max="300" placeholder="mmHg" required></div>
-       <div class="field"><label data-i18n>Derecho: diastólica</label><input name="rd" type="number" inputmode="numeric" min="30" max="200" placeholder="mmHg" required></div>
-       <div class="field"><label data-i18n>Derecho: pulso</label><input name="rp" type="number" inputmode="numeric" min="20" max="250" placeholder="lpm"></div>
-      </div>
+
       <div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar medición</button><button class="btn ghost" type="reset" data-i18n>Limpiar</button></div></form>
      </div>
 
@@ -470,6 +487,8 @@
      <div class="card"><form id="patientForm"><div class="formgrid">
       <div class="field"><label data-i18n>Nombre completo</label><input name="name" autocomplete="name"></div>
       <div class="field"><label data-i18n>Fecha de nacimiento</label><input name="birthDate" type="date"></div>
+      <div class="field"><label>Peso (kg)</label><input name="weightKg" type="number" inputmode="decimal" min="1" max="500" step="0.1" placeholder="Ej. 68"></div>
+      <div class="field"><label>Diagnóstico de hipertensión</label><select name="hypertension"><option value="">No indicado</option><option value="yes">Sí, diagnosticada</option><option value="no">No diagnosticada</option><option value="suspected">En evaluación</option></select></div>
       <div class="field"><label>Estatura (cm) · necesaria para referencias pediátricas</label><input name="heightCm" type="number" inputmode="decimal" min="30" max="250" step="0.1" placeholder="Ej. 165"></div>
       <div class="field"><label>Fecha de actualización de estatura</label><input name="heightDate" type="date"></div>
       <div class="field"><label data-i18n>Sexo (opcional)</label><select name="sex"><option value="">No especificado</option><option>Femenino</option><option>Masculino</option><option>Prefiero no decirlo</option></select></div>
@@ -692,7 +711,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=36"></script>
+<script src="app.js?v=37"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>

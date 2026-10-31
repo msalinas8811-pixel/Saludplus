@@ -38,7 +38,11 @@ const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) 
 const fmtDate = (d) => { if (!d) return t('Sin fecha'); const [y, m, day] = d.split('-'); return `${day}/${m}/${y}`; };
 const average = (a) => a.length ? a.reduce((s, v) => s + Number(v), 0) / a.length : null;
 const num = (v) => Number(v);
-const validBP = (x) => [x.ls, x.ld, x.rs, x.rd].every(v => v !== '' && v !== null && v !== undefined && Number.isFinite(num(v)) && num(v) > 0);
+const validBP = (x) => {
+  const left = [x.ls, x.ld].every(v => v !== '' && v !== null && v !== undefined && Number.isFinite(num(v)) && num(v) > 0);
+  const right = [x.rs, x.rd].every(v => v !== '' && v !== null && v !== undefined && Number.isFinite(num(v)) && num(v) > 0);
+  return left || right;
+};
 const pam = (s, d) => (num(s) + 2 * num(d)) / 3;
 const byDateDesc = (a, b) => ((b.date || '') + (b.time || '')).localeCompare((a.date || '') + (a.time || ''));
 const byDateAsc = (a, b) => ((a.date || '') + (a.time || '')).localeCompare((b.date || '') + (b.time || ''));
@@ -563,9 +567,24 @@ function bindForms() {
     save(); toast('Sesión del mapa guardada.');
   });
 
+  const armSelect = $('bpArm');
+  if (armSelect) armSelect.addEventListener('change', () => {
+    const label = $('bpOtherArmLabel');
+    if (label) label.textContent = `Brazo ${armSelect.value === 'left' ? 'derecho' : 'izquierdo'} · sistólica`;
+  });
   $('bpForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target);
-    data.bp.push({ id: uid(), date: f.get('date'), time: f.get('time'), take: f.get('take'), notes: f.get('notes'), ls: +f.get('ls'), ld: +f.get('ld'), lp: f.get('lp') ? +f.get('lp') : null, rs: +f.get('rs'), rd: +f.get('rd'), rp: f.get('rp') ? +f.get('rp') : null });
+    const arm = f.get('primaryArm') || 'left';
+    const ps = Number(f.get('primarySys')), pd = Number(f.get('primaryDia'));
+    const os = f.get('otherSys') ? Number(f.get('otherSys')) : null;
+    const od = f.get('otherDia') ? Number(f.get('otherDia')) : null;
+    if ((os && !od) || (!os && od)) { toast('Completa sistólica y diastólica del segundo brazo, o déjalas ambas vacías.'); return; }
+    const record = { id: uid(), date: f.get('date'), time: f.get('time'), take: f.get('take'), notes: f.get('notes'), primaryArm: arm };
+    record.ls = arm === 'left' ? ps : os; record.ld = arm === 'left' ? pd : od;
+    record.lp = arm === 'left' ? (f.get('primaryPulse') ? Number(f.get('primaryPulse')) : null) : (f.get('otherPulse') ? Number(f.get('otherPulse')) : null);
+    record.rs = arm === 'right' ? ps : os; record.rd = arm === 'right' ? pd : od;
+    record.rp = arm === 'right' ? (f.get('primaryPulse') ? Number(f.get('primaryPulse')) : null) : (f.get('otherPulse') ? Number(f.get('otherPulse')) : null);
+    data.bp.push(record);
     e.target.reset(); setDefaults(); save(); toast(t('Medición guardada.'));
   });
   $('glucoseForm').addEventListener('submit', e => {
@@ -639,6 +658,13 @@ window.medTaken = medTaken;
 function renderPatient() {
   const f = $('patientForm'), p = data.patient || {};
   Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
+  const name = $('bpPatientName'), details = $('bpPatientDetails');
+  if (name) name.textContent = p.name || 'Paciente sin configurar';
+  if (details) {
+    const age = p.birthDate ? ageOnDate(p.birthDate) : null;
+    const bits = [age === null ? 'Edad no indicada' : age + ' años', p.sex || 'Sexo no indicado', p.hypertension === 'yes' ? 'Hipertensión diagnosticada' : (p.hypertension === 'suspected' ? 'Hipertensión en evaluación' : ''), p.conditions || 'Sin otros padecimientos registrados'];
+    details.textContent = bits.filter(Boolean).join(' · ');
+  }
 }
 function renderWater() {
   const w = data.water || (data.water = { goal: 2000, interval: 60, logs: [] }), day = today();
