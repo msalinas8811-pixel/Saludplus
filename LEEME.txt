@@ -59,3 +59,5 @@ NOVEDADES v27
 - Diseño adaptable a celular y computadora, con estados hover, foco de teclado y pulsación táctil.
 - Se mantienen las claves y estructura de almacenamiento existentes; no se borran registros.
 - Se actualizó la versión de caché del service worker para cargar los archivos nuevos.
+
+VERSIÓN 36 — Perfil clínico por edad. Se agrega estatura y fecha de actualización; panel de presión dinámico. Menores de 13: no se inventan percentiles; requiere valoración profesional. 13–17: referencia AAP 2017. Adultos: umbral domiciliario ESC 2024 ≥135 sistólica y/o ≥85 diastólica en promedio. PAM y pulso sin categorías universales automáticas. Se conserva localStorage salud360_pwa_v1.
