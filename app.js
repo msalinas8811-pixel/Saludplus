@@ -3,13 +3,16 @@
 'use strict';
 
 const KEY = 'salud360_pwa_v1';
-const emptyData = () => ({ bp: [], glucose: [], pulse: [], weight: [], meds: [], visits: [], patient: {}, examPlans: [], examResults: [], reminders: { bpTimes: ['08:00', '20:00'] }, water: { goal: 2000, interval: 60, logs: [] } });
+const emptyData = () => ({ bp: [], bpMap: { settings: { startDate: '', duration: 7, morningTime: '07:00', eveningTime: '20:00' }, sessions: [] }, glucose: [], pulse: [], weight: [], meds: [], visits: [], patient: {}, examPlans: [], examResults: [], reminders: { bpTimes: ['08:00', '20:00'] }, water: { goal: 2000, interval: 60, logs: [] } });
 let data = loadData();
 
 function loadData() {
   try {
     const x = { ...emptyData(), ...JSON.parse(localStorage.getItem(KEY) || '{}') };
     x.patient = x.patient || {};
+    x.bpMap = { ...emptyData().bpMap, ...(x.bpMap || {}) };
+    x.bpMap.settings = { ...emptyData().bpMap.settings, ...(x.bpMap.settings || {}) };
+    x.bpMap.sessions = Array.isArray(x.bpMap.sessions) ? x.bpMap.sessions : [];
     x.reminders = { ...emptyData().reminders, ...(x.reminders || {}) };
     x.reminders.bpTimes = Array.isArray(x.reminders.bpTimes) ? x.reminders.bpTimes : ['08:00', '20:00'];
     ['bp', 'glucose', 'pulse', 'weight', 'meds', 'visits'].forEach(k => { x[k] = Array.isArray(x[k]) ? x[k] : []; });
@@ -70,7 +73,7 @@ const NAV = [
   { id: 'asistente', label: 'Asistente', icon: 'chat', views: ['asistente'] },
   { id: 'reportes', label: 'Reportes', icon: 'file', views: ['reportes', 'examrep', 'respaldo'] }
 ];
-const SUBLABEL = { presion: 'Presión', glucosa: 'Glucosa', agua: 'Agua', graficas: 'Evolución', medicamentos: 'Medicinas', consultas: 'Consultas', examenes: 'Exámenes', paciente: 'Perfil', reportes: 'Reportes', examrep: 'Exámenes', respaldo: 'Respaldo', inicio: 'Inicio', asistente: 'Asistente' };
+const SUBLABEL = { 'mapa-presion': 'Mapa de presión', presion: 'Presión', glucosa: 'Glucosa', agua: 'Agua', graficas: 'Evolución', medicamentos: 'Medicinas', consultas: 'Consultas', examenes: 'Exámenes', paciente: 'Perfil', reportes: 'Reportes', examrep: 'Exámenes', respaldo: 'Respaldo', inicio: 'Inicio', asistente: 'Asistente' };
 let currentView = 'inicio';
 const groupOf = (view) => NAV.find(g => g.views.includes(view)) || NAV[0];
 
@@ -96,6 +99,7 @@ function showView(id) {
     sub.querySelectorAll('button').forEach(b => b.addEventListener('click', () => showView(b.dataset.sub)));
   } else { sub.hidden = true; sub.innerHTML = ''; }
   if (id === 'medicamentos') refreshPrescriptionOptions();
+  if (id === 'mapa-presion') renderPressureMap();
   if (id === 'avisos') renderNotices();
   if (id === 'graficas') renderCharts();
   if (id === 'examenes') renderExams();
@@ -338,6 +342,7 @@ function render() {
 
   $('backupStats').textContent = `${data.bp.length} ${t('mediciones de presión')} · ${data.glucose.length} ${t('registros de glucosa')} · ${data.meds.length} ${t('medicamentos')} · ${data.visits.length} ${t('consultas')} · ${(data.examPlans || []).length} ${t('exámenes programados')} · ${(data.examResults || []).length} ${t('resultados')}`;
   renderPatient(); renderWater(); renderAlarms(); renderNotices(); renderHome(); renderExams();
+  if (currentView === 'mapa-presion') renderPressureMap();
   refreshPrescriptionOptions();
   if (currentView === 'graficas') renderCharts();
   if (currentView === 'examrep') renderExamReport();
@@ -420,12 +425,78 @@ function refreshPrescriptionOptions() {
   if ([...s.options].some(o => o.value === old)) s.value = old;
 }
 
+/* ---------- Mapa de presión domiciliaria ---------- */
+function mapSettings() {
+  if (!data.bpMap) data.bpMap = emptyData().bpMap;
+  if (!data.bpMap.settings) data.bpMap.settings = { ...emptyData().bpMap.settings };
+  if (!Array.isArray(data.bpMap.sessions)) data.bpMap.sessions = [];
+  return data.bpMap.settings;
+}
+function mapMinutes(v) { const p=String(v||'00:00').split(':').map(Number); return (p[0]||0)*60+(p[1]||0); }
+function renderPressureMap() {
+  const settings=mapSettings(), sf=$('bpMapSettingsForm');
+  if (sf && !sf.dataset.loaded) {
+    sf.elements.startDate.value=settings.startDate||today();
+    sf.elements.duration.value=String(settings.duration||7);
+    sf.elements.morningTime.value=settings.morningTime||'07:00';
+    sf.elements.eveningTime.value=settings.eveningTime||'20:00';
+    sf.dataset.loaded='1';
+  }
+  const dayInput=$('bpMapDay');
+  if (!dayInput.value) dayInput.value=today();
+  const day=dayInput.value, all=[...data.bpMap.sessions].sort((a,b)=>(a.date+a.time1).localeCompare(b.date+b.time1));
+  const sessions=all.filter(s=>s.date===day);
+  const start=settings.startDate||today(), endD=new Date(start+'T12:00:00');
+  endD.setDate(endD.getDate()+Number(settings.duration||7)-1);
+  const end=isoDateLocal(endD), done=new Set(all.filter(s=>s.date>=start&&s.date<=end).map(s=>s.date)).size;
+  $('bpMapProgress').innerHTML=`<div class="map-progress-top"><strong>${done} / ${Number(settings.duration||7)} días con registros</strong><span>${fmtDate(start)} – ${fmtDate(end)}</span></div><div class="map-progress-track"><i style="width:${Math.min(100,done/Number(settings.duration||7)*100)}%"></i></div><small>Cuenta días con al menos una sesión; no indica cumplimiento clínico.</small>`;
+  $('bpMapCount').textContent=all.length+' sesiones';
+  if (!sessions.length) {
+    $('bpMapChart').innerHTML=`<div class="empty">No hay sesiones guardadas para ${fmtDate(day)}. Registra las lecturas de ese día para ver el mapa.</div>`;
+    $('bpMapAverages').innerHTML='';
+  } else {
+    const pts=sessions.flatMap(s=>[{time:s.time1,sys:+s.sys1,dia:+s.dia1},{time:s.time2,sys:+s.sys2,dia:+s.dia2}]).sort((a,b)=>mapMinutes(a.time)-mapMinutes(b.time));
+    const vals=pts.flatMap(p=>[p.sys,p.dia]), lo=Math.max(0,Math.floor((Math.min(...vals)-15)/10)*10), hi=Math.ceil((Math.max(...vals)+15)/10)*10;
+    const W=760,H=310,L=54,R=22,T=24,B=58,iw=W-L-R,ih=H-T-B,x=t=>L+mapMinutes(t)/1440*iw,y=v=>T+(hi-v)/(hi-lo||1)*ih;
+    let svg=`<svg class="map-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfica diaria de presión sistólica y diastólica">`;
+    for(let v=Math.ceil(lo/20)*20;v<=hi;v+=20) svg+=`<line x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}" class="map-grid"/><text x="${L-9}" y="${y(v)+4}" text-anchor="end" class="map-axis">${v}</text>`;
+    [0,360,720,1080,1440].forEach(m=>{const xx=L+m/1440*iw;svg+=`<line x1="${xx}" y1="${T}" x2="${xx}" y2="${T+ih}" class="map-grid map-grid-v"/><text x="${xx}" y="${H-27}" text-anchor="middle" class="map-axis">${String(m/60).padStart(2,'0')}:00</text>`;});
+    svg+=`<polyline points="${pts.map(p=>x(p.time)+','+y(p.sys)).join(' ')}" class="map-line map-sys"/><polyline points="${pts.map(p=>x(p.time)+','+y(p.dia)).join(' ')}" class="map-line map-dia"/>`;
+    pts.forEach(p=>svg+=`<circle cx="${x(p.time)}" cy="${y(p.sys)}" r="5" class="map-dot map-dot-sys"><title>${p.time} · Sistólica ${p.sys}</title></circle><circle cx="${x(p.time)}" cy="${y(p.dia)}" r="5" class="map-dot map-dot-dia"><title>${p.time} · Diastólica ${p.dia}</title></circle>`);
+    svg+='</svg><div class="map-legend"><span><i class="legend-sys"></i>Sistólica</span><span><i class="legend-dia"></i>Diastólica</span></div>';
+    $('bpMapChart').innerHTML=svg;
+    $('bpMapAverages').innerHTML=`<div class="map-average"><small>Promedio sistólica del día</small><strong>${Math.round(average(pts.map(p=>p.sys)))} mmHg</strong></div><div class="map-average"><small>Promedio diastólica del día</small><strong>${Math.round(average(pts.map(p=>p.dia)))} mmHg</strong></div><p class="fine">Promedios descriptivos de las lecturas guardadas en esta fecha; no son un diagnóstico.</p>`;
+  }
+  $('bpMapList').innerHTML=all.length?all.slice().reverse().map(s=>listItem(`${fmtDate(s.date)} · ${esc(s.period)} · ${esc(s.time1)} / ${esc(s.time2)}`,`${esc(s.arm)} · ${s.sys1}/${s.dia1} y ${s.sys2}/${s.dia2} mmHg${s.notes?' · '+esc(s.notes):''}`,`<button class="btn danger small" type="button" onclick="removeMapSession('${s.id}')">Eliminar</button>`)).join(''):empty('Todavía no hay sesiones del mapa.');
+}
+async function removeMapSession(id) {
+  if (!await askConfirm('¿Eliminar esta sesión del mapa?','Eliminar')) return;
+  data.bpMap.sessions=data.bpMap.sessions.filter(s=>s.id!==id); save();
+}
+window.removeMapSession=removeMapSession;
+
 /* ---------- Formularios ---------- */
 function setDefaults() {
   document.querySelectorAll('input[type=date]:not([name="birthDate"]):not([name="end"]):not([name="nextDate"])').forEach(x => { if (!x.value && !['chartStart', 'chartEnd'].includes(x.id)) x.value = today(); });
   document.querySelectorAll('input[type=time]').forEach(x => { if (!x.value) x.value = nowTime(); });
 }
 function bindForms() {
+  $('bpMapDay').addEventListener('change', renderPressureMap);
+  $('bpMapSettingsForm').addEventListener('submit', e => {
+    e.preventDefault(); const f=new FormData(e.currentTarget), s=mapSettings();
+    s.startDate=f.get('startDate'); s.duration=Number(f.get('duration')); s.morningTime=f.get('morningTime'); s.eveningTime=f.get('eveningTime');
+    e.currentTarget.dataset.loaded='1'; save(); toast('Configuración del mapa guardada.');
+  });
+  $('bpMapSessionForm').addEventListener('submit', e => {
+    e.preventDefault(); const f=new FormData(e.currentTarget), t1=mapMinutes(f.get('time1')), t2=mapMinutes(f.get('time2'));
+    if (t2<=t1 || t2-t1>10) { toast('La segunda lectura debe ser posterior a la primera y estar separada aproximadamente por un minuto (máximo 10 minutos).'); return; }
+    const s={id:uid(),date:f.get('date'),period:f.get('period'),arm:f.get('arm'),time1:f.get('time1'),sys1:Number(f.get('sys1')),dia1:Number(f.get('dia1')),pulse1:f.get('pulse1')?Number(f.get('pulse1')):null,time2:f.get('time2'),sys2:Number(f.get('sys2')),dia2:Number(f.get('dia2')),pulse2:f.get('pulse2')?Number(f.get('pulse2')):null,notes:f.get('notes')||''};
+    if ([s.sys1,s.dia1,s.sys2,s.dia2].some(v=>!Number.isFinite(v)||v<=0)) { toast('Revisa los valores de presión.'); return; }
+    data.bpMap.sessions.push(s); e.currentTarget.reset(); e.currentTarget.elements.date.value=today(); e.currentTarget.elements.time1.value=nowTime();
+    const later=new Date(); later.setMinutes(later.getMinutes()+1); e.currentTarget.elements.time2.value=String(later.getHours()).padStart(2,'0')+':'+String(later.getMinutes()).padStart(2,'0');
+    save(); toast('Sesión del mapa guardada.');
+  });
+
   $('bpForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target);
     data.bp.push({ id: uid(), date: f.get('date'), time: f.get('time'), take: f.get('take'), notes: f.get('notes'), ls: +f.get('ls'), ld: +f.get('ld'), lp: f.get('lp') ? +f.get('lp') : null, rs: +f.get('rs'), rd: +f.get('rd'), rp: f.get('rp') ? +f.get('rp') : null });

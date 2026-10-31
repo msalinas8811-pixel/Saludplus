@@ -80,6 +80,10 @@
        <span class="shortcut-copy"><strong data-i18n>Presión arterial</strong><small data-i18n>Registrar y consultar</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
+      <button class="shortcut-card shortcut-map" type="button" onclick="showView('mapa-presion')" aria-label="Abrir mapa de presión">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-gauge"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Mapa de presión</strong><small data-i18n>Seguimiento por horarios</small></span><span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
       <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')" aria-label="Abrir glucosa">
        <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-drop"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Glucosa</strong><small data-i18n>Registrar y consultar</small></span>
@@ -238,6 +242,10 @@
      </div>
      <div class="card tile"><div class="label" data-i18n>Diferencia sistólica entre brazos</div><div class="value" id="bpDiff">—</div></div>
 
+     <div class="card map-entry-card"><div class="row between wrap" style="align-items:center;gap:12px">
+      <div><h3 data-i18n>Mapa de presión</h3><p class="muted" data-i18n>Organiza las lecturas domiciliarias por hora y observa su evolución diaria.</p></div>
+      <button class="btn secondary" type="button" onclick="showView('mapa-presion')" data-i18n>Abrir mapa</button>
+     </div></div>
      <div class="card"><h3 data-i18n>Nueva medición</h3>
       <form id="bpForm"><div class="formgrid">
        <div class="field"><label data-i18n>Fecha</label><input name="date" type="date" required></div>
@@ -256,6 +264,43 @@
 
      <div class="card"><div class="row between" style="margin-bottom:10px"><h3 style="margin:0" data-i18n>Historial</h3><span class="muted" style="font-size:13px" id="bpCount">0 registros</span></div><div id="bpList" class="list"><div class="empty" data-i18n>Aún no hay mediciones.</div></div></div>
      <p class="notice" data-i18n>La PAM se estima como (sistólica + 2 × diastólica) / 3. Las diferencias entre brazos y los promedios son datos descriptivos, no un diagnóstico. Para seguimiento habitual, mide en condiciones consistentes y sigue las indicaciones de tu profesional.</p>
+    </div>
+   </section>
+
+   <section id="mapa-presion" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
+    <div class="page-head"><div><h2 data-i18n>Mapa de presión</h2><p data-i18n>Seguimiento domiciliario de las mediciones según la hora del día.</p></div></div>
+    <div class="stack">
+     <div class="notice map-disclaimer"><strong>Importante:</strong> Este mapa organiza mediciones hechas en casa. No sustituye un MAPA clínico de 24 horas con un monitor automático. No hagas mediciones adicionales ni cambies tratamientos sin indicación profesional.</div>
+     <div class="card"><h3 data-i18n>Configurar seguimiento</h3><p class="muted">Los horarios son orientativos y se pueden ajustar a las indicaciones del profesional de salud.</p>
+      <form id="bpMapSettingsForm"><div class="formgrid">
+       <div class="field"><label>Fecha de inicio</label><input name="startDate" type="date" required></div>
+       <div class="field"><label>Duración del seguimiento</label><select name="duration"><option value="3">3 días</option><option value="7" selected>7 días</option></select></div>
+       <div class="field"><label>Hora orientativa de mañana</label><input name="morningTime" type="time" required></div>
+       <div class="field"><label>Hora orientativa de noche</label><input name="eveningTime" type="time" required></div>
+      </div><div class="form-actions"><button class="btn" type="submit">Guardar configuración</button></div></form>
+      <p class="fine">En protocolos domiciliarios habituales se realizan lecturas por la mañana y por la noche, con dos mediciones separadas por aproximadamente un minuto. El profesional debe confirmar el plan apropiado para cada paciente.</p>
+     </div>
+     <div class="card"><h3 data-i18n>Registrar sesión</h3><p class="muted">Registra dos lecturas de la misma sesión. Selecciona el brazo indicado por tu profesional.</p>
+      <form id="bpMapSessionForm"><div class="formgrid">
+       <div class="field"><label>Fecha</label><input name="date" type="date" required></div>
+       <div class="field"><label>Sesión</label><select name="period"><option>Mañana</option><option>Noche</option><option>Otra hora</option></select></div>
+       <div class="field"><label>Brazo utilizado</label><select name="arm"><option>Izquierdo</option><option>Derecho</option></select></div>
+       <div class="field"><label>Hora de lectura 1</label><input name="time1" type="time" required></div>
+       <div class="field"><label>Lectura 1 · sistólica</label><input name="sys1" type="number" min="40" max="300" required></div>
+       <div class="field"><label>Lectura 1 · diastólica</label><input name="dia1" type="number" min="20" max="200" required></div>
+       <div class="field"><label>Lectura 1 · pulso (opcional)</label><input name="pulse1" type="number" min="20" max="250"></div>
+       <div class="field"><label>Hora de lectura 2</label><input name="time2" type="time" required></div>
+       <div class="field"><label>Lectura 2 · sistólica</label><input name="sys2" type="number" min="40" max="300" required></div>
+       <div class="field"><label>Lectura 2 · diastólica</label><input name="dia2" type="number" min="20" max="200" required></div>
+       <div class="field"><label>Lectura 2 · pulso (opcional)</label><input name="pulse2" type="number" min="20" max="250"></div>
+       <div class="field full"><label>Notas (opcional)</label><input name="notes" placeholder="Ej. antes del desayuno, reposo"></div>
+      </div><div class="form-actions"><button class="btn" type="submit">Guardar sesión</button><button class="btn ghost" type="reset">Limpiar</button></div></form>
+     </div>
+     <div class="card"><div class="row between wrap"><div><h3>Gráfica diaria</h3><p class="muted">La gráfica muestra las lecturas según su hora real.</p></div><div class="field map-date-field"><label>Ver día</label><input id="bpMapDay" type="date"></div></div>
+      <div id="bpMapProgress" class="map-progress"></div><div id="bpMapChart" class="map-chart"><div class="empty">Registra una sesión para generar la gráfica.</div></div><div id="bpMapAverages" class="map-averages"></div>
+     </div>
+     <div class="card"><div class="row between wrap"><h3>Sesiones registradas</h3><span id="bpMapCount" class="muted">0 sesiones</span></div><div id="bpMapList" class="list"></div></div>
     </div>
    </section>
 

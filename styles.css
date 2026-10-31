@@ -511,3 +511,32 @@ dialog.sheet h3{margin:0 0 14px}
 .glucose-context {font-size:11px;color:#718496;margin-top:4px}
 .glucose-chart-note {margin-top:12px;line-height:1.45}
 .chart-legend span {display:inline-flex;align-items:center;gap:6px}
+
+/* SaludPlus v30 · Mapa de presión */
+.shortcut-map .shortcut-icon{background:#e9f3ff;color:#2467a8}
+.map-entry-card{border:1px solid #d7e8f5}
+.map-disclaimer{line-height:1.55}
+.map-progress{margin:14px 0 8px}
+.map-progress-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;margin-bottom:8px}
+.map-progress-top span,.map-progress small{color:var(--muted,#667085);font-size:12px}
+.map-progress-track{height:9px;border-radius:99px;background:#e8eef4;overflow:hidden;margin-bottom:7px}
+.map-progress-track i{display:block;height:100%;border-radius:99px;background:#3684c5}
+.map-date-field{min-width:160px}
+.map-chart{width:100%;overflow-x:auto}
+.map-svg{display:block;width:100%;min-width:540px;height:auto}
+.map-grid{stroke:#e4eaf0;stroke-width:1}
+.map-grid-v{stroke-dasharray:3 5}
+.map-axis{fill:#64748b;font-size:12px}
+.map-line{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.map-sys{stroke:#d65b56}.map-dia{stroke:#347fbd}
+.map-dot{stroke:#fff;stroke-width:2}.map-dot-sys{fill:#d65b56}.map-dot-dia{fill:#347fbd}
+.map-legend{display:flex;justify-content:center;gap:22px;margin:4px 0 12px;color:var(--muted,#667085);font-size:13px}
+.map-legend span{display:flex;align-items:center;gap:7px}
+.map-legend i{display:inline-block;width:18px;height:4px;border-radius:5px}
+.legend-sys{background:#d65b56}.legend-dia{background:#347fbd}
+.map-averages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px}
+.map-average{padding:14px;border:1px solid #e3eaf1;border-radius:14px;background:#f8fafc}
+.map-average small{display:block;color:var(--muted,#667085);font-size:12px}
+.map-average strong{display:block;font-size:22px;margin-top:4px}
+.map-averages .fine{grid-column:1/-1}
+@media(max-width:560px){.map-averages{grid-template-columns:1fr}.map-average strong{font-size:20px}}
