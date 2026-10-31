@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=28">
+<link rel="stylesheet" href="styles.css?v=29">
 </head>
 <body>
 
@@ -222,6 +222,7 @@
 
    <!-- ================= CONTROLES ================= -->
    <section id="presion" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Presión arterial</h2><p data-i18n>Registra cada toma y compara ambos brazos.</p></div></div>
     <div class="stack">
      <div class="card" id="bpAverageCard"><div class="bpwrap"><div class="bpmain">
@@ -259,6 +260,7 @@
    </section>
 
    <section id="glucosa" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Control de glucosa</h2><p data-i18n>Anota el resultado y las circunstancias de la medición.</p></div></div>
     <div class="stack">
      <div class="card glucose-gauge-card">
@@ -280,6 +282,7 @@
    </section>
 
    <section id="agua" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Agua y recordatorios</h2><p data-i18n>Registra vasos, fija una meta y configura recordatorios.</p></div></div>
     <div class="grid cols-2">
      <div class="card"><h3 data-i18n>Consumo de hoy</h3>
@@ -305,6 +308,7 @@
    </section>
 
    <section id="graficas" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Evolución</h2><p data-i18n>Visualiza tus registros guardados y filtra por fechas.</p></div></div>
     <div class="stack">
      <div class="card"><div class="formgrid">
@@ -313,7 +317,7 @@
       <div class="field"><label for="chartEnd" data-i18n>Fecha final</label><input id="chartEnd" type="date"></div>
      </div><div class="form-actions"><button class="btn" id="drawChartBtn" type="button" data-i18n>Actualizar gráfica</button><button class="btn secondary" id="chartAllDatesBtn" type="button" data-i18n>Ver todo el historial</button></div></div>
      <div class="grid cols-2" id="chartCards">
-      <div class="card"><h3 id="chartTitle">Presión arterial</h3><div id="chartSummary" class="muted" style="font-size:13px">Registra controles para ver la evolución.</div><div class="chart-wrap" id="chartArea"></div><div class="chart-legend" id="chartLegend"></div></div>
+      <div class="card"><h3 id="chartTitle">Presión arterial</h3><div id="chartSummary" class="muted" style="font-size:13px">Registra controles para ver la evolución.</div><div class="chart-wrap" id="chartArea"></div><div class="chart-legend" id="chartLegend"></div><p class="fine glucose-chart-note" data-i18n>Los colores son orientativos y solo aplican a referencias en ayunas o a las 2 horas después de comer. Otros momentos requieren interpretar el resultado según el plan clínico individual. Un resultado aislado no establece un diagnóstico.</p></div>
       <div class="card"><h3 data-i18n>Registrar pulso o peso</h3><p class="muted" style="font-size:13px;margin-bottom:12px" data-i18n>Son controles opcionales; se incluyen en las gráficas.</p>
        <form id="extraControlForm"><div class="formgrid">
         <div class="field"><label data-i18n>Tipo</label><select name="type"><option value="pulse">Pulso (latidos/min)</option><option value="weight">Peso (kg)</option></select></div>
@@ -329,6 +333,7 @@
 
    <!-- ================= MI SALUD ================= -->
    <section id="medicamentos" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Medicamentos</h2><p data-i18n>Añade solo lo indicado por el profesional sanitario.</p></div></div>
     <div class="stack">
      <div class="card"><h3 data-i18n>Agregar medicamento</h3>
@@ -348,6 +353,7 @@
    </section>
 
    <section id="consultas" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Consultas y recetas</h2><p data-i18n>Guarda citas, indicaciones y archivos asociados.</p></div></div>
     <div class="stack">
      <div class="card"><h3 data-i18n>Registrar consulta</h3>
@@ -366,6 +372,7 @@
    </section>
 
    <section id="examenes" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Control de exámenes</h2><p data-i18n>Organiza tus exámenes en grupos (rutinarios, por receta, por padecimiento) y anota el resultado de cada uno.</p></div></div>
     <div class="stack">
      <div class="card" id="examSummary"></div>
@@ -389,6 +396,7 @@
    </section>
 
    <section id="paciente" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Perfil del paciente</h2><p data-i18n>Datos personales y de seguridad médica. Completa solo lo que quieras guardar.</p></div></div>
     <div class="stack">
      <div class="card"><form id="patientForm"><div class="formgrid">
@@ -411,6 +419,7 @@
    </section>
 
    <section id="avisos" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Avisos y recordatorios</h2><p data-i18n>Consulta tus mediciones programadas y próximas citas.</p></div></div>
     <div class="card notice-settings-card">
      <h3 data-i18n>Recordatorios para medir la presión</h3>
@@ -437,6 +446,7 @@
 
    <!-- ================= ASISTENTE IA ================= -->
    <section id="asistente" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Asistente de salud</h2><p data-i18n>Resuelve dudas generales de salud o analiza tus propios registros.</p></div></div>
     <div class="row between wrap" style="margin-bottom:12px">
      <div class="seg" role="group" aria-label="Tipo de asistencia" id="modeSeg"><button type="button" data-mode="general" class="active" data-i18n>General</button><button type="button" data-mode="personal" data-i18n>Con mis registros</button></div>
@@ -479,6 +489,7 @@
 
    <!-- ================= REPORTES ================= -->
    <section id="reportes" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Reportes de salud</h2><p data-i18n>Promedios por fechas y reporte clínico para tu consulta.</p></div></div>
     <div class="stack">
      <div class="card"><h3 data-i18n>Promedios por periodo de fechas</h3>
@@ -500,6 +511,7 @@
    </section>
 
    <section id="examrep" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Resultados de exámenes</h2><p data-i18n>Consulta tus resultados con sus rangos normales y descárgalos en PDF para llevarlos a tu médico.</p></div></div>
     <div class="stack">
      <div class="card">
@@ -515,6 +527,7 @@
    </section>
 
    <section id="respaldo" class="view">
+    <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Respaldo y restauración</h2><p data-i18n>Exporta los datos para transferirlos a otro dispositivo.</p></div></div>
     <div class="stack">
      <div class="grid cols-2">
@@ -608,12 +621,12 @@
  <nav class="tabbar" data-nav="tab" aria-label="Navegación principal"></nav>
 </div>
 
-<script src="i18n.js?v=28"></script>
-<script src="app.js?v=28"></script>
-<script src="exams.js?v=28"></script>
-<script src="examreport.js?v=28"></script>
-<script src="firebase-config.js?v=28"></script>
-<script src="ai-firebase.js?v=28"></script>
-<script src="chat.js?v=28"></script>
+<script src="i18n.js?v=29"></script>
+<script src="app.js?v=29"></script>
+<script src="exams.js?v=29"></script>
+<script src="examreport.js?v=29"></script>
+<script src="firebase-config.js?v=29"></script>
+<script src="ai-firebase.js?v=29"></script>
+<script src="chat.js?v=29"></script>
 </body>
 </html>

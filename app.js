@@ -80,7 +80,7 @@ function buildNav() {
   document.querySelector('[data-nav="tab"]').innerHTML = NAV.map(g => mk(g, false)).join('');
   document.querySelectorAll('[data-group]').forEach(b => b.addEventListener('click', () => {
     const g = NAV.find(x => x.id === b.dataset.group);
-    showView(groupOf(currentView).id === g.id ? currentView : g.views[0]);
+    if (g) showView(g.id === 'inicio' ? 'inicio' : g.views[0]);
   }));
 }
 function showView(id) {
@@ -155,9 +155,45 @@ function bpGauge(s, d) {
   const label = c ? `${t('Presión arterial')} ${Math.round(s)}/${Math.round(d)} mmHg: ${t(c.label)}` : t('Sin registros');
   return `<div class="bp-speed-wrap" role="group" aria-label="${esc(label)}">${speedGauge(s, 80, 200, 'Sistólica', 'mmHg', '#315F9B', true)}${speedGauge(d, 40, 130, 'Diastólica', 'mmHg', '#315F9B', true)}</div>`;
 }
-function glucoseGauge(value) {
-  return speedGauge(value, 0, 300, 'Última glucosa', 'mg/dL', '#168F9C', false);
+
+function glucoseStatus(value, when) {
+  if (!Number.isFinite(value) || value <= 0) return { key:'unknown', label:'Sin datos suficientes', color:'#9AA9B5' };
+  if (value < 70) return { key:'low', label:'Baja (<70 mg/dL)', color:'#D94B52' };
+  if (when === 'Ayunas') {
+    if (value < 100) return { key:'usual', label:'Rango habitual en ayunas (70–99)', color:'#36A66B' };
+    if (value < 126) return { key:'elevated', label:'Por encima del rango habitual en ayunas (100–125)', color:'#E5A52F' };
+    return { key:'high', label:'Elevada en ayunas (≥126)', color:'#D94B52' };
+  }
+  if (when === '2 horas después de comer') {
+    if (value < 140) return { key:'usual', label:'Por debajo de 140 a las 2 h', color:'#36A66B' };
+    if (value < 200) return { key:'elevated', label:'Elevada a las 2 h (140–199)', color:'#E5A52F' };
+    return { key:'high', label:'Elevada a las 2 h (≥200)', color:'#D94B52' };
+  }
+  return { key:'context', label:'Interpretar según el momento y el plan clínico', color:'#168F9C' };
 }
+function glucoseGauge(value, when) {
+  const has = Number.isFinite(value), v = has ? Math.max(0, Math.min(300, value)) : 0;
+  const cx=100,cy=94,r=70;
+  const arc=(a1,a2,color,w=12)=>{
+    const p1={x:cx+r*Math.cos(a1*Math.PI/180),y:cy-r*Math.sin(a1*Math.PI/180)};
+    const p2={x:cx+r*Math.cos(a2*Math.PI/180),y:cy-r*Math.sin(a2*Math.PI/180)};
+    return `<path d="M ${p1.x} ${p1.y} A ${r} ${r} 0 0 1 ${p2.x} ${p2.y}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round"/>`;
+  };
+  // The colored bands reflect fasting or 2-hour post-meal reference categories.
+  let bands = arc(180,138,'#D94B52');
+  if (when === 'Ayunas') {
+    bands += arc(138,120,'#36A66B') + arc(120,105,'#E5A52F') + arc(105,0,'#D94B52');
+  } else if (when === '2 horas después de comer') {
+    bands += arc(138,96,'#36A66B') + arc(96,60,'#E5A52F') + arc(60,0,'#D94B52');
+  } else {
+    bands += arc(138,0,'#168F9C');
+  }
+  const angle=180-(v/300)*180, rad=angle*Math.PI/180;
+  const needle=has?`<line x1="${cx}" y1="${cy}" x2="${cx+55*Math.cos(rad)}" y2="${cy-55*Math.sin(rad)}" stroke="#20394D" stroke-width="4" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="6" fill="#20394D"/>`:'';
+  const st=glucoseStatus(value,when);
+  return `<div class="speed-gauge glucose-speed"><div class="speed-title">${esc(t('Última glucosa'))}</div><svg viewBox="0 0 200 116" role="img" aria-label="${esc(t('Glucosa'))}: ${has?Math.round(value)+' mg/dL':t('Sin registros')}">${bands}${needle}</svg><div class="speed-value">${has?Math.round(value):'—'} <small>mg/dL</small></div><div class="glucose-level glucose-${st.key}"><i style="background:${st.color}"></i>${esc(t(st.label))}</div><div class="speed-scale">0 <span>300</span></div><div class="glucose-context">${esc(t(when || 'Momento no indicado'))}</div></div>`;
+}
+
 
 function setBPStatus(cardId, statusId, adviceId, s, d) {
   const card = $(cardId), badge = $(statusId), advice = $(adviceId);
@@ -195,7 +231,7 @@ function svgLineChart(seriesList, labels) {
   seriesList.forEach(ser => {
     const pts = ser.values.map(v => `${x(v.i)},${y(Number(v.value))}`).join(' ');
     if (ser.values.length > 1) g += `<polyline points="${pts}" fill="none" style="stroke:${ser.color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
-    ser.values.forEach(v => { g += `<circle cx="${x(v.i)}" cy="${y(Number(v.value))}" r="4" style="fill:${ser.color}"/>`; });
+    ser.values.forEach(v => { g += `<circle cx="${x(v.i)}" cy="${y(Number(v.value))}" r="5" style="fill:${v.color || ser.color};stroke:#fff;stroke-width:1.5"/>`; });
   });
   [0, Math.floor((labels.length - 1) / 2), labels.length - 1].filter((v, i, a) => a.indexOf(v) === i).forEach(i => {
     if (labels[i]) g += `<text x="${x(i)}" y="${h - 12}" text-anchor="middle" font-size="11">${esc(labels[i])}</text>`;
@@ -218,7 +254,14 @@ function renderCharts() {
       { name: 'Sistólica (promedio de brazos)', color: 'var(--brand)', values: items.map((x, i) => ({ i, value: avgOf(x, 'ls', 'rs') })).filter(v => Number.isFinite(v.value)) },
       { name: 'Diastólica (promedio de brazos)', color: 'var(--leaf)', values: items.map((x, i) => ({ i, value: avgOf(x, 'ld', 'rd') })).filter(v => Number.isFinite(v.value)) }
     ];
-  } else if (type === 'glucose') { title = 'Glucosa (mg/dL)'; ({ items, series } = single(data.glucose, 'Glucosa', 'var(--brand)')); }
+  } else if (type === 'glucose') {
+    title = 'Glucosa (mg/dL)';
+    items = data.glucose.filter(within).sort(byDateAsc);
+    series = [{ name: 'Glucosa', color: 'var(--teal)', values: items.map((x,i) => {
+      const v = +(x.value ?? x.glucose), st = glucoseStatus(v, x.when);
+      return { i, value:v, date:x.date, color:st.color };
+    }).filter(v => Number.isFinite(v.value) && v.value > 0) }];
+  }
   else if (type === 'pulse') { title = 'Pulso (latidos/min)'; ({ items, series } = single(data.pulse, 'Pulso', 'var(--brand)')); }
   else if (type === 'weight') { title = 'Peso (kg)'; ({ items, series } = single(data.weight, 'Peso', 'var(--brand)')); }
   else {
@@ -231,7 +274,9 @@ function renderCharts() {
   $('chartTitle').textContent = t(title);
   $('chartSummary').textContent = `${items.length} ${t('registro(s) en el período seleccionado.')}`;
   $('chartArea').innerHTML = svgLineChart(series, labels);
-  $('chartLegend').innerHTML = series.map(s => `<span><i class="legend-dot" style="background:${s.color}"></i>${esc(t(s.name))}</span>`).join('');
+  $('chartLegend').innerHTML = type === 'glucose'
+    ? `<span><i class="legend-dot" style="background:#36A66B"></i>${esc(t('Rango habitual según contexto'))}</span><span><i class="legend-dot" style="background:#E5A52F"></i>${esc(t('Por encima del rango de referencia'))}</span><span><i class="legend-dot" style="background:#D94B52"></i>${esc(t('Baja o valor elevado'))}</span><span><i class="legend-dot" style="background:#168F9C"></i>${esc(t('Contexto sin rango estándar'))}</span>`
+    : series.map(s => `<span><i class="legend-dot" style="background:${s.color}"></i>${esc(t(s.name))}</span>`).join('');
 }
 
 /* ---------- Render principal ---------- */
@@ -276,7 +321,7 @@ function render() {
     removeBtn('bp', x.id))).join('') : empty('Aún no hay mediciones.');
 
   $('glucoseAvg').textContent = gl.length ? `${t('Promedio de registros')}: ${Math.round(average(gl.map(x => +x.value)))} mg/dL` : `${t('Promedio')}: —`;
-  if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN);
+  if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN, gl.length ? gl[0].when : '');
   $('glucoseList').innerHTML = gl.length ? gl.map(x => listItem(`${esc(x.value)} mg/dL · ${fmtDate(x.date)} ${esc(x.time)}`, `${esc(t(x.when || ''))}${x.notes ? '\n' + esc(x.notes) : ''}`, removeBtn('glucose', x.id))).join('') : empty('Aún no hay mediciones.');
 
   $('medList').innerHTML = data.meds.length ? data.meds.map(x => {

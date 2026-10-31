@@ -490,3 +490,24 @@ dialog.sheet h3{margin:0 0 14px}
 }
 .tabbar .notice-count[hidden] { display:none; }
 .tabbar button { position:relative; }
+
+/* SaludPlus v29: regreso a Inicio y colores contextuales de glucosa */
+.back-home-btn {
+ display:inline-flex;align-items:center;gap:9px;margin:0 0 16px;
+ padding:10px 15px;border:1px solid #d9e5ee;border-radius:13px;
+ background:#fff;color:#17699f;font-weight:750;font-size:14px;
+ box-shadow:0 3px 10px rgba(27,67,96,.06);cursor:pointer;
+ transition:background .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.back-home-btn span:first-child {font-size:20px;line-height:1}
+.back-home-btn:hover {background:#eaf5fc;transform:translateX(-2px);box-shadow:0 6px 15px rgba(27,67,96,.12)}
+.back-home-btn:active {transform:scale(.98)}
+.back-home-btn:focus-visible {outline:3px solid rgba(18,126,196,.28);outline-offset:2px}
+.glucose-level {display:flex;align-items:center;justify-content:center;gap:7px;margin:5px auto 0;max-width:260px;font-size:12px;font-weight:750;line-height:1.25}
+.glucose-level i {width:9px;height:9px;border-radius:50%;flex:0 0 9px}
+.glucose-low,.glucose-high {color:#B8333B}
+.glucose-usual {color:#23834F}
+.glucose-elevated {color:#A56C08}
+.glucose-context {font-size:11px;color:#718496;margin-top:4px}
+.glucose-chart-note {margin-top:12px;line-height:1.45}
+.chart-legend span {display:inline-flex;align-items:center;gap:6px}
