@@ -77,3 +77,10 @@ VERSIÓN 38 — DISEÑO DINÁMICO DEL TENSIÓMETRO
 - Animaciones suaves de entrada, brillo de pantalla, indicador y corazón; se respeta prefers-reduced-motion.
 - El bloque de registro permanece inmediatamente debajo del encabezado de Presión arterial, antes del panel de interpretación, mapa, referencias e historial.
 - Se mantienen los campos, la lógica de guardado y el almacenamiento de v37.
+
+
+VERSIÓN 39 — AJUSTE DE PANTALLA COMPLETA
+- Se corrigió la estructura HTML: el tensiómetro ya no queda dentro del encabezado flex.
+- Ahora aparece debajo del título "Presión arterial", ocupando todo el ancho disponible de la pantalla.
+- Se mantiene el diseño dinámico y animado del tensiómetro de v38.
+- Se actualizó caché del service worker a v39.

@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=38">
+<link rel="stylesheet" href="styles.css?v=39">
 </head>
 <body>
 
@@ -228,6 +228,7 @@
    <section id="presion" class="view">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Presión arterial</h2><p data-i18n>Registra cada toma y compara ambos brazos.</p></div>
+</div>
 <div class="card bp-entry-card">
       <div class="bp-entry-title"><div><span class="bp-kicker">NUEVO REGISTRO</span><h3>Ingresa tu medición</h3><p class="muted">Completa los valores que muestra tu tensiómetro.</p></div><span class="bp-device-icon" aria-hidden="true">♥</span></div>
       <div class="patient-summary" id="bpPatientSummary"><div><strong id="bpPatientName">Paciente sin configurar</strong><span id="bpPatientDetails">Completa el perfil clínico para mostrar sus datos aquí.</span></div><button type="button" class="btn secondary small" onclick="showView('perfil')">Editar perfil</button></div>
@@ -256,8 +257,6 @@
 
 
       <div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar medición</button><button class="btn ghost" type="reset" data-i18n>Limpiar</button></div></form>
-     </div>
-
      </div>
     <div class="card age-clinical-card" id="ageClinicalCard" aria-live="polite"><div class="row between wrap"><div><h3 style="margin:0">Interpretación según perfil</h3><p class="muted" id="clinicalProfileLine">Completa tu fecha de nacimiento en Mi perfil.</p></div><span class="badge" id="clinicalAgeBadge">Perfil pendiente</span></div><div class="clinical-metrics" id="clinicalMetrics"><div class="clinical-metric status-unknown"><small>Presión más reciente</small><strong>—</strong><span>Esperando registros</span></div><div class="clinical-metric status-unknown"><small>PAM aproximada</small><strong>—</strong><span>No es un diagnóstico</span></div><div class="clinical-metric status-unknown"><small>Pulso registrado</small><strong>—</strong><span>Depende de edad y actividad</span></div></div><p class="fine" id="clinicalGuidance">La clasificación se selecciona según edad y referencia clínica. No sustituye una valoración profesional.</p></div>
     <div class="stack">
@@ -709,7 +708,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=38"></script>
+<script src="app.js?v=39"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>

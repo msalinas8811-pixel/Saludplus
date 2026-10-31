@@ -699,3 +699,14 @@ dialog.sheet h3{margin:0 0 14px}
  .bp-entry-card,.bp-entry-card:before,.bp-kicker:before,.bp-device-icon,.bp-device-screen:after{animation:none!important}
  .bp-reading,.bp-entry-card .form-actions .btn{transition:none!important}
 }
+
+/* v39 — tensiómetro a ancho completo, debajo del título */
+#presion > .page-head{display:block;width:100%;margin-bottom:16px}
+#presion > .bp-entry-card{display:block;width:100%;max-width:none;min-width:0;box-sizing:border-box;margin:0 0 22px}
+#presion > .bp-entry-card .bp-device{width:100%;max-width:760px}
+#presion > .bp-entry-card .patient-summary{width:100%;box-sizing:border-box}
+@media(max-width:700px){
+ #presion > .page-head{display:block}
+ #presion > .bp-entry-card{width:100%;margin-top:0}
+ #presion > .bp-entry-card .bp-device{max-width:none}
+}
