@@ -1,3 +1,5 @@
+SALUDPLUS PWA v27 - ACCESOS DIRECTOS Y DISEÑO ACCESIBLE
+
 SaludPlus PWA — versión 23 (control de exámenes + barra de presión)
 
 NOVEDADES DE LA VERSIÓN 23
@@ -51,8 +53,9 @@ v25 · IA con Firebase
 - Nuevo: firebase-config.js y ai-firebase.js. Rellena firebase-config.js siguiendo FIREBASE-PASO-A-PASO.txt y la IA (chat y lectura de informes) funciona desde GitHub Pages sin servidor.
 
 
-SALUDPLUS v26 — REDISEÑO VISUAL
-- Inicio actualizado con jerarquía visual, tarjetas y acentos morados.
-- Nueva pantalla Panorama de salud con resumen de presión, pulso, glucosa, gráfica de últimas mediciones, promedios por fechas e historial reciente.
-- Se conserva la estructura de datos, formularios, almacenamiento local, Firebase y backend de IA de v25.
-- Para actualizar: reemplaza los archivos del repositorio por los de este ZIP conservando la carpeta backend y configura las variables secretas del servidor como estaban.
+NOVEDADES v27
+- Inicio con siete tarjetas grandes para Presión arterial, Glucosa, Agua, Medicinas, Consultas, Exámenes y Mi perfil.
+- Cada tarjeta abre la pantalla funcional ya existente.
+- Diseño adaptable a celular y computadora, con estados hover, foco de teclado y pulsación táctil.
+- Se mantienen las claves y estructura de almacenamiento existentes; no se borran registros.
+- Se actualizó la versión de caché del service worker para cargar los archivos nuevos.

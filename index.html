@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 </head>
 <body>
 
@@ -65,6 +65,57 @@
      </div>
     </div>
 
+    <section class="home-shortcuts" aria-labelledby="shortcutTitle">
+     <div class="shortcuts-heading">
+      <div>
+       <p class="eyebrow" data-i18n>Accesos directos</p>
+       <h2 id="shortcutTitle" data-i18n>¿Qué deseas hacer?</h2>
+       <p class="muted" data-i18n>Toca una tarjeta para abrir la función.</p>
+      </div>
+     </div>
+     <div class="shortcut-grid">
+      <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')" aria-label="Abrir presión arterial">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-activity"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Presión arterial</strong><small data-i18n>Registrar y consultar</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')" aria-label="Abrir glucosa">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-drop"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Glucosa</strong><small data-i18n>Registrar y consultar</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-water" type="button" onclick="showView('agua')" aria-label="Abrir control de agua">
+       <span class="shortcut-icon" aria-hidden="true">💧</span>
+       <span class="shortcut-copy"><strong data-i18n>Agua</strong><small data-i18n>Control diario</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-meds" type="button" onclick="showView('medicamentos')" aria-label="Abrir medicinas">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-pill"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Medicinas</strong><small data-i18n>Horarios y recordatorios</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-visits" type="button" onclick="showView('consultas')" aria-label="Abrir consultas">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Consultas</strong><small data-i18n>Citas y seguimiento</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-exams" type="button" onclick="showView('examenes')" aria-label="Abrir exámenes">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')" aria-label="Abrir mi perfil">
+       <span class="shortcut-icon" aria-hidden="true">👤</span>
+       <span class="shortcut-copy"><strong data-i18n>Mi perfil</strong><small data-i18n>Mis datos y configuración</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+     </div>
+    </section>
+
+    <div class="home-summary-heading">
+     <h2 data-i18n>Resumen de salud</h2>
+     <p class="muted" data-i18n>Tus últimos registros y próximos eventos.</p>
+    </div>
     <div class="tiles">
      <article class="card tile wide" id="avgBPCard">
       <div class="label"><svg class="i"><use href="#i-gauge"/></svg><span data-i18n>Presión arterial</span></div>
@@ -166,39 +217,6 @@
 
      <p class="notice" data-i18n>SaludPlus ayuda a organizar mediciones y documentos; no diagnostica ni sustituye a un profesional sanitario. Si tienes síntomas preocupantes, busca atención médica.</p>
     </div>
-   </section>
-
-
-   <!-- ================= PANORAMA DE SALUD ================= -->
-   <section id="panorama" class="view">
-    <div class="page-head panorama-head">
-     <div><p class="eyebrow">SALUDPLUS · RESUMEN PERSONAL</p><h2>Panorama de salud</h2><p>Una vista visual de tus mediciones y su evolución.</p></div>
-     <button class="btn secondary large-action" type="button" onclick="showView('presion')"><svg class="i"><use href="#i-heart"/></svg> Registrar presión</button>
-    </div>
-    <div class="panorama-hero card">
-     <div class="panorama-hero-copy"><span class="eyebrow">PROMEDIO RECIENTE · ÚLTIMAS 7 TOMAS</span><div class="panorama-main-value" id="panoramaBP">—</div><div class="muted">mmHg · promedio de lecturas válidas de ambos brazos</div><div id="panoramaBPStatus" class="bp-status" hidden></div></div>
-     <div class="panorama-ring" id="panoramaGauge"></div>
-    </div>
-    <div class="panorama-metrics">
-     <article class="metric-card metric-purple"><div class="metric-icon"><svg class="i"><use href="#i-gauge"/></svg></div><span>Sistólica promedio</span><strong id="panoramaSys">—</strong><small>mmHg</small></article>
-     <article class="metric-card metric-lilac"><div class="metric-icon"><svg class="i"><use href="#i-heart"/></svg></div><span>Diastólica promedio</span><strong id="panoramaDia">—</strong><small>mmHg</small></article>
-     <article class="metric-card metric-teal"><div class="metric-icon"><svg class="i"><use href="#i-activity"/></svg></div><span>Pulso promedio</span><strong id="panoramaPulse">—</strong><small>lpm · si está registrado</small></article>
-     <article class="metric-card metric-blue"><div class="metric-icon"><svg class="i"><use href="#i-drop"/></svg></div><span>Glucosa reciente</span><strong id="panoramaGlucose">—</strong><small>mg/dL · último registro</small></article>
-    </div>
-    <article class="card panorama-chart-card">
-     <div class="row between wrap"><div><h3>Evolución de presión</h3><p class="muted">Últimas 10 mediciones, promedio de ambos brazos</p></div><button class="btn small ghost" type="button" onclick="showView('graficas')">Ver evolución completa</button></div>
-     <div id="panoramaChart" class="panorama-chart" aria-label="Gráfica de evolución de presión"></div>
-     <div class="panorama-legend"><span><i class="legend-sys"></i>Sistólica</span><span><i class="legend-dia"></i>Diastólica</span></div>
-    </article>
-    <article class="card panorama-chart-card">
-     <div class="row between wrap"><div><h3>Promedios por periodo</h3><p class="muted">Calcula el promedio entre dos fechas.</p></div></div>
-     <div class="formgrid panorama-dates"><div class="field"><label for="panoramaStart">Desde</label><input id="panoramaStart" type="date"></div><div class="field"><label for="panoramaEnd">Hasta</label><input id="panoramaEnd" type="date"></div></div>
-     <button class="btn large-action" id="panoramaCalculate" type="button">Actualizar estadísticas</button>
-     <div class="kpis panorama-kpis"><div class="kpi"><span>Sistólica / diastólica</span><strong id="panoramaRangeBP">—</strong></div><div class="kpi"><span>PAM estimada</span><strong id="panoramaRangePAM">—</strong></div><div class="kpi"><span>Lecturas válidas</span><strong id="panoramaRangeCount">0</strong></div></div>
-     <p class="fine" id="panoramaRangeNote">Los promedios son descriptivos y no constituyen un diagnóstico.</p>
-    </article>
-    <article class="card panorama-chart-card"><div class="row between wrap"><div><h3>Lecturas recientes</h3><p class="muted">Tus últimos registros guardados.</p></div><button class="btn small ghost" type="button" onclick="showView('presion')">Abrir historial</button></div><div class="tablewrap"><table class="report-table"><thead><tr><th>Fecha</th><th>Izquierdo</th><th>Derecho</th><th>Pulso</th></tr></thead><tbody id="panoramaRecentTable"><tr><td colspan="4">—</td></tr></tbody></table></div></article>
-    <p class="notice">Esta pantalla organiza tus datos y ofrece referencias orientativas. No diagnostica ni sustituye la valoración de un profesional de salud.</p>
    </section>
 
    <!-- ================= CONTROLES ================= -->
@@ -559,12 +577,12 @@
  <nav class="tabbar" data-nav="tab" aria-label="Navegación principal"></nav>
 </div>
 
-<script src="i18n.js?v=26"></script>
-<script src="app.js?v=26"></script>
-<script src="exams.js?v=25"></script>
-<script src="examreport.js?v=25"></script>
-<script src="firebase-config.js?v=25"></script>
-<script src="ai-firebase.js?v=25"></script>
-<script src="chat.js?v=25"></script>
+<script src="i18n.js?v=27"></script>
+<script src="app.js?v=27"></script>
+<script src="exams.js?v=27"></script>
+<script src="examreport.js?v=27"></script>
+<script src="firebase-config.js?v=27"></script>
+<script src="ai-firebase.js?v=27"></script>
+<script src="chat.js?v=27"></script>
 </body>
 </html>

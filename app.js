@@ -63,13 +63,13 @@ function askConfirm(msg, okLabel) {
 
 /* ---------- Navegación ---------- */
 const NAV = [
-  { id: 'inicio', label: 'Inicio', icon: 'home', views: ['inicio', 'panorama'] },
+  { id: 'inicio', label: 'Inicio', icon: 'home', views: ['inicio'] },
   { id: 'controles', label: 'Controles', icon: 'activity', views: ['presion', 'glucosa', 'agua', 'graficas'] },
   { id: 'misalud', label: 'Mi salud', icon: 'heart', views: ['medicamentos', 'consultas', 'examenes', 'paciente'] },
   { id: 'asistente', label: 'Asistente', icon: 'chat', views: ['asistente'] },
   { id: 'reportes', label: 'Reportes', icon: 'file', views: ['reportes', 'examrep', 'respaldo'] }
 ];
-const SUBLABEL = { presion: 'Presión', glucosa: 'Glucosa', agua: 'Agua', graficas: 'Evolución', medicamentos: 'Medicinas', consultas: 'Consultas', examenes: 'Exámenes', paciente: 'Perfil', reportes: 'Reportes', examrep: 'Exámenes', respaldo: 'Respaldo', inicio: 'Hoy', panorama: 'Panorama de salud', asistente: 'Asistente' };
+const SUBLABEL = { presion: 'Presión', glucosa: 'Glucosa', agua: 'Agua', graficas: 'Evolución', medicamentos: 'Medicinas', consultas: 'Consultas', examenes: 'Exámenes', paciente: 'Perfil', reportes: 'Reportes', examrep: 'Exámenes', respaldo: 'Respaldo', inicio: 'Inicio', asistente: 'Asistente' };
 let currentView = 'inicio';
 const groupOf = (view) => NAV.find(g => g.views.includes(view)) || NAV[0];
 
@@ -96,7 +96,6 @@ function showView(id) {
   } else { sub.hidden = true; sub.innerHTML = ''; }
   if (id === 'medicamentos') refreshPrescriptionOptions();
   if (id === 'graficas') renderCharts();
-  if (id === 'panorama') renderPanorama();
   if (id === 'examenes') renderExams();
   if (id === 'examrep') renderExamReport();
   if (id === 'asistente' && typeof chatOnShow === 'function') chatOnShow();
@@ -271,73 +270,11 @@ function render() {
     `${x.fileData ? `<button class="btn secondary small" type="button" onclick="openAttachment('${x.id}')">${esc(t('Ver archivo'))}</button>` : ''}${removeBtn('visits', x.id)}`)).join('') : empty('No hay consultas registradas.');
 
   $('backupStats').textContent = `${data.bp.length} ${t('mediciones de presión')} · ${data.glucose.length} ${t('registros de glucosa')} · ${data.meds.length} ${t('medicamentos')} · ${data.visits.length} ${t('consultas')} · ${(data.examPlans || []).length} ${t('exámenes programados')} · ${(data.examResults || []).length} ${t('resultados')}`;
-  renderPatient(); renderWater(); renderAlarms(); renderHome(); renderPanorama(); renderExams();
+  renderPatient(); renderWater(); renderAlarms(); renderHome(); renderExams();
   refreshPrescriptionOptions();
   if (currentView === 'graficas') renderCharts();
   if (currentView === 'examrep') renderExamReport();
   if (typeof applyLanguage === 'function') applyLanguage(currentLang);
-}
-
-
-function renderPanorama() {
-  const bp = [...data.bp].filter(validBP).sort(byDateDesc);
-  const recent = bp.slice(0, 7);
-  const sys = recent.flatMap(x => [num(x.ls), num(x.rs)]).filter(v => Number.isFinite(v) && v > 0);
-  const dia = recent.flatMap(x => [num(x.ld), num(x.rd)]).filter(v => Number.isFinite(v) && v > 0);
-  const s = sys.length ? average(sys) : null, d = dia.length ? average(dia) : null;
-  const set = (id, value) => { const el = $(id); if (el) el.textContent = value; };
-  set('panoramaBP', s == null ? '—' : `${Math.round(s)}/${Math.round(d)}`);
-  set('panoramaSys', s == null ? '—' : Math.round(s));
-  set('panoramaDia', d == null ? '—' : Math.round(d));
-  const pulses = recent.flatMap(x => [num(x.lp), num(x.rp)]).filter(v => Number.isFinite(v) && v > 0);
-  set('panoramaPulse', pulses.length ? Math.round(average(pulses)) : '—');
-  const glucose = [...data.glucose].sort(byDateDesc)[0];
-  set('panoramaGlucose', glucose && Number(glucose.value) > 0 ? Math.round(Number(glucose.value)) : '—');
-  const gauge = $('panoramaGauge');
-  if (gauge) gauge.innerHTML = bpGauge(s, d);
-  const status = $('panoramaBPStatus');
-  if (status) {
-    if (s == null || d == null) { status.hidden = true; }
-    else { const c = classifyBP(s, d); status.hidden = false; status.className = 'bp-status bp-' + c.key; status.textContent = t(c.label); }
-  }
-  const chart = $('panoramaChart');
-  if (chart) {
-    const rows = bp.slice(0, 10).reverse();
-    if (!rows.length) chart.innerHTML = `<p class="empty">Aún no hay mediciones suficientes para mostrar la evolución.</p>`;
-    else {
-      const values = rows.flatMap(x => [(num(x.ls)+num(x.rs))/2,(num(x.ld)+num(x.rd))/2]).filter(v=>Number.isFinite(v)&&v>0);
-      const max = Math.max(180, ...values), min = 0;
-      chart.innerHTML = rows.map(x => {
-        const a = (num(x.ls)+num(x.rs))/2, b = (num(x.ld)+num(x.rd))/2;
-        const h1 = Math.max(3, a/max*100), h2 = Math.max(3, b/max*100);
-        return `<div class="panorama-day" title="${esc(fmtDate(x.date))}: ${Math.round(a)}/${Math.round(b)}"><div class="panorama-bar sys" style="height:${h1}%"></div><div class="panorama-bar dia" style="height:${h2}%"></div><label>${esc((x.date||'').slice(5).replace('-','/'))}</label></div>`;
-      }).join('');
-    }
-  }
-  const table = $('panoramaRecentTable');
-  if (table) table.innerHTML = bp.length ? bp.slice(0,8).map(x => {
-    const pulse = [num(x.lp),num(x.rp)].filter(v=>Number.isFinite(v)&&v>0);
-    return `<tr><td>${esc(fmtDate(x.date))}</td><td>${num(x.ls)}/${num(x.ld)}</td><td>${num(x.rs)}/${num(x.rd)}</td><td>${pulse.length?Math.round(average(pulse)):'—'}</td></tr>`;
-  }).join('') : `<tr><td colspan="4">Aún no hay mediciones.</td></tr>`;
-  const start = $('panoramaStart'), end = $('panoramaEnd');
-  if (start && !start.value) { const d0 = new Date(); d0.setDate(d0.getDate()-29); start.value = isoDateLocal(d0); }
-  if (end && !end.value) end.value = today();
-  const calc = () => {
-    const from = start?.value || '', to = end?.value || '';
-    const note = $('panoramaRangeNote');
-    if (!from || !to || from > to) { set('panoramaRangeBP','—'); set('panoramaRangePAM','—'); set('panoramaRangeCount','0'); if(note)note.textContent='Verifica las fechas seleccionadas.'; return; }
-    const entries = data.bp.filter(x=>x.date>=from&&x.date<=to).flatMap(x=>[
-      num(x.ls)>0&&num(x.ld)>0?{s:num(x.ls),d:num(x.ld),p:pam(x.ls,x.ld)}:null,
-      num(x.rs)>0&&num(x.rd)>0?{s:num(x.rs),d:num(x.rd),p:pam(x.rs,x.rd)}:null
-    ]).filter(Boolean);
-    set('panoramaRangeBP',entries.length?`${Math.round(average(entries.map(x=>x.s)))}/${Math.round(average(entries.map(x=>x.d)))} mmHg`:'—');
-    set('panoramaRangePAM',entries.length?average(entries.map(x=>x.p)).toFixed(1)+' mmHg':'—');
-    set('panoramaRangeCount',String(entries.length));
-    if(note)note.textContent=entries.length?`Periodo ${fmtDate(from)} a ${fmtDate(to)} · ${entries.length} lecturas válidas.`:'No hay lecturas completas en este periodo.';
-  };
-  const button = $('panoramaCalculate');
-  if (button && !button.dataset.bound) { button.addEventListener('click',calc); button.dataset.bound='1'; }
-  calc();
 }
 
 function renderHome() {
