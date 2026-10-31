@@ -298,11 +298,21 @@ function selectBPRecord(id) {
 }
 window.selectBPRecord = selectBPRecord;
 
+function pamMiniGauge(value) {
+  const min=40,max=130,v=Math.max(min,Math.min(max,value)),angle=180-(v-min)/(max-min)*180;
+  const rad=angle*Math.PI/180,cx=100,cy=94,r=70,nx=cx+Math.cos(rad)*55,ny=cy-Math.sin(rad)*55;
+  const arc=(a1,a2,color)=>{const p1={x:cx+r*Math.cos(a1*Math.PI/180),y:cy-r*Math.sin(a1*Math.PI/180)},p2={x:cx+r*Math.cos(a2*Math.PI/180),y:cy-r*Math.sin(a2*Math.PI/180)};return `<path d="M ${p1.x} ${p1.y} A ${r} ${r} 0 0 1 ${p2.x} ${p2.y}" fill="none" stroke="${color}" stroke-width="12" stroke-linecap="round"/>`;};
+  const redEnd=180-(65-min)/(max-min)*180,greenEnd=180-(100-min)/(max-min)*180;
+  const color=value<65?'#D96A6A':value<=100?'#55A879':'#E4AD4D';
+  return `<div class="speed-gauge pam-mini" role="img" aria-label="PAM ${value.toFixed(1)} mmHg"><svg viewBox="0 0 200 116">${arc(180,redEnd,'#D96A6A')}${arc(redEnd,greenEnd,'#55A879')}${arc(greenEnd,0,'#E4AD4D')}<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#20394D" stroke-width="4" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="6" fill="#20394D"/></svg><div class="speed-value">${value.toFixed(1)} <small>mmHg</small></div><div class="speed-scale"><span>40</span><span>130</span></div></div>`;
+}
 function renderPamScale(value) {
   const status = $('pamScale')?.querySelector('.pam-scale-status');
   const explanation = $('pamScaleExplanation');
   const marker = $('pamScaleMarker');
   if (!status || !explanation || !marker) return;
+  const mini = $('pamMiniGauge');
+  if (mini) mini.innerHTML = Number.isFinite(value) ? pamMiniGauge(value) : '';
   if (!Number.isFinite(value)) {
     status.textContent = 'Esperando mediciones';
     explanation.textContent = 'Registra mediciones para calcular la PAM promedio. La PAM aislada no diagnostica daño en órganos.';
@@ -360,6 +370,8 @@ function render() {
   setBPStatus('bpAverageCard', 'bpAverageStatus', 'bpAverageAdvice', avgS, avgD);
   $('bpSysAvg').textContent = ss.length ? Math.round(avgS) + ' mmHg' : '—';
   $('bpDiaAvg').textContent = dd.length ? Math.round(avgD) + ' mmHg' : '—';
+  $('bpSysMiniGauge').innerHTML = ss.length ? speedGauge(avgS, 80, 200, 'Sistólica', 'mmHg', '#315F9B', false) : '';
+  $('bpDiaMiniGauge').innerHTML = dd.length ? speedGauge(avgD, 40, 130, 'Diastólica', 'mmHg', '#315F9B', false) : '';
   const pams = recent.flatMap(x => [pam(x.ls, x.ld), pam(x.rs, x.rd)]).filter(Number.isFinite);
   const pamValue = pams.length ? average(pams) : null;
   const pamText = pamValue !== null ? pamValue.toFixed(1) + ' mmHg' : '—';
