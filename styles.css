@@ -549,3 +549,27 @@ dialog.sheet h3{margin:0 0 14px}
 #bpList .item .actions .btn{white-space:nowrap}
 #bpList .item:focus-within{outline:2px solid #7eb4df;outline-offset:2px}
 @media(max-width:520px){#bpList .item{align-items:flex-start;flex-direction:column}#bpList .item .actions{width:100%}}
+
+/* SaludPlus v32 · referencias clínicas junto a cada indicador */
+.reference-tile{height:100%;display:flex;flex-direction:column;align-items:flex-start}
+.reference-note{margin-top:12px;padding-top:10px;border-top:1px solid var(--border,#dce5ec);font-size:12px;line-height:1.55;color:var(--muted,#5f7180);width:100%;font-weight:400}
+.reference-note strong{color:var(--text,#173247);font-size:12px}
+.reference-caution{font-size:13px;line-height:1.6}
+@media(max-width:700px){.grid.cols-3:has(#bpSysAvg){grid-template-columns:1fr}}
+
+/* SaludPlus v33 · escala visual PAM */
+.pam-scale{width:100%;margin-top:10px}
+.pam-scale-status{font-size:13px;font-weight:750;line-height:1.4;margin-bottom:10px;color:var(--text,#173247)}
+.pam-scale-status[data-level="low"]{color:#a83232}
+.pam-scale-status[data-level="usual"]{color:#23754a}
+.pam-scale-status[data-level="high"]{color:#98620c}
+.pam-scale-track{height:13px;border-radius:20px;display:flex;position:relative;overflow:visible;background:#e8edf2}
+.pam-zone{height:100%;display:block}
+.pam-low{width:27.78%;background:#d96a6a;border-radius:20px 0 0 20px}
+.pam-usual{width:38.89%;background:#55a879}
+.pam-high{width:33.33%;background:#e4ad4d;border-radius:0 20px 20px 0}
+.pam-marker{position:absolute;top:-5px;width:4px;height:23px;background:#173247;border:1px solid white;border-radius:4px;transform:translateX(-50%);box-shadow:0 1px 4px #0003}
+.pam-scale-labels{display:flex;justify-content:space-between;gap:5px;font-size:10px;color:var(--muted,#64748b);margin-top:7px}
+.pam-scale-labels span:nth-child(2){text-align:center}
+.pam-scale-labels span:last-child{text-align:right}
+.pam-scale .reference-note{font-size:11px}

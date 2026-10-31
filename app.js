@@ -298,6 +298,39 @@ function selectBPRecord(id) {
 }
 window.selectBPRecord = selectBPRecord;
 
+function renderPamScale(value) {
+  const status = $('pamScale')?.querySelector('.pam-scale-status');
+  const explanation = $('pamScaleExplanation');
+  const marker = $('pamScaleMarker');
+  if (!status || !explanation || !marker) return;
+  if (!Number.isFinite(value)) {
+    status.textContent = 'Esperando mediciones';
+    explanation.textContent = 'Registra mediciones para calcular la PAM promedio. La PAM aislada no diagnostica daño en órganos.';
+    marker.hidden = true;
+    return;
+  }
+  let label, detail, color;
+  if (value < 65) {
+    label = 'Por debajo de 65 mmHg';
+    detail = 'En adultos hospitalizados, 65 mmHg se usa a menudo como objetivo inicial en ciertos cuadros críticos. Una lectura aislada en casa no permite concluir que los órganos estén en riesgo; consulta al profesional para interpretarla.';
+    color = 'low';
+  } else if (value <= 100) {
+    label = 'Dentro de la referencia habitual para adultos (65–100)';
+    detail = 'Es una referencia general de adultos, no un objetivo individual ni una garantía de que todo esté bien. Debe interpretarse junto con la presión sistólica, diastólica y el contexto clínico.';
+    color = 'usual';
+  } else {
+    label = 'Por encima de 100 mmHg';
+    detail = 'Es una PAM elevada respecto a esta referencia descriptiva, pero no significa automáticamente que los órganos estén sufriendo daño. Valora también la sistólica, la diastólica y las indicaciones clínicas.';
+    color = 'high';
+  }
+  status.textContent = label;
+  status.dataset.level = color;
+  explanation.textContent = detail;
+  marker.hidden = false;
+  marker.style.left = Math.max(0, Math.min(100, (value - 40) / 90 * 100)) + '%';
+  marker.setAttribute('aria-label', 'PAM ' + value.toFixed(1) + ' mmHg');
+}
+
 function render() {
   const bp = [...data.bp].sort(byDateDesc);
   const gl = [...data.glucose].sort(byDateDesc);
@@ -328,8 +361,10 @@ function render() {
   $('bpSysAvg').textContent = ss.length ? Math.round(avgS) + ' mmHg' : '—';
   $('bpDiaAvg').textContent = dd.length ? Math.round(avgD) + ' mmHg' : '—';
   const pams = recent.flatMap(x => [pam(x.ls, x.ld), pam(x.rs, x.rd)]).filter(Number.isFinite);
-  const pamText = pams.length ? average(pams).toFixed(1) + ' mmHg' : '—';
+  const pamValue = pams.length ? average(pams) : null;
+  const pamText = pamValue !== null ? pamValue.toFixed(1) + ' mmHg' : '—';
   $('bpPamAvg').textContent = pamText; $('homePamAvg').textContent = pamText;
+  renderPamScale(pamValue);
   $('bpDiff').textContent = recent.length ? Math.round(average(recent.map(x => Math.abs(num(x.ls) - num(x.rs))))) + ' mmHg' : '—';
   $('bpCount').textContent = `${bp.length} ${t('registros')}`;
 

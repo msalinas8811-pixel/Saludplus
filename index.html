@@ -240,11 +240,12 @@
       <div class="value" id="bpSelectedValue">—</div><div id="bpSelectedGauge"></div>
      </div>
      <div class="grid cols-3">
-      <div class="card tile"><div class="label" data-i18n>Promedio sistólica</div><div class="value" id="bpSysAvg">—</div></div>
-      <div class="card tile"><div class="label" data-i18n>Promedio diastólica</div><div class="value" id="bpDiaAvg">—</div></div>
-      <div class="card tile"><div class="label" data-i18n>PAM promedio aproximada</div><div class="value" id="bpPamAvg">—</div></div>
+      <div class="card tile reference-tile"><div class="label" data-i18n>Promedio sistólica</div><div class="value" id="bpSysAvg">—</div><div class="reference-note"><strong>Referencia adultos en casa:</strong><br>Menor de 120: no elevada<br>120–134: elevada<br>135 o más: umbral de hipertensión*</div></div>
+      <div class="card tile reference-tile"><div class="label" data-i18n>Promedio diastólica</div><div class="value" id="bpDiaAvg">—</div><div class="reference-note"><strong>Referencia adultos en casa:</strong><br>Menor de 70: no elevada<br>70–84: elevada<br>85 o más: umbral de hipertensión*</div></div>
+      <div class="card tile reference-tile pam-reference-tile"><div class="label" data-i18n>PAM promedio aproximada</div><div class="value" id="bpPamAvg">—</div><div id="pamScale" class="pam-scale" aria-live="polite"><div class="pam-scale-status">Esperando mediciones</div><div class="pam-scale-track"><span class="pam-zone pam-low"></span><span class="pam-zone pam-usual"></span><span class="pam-zone pam-high"></span><i id="pamScaleMarker" class="pam-marker" hidden></i></div><div class="pam-scale-labels"><span>Baja</span><span>Referencia habitual*</span><span>Elevada</span></div><p id="pamScaleExplanation" class="reference-note">La PAM es un cálculo orientativo; no diagnostica por sí sola daño en órganos.</p></div></div>
      </div>
-     <div class="card tile"><div class="label" data-i18n>Diferencia sistólica entre brazos</div><div class="value" id="bpDiff">—</div></div>
+     <div class="card tile reference-tile"><div class="label" data-i18n>Diferencia sistólica entre brazos</div><div class="value" id="bpDiff">—</div><div class="reference-note"><strong>Referencia:</strong><br>Más de 10 mmHg: repetir y confirmar la diferencia. Si persiste, las mediciones posteriores suelen hacerse en el brazo con la cifra mayor.</div></div>
+     <div class="notice reference-caution"><strong>Importante:</strong> Estas cifras de sistólica y diastólica corresponden a referencias para adultos en mediciones domiciliarias, basadas en ESC 2024. No deben aplicarse automáticamente a niños o adolescentes: sus valores se interpretan según edad, sexo, estatura y criterio profesional. *El umbral se valora con el promedio de sistólica y/o diastólica, no con una cifra aislada.</div>
 
      <div class="card map-entry-card"><div class="row between wrap" style="align-items:center;gap:12px">
       <div><h3 data-i18n>Mapa de presión</h3><p class="muted" data-i18n>Organiza las lecturas domiciliarias por hora y observa su evolución diaria.</p></div>
