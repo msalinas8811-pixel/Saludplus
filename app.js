@@ -284,6 +284,20 @@ function renderCharts() {
 }
 
 /* ---------- Render principal ---------- */
+function selectBPRecord(id) {
+  const x = data.bp.find(r => r.id === id);
+  if (!x) return;
+  const left = Number(x.ls), right = Number(x.rs), leftD = Number(x.ld), rightD = Number(x.rd);
+  const sys = [left,right].filter(Number.isFinite);
+  const dia = [leftD,rightD].filter(Number.isFinite);
+  const s = average(sys), d = average(dia);
+  $('bpSelectedDateTime').textContent = `${fmtDate(x.date)} · ${x.time || 'Hora no registrada'} · Toma ${x.take || '—'}`;
+  $('bpSelectedValue').textContent = `${Math.round(s)}/${Math.round(d)} mmHg`;
+  $('bpSelectedGauge').innerHTML = bpGauge(s,d);
+  $('bpSelectedCard').scrollIntoView({behavior:'smooth',block:'center'});
+}
+window.selectBPRecord = selectBPRecord;
+
 function render() {
   const bp = [...data.bp].sort(byDateDesc);
   const gl = [...data.glucose].sort(byDateDesc);
@@ -322,7 +336,7 @@ function render() {
   $('bpList').innerHTML = bp.length ? bp.map(x => listItem(
     `${fmtDate(x.date)} · ${esc(x.time)} · ${t('Toma')} ${esc(x.take)}`,
     `${t('Izquierdo')} ${x.ls}/${x.ld} · ${t('pulso')} ${x.lp || '—'} | ${t('Derecho')} ${x.rs}/${x.rd} · ${t('pulso')} ${x.rp || '—'}\n${t('PAM aprox.')}: ${Math.round(pam(x.ls, x.ld))} / ${Math.round(pam(x.rs, x.rd))} · ${t('Dif. sistólica')}: ${Math.abs(+x.ls - +x.rs)} mmHg${x.notes ? '\n' + esc(x.notes) : ''}`,
-    removeBtn('bp', x.id))).join('') : empty('Aún no hay mediciones.');
+    `<button class="btn secondary small" type="button" onclick="selectBPRecord('${x.id}')">Ver gráfica</button>` + removeBtn('bp', x.id))).join('') : empty('Aún no hay mediciones.');
 
   $('glucoseAvg').textContent = gl.length ? `${t('Promedio de registros')}: ${Math.round(average(gl.map(x => +x.value)))} mg/dL` : `${t('Promedio')}: —`;
   if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN, gl.length ? gl[0].when : '');

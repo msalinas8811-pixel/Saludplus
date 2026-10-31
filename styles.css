@@ -540,3 +540,12 @@ dialog.sheet h3{margin:0 0 14px}
 .map-average strong{display:block;font-size:22px;margin-top:4px}
 .map-averages .fine{grid-column:1/-1}
 @media(max-width:560px){.map-averages{grid-template-columns:1fr}.map-average strong{font-size:20px}}
+
+/* SaludPlus v31 · selección de medición histórica */
+#bpSelectedCard{border:1px solid #b9d6ee;background:var(--card,#fff)}
+#bpSelectedCard .value{font-size:25px;font-weight:750;margin:8px 0}
+#bpList .item{align-items:center;gap:12px}
+#bpList .item .actions{display:flex;flex-wrap:wrap;gap:7px}
+#bpList .item .actions .btn{white-space:nowrap}
+#bpList .item:focus-within{outline:2px solid #7eb4df;outline-offset:2px}
+@media(max-width:520px){#bpList .item{align-items:flex-start;flex-direction:column}#bpList .item .actions{width:100%}}
