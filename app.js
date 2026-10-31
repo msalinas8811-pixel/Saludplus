@@ -370,8 +370,8 @@ function render() {
   setBPStatus('bpAverageCard', 'bpAverageStatus', 'bpAverageAdvice', avgS, avgD);
   $('bpSysAvg').textContent = ss.length ? Math.round(avgS) + ' mmHg' : '—';
   $('bpDiaAvg').textContent = dd.length ? Math.round(avgD) + ' mmHg' : '—';
-  $('bpSysMiniGauge').innerHTML = ss.length ? speedGauge(avgS, 80, 200, 'Sistólica', 'mmHg', '#315F9B', false) : '';
-  $('bpDiaMiniGauge').innerHTML = dd.length ? speedGauge(avgD, 40, 130, 'Diastólica', 'mmHg', '#315F9B', false) : '';
+  $('bpSysMiniGauge').innerHTML = ss.length ? speedGauge(avgS, 80, 200, 'Sistólica', 'mmHg', '#315F9B', true) : '';
+  $('bpDiaMiniGauge').innerHTML = dd.length ? speedGauge(avgD, 40, 130, 'Diastólica', 'mmHg', '#315F9B', true) : '';
   const pams = recent.flatMap(x => [pam(x.ls, x.ld), pam(x.rs, x.rd)]).filter(Number.isFinite);
   const pamValue = pams.length ? average(pams) : null;
   const pamText = pamValue !== null ? pamValue.toFixed(1) + ' mmHg' : '—';
