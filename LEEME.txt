@@ -49,3 +49,12 @@ v24 · Leer informes de laboratorio con IA
 
 v25 · IA con Firebase
 - Nuevo: firebase-config.js y ai-firebase.js. Rellena firebase-config.js siguiendo FIREBASE-PASO-A-PASO.txt y la IA (chat y lectura de informes) funciona desde GitHub Pages sin servidor.
+
+
+SALUDPLUS v26 - REDISEÑO DINÁMICO
+- Interfaz visual refinada, tarjetas y jerarquía de métricas.
+- Botones más grandes con estados hover, focus y pulsación táctil.
+- Navegación con iconos SVG destacados y selección visual.
+- Barras del tensiómetro más anchas y altas, con etiquetas legibles.
+- Se mantienen los archivos funcionales y la estructura de datos de v25.
+- No se han cambiado las fórmulas ni los registros de salud.
