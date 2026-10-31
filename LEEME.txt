@@ -84,3 +84,12 @@ VERSIÓN 39 — AJUSTE DE PANTALLA COMPLETA
 - Ahora aparece debajo del título "Presión arterial", ocupando todo el ancho disponible de la pantalla.
 - Se mantiene el diseño dinámico y animado del tensiómetro de v38.
 - Se actualizó caché del service worker a v39.
+
+
+VERSIÓN 40 — DISEÑO 6 SALUDPLUS PREMIUM
+- Se reemplazó la apariencia del tensiómetro por el diseño 6: panel azul profundo, corazón luminoso animado, trazo ECG y tres filas de captura.
+- Lecturas grandes y editables: sistólica, diastólica y pulso.
+- Selector visual de brazo izquierdo/derecho; segundo brazo opcional.
+- Se conservan nombres de campos, guardado y almacenamiento previo.
+- Los resúmenes y promedios ahora eligen por sesión el brazo con sistólica más alta; si solo hay un brazo, usan esa lectura. No se promedian los dos brazos entre sí.
+- Se conserva historial anterior y clave local de almacenamiento.
