@@ -3,6 +3,7 @@
 'use strict';
 
 const KEY = 'salud360_pwa_v1';
+const PATIENT_KEY = 'saludplus_patient_profile_v1';
 const emptyData = () => ({ bp: [], bpMap: { settings: { startDate: '', duration: 7, morningTime: '07:00', eveningTime: '20:00' }, sessions: [] }, glucose: [], pulse: [], weight: [], meds: [], visits: [], patient: {}, examPlans: [], examResults: [], reminders: { bpTimes: ['08:00', '20:00'] }, water: { goal: 2000, interval: 60, logs: [] } });
 let data = loadData();
 let selectedBPRecordId = null;
@@ -11,6 +12,8 @@ function loadData() {
   try {
     const x = { ...emptyData(), ...JSON.parse(localStorage.getItem(KEY) || '{}') };
     x.patient = x.patient || {};
+    // Perfil separado: evita perderlo si el historial o los adjuntos llenan localStorage.
+    try { const savedPatient = JSON.parse(localStorage.getItem(PATIENT_KEY) || 'null'); if ((!x.patient || !x.patient.name) && savedPatient && savedPatient.name) x.patient = savedPatient; } catch (_) {}
     x.bpMap = { ...emptyData().bpMap, ...(x.bpMap || {}) };
     x.bpMap.settings = { ...emptyData().bpMap.settings, ...(x.bpMap.settings || {}) };
     x.bpMap.sessions = Array.isArray(x.bpMap.sessions) ? x.bpMap.sessions : [];
@@ -24,8 +27,12 @@ function loadData() {
   } catch (e) { return emptyData(); }
 }
 function persist() {
-  try { localStorage.setItem(KEY, JSON.stringify(data)); return true; }
-  catch (e) { toast(t('No se pudo guardar: el almacenamiento del dispositivo está lleno. Exporta un respaldo y borra archivos adjuntos grandes.')); return false; }
+  let mainSaved = false, profileSaved = false;
+  try { localStorage.setItem(KEY, JSON.stringify(data)); mainSaved = true; } catch (_) {}
+  try { localStorage.setItem(PATIENT_KEY, JSON.stringify(data.patient || {})); profileSaved = true; } catch (_) {}
+  if (mainSaved || profileSaved) return true;
+  toast('No se pudo guardar: el almacenamiento del dispositivo está lleno o bloqueado. Exporta un respaldo y libera espacio.');
+  return false;
 }
 function save() { persist(); render(); }
 
@@ -719,37 +726,17 @@ function bindForms() {
   });
   const patientForm = $('patientForm');
   if (patientForm) patientForm.addEventListener('submit', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const patient = {};
-    for (const [key, value] of formData.entries()) patient[key] = String(value ?? '').trim();
-    patient.name = String(patient.name || '').trim();
-    if (!patient.name) {
-      toast('Escribe el nombre completo del paciente antes de guardar.');
-      form.elements.name?.focus();
-      return;
-    }
-    const previousPatient = data.patient;
-    data.patient = patient;
-    // Guardar y verificar la escritura antes de cerrar el formulario.
-    const stored = persist();
-    let verified = false;
-    if (stored) {
-      try {
-        const check = JSON.parse(localStorage.getItem(KEY) || '{}');
-        verified = !!(check.patient && check.patient.name === patient.name);
-      } catch (_) { verified = false; }
-    }
-    if (!verified) {
-      data.patient = previousPatient || {};
-      toast('No se pudo confirmar el guardado. Revisa el almacenamiento del navegador e inténtalo nuevamente.');
-      return;
-    }
-    $('patientEditCard')?.classList.add('hidden');
-    render();
-    toast('Perfil del paciente guardado correctamente.');
+    e.preventDefault(); e.stopPropagation();
+    const form=e.currentTarget, patient={};
+    for (const [key,value] of new FormData(form).entries()) patient[key]=String(value ?? '').trim();
+    patient.name=String(patient.name || '').trim();
+    if(!patient.name){toast('Escribe el nombre completo del paciente antes de guardar.');form.elements.namedItem('name')?.focus();return;}
+    const previous=data.patient || {}; data.patient=patient;
+    let verified=false;
+    try { localStorage.setItem(PATIENT_KEY,JSON.stringify(patient)); const check=JSON.parse(localStorage.getItem(PATIENT_KEY)||'{}'); verified=check.name===patient.name; } catch (_) {}
+    if(!verified){data.patient=previous;toast('No se pudo guardar el perfil. Revisa el espacio y los permisos de almacenamiento del navegador.');return;}
+    try { localStorage.setItem(KEY,JSON.stringify(data)); } catch (_) {}
+    $('patientEditCard')?.classList.add('hidden'); render(); toast('Perfil del paciente guardado correctamente.');
   });
   $('patientClear').addEventListener('click', async () => {
     if (await askConfirm(t('¿Limpiar los campos del formulario? Los datos guardados no se borran hasta que guardes el formulario vacío.'), t('Limpiar'))) $('patientForm').reset();
@@ -824,7 +811,7 @@ function renderPatient() {
   if (examBox) {
     const examRows = [...(data.examResults || [])].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
     examBox.innerHTML = examRows.length ? examRows.map(r => {
-      const entries = Array.isArray(r.entries) ? r.entries : (Array.isArray(r.results) ? r.results : []);
+      const entries = Array.isArray(r.entries) ? r.entries : (Array.isArray(r.results) ? r.results : (typeof resultEntries === 'function' ? resultEntries(r) : []));
       const details = entries.map(en => `<div class="profile-exam-value"><strong>${esc(en.name || en.test || 'Resultado')}</strong><span>${esc(en.value ?? en.result ?? '—')}${en.unit ? ' '+esc(en.unit) : ''}</span>${en.ref ? `<small>Referencia del laboratorio: ${esc(en.ref)}</small>` : ''}</div>`).join('');
       const files = (r.files || []).map(file => `<button class="btn ghost small" type="button" onclick="openExamFile('${esc(file.id)}','${esc(file.name).replace(/'/g,'')}')">Ver ${esc(file.name || 'documento')}</button>`).join('');
       return `<article class="profile-exam-report"><div class="profile-exam-report-head"><span class="profile-history-icon exam">▤</span><div><strong>${esc(r.name || 'Examen')}</strong><small>Fecha de registro: ${esc(fmtDate(r.date))}${r.lab ? ' · '+esc(r.lab) : ''}</small></div><span class="profile-exam-status">${esc(({normal:'Normal',altered:'Alterado',review:'Pendiente de revisión'})[r.status] || 'Registrado')}</span></div>${r.summary ? `<p class="profile-exam-summary">${esc(r.summary)}</p>` : ''}${details ? `<div class="profile-exam-values">${details}</div>` : ''}${files ? `<div class="profile-exam-files">${files}</div>` : ''}</article>`;
@@ -1038,13 +1025,17 @@ function clinicalReportHtml() {
   const s5 = section('5. Glucosa · historial completo', `<p><strong>${esc(t('Promedio de los registros'))}:</strong> ${gl.length ? Math.round(average(gl.map(x => num(x.value)))) + ' mg/dL' : '—'} · <strong>${esc(t('Total'))}:</strong> ${gl.length}</p>` + (gl.length ? tbl(['Fecha', 'Hora', 'Glucosa', 'Momento', 'Notas'], gl.map(x => `<tr><td>${esc(fmtDate(x.date))}</td><td>${esc(x.time || '—')}</td><td>${esc(x.value)} mg/dL</td><td>${esc(t(x.when || '—'))}</td><td>${esc(x.notes || '—')}</td></tr>`).join('')) : `<p>${esc(t('No hay registros de glucosa.'))}</p>`));
   const s6 = section('6. Consultas y próximas citas', `<p><strong>${esc(t('Citas futuras registradas'))}:</strong> ${upcoming.length}</p>` + (visits.length ? tbl(['Fecha', 'Próxima cita', 'Profesional', 'Especialidad', 'Motivo / notas', 'Archivo'], visits.map(v => `<tr><td>${esc(v.date ? fmtDate(v.date) : '—')}</td><td>${esc(v.nextDate ? fmtDate(v.nextDate) : '—')}</td><td>${esc(v.doctor || '—')}</td><td>${esc(v.specialty || '—')}</td><td>${esc(v.notes || '—')}</td><td>${esc(v.fileName || '—')}</td></tr>`).join('')) : `<p>${esc(t('No hay consultas registradas.'))}</p>`));
   const s7 = section('7. Hidratación', `<p><strong>${esc(t('Meta diaria configurada'))}:</strong> ${num(water.goal) || 2000} ml</p><p><strong>${esc(t('Consumo anotado hoy'))} (${fmtDate(today())}):</strong> ${todayWater} ml</p><p><strong>${esc(t('Registros totales de agua'))}:</strong> ${wl.length}</p>`);
-  $('reportOutput').innerHTML = `<div class="card report-block"><h2>${esc(t('Reporte clínico personal'))}</h2><p><strong>${esc(t('Generado'))}:</strong> ${esc(new Date().toLocaleString(locale()))}</p><p class="muted">${esc(t('Documento compilado a partir de la información guardada en este dispositivo. Los campos no completados se muestran como “No registrado”.'))}</p></div>${s1}${s2}${s3}${s4}${s5}${s6}${s7}${examReportSection(section, tbl)}<p class="notice">${esc(t('Este documento organiza datos introducidos por el usuario; no es una valoración médica ni sustituye el expediente oficial o el criterio de un profesional sanitario. Verifica los datos antes de compartirlo.'))}</p>`;
+  let examSection='';
+  try { examSection=typeof examReportSection==='function'?examReportSection(section,tbl):section('8. Control de exámenes','<p>No se pudo cargar el módulo de exámenes.</p>'); }
+  catch(err){console.error('Error al incluir exámenes en reporte clínico',err);examSection=section('8. Control de exámenes','<p>No fue posible leer los resultados de exámenes.</p>');}
+  const noProfile=!(p.name && p.name.trim());
+  $('reportOutput').innerHTML=`<div class="card report-block"><h2>Reporte clínico del paciente</h2><p><strong>Paciente:</strong> ${esc(p.name||'Perfil no registrado')}</p><p><strong>Generado:</strong> ${esc(new Date().toLocaleString(locale()))}</p><p class="muted">Documento compilado con los datos guardados en este dispositivo.</p>${noProfile?'<p class="notice">Primero registra el perfil del paciente para completar la identificación del expediente.</p>':''}</div>${s1}${s2}${s3}${s4}${s5}${s6}${s7}${examSection}<p class="notice">Este documento organiza datos introducidos por el usuario; no es una valoración médica ni sustituye el expediente oficial o el criterio de un profesional sanitario. Verifica los datos antes de compartirlo.</p>`;
   window.regenReport = clinicalReportHtml;
   window.currentHealthReport = { period: 'clinical', label: 'Reporte clínico personal', range: { start: 'todos', end: today() }, bps: vb, gls: gl, avgSys: avgBP, avgDia, avgPam, avgG: gl.length ? average(gl.map(x => num(x.value))) : null };
 }
 function bindReports() {
   $('generateReportBtn').addEventListener('click', reportHtml);
-  $('clinicalReportBtn').addEventListener('click', () => { clinicalReportHtml(); $('reportOutput').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  $('clinicalReportBtn').addEventListener('click', () => { try { clinicalReportHtml(); $('reportOutput').scrollIntoView({behavior:'smooth',block:'start'}); } catch(err) { console.error('No se pudo generar el reporte clínico',err); $('reportOutput').innerHTML='<div class="card"><h3>No se pudo generar el reporte</h3><p>Recarga la aplicación y vuelve a intentarlo.</p></div>'; } });
   $('calculateDateAveragesBtn').addEventListener('click', calculateDateAverages);
   $('reportPeriod').addEventListener('change', reportHtml);
   $('reportDate').addEventListener('change', reportHtml);
