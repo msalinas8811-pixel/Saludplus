@@ -1432,21 +1432,3 @@ a{color:var(--brand-strong)}
 .profile-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.profile-detail{min-width:0;padding:11px 12px;border-radius:13px;background:linear-gradient(120deg,#eaf8ff,#d6f0ff);color:#123c5d}.profile-detail small{display:block;color:#46718d;font-size:11px;margin-bottom:4px}.profile-detail strong{display:block;font-size:13px;line-height:1.4;overflow-wrap:anywhere;white-space:pre-wrap}
 .profile-history-card h3{margin:0;font-size:18px}.profile-history-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}.profile-history-row{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:14px;background:linear-gradient(110deg,#e9f8ff,#d4f0ff);color:#123c5d}.profile-history-icon{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:#c8edff;color:#087bb5;font-size:23px;flex:none}.profile-history-icon.glucose{color:#c83e85;background:#ffe3f1}.profile-history-row>div{display:flex;flex-direction:column;gap:3px;min-width:0}.profile-history-row strong{font-size:15px}.profile-history-row small{font-size:11px;color:#426a84;line-height:1.4}.profile-edit-card{scroll-margin-top:15px}
 @media(max-width:560px){#inicio .shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#inicio .shortcut-card{min-height:112px;padding:13px}#inicio .shortcut-copy strong{font-size:14px}.profile-detail-grid{grid-template-columns:1fr}.profile-display-heading h3{font-size:18px}}
-
-/* SaludPlus v63 · expediente del paciente y resultados de laboratorio */
-.profile-details-card{background:linear-gradient(145deg,#f8fdff,#e5f5ff);box-shadow:0 8px 24px #063b6414}
-.profile-history-card{padding:16px;background:linear-gradient(145deg,#ffffff,#f1faff);box-shadow:0 6px 20px #063b6410}
-.profile-section-subtitle{margin:4px 0 0;font-size:12px}
-.profile-exam-report{padding:13px;border:1px solid #b8dff0;border-radius:15px;background:linear-gradient(120deg,#f0faff,#e3f4ff);color:#123c5d}
-.profile-exam-report-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.profile-exam-report-head>div{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
-.profile-exam-report-head>div strong{font-size:14px;overflow-wrap:anywhere}
-.profile-exam-report-head small{font-size:11px;color:#426a84}
-.profile-history-icon.exam{font-size:21px;background:#d9f2ff;color:#0875a9}
-.profile-exam-status{font-size:10px;font-weight:800;padding:5px 8px;border-radius:20px;background:#dceefa;color:#245b7b}
-.profile-exam-summary{margin:9px 0 0;font-size:12px;line-height:1.45;color:#315a74;white-space:pre-wrap}
-.profile-exam-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
-.profile-exam-value{display:flex;flex-direction:column;gap:3px;padding:9px;border-radius:10px;background:#fff;border:1px solid #cce7f4;min-width:0}
-.profile-exam-value strong{font-size:11px;color:#41677e}.profile-exam-value span{font-size:14px;font-weight:800;overflow-wrap:anywhere;color:#0b3859}.profile-exam-value small{font-size:10px;color:#638197}
-.profile-exam-files{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-@media(max-width:560px){.profile-exam-values{grid-template-columns:1fr}.profile-history-card{padding:13px}.profile-exam-report{padding:10px}}
