@@ -726,11 +726,18 @@ function renderWater() {
   const w = data.water || (data.water = { goal: 2000, interval: 60, logs: [] }), day = today();
   const logs = w.logs.filter(x => x.date === day), sum = logs.reduce((a, x) => a + (+x.ml || 0), 0);
   const goal = +w.goal || 2000, pct = Math.min(100, Math.round(sum / goal * 100));
-  $('waterBig').textContent = sum + ' ml';
+  $('waterBig').textContent = sum.toLocaleString('es-SV') + ' ml';
   $('waterGoalText').textContent = `${t('Meta diaria')}: ${goal} ml · ${pct}%`;
   $('waterSummary').textContent = `${sum} / ${goal} ml`;
-  $('ringPct').textContent = pct + '%';
-  $('ringFg').style.strokeDashoffset = String(289 - 289 * pct / 100);
+  const liters = sum >= 1000 ? (sum / 1000).toLocaleString('es-SV', {maximumFractionDigits:2}) + ' L' : sum.toLocaleString('es-SV') + ' ml';
+  $('waterLiters').textContent = liters;
+  $('waterGoalDisplay').textContent = goal.toLocaleString('es-SV') + ' ml';
+  $('waterGoalLiters').textContent = (goal / 1000).toLocaleString('es-SV', {maximumFractionDigits:2}) + ' L';
+  $('waterPercent').textContent = pct + '%';
+  $('waterDateDisplay').textContent = new Date().toLocaleDateString('es-SV', {day:'numeric',month:'short',year:'numeric'});
+  $('waterRing').style.setProperty('--water-progress', pct + '%');
+  $('bottleFill').style.height = Math.min(100, sum / Math.max(goal, 1) * 100) + '%';
+  $('waterEncouragement').textContent = sum === 0 ? '¡Cada vaso cuenta!' : (pct >= 100 ? '¡Has alcanzado tu meta configurada!' : '¡Vas a tu ritmo!');
   ['waterBar', 'waterBar2'].forEach(id => { const e = $(id); if (e) e.style.width = pct + '%'; });
   const f = $('waterSettings');
   if (document.activeElement?.form !== f) { f.elements.goal.value = goal; f.elements.interval.value = String(w.interval || 60); }
@@ -814,6 +821,7 @@ function bindNoticeSettings() {
 }
 function bindWaterAndAlarms() {
   document.querySelectorAll('[data-water]').forEach(b => b.addEventListener('click', () => addWater(b.dataset.water)));
+  $('waterCustomForm').addEventListener('submit', e => { e.preventDefault(); const field = $('waterCustomMl'); const ml = Number(field.value); if (Number.isFinite(ml) && ml > 0 && ml <= 5000) { addWater(ml); field.value = ''; } else toast('Ingresa una cantidad válida en ml.'); });
   $('waterUndo').addEventListener('click', () => {
     const a = data.water.logs.filter(x => x.date === today());
     if (a.length) { const last = a[a.length - 1]; data.water.logs = data.water.logs.filter(x => x.id !== last.id); save(); } else toast(t('No hay tomas para deshacer hoy.'));
