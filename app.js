@@ -727,8 +727,6 @@ function renderWater() {
   const logs = w.logs.filter(x => x.date === day), sum = logs.reduce((a, x) => a + (+x.ml || 0), 0);
   const goal = +w.goal || 2000, pct = Math.min(100, Math.round(sum / goal * 100));
   $('waterBig').textContent = sum.toLocaleString('es-SV') + ' ml';
-  $('waterGoalText').textContent = `${t('Meta diaria')}: ${goal} ml · ${pct}%`;
-  $('waterSummary').textContent = `${sum} / ${goal} ml`;
   const liters = sum >= 1000 ? (sum / 1000).toLocaleString('es-SV', {maximumFractionDigits:2}) + ' L' : sum.toLocaleString('es-SV') + ' ml';
   $('waterLiters').textContent = liters;
   $('waterGoalDisplay').textContent = goal.toLocaleString('es-SV') + ' ml';
