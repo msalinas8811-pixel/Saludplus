@@ -136,3 +136,11 @@ VERSIÓN 45 — CLASIFICACIÓN POR REGISTRO Y GRÁFICA SELECCIONABLE
 - Al pulsar "Ver gráfica", la gráfica y el valor mostrado cambian al registro elegido; al cargar la pantalla se muestra la medición más reciente.
 - Se actualizó el título a "Clasificación del registro" para no confundirlo con un promedio de varios registros.
 - Se conserva el historial y la clave local.
+
+
+VERSIÓN 46 — INTERPRETACIÓN DE PERFIL DINÁMICA Y NUEVA PALETA
+- Interpretación según perfil usa el registro seleccionado del historial; al entrar por defecto usa el registro más reciente.
+- Al seleccionar otro registro, se actualizan clasificación y perfil clínico con la misma medición.
+- La línea del perfil muestra fecha, hora y brazo de referencia.
+- Nuevo estilo azul/cian/turquesa inspirado en la referencia visual enviada; se conservan colores semánticos de estado y etiquetas para no depender solo del color.
+- Sin cambios en almacenamiento ni en registros.

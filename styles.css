@@ -962,3 +962,34 @@ dialog.sheet h3{margin:0 0 14px}
 #bpSelectedCard .value{font-size:clamp(25px,5vw,36px);font-weight:850}
 #bpSelectedCard .row{gap:8px}
 @media(max-width:480px){#bpSelectedCard{padding:12px}#bpSelectedCard .bp-speed-wrap{gap:4px}}
+
+/* v46 — interpretación dinámica por registro + paleta azul/cian SaludPlus */
+.age-clinical-card{
+ border:1px solid rgba(26,166,202,.42)!important;
+ border-radius:22px!important;
+ background:linear-gradient(132deg,#0867a8 0%,#078fc2 55%,#17b8c4 100%)!important;
+ color:#f4fcff!important;
+ box-shadow:0 12px 30px rgba(0,111,164,.16),inset 0 1px 0 rgba(255,255,255,.22);
+}
+.age-clinical-card h3,.age-clinical-card p,.age-clinical-card .muted,
+.age-clinical-card #clinicalProfileLine{color:#e8faff!important}
+.age-clinical-card .badge{background:rgba(255,255,255,.18)!important;color:#fff!important;border:1px solid rgba(255,255,255,.3)}
+.age-clinical-card .clinical-metric{
+ background:rgba(255,255,255,.94)!important;
+ border:1px solid rgba(255,255,255,.58)!important;
+ border-radius:16px!important;
+ box-shadow:0 5px 16px rgba(0,48,90,.1);
+}
+.age-clinical-card .clinical-metric small,.age-clinical-card .clinical-metric span{color:#526d80!important}
+.age-clinical-card .clinical-metric strong{color:#123b58!important}
+.age-clinical-card .clinical-metric.status-normal{background:#e9fbf4!important;border-color:#77d9b4!important}
+.age-clinical-card .clinical-metric.status-normal strong{color:#087c63!important}
+.age-clinical-card .clinical-metric.status-low{background:#e8f4ff!important;border-color:#82c5ef!important}
+.age-clinical-card .clinical-metric.status-low strong{color:#176ba8!important}
+.age-clinical-card .clinical-metric.status-high{background:#fff3df!important;border-color:#f4c46e!important}
+.age-clinical-card .clinical-metric.status-high strong{color:#a65b08!important}
+.age-clinical-card .clinical-metric.status-very-high{background:#ffebee!important;border-color:#f2a1aa!important}
+.age-clinical-card .clinical-metric.status-very-high strong{color:#bd293d!important}
+.age-clinical-card .clinical-metric.status-unknown{background:#f1f8fc!important}
+.age-clinical-card #clinicalGuidance{color:#f2fcff!important}
+@media(max-width:560px){.age-clinical-card{padding:15px!important}.age-clinical-card .clinical-metrics{gap:8px}}
