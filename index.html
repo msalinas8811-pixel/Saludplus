@@ -497,11 +497,16 @@
    </section>
 
    <!-- ================= MI SALUD ================= -->
-   <section id="medicamentos" class="view">
+   <section id="medicamentos" class="view medication-premium">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
-    <div class="page-head"><div><h2 data-i18n>Medicamentos</h2><p data-i18n>Añade solo lo indicado por el profesional sanitario.</p></div></div>
-    <div class="stack">
-     <div class="card"><h3 data-i18n>Agregar medicamento</h3>
+    <div class="med-hero">
+     <div class="med-hero-copy"><div class="med-pill-icon">💊</div><div><p class="med-kicker">SALUDPLUS · CUIDADO DIARIO</p><h2>Mis Medicamentos</h2><p>Registra, organiza y consulta tus recordatorios.</p></div></div>
+     <div class="med-hero-art"><div class="med-bottle"><span>＋</span></div><div class="med-capsule">💊</div></div>
+     <div class="med-progress"><div class="med-progress-ring" id="medProgressRing"><div><strong id="medTakenCount">0 de 0</strong><small>tomados hoy</small><b id="medTakenPercent">0%</b></div></div></div>
+     <div class="med-next" id="medNextReminder"><span>🔔</span><div><small>Próximo recordatorio</small><strong id="medNextTime">Sin horarios pendientes</strong><small id="medNextName">Agrega tus medicamentos</small></div></div>
+    </div>
+    <button type="button" class="med-add-main" id="toggleMedForm">＋ Agregar medicamento</button>
+    <div class="card med-form-card hidden" id="medFormCard"><div class="row between"><h3>Nuevo medicamento</h3><button type="button" class="med-close-form" id="closeMedForm" aria-label="Cerrar">×</button></div>
       <form id="medForm"><div class="formgrid">
        <div class="field"><label data-i18n>Nombre</label><input name="name" required placeholder="Nombre del medicamento"></div>
        <div class="field"><label data-i18n>Dosis prescrita</label><input name="dose" required placeholder="Como aparece en la receta"></div>
@@ -511,10 +516,9 @@
        <div class="field"><label data-i18n>Vincular receta</label><select name="prescription" id="medPrescription"><option value="">Sin receta vinculada</option></select></div>
        <div class="field full"><label data-i18n>Instrucciones de la receta</label><textarea name="instructions" placeholder="Frecuencia y duración prescritas; no cambies la indicación por cuenta propia"></textarea></div>
       </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar medicamento</button></div></form>
-     </div>
-     <p class="notice" data-i18n>Los horarios se guardan como recordatorios, pero la página web no garantiza alarmas si el navegador está cerrado o el sistema suspende la app. No sustituye un sistema de alarmas nativo.</p>
-     <div id="medList" class="list"><div class="empty" data-i18n>No hay medicamentos registrados.</div></div>
     </div>
+    <div class="med-list-panel"><div class="row between wrap"><h3>▦ Medicamentos de hoy</h3><span class="med-date-chip" id="medTodayDate"></span></div><div id="medList" class="med-list"><div class="empty" data-i18n>No hay medicamentos registrados.</div></div></div>
+    <p class="notice" data-i18n>Los horarios son recordatorios de apoyo. La página web no garantiza alarmas si el navegador está cerrado o el sistema suspende la app. Sigue siempre la receta y no cambies dosis u horarios sin consultar a un profesional sanitario.</p>
    </section>
 
    <section id="consultas" class="view">

@@ -437,12 +437,7 @@ function render() {
   }
   $('glucoseList').innerHTML = gl.length ? gl.map(x => listItem(`${esc(x.value)} mg/dL · ${fmtDate(x.date)} ${esc(x.time)}`, `${esc(t(x.when || ''))}${x.notes ? '\n' + esc(x.notes) : ''}`, removeBtn('glucose', x.id))).join('') : empty('Aún no hay mediciones.');
 
-  $('medList').innerHTML = data.meds.length ? data.meds.map(x => {
-    const taken = (x.taken || []).some(k => k.date === today());
-    return listItem(`${esc(x.name)} · ${esc(x.dose)}`,
-      `${t('Recordatorio')}: ${esc(x.time)} · ${t('Desde')} ${fmtDate(x.start)}${x.end ? ' ' + t('hasta') + ' ' + fmtDate(x.end) : ''}${x.instructions ? '\n' + esc(x.instructions) : ''}${x.prescription ? '\n' + t('Receta vinculada') + ': ' + esc(data.visits.find(v => v.id === x.prescription)?.fileName || t('consulta')) : ''}${taken ? '\n✓ ' + t('Tomada hoy') : ''}`,
-      `<button class="btn secondary small" type="button" onclick="medTaken('${x.id}')">${esc(t('Marcar tomada hoy'))}</button>${removeBtn('meds', x.id)}`);
-  }).join('') : empty('No hay medicamentos registrados.');
+  renderMedicationDashboard();
 
   $('visitList').innerHTML = data.visits.length ? [...data.visits].sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(x => listItem(
     `${esc(x.doctor || t('Consulta médica'))} · ${fmtDate(x.date)}`,
@@ -496,6 +491,24 @@ function renderHome() {
   renderNextDose();
 }
 
+function renderMedicationDashboard() {
+  const day = today();
+  const active = activeMeds();
+  const taken = active.filter(m => (m.taken || []).some(k => k.date === day));
+  const pct = active.length ? Math.round(taken.length / active.length * 100) : 0;
+  const next = active.filter(m => !(m.taken || []).some(k => k.date === day)).sort((x,y) => (x.time || '').localeCompare(y.time || ''))[0];
+  $('medTakenCount').textContent = `${taken.length} de ${active.length}`;
+  $('medTakenPercent').textContent = pct + '%';
+  $('medProgressRing').style.setProperty('--med-progress', pct + '%');
+  $('medTodayDate').textContent = new Date().toLocaleDateString('es-SV',{weekday:'short',day:'numeric',month:'long'});
+  $('medNextTime').textContent = next ? next.time : (active.length ? 'Tomas de hoy registradas' : 'Sin horarios pendientes');
+  $('medNextName').textContent = next ? `${next.name} · ${next.dose}` : (active.length ? '¡Buen seguimiento!' : 'Agrega tus medicamentos');
+  $('medList').innerHTML = active.length ? active.slice().sort((x,y)=>(x.time||'').localeCompare(y.time||'')).map(m => {
+    const done = (m.taken || []).some(k => k.date === day);
+    const details = `${esc(m.dose || '')} · ${esc(m.time || 'Sin hora')}${m.instructions ? ' · ' + esc(m.instructions) : ''}`;
+    return `<article class="med-row ${done ? 'is-taken' : ''}"><div class="med-row-icon">${done ? '✓' : '💊'}</div><div class="med-row-info"><strong>${esc(m.name)}</strong><small>${details}</small></div><div class="med-row-actions"><button type="button" class="med-state ${done ? 'done' : ''}" ${done ? 'disabled' : ''} onclick="medTaken('${m.id}')">${done ? '✓ Tomado' : '○ Pendiente'}</button>${removeBtn('meds',m.id)}</div></article>`;
+  }).join('') : '<div class="med-empty"><span>💊</span><strong>Aún no tienes medicamentos</strong><small>Agrega el primero para organizar tus recordatorios.</small></div>';
+}
 function activeMeds() { const d = today(); return data.meds.filter(m => m.time && (!m.start || m.start <= d) && (!m.end || m.end >= d)); }
 function nextDose() {
   const d = today(), now = nowTime();
@@ -645,10 +658,12 @@ function bindForms() {
     const display = $('glucoseEntryPreview');
     if (display) display.textContent = glucoseInput.value || '---';
   });
+  $('toggleMedForm').addEventListener('click', () => { $('medFormCard').classList.toggle('hidden'); if (!$('medFormCard').classList.contains('hidden')) $('medFormCard').scrollIntoView({behavior:'smooth',block:'start'}); });
+  $('closeMedForm').addEventListener('click', () => $('medFormCard').classList.add('hidden'));
   $('medForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target);
     data.meds.push({ id: uid(), name: f.get('name'), dose: f.get('dose'), time: f.get('time'), start: f.get('start'), end: f.get('end'), prescription: f.get('prescription'), instructions: f.get('instructions'), taken: [] });
-    e.target.reset(); setDefaults(); save(); toast(t('Medicamento guardado.'));
+    e.target.reset(); setDefaults(); $('medFormCard').classList.add('hidden'); save(); toast(t('Medicamento guardado.'));
   });
   $('visitForm').addEventListener('submit', async e => {
     e.preventDefault(); const form = e.target, f = new FormData(form), file = f.get('file');
