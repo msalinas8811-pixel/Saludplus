@@ -56,18 +56,168 @@
    <nav id="subnav" class="subnav" aria-label="Secciones" hidden></nav>
 
    <!-- ================= HOY ================= -->
-   <section id="inicio" class="view active home-minimal">
-    <div class="hello home-welcome">
-     <div><p class="eyebrow" id="todayLabel"></p><h1 id="homeGreeting">Buenos días</h1></div>
+   <section id="inicio" class="view active">
+    <div class="hello">
+     <div><p class="eyebrow" id="todayLabel"></p><h1 id="homeGreeting">Hola</h1></div>
+     <div class="quick">
+      <button class="btn small" type="button" onclick="showView('presion')"><svg class="i" style="width:18px;height:18px"><use href="#i-plus"/></svg><span data-i18n>Presión</span></button>
+      <button class="btn small secondary" type="button" onclick="showView('glucosa')"><svg class="i" style="width:18px;height:18px"><use href="#i-plus"/></svg><span data-i18n>Glucosa</span></button>
+      <button class="btn small secondary" type="button" data-water="250"><svg class="i" style="width:18px;height:18px"><use href="#i-drop"/></svg><span>+250 ml</span></button>
+     </div>
     </div>
-    <section class="home-shortcuts home-six-grid" aria-label="Accesos principales">
-     <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')"><span class="shortcut-icon">♥</span><span class="shortcut-copy"><strong>Presión arterial</strong></span><span class="shortcut-arrow">›</span></button>
-     <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')"><span class="shortcut-icon">🩸</span><span class="shortcut-copy"><strong>Glucosa</strong></span><span class="shortcut-arrow">›</span></button>
-     <button class="shortcut-card shortcut-water" type="button" onclick="showView('agua')"><span class="shortcut-icon">💧</span><span class="shortcut-copy"><strong>Agua · Hidratación</strong></span><span class="shortcut-arrow">›</span></button>
-     <button class="shortcut-card shortcut-meds" type="button" onclick="showView('medicamentos')"><span class="shortcut-icon">💊</span><span class="shortcut-copy"><strong>Medicamentos</strong><small>Recordatorios</small></span><span class="shortcut-arrow">›</span></button>
-     <button class="shortcut-card shortcut-visits" type="button" onclick="showView('consultas')"><span class="shortcut-icon">🗓️</span><span class="shortcut-copy"><strong>Consultas y citas</strong></span><span class="shortcut-arrow">›</span></button>
-     <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')"><span class="shortcut-icon">👤</span><span class="shortcut-copy"><strong>Perfil del paciente</strong></span><span class="shortcut-arrow">›</span></button>
+
+    <section class="home-shortcuts" aria-labelledby="shortcutTitle">
+     <div class="shortcuts-heading">
+      <div>
+       <p class="eyebrow" data-i18n>Accesos directos</p>
+       <h2 id="shortcutTitle" data-i18n>¿Qué deseas hacer?</h2>
+       <p class="muted" data-i18n>Toca una tarjeta para abrir la función.</p>
+      </div>
+     </div>
+     <div class="shortcut-grid">
+      <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')" aria-label="Abrir presión arterial">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-activity"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Presión arterial</strong><small data-i18n>Registrar y consultar</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')" aria-label="Abrir glucosa">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-drop"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Glucosa</strong><small data-i18n>Registrar y consultar</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-water" type="button" onclick="showView('agua')" aria-label="Abrir control de agua">
+       <span class="shortcut-icon" aria-hidden="true">💧</span>
+       <span class="shortcut-copy"><strong data-i18n>Agua</strong><small data-i18n>Control diario</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-meds" type="button" onclick="showView('medicamentos')" aria-label="Abrir medicinas">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-pill"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Medicinas</strong><small data-i18n>Horarios y recordatorios</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-visits" type="button" onclick="showView('consultas')" aria-label="Abrir consultas">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Consultas</strong><small data-i18n>Citas y seguimiento</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-exams" type="button" onclick="showView('examenes')" aria-label="Abrir exámenes">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')" aria-label="Abrir mi perfil">
+       <span class="shortcut-icon" aria-hidden="true">👤</span>
+       <span class="shortcut-copy"><strong data-i18n>Mi perfil</strong><small data-i18n>Mis datos y configuración</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+     </div>
     </section>
+
+    <div class="home-summary-heading">
+     <h2 data-i18n>Resumen de salud</h2>
+     <p class="muted" data-i18n>Tus últimos registros y próximos eventos.</p>
+    </div>
+    <div class="tiles">
+     <article class="card tile wide" id="avgBPCard">
+      <div class="label"><svg class="i"><use href="#i-gauge"/></svg><span data-i18n>Presión arterial</span></div>
+      <div class="bpwrap"><div class="bpmain">
+      <div class="row between wrap" style="align-items:flex-end;gap:16px">
+       <div><div class="muted" style="font-size:12.5px" data-i18n>Última toma (brazo izquierdo)</div><div class="value" id="homeBP">—</div><div class="muted" style="font-size:12.5px" id="homeBPSub">Sin registros</div></div>
+       <div class="avgbox"><div class="muted" style="font-size:12.5px" data-i18n>Promedio de las últimas 7 tomas</div><div class="value" id="avgBP" style="font-size:22px">—</div><div id="avgBPStatus" class="bp-status" hidden></div></div>
+      </div>
+      <p class="muted" style="font-size:12.5px" id="avgBPSub">Se calcula con las mediciones guardadas.</p>
+      <p class="muted" style="font-size:12.5px"><span data-i18n>PAM promedio:</span> <strong id="homePamAvg">—</strong></p>
+      </div><div id="homeGauge"></div></div>
+     </article>
+
+     <article class="card tile">
+      <div class="label"><svg class="i"><use href="#i-drop"/></svg><span data-i18n>Glucosa</span></div>
+      <div class="value" id="homeGlucose">—</div>
+      <div class="muted" style="font-size:12.5px" id="homeGlucoseSub">Sin registros</div>
+     </article>
+
+     <article class="card tile">
+      <div class="label"><svg class="i"><use href="#i-drop"/></svg><span data-i18n>Agua de hoy</span></div>
+      <div class="row wrap" style="gap:10px 14px">
+       <div class="ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="ringFg" cx="50" cy="50" r="46"/></svg><b id="ringPct">0%</b></div>
+       <div><div class="muted" style="font-size:12.5px" id="waterSummary">0 ml</div><button class="btn small ghost" type="button" style="margin-top:8px" onclick="showView('agua')" data-i18n>Registrar</button></div>
+      </div>
+      <div class="bar" hidden><div id="waterBar"></div></div>
+     </article>
+
+     <article class="card tile wide">
+      <div class="label"><svg class="i"><use href="#i-pill"/></svg><span data-i18n>Próxima toma de medicamento</span></div>
+      <div class="value" id="nextDoseTitle" style="font-size:20px">—</div>
+      <div class="muted" style="font-size:13px" id="nextDoseSub">—</div>
+      <div><button class="btn small secondary hidden" type="button" id="nextDoseBtn" style="margin-top:6px" data-i18n>Marcar como tomada</button></div>
+     </article>
+
+     <article class="card tile wide">
+      <div class="label"><svg class="i"><use href="#i-cal"/></svg><span data-i18n>Próximas citas</span></div>
+      <div id="upcomingVisits" class="list"><div class="empty" data-i18n>No hay citas futuras registradas.</div></div>
+     </article>
+     <article class="card tile wide">
+      <div class="label"><svg class="i"><use href="#i-file"/></svg><span data-i18n>Control de exámenes</span></div>
+      <div id="homeExams" class="list"></div>
+      <div><button class="btn small ghost" type="button" onclick="showView('examenes')" style="margin-top:6px" data-i18n>Ver exámenes</button></div>
+     </article>
+    </div>
+
+    <div class="stack" style="margin-top:14px">
+     <article class="card ficha">
+      <h3 data-i18n>Ficha de emergencia</h3>
+      <dl>
+       <dt data-i18n>Paciente</dt><dd id="homePatientName">No registrado</dd>
+       <dt data-i18n>Tipo de sangre</dt><dd id="homeBloodType">No registrado</dd>
+       <dt data-i18n>Alergias a medicamentos</dt><dd id="homeMedAllergies">No registradas</dd>
+       <dt data-i18n>Otras alergias</dt><dd id="homeOtherAllergies">No registradas</dd>
+       <dt data-i18n>Contacto de emergencia</dt><dd id="homeEmergency">No registrado</dd>
+      </dl>
+      <a class="btn small call hidden" id="homeEmergencyCall" href="#"><svg class="i" style="width:18px;height:18px"><use href="#i-phone"/></svg><span data-i18n>Llamar al contacto</span></a>
+      <p style="margin-top:12px"><button class="btn small ghost" type="button" onclick="showView('paciente')" data-i18n>Editar perfil</button></p>
+     </article>
+
+     <article class="card">
+      <div class="row between"><h3 data-i18n>Medicamentos y horarios</h3><span class="fine"><span id="homeMeds">0</span> <span data-i18n>medicamentos</span> · <span id="homeVisits">0</span> <span data-i18n>consultas</span></span></div>
+      <div id="homeMedicationSchedule" class="list"><div class="empty" data-i18n>No hay medicamentos registrados.</div></div>
+      <p style="margin-top:12px"><button class="btn small ghost" type="button" onclick="showView('medicamentos')" data-i18n>Administrar medicamentos</button></p>
+     </article>
+
+     <details class="fold">
+      <summary><span data-i18n>Promedios de presión por periodo</span><svg class="i"><use href="#i-chev"/></svg></summary>
+      <div class="fold-body">
+       <div class="formgrid">
+        <div class="field"><label for="homeAvgStart" data-i18n>Desde</label><input id="homeAvgStart" type="date"></div>
+        <div class="field"><label for="homeAvgEnd" data-i18n>Hasta</label><input id="homeAvgEnd" type="date"></div>
+       </div>
+       <div class="form-actions"><button class="btn" id="homeUpdateAverages" type="button" data-i18n>Actualizar promedios</button></div>
+       <div class="kpis" style="margin-top:12px">
+        <div class="kpi"><span data-i18n>Sistólica / diastólica</span><strong id="homePeriodBP">—</strong></div>
+        <div class="kpi"><span data-i18n>PAM promedio estimada</span><strong id="homePeriodPAM">—</strong></div>
+        <div class="kpi"><span data-i18n>Mediciones incluidas</span><strong id="homePeriodCount">0</strong></div>
+       </div>
+       <p class="fine" style="margin-top:10px" id="homePeriodMessage">Selecciona el periodo y pulsa Actualizar promedios.</p>
+      </div>
+     </details>
+
+     <details class="fold">
+      <summary><span data-i18n>Últimas mediciones de presión</span><svg class="i"><use href="#i-chev"/></svg></summary>
+      <div class="fold-body">
+       <div class="tablewrap"><table class="report-table"><thead><tr><th data-i18n>Fecha</th><th data-i18n>Hora</th><th data-i18n>Izquierdo</th><th data-i18n>Derecho</th><th data-i18n>PAM aprox.</th></tr></thead><tbody id="homePressureTable"><tr><td colspan="5">—</td></tr></tbody></table></div>
+       <p style="margin-top:12px"><button class="btn small ghost" type="button" onclick="showView('presion')" data-i18n>Ver todas las mediciones</button></p>
+      </div>
+     </details>
+
+     <details class="fold">
+      <summary><span data-i18n>Calendario de citas</span><svg class="i"><use href="#i-chev"/></svg></summary>
+      <div class="fold-body grid cols-2">
+       <div><h3 data-i18n>Próximas</h3><div id="homeUpcomingAppointments" class="list"><div class="empty" data-i18n>No hay próximas citas registradas.</div></div></div>
+       <div><h3 data-i18n>Anteriores</h3><div id="homeCompletedAppointments" class="list"><div class="empty" data-i18n>No hay citas anteriores registradas.</div></div></div>
+      </div>
+     </details>
+
+     <p class="notice" data-i18n>SaludPlus ayuda a organizar mediciones y documentos; no diagnostica ni sustituye a un profesional sanitario. Si tienes síntomas preocupantes, busca atención médica.</p>
+    </div>
    </section>
 
    <!-- ================= CONTROLES ================= -->
@@ -424,24 +574,16 @@
     </div>
    </section>
 
-   <section id="paciente" class="view patient-profile-view">
+   <section id="paciente" class="view">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
-    <div class="profile-title"><span>👤</span><div><p class="profile-kicker">SALUDPLUS · INFORMACIÓN PERSONAL</p><h2>Perfil del Paciente</h2></div></div>
-    <div id="patientProfileSummary" class="patient-profile-card">
-     <div class="profile-empty"><span>👤</span><strong>Aún no has registrado el perfil del paciente</strong><small>Guarda tus datos personales y médicos para tenerlos organizados.</small><button type="button" class="btn" id="registerPatientProfile">＋ Registrar perfil del paciente</button></div>
-    </div>
-    <div id="patientProfileActions" class="profile-actions hidden">
-     <button type="button" class="btn" id="editPatientProfile">✎ Editar perfil</button>
-     <button type="button" class="btn danger" id="deletePatientProfile">⌫ Eliminar perfil</button>
-    </div>
-    <div class="card patient-form-card hidden" id="patientFormCard">
-     <div class="row between"><h3 id="patientFormTitle">Registrar perfil del paciente</h3><button type="button" class="profile-close" id="closePatientForm" aria-label="Cerrar">×</button></div>
-     <form id="patientForm"><div class="formgrid">
+    <div class="page-head"><div><h2 data-i18n>Perfil del paciente</h2><p data-i18n>Datos personales y de seguridad médica. Completa solo lo que quieras guardar.</p></div></div>
+    <div class="stack">
+     <div class="card"><form id="patientForm"><div class="formgrid">
       <div class="field"><label data-i18n>Nombre completo</label><input name="name" autocomplete="name"></div>
       <div class="field"><label data-i18n>Fecha de nacimiento</label><input name="birthDate" type="date"></div>
       <div class="field"><label>Peso (kg)</label><input name="weightKg" type="number" inputmode="decimal" min="1" max="500" step="0.1" placeholder="Ej. 68"></div>
       <div class="field"><label>Diagnóstico de hipertensión</label><select name="hypertension"><option value="">No indicado</option><option value="yes">Sí, diagnosticada</option><option value="no">No diagnosticada</option><option value="suspected">En evaluación</option></select></div>
-      <div class="field"><label>Estatura (cm)</label><input name="heightCm" type="number" inputmode="decimal" min="30" max="250" step="0.1" placeholder="Ej. 165"></div>
+      <div class="field"><label>Estatura (cm) · necesaria para referencias pediátricas</label><input name="heightCm" type="number" inputmode="decimal" min="30" max="250" step="0.1" placeholder="Ej. 165"></div>
       <div class="field"><label>Fecha de actualización de estatura</label><input name="heightDate" type="date"></div>
       <div class="field"><label data-i18n>Sexo (opcional)</label><select name="sex"><option value="">No especificado</option><option>Femenino</option><option>Masculino</option><option>Prefiero no decirlo</option></select></div>
       <div class="field"><label data-i18n>Teléfono del paciente</label><input name="phone" type="tel" autocomplete="tel"></div>
@@ -449,19 +591,14 @@
       <div class="field"><label data-i18n>Contacto de emergencia</label><input name="emergencyName" placeholder="Nombre y relación"></div>
       <div class="field"><label data-i18n>Teléfono de emergencia</label><input name="emergencyPhone" type="tel"></div>
       <div class="field"><label data-i18n>Grupo sanguíneo (si lo conoce)</label><select name="blood"><option value="">No indicado</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>AB+</option><option>AB−</option><option>O+</option><option>O−</option></select></div>
-      <div class="field full"><label data-i18n>Enfermedades o padecimientos relevantes</label><textarea name="conditions"></textarea></div>
-      <div class="field full"><label data-i18n>Alergias a medicamentos</label><textarea name="medAllergies"></textarea></div>
+      <div class="field full"><label data-i18n>Enfermedades o padecimientos relevantes</label><textarea name="conditions" placeholder="Ej. enfermedades diagnosticadas; incluye solo datos confirmados"></textarea></div>
+      <div class="field full"><label data-i18n>Alergias a medicamentos</label><textarea name="medAllergies" placeholder="Nombre del medicamento y reacción conocida; si no hay, escribe Ninguna conocida"></textarea></div>
       <div class="field full"><label data-i18n>Alergias a alimentos u otras sustancias</label><textarea name="otherAllergies"></textarea></div>
-      <div class="field full"><label data-i18n>Medicamentos actuales e indicaciones importantes</label><textarea name="currentMeds"></textarea></div>
-      <div class="field full"><label data-i18n>Otros datos médicos importantes</label><textarea name="medicalNotes"></textarea></div>
-     </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar datos del paciente</button><button class="btn ghost" type="button" id="patientClear" data-i18n>Limpiar formulario</button></div></form>
+      <div class="field full"><label data-i18n>Medicamentos actuales e indicaciones importantes</label><textarea name="currentMeds" placeholder="También puedes registrar cada medicamento en la sección Medicinas"></textarea></div>
+      <div class="field full"><label data-i18n>Otros datos médicos importantes (opcional)</label><textarea name="medicalNotes" placeholder="Ej. profesional de referencia, dispositivos médicos u otra información útil en una emergencia"></textarea></div>
+     </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar datos del paciente</button><button class="btn ghost" type="button" id="patientClear" data-i18n>Limpiar formulario</button></div></form></div>
+     <p class="notice" data-i18n>Privacidad: los datos se guardan en este navegador y dispositivo; no se sincronizan automáticamente. Protege el dispositivo y exporta un respaldo seguro.</p>
     </div>
-    <div class="patient-health-history">
-     <div class="profile-history-heading"><span>⌁</span><div><h3>Historial de Salud</h3><small>Registros guardados de presión arterial y glucosa</small></div></div>
-     <article class="profile-history-card bp-history-card"><div class="profile-history-top"><span class="history-symbol">♥</span><div><h3>Presión arterial</h3><small id="profileBPLastDate">Sin mediciones registradas</small></div><button type="button" class="profile-history-link" onclick="showView('presion')">Ver historial ›</button></div><strong class="profile-last-value" id="profileBPLast">—</strong><div class="profile-history-list" id="profileBPHistory"></div></article>
-     <article class="profile-history-card glucose-history-card"><div class="profile-history-top"><span class="history-symbol">🩸</span><div><h3>Glucosa</h3><small id="profileGlucoseLastDate">Sin mediciones registradas</small></div><button type="button" class="profile-history-link" onclick="showView('glucosa')">Ver historial ›</button></div><strong class="profile-last-value" id="profileGlucoseLast">—</strong><div class="profile-history-list" id="profileGlucoseHistory"></div></article>
-    </div>
-    <p class="notice">Tus datos se guardan en este dispositivo. Exporta un respaldo para conservar una copia.</p>
    </section>
 
    <section id="avisos" class="view">
