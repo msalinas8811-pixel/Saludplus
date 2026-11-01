@@ -1,9 +1,9 @@
 /* SaludPlus v25 · service worker
    - Páginas: red primero (para recibir actualizaciones) y copia local si no hay conexión.
    - Archivos estáticos: copia local primero y se refrescan en segundo plano. */
-const CACHE = 'saludplus-v52';
+const CACHE = 'saludplus-v54';
 const FILES = [
-  './', './index.html', './styles.css?v=52', './i18n.js?v=52', './app.js?v=52', './exams.js?v=52', './examreport.js?v=52', './chat.js?v=52', './firebase-config.js?v=52', './ai-firebase.js?v=52',
+  './', './index.html', './styles.css?v=54', './i18n.js?v=54', './app.js?v=54', './exams.js?v=54', './examreport.js?v=54', './chat.js?v=54', './firebase-config.js?v=54', './ai-firebase.js?v=54',
   './manifest.json', './icon-192.png', './icon-512.png', './saludplus-logo.svg'
 ];
 

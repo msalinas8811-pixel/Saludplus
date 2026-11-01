@@ -1125,3 +1125,110 @@ a{color:var(--brand-strong)}
  .map-pressure-screen .card{padding:14px!important;border-radius:17px!important}
  .map-pressure-screen .card .formgrid{gap:12px!important}
 }
+
+/* v53 — mapa realmente adaptado al diseño del monitor y corrección móvil */
+.map-pressure-screen>.stack{
+ padding:clamp(14px,3vw,24px)!important;
+ border-radius:28px!important;
+ background:
+  radial-gradient(ellipse at 12% 42%,rgba(0,211,255,.20),transparent 38%),
+  radial-gradient(ellipse at 100% 0%,rgba(104,65,255,.18),transparent 40%),
+  linear-gradient(145deg,#061c43 0%,#082e63 50%,#031735 100%)!important;
+ border:1px solid #0c5d91!important;
+ box-shadow:0 20px 55px rgba(3,28,66,.22),inset 0 1px 0 rgba(164,226,255,.18)!important;
+}
+.map-pressure-screen>.stack:before{
+ opacity:.15!important;
+ background:repeating-linear-gradient(165deg,transparent 0 34px,rgba(51,196,255,.18) 35px 36px,transparent 37px 72px)!important;
+}
+.map-pressure-screen .card{
+ background:linear-gradient(145deg,rgba(8,48,91,.92),rgba(4,34,75,.97))!important;
+ border:1px solid rgba(50,207,255,.42)!important;
+ border-radius:19px!important;
+ box-shadow:inset 0 1px 0 #ffffff12,0 8px 22px #00152b44!important;
+}
+.map-pressure-screen .card h3{font-size:clamp(18px,4vw,22px)!important}
+.map-pressure-screen .formgrid{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr)!important;
+ gap:14px!important;
+}
+.map-pressure-screen .formgrid .field,
+.map-pressure-screen .formgrid .field.full{
+ grid-column:1/-1!important;width:100%!important;min-width:0!important;
+}
+.map-pressure-screen .field label{
+ display:block!important;line-height:1.35!important;
+ overflow-wrap:anywhere!important;margin-bottom:2px!important;
+}
+.map-pressure-screen .field input,
+.map-pressure-screen .field select,
+.map-pressure-screen .field textarea{
+ display:block!important;width:100%!important;max-width:100%!important;
+ min-width:0!important;box-sizing:border-box!important;
+ min-height:50px!important;padding:12px 14px!important;
+ font-size:16px!important;
+}
+.map-pressure-screen .form-actions{display:flex!important;flex-wrap:wrap!important;gap:10px!important}
+.map-pressure-screen .form-actions .btn{max-width:100%!important;white-space:normal!important}
+.map-pressure-screen .map-date-field{min-width:min(100%,190px)!important}
+.map-pressure-screen .row.between.wrap{align-items:flex-start!important}
+@media(max-width:700px){
+ .map-pressure-screen>.stack{padding:12px!important;border-radius:22px!important}
+ .map-pressure-screen .card{padding:15px!important;border-radius:17px!important}
+ .map-pressure-screen .formgrid{grid-template-columns:minmax(0,1fr)!important}
+ .map-pressure-screen .formgrid .field{margin:0!important}
+ .map-pressure-screen .map-date-field{width:100%!important}
+}
+
+/* v54 — pantalla Mapa: réplica del encabezado del tensiómetro Diseño 6 */
+.map-pressure-screen .map-monitor-shell{
+ width:100%;max-width:none;box-sizing:border-box;overflow:hidden;position:relative;isolation:isolate;
+ padding:clamp(16px,3vw,28px)!important;border:1px solid #0c5d91!important;border-radius:28px!important;
+ color:#eaf7ff!important;
+ background:
+  radial-gradient(ellipse at 12% 42%,rgba(0,211,255,.22),transparent 38%),
+  radial-gradient(ellipse at 100% 0%,rgba(104,65,255,.24),transparent 40%),
+  linear-gradient(145deg,#061c43 0%,#082e63 50%,#031735 100%)!important;
+ box-shadow:0 20px 55px rgba(3,28,66,.28),inset 0 1px 0 rgba(164,226,255,.18)!important;
+}
+.map-pressure-screen .map-monitor-shell:before{
+ content:"";position:absolute;z-index:-1;inset:0;opacity:.17;pointer-events:none;
+ background:repeating-linear-gradient(165deg,transparent 0 34px,rgba(51,196,255,.16) 35px 36px,transparent 37px 76px);
+}
+.map-pressure-screen .map-monitor-shell .premium-topline{display:flex;align-items:center;justify-content:space-between;margin:0 3px 15px}
+.map-pressure-screen .map-patient-summary{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding:14px 16px!important;border:1px solid #286b99!important;border-radius:18px!important;
+ background:rgba(5,38,82,.82)!important;margin-bottom:18px;color:#f3faff!important;
+}
+.map-pressure-screen .map-patient-summary strong{display:block;color:#fff!important;font-size:16px}
+.map-pressure-screen .map-patient-summary span{display:block;color:#b9d6e9!important;font-size:12px;line-height:1.5;margin-top:4px}
+.map-pressure-screen .map-patient-summary .btn{
+ background:linear-gradient(110deg,#087fc0,#0ca9c4)!important;color:#fff!important;
+ border:1px solid #45c6e3!important;border-radius:13px!important;
+}
+.map-pressure-screen .map-heart-intro{margin-bottom:16px}
+.map-pressure-screen .map-heart-intro strong{font-size:clamp(18px,4vw,22px)}
+.map-pressure-screen .map-content-stack{display:flex!important;flex-direction:column!important;gap:14px!important;min-width:0}
+.map-pressure-screen .map-content-stack>.card{
+ width:100%;min-width:0;box-sizing:border-box;
+ background:linear-gradient(145deg,rgba(8,48,91,.92),rgba(4,34,75,.97))!important;
+ border:1px solid rgba(50,207,255,.42)!important;border-radius:19px!important;
+ padding:clamp(14px,3vw,20px)!important;color:#edf8ff!important;
+ box-shadow:inset 0 1px 0 #ffffff12,0 8px 22px #00152b44!important;
+}
+.map-pressure-screen .map-content-stack>.card h3{color:#f2f9ff!important}
+.map-pressure-screen .map-content-stack>.card p.muted,
+.map-pressure-screen .map-content-stack>.card .muted,
+.map-pressure-screen .map-content-stack>.card .fine{color:#a9c9df!important}
+.map-pressure-screen .map-content-stack>.map-disclaimer{
+ background:rgba(7,47,91,.72)!important;border:1px solid rgba(102,193,229,.38)!important;
+ border-left:4px solid #18b9d0!important;color:#dceffa!important;
+}
+@media(max-width:560px){
+ .map-pressure-screen .map-monitor-shell{padding:16px!important;border-radius:24px!important}
+ .map-pressure-screen .map-patient-summary{align-items:flex-start;flex-direction:column}
+ .map-pressure-screen .map-patient-summary .btn{align-self:flex-start}
+ .map-pressure-screen .map-heart-intro{justify-content:flex-start}
+}

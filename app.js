@@ -696,12 +696,15 @@ function renderPatient() {
   const f = $('patientForm'), p = data.patient || {};
   Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
   const name = $('bpPatientName'), details = $('bpPatientDetails');
-  if (name) name.textContent = p.name || 'Paciente sin configurar';
-  if (details) {
-    const age = p.birthDate ? ageOnDate(p.birthDate) : null;
-    const bits = [age === null ? 'Edad no indicada' : age + ' años', p.sex || 'Sexo no indicado', p.hypertension === 'yes' ? 'Hipertensión diagnosticada' : (p.hypertension === 'suspected' ? 'Hipertensión en evaluación' : ''), p.conditions || 'Sin otros padecimientos registrados'];
-    details.textContent = bits.filter(Boolean).join(' · ');
-  }
+  const mapName = $('mapPatientName'), mapDetails = $('mapPatientDetails');
+  const patientName = p.name || 'Paciente sin configurar';
+  const age = p.birthDate ? ageOnDate(p.birthDate) : null;
+  const bits = [age === null ? 'Edad no indicada' : age + ' años', p.sex || 'Sexo no indicado', p.hypertension === 'yes' ? 'Hipertensión diagnosticada' : (p.hypertension === 'suspected' ? 'Hipertensión en evaluación' : ''), p.conditions || 'Sin otros padecimientos registrados'];
+  const patientDetails = bits.filter(Boolean).join(' · ');
+  if (name) name.textContent = patientName;
+  if (details) details.textContent = patientDetails;
+  if (mapName) mapName.textContent = patientName;
+  if (mapDetails) mapDetails.textContent = patientDetails;
 }
 function renderWater() {
   const w = data.water || (data.water = { goal: 2000, interval: 60, logs: [] }), day = today();

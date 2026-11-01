@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=52">
+<link rel="stylesheet" href="styles.css?v=54">
 </head>
 <body>
 
@@ -326,7 +326,17 @@
    <section id="mapa-presion" class="view map-pressure-screen">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Mapa de presión</h2><p data-i18n>Seguimiento domiciliario de las mediciones según la hora del día.</p></div></div>
-    <div class="stack">
+    <div class="card bp-entry-card premium-monitor map-monitor-shell">
+     <div class="premium-topline">
+      <div class="premium-brand"><span class="premium-logo">✿</span><span>Salud<strong>Plus</strong></span></div>
+      <span class="premium-heart-mini">♡</span>
+     </div>
+     <div class="patient-summary map-patient-summary"><div><strong id="mapPatientName">Paciente sin configurar</strong><span id="mapPatientDetails">Completa el perfil clínico para mostrar sus datos aquí.</span></div><button type="button" class="btn secondary small" onclick="showView('perfil')">Editar perfil</button></div>
+     <div class="premium-dual-intro map-heart-intro">
+      <div class="premium-heart-platform"><div class="premium-big-heart">♥<svg viewBox="0 0 220 80" aria-hidden="true"><path d="M0 42 H54 L69 42 L83 18 L98 65 L116 29 L130 42 H160 L175 42 L188 25 L199 56 L210 42 H220"/></svg></div><div class="premium-rings"></div></div>
+      <div><strong>Mapa de presión</strong><span>Organiza y consulta tus mediciones por día y horario.</span></div>
+     </div>
+     <div class="map-content-stack">
      <div class="notice map-disclaimer"><strong>Importante:</strong> Este mapa organiza mediciones hechas en casa. No sustituye un MAPA clínico de 24 horas con un monitor automático. No hagas mediciones adicionales ni cambies tratamientos sin indicación profesional.</div>
      <div class="card"><h3 data-i18n>Configurar seguimiento</h3><p class="muted">Los horarios son orientativos y se pueden ajustar a las indicaciones del profesional de salud.</p>
       <form id="bpMapSettingsForm"><div class="formgrid">
@@ -357,8 +367,7 @@
       <div id="bpMapProgress" class="map-progress"></div><div id="bpMapChart" class="map-chart"><div class="empty">Registra una sesión para generar la gráfica.</div></div><div id="bpMapAverages" class="map-averages"></div>
      </div>
      <div class="card"><div class="row between wrap"><h3>Sesiones registradas</h3><span id="bpMapCount" class="muted">0 sesiones</span></div><div id="bpMapList" class="list"></div></div>
-    </div>
-   </section>
+    </div></div></section>
 
    <section id="glucosa" class="view">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
@@ -727,7 +736,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=52"></script>
+<script src="app.js?v=54"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>

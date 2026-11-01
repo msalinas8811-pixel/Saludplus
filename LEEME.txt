@@ -190,3 +190,19 @@ VERSIÓN 52 — MAPA CON DISEÑO IDÉNTICO AL MONITOR + PALETA DEL LOGO GLOBAL
 - Se armonizan en toda la app los colores de marca del logo: azul, cian/turquesa y verde como acento de éxito.
 - Se conservan los colores clínicos de estado en tonos discretos para que las categorías sigan diferenciándose.
 - Sin cambios en datos, estructura de registros ni clave de almacenamiento.
+
+
+VERSIÓN 53 — AJUSTE VISUAL Y RESPONSIVE DEL MAPA
+- Se acerca el contenedor del mapa al monitor de presión: mismo fondo azul profundo, luces cian y líneas técnicas sutiles.
+- Tarjetas internas coordinadas con el diseño Diseño 6.
+- Se corrigió el formulario móvil: cada campo ocupa una fila completa, sin columnas estrechas, textos encimados ni controles superpuestos.
+- Inputs y selects con altura táctil mínima de 50px y tipografía de 16px.
+- Se mantienen todos los datos y las funciones existentes.
+
+
+VERSIÓN 54 — MAPA CON EL MISMO ENCABEZADO Y CORAZÓN DEL REGISTRO
+- La pantalla Mapa de presión ahora replica el encabezado superior del monitor: marca SaludPlus, corazón decorativo, resumen del paciente y botón Editar perfil.
+- Reutiliza la misma ilustración del corazón con ECG y plataforma luminosa del formulario Presión arterial.
+- Debajo del corazón aparecen las funciones propias del mapa: aviso, configuración, registro de sesiones, gráfica, promedios e historial.
+- El resumen del paciente del mapa se sincroniza con el perfil clínico.
+- Se mantiene la función y estructura de datos del mapa; no se altera el almacenamiento local.
