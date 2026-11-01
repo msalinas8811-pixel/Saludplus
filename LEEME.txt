@@ -152,3 +152,20 @@ VERSIÓN 47 — QUITAR TARJETA DE MEDICIÓN SELECCIONADA Y ACLARAR MONITOR
 - Se aclaró el fondo del tensiómetro y especialmente el panel del corazón: degradado azul, celeste y turquesa más luminoso, con texto oscuro en el área del corazón.
 - Se conserva la animación, los registros de ambos brazos, el historial, la clasificación y la interpretación dinámica.
 - Sin cambios en almacenamiento local.
+
+
+VERSIÓN 48 — PALETA SOBRIA
+- Se sustituyó la combinación multicolor de v47 por una paleta más sobria y uniforme en azul medio/pizarra.
+- El fondo del monitor usa un único degradado azul discreto.
+- El panel del corazón usa tonos gris-azulados claros y un corazón rosa apagado, sin neones.
+- Los dos paneles de brazos comparten el mismo tono azul; se eliminó el contraste violeta.
+- Botón Guardar y detalles visuales usan azul acero.
+- Se mantienen la funcionalidad, animaciones suaves, formulario de ambos brazos, historial y datos locales.
+
+
+VERSIÓN 49 — IDENTIDAD VISUAL AZUL/CELeste/TURQUESA APROBADA
+- Se aplica el degradado de referencia azul intenso → celeste → turquesa al monitor de presión.
+- Se armonizan la zona del corazón, los dos paneles de brazos, campos y botón Guardar.
+- La tarjeta de interpretación usa la misma identidad principal, con tarjetas internas sobrias.
+- Se evitan violetas, verdes/rojos saturados y efectos neón; estados conservan etiquetas y tonos discretos para legibilidad.
+- Se mantienen funciones, historial, mapa y almacenamiento local.
