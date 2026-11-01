@@ -169,3 +169,10 @@ VERSIÓN 49 — IDENTIDAD VISUAL AZUL/CELeste/TURQUESA APROBADA
 - La tarjeta de interpretación usa la misma identidad principal, con tarjetas internas sobrias.
 - Se evitan violetas, verdes/rojos saturados y efectos neón; estados conservan etiquetas y tonos discretos para legibilidad.
 - Se mantienen funciones, historial, mapa y almacenamiento local.
+
+
+VERSIÓN 50 — RESTAURACIÓN DEL COLOR ORIGINAL
+- Se restaura la paleta original del tensiómetro Diseño 6 de la versión 43.
+- Se conservan las funciones añadidas después: registro simultáneo de ambos brazos, clasificación vinculada al registro, interpretación dinámica, historial compacto y mapa.
+- Se conserva la retirada visual de la tarjeta independiente "Medición seleccionada".
+- No se modifican datos ni la clave de almacenamiento local.
