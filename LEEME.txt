@@ -102,3 +102,28 @@ VERSIÓN 41 — ORDEN SIMPLIFICADO DE PRESIÓN ARTERIAL
 - Al final queda únicamente el acceso a Mapa de presión.
 - Se ocultan de esta pantalla los paneles secundarios de referencia, velocímetros y avisos antiguos, manteniendo sus nodos internos ocultos cuando son necesarios para compatibilidad con funciones existentes.
 - No se elimina la funcionalidad del mapa ni los registros guardados.
+
+
+VERSIÓN 42 — HISTORIAL COMPACTO
+- Se redujo el espacio vertical de cada registro de presión y se ajustaron tipografía, padding, botones y separación entre tarjetas.
+- En móvil, las acciones quedan debajo del texto en una fila compacta.
+- Se corrigió el detalle del historial cuando solo existe lectura de un brazo: no muestra null/null ni PAM falsa del brazo vacío.
+- Cuando se registran ambos brazos, muestra ambas lecturas y la diferencia; indica el brazo de referencia por sistólica mayor.
+- Se conserva el orden de la pantalla y los datos locales.
+
+
+VERSIÓN 43 — TENSIÓMETRO FIEL AL DISEÑO 6
+- Se rediseñó la composición para acercarla a la imagen de referencia: corazón 3D estilizado con ECG y anillos luminosos a la izquierda, tres bandas de valores a la derecha, selector de brazo y pie con fecha, hora y botón Guardar.
+- Se conservaron los campos y nombres de formulario requeridos por la lógica existente: primarySys, primaryDia, primaryPulse, primaryArm, otherSys, otherDia, otherPulse, date, time, take y notes.
+- Se mantiene la sección opcional para registrar el otro brazo, el perfil del paciente, la clasificación del promedio, interpretación, historial compacto y mapa.
+- No se modificó la clave de almacenamiento local.
+
+
+VERSIÓN 44 — REGISTRO DE AMBOS BRAZOS EN UNA SOLA TOMA
+- Se muestran paneles simultáneos e independientes para brazo izquierdo y derecho.
+- Cada brazo tiene campos propios de sistólica, diastólica y pulso.
+- En un solo envío se puede guardar solo el brazo medido o ambos brazos juntos.
+- Validación: si se empieza a llenar un brazo, sistólica y diastólica deben completarse juntas; al menos un brazo debe tener medición completa.
+- Se conserva el esquema de datos anterior (ls/ld/lp y rs/rd/rp), historial, promedios, perfil y mapa.
+- Los resúmenes siguen usando como referencia el brazo con mayor sistólica cuando existen ambos valores.
+- No se borra el historial ni cambia la clave de almacenamiento local.

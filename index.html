@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=41">
+<link rel="stylesheet" href="styles.css?v=44">
 </head>
 <body>
 
@@ -230,44 +230,49 @@
     <div class="page-head"><div><h2 data-i18n>Presión arterial</h2><p data-i18n>Registra cada toma y compara ambos brazos.</p></div>
 </div>
 <div class="card bp-entry-card premium-monitor">
-      <div class="premium-monitor-head">
-       <div class="premium-brand"><span class="premium-logo">💧</span><span>Salud<strong>Plus</strong></span></div>
-       <span class="premium-live"><i></i> NUEVO REGISTRO</span>
-      </div>
-      <div class="patient-summary" id="bpPatientSummary"><div><strong id="bpPatientName">Paciente sin configurar</strong><span id="bpPatientDetails">Completa el perfil clínico para mostrar sus datos aquí.</span></div><button type="button" class="btn secondary small" onclick="showView('perfil')">Editar perfil</button></div>
-      <form id="bpForm">
-       <div class="premium-monitor-body">
-        <div class="premium-heart-zone">
-         <div class="premium-heart-orbit"><div class="premium-heart">♥</div><svg viewBox="0 0 220 52" role="img" aria-label="Pulso cardíaco"><path d="M2 27 H42 L56 27 L67 8 L82 44 L98 18 L110 27 H145 L158 27 L170 13 L181 38 L194 27 H218"/></svg></div>
-         <div class="premium-heart-caption">CONTROL DE PRESIÓN<br/><span>Tu bienestar, en cada medición</span></div>
-        </div>
-        <div class="premium-reading-zone">
-         <label class="premium-reading"><span><i class="premium-dot sys"></i>Sistólica</span><div><input name="primarySys" type="number" inputmode="numeric" min="50" max="300" placeholder="120" required/><small>mmHg</small></div></label>
-         <label class="premium-reading"><span><i class="premium-dot dia"></i>Diastólica</span><div><input name="primaryDia" type="number" inputmode="numeric" min="30" max="200" placeholder="80" required/><small>mmHg</small></div></label>
-         <label class="premium-reading"><span><i class="premium-dot pulse"></i>Pulso</span><div><input name="primaryPulse" type="number" inputmode="numeric" min="20" max="250" placeholder="72"/><small>lpm</small></div></label>
-        </div>
-       </div>
-       <div class="premium-controls">
-        <div class="premium-arm-control"><span>Brazo de medición</span><div class="premium-arm-pills"><label><input type="radio" name="primaryArm" value="left" checked/><span>♧ Izquierdo</span></label><label><input type="radio" name="primaryArm" value="right"/><span>♧ Derecho</span></label></div></div>
-        <details class="bp-second-arm premium-second-arm"><summary>+ Registrar también el otro brazo (opcional)</summary>
-         <div class="premium-other-grid">
-          <label class="premium-reading"><span>Sistólica · otro brazo</span><input name="otherSys" type="number" inputmode="numeric" min="50" max="300" placeholder="120"/></label>
-          <label class="premium-reading"><span>Diastólica · otro brazo</span><input name="otherDia" type="number" inputmode="numeric" min="30" max="200" placeholder="80"/></label>
-          <label class="premium-reading"><span>Pulso · otro brazo</span><input name="otherPulse" type="number" inputmode="numeric" min="20" max="250" placeholder="72"/></label>
-         </div>
-        </details>
-       </div>
-       <div class="premium-footer">
-        <label class="premium-date"><span>▦ Fecha</span><input name="date" type="date" required/></label>
-        <label class="premium-date"><span>◷ Hora</span><input name="time" type="time" required/></label>
-        <label class="premium-date"><span>N.º de toma</span><select name="take"><option>1</option><option>2</option><option>3</option></select></label>
-       </div>
-       <label class="premium-notes"><span>Notas (opcional)</span><input name="notes" placeholder="Ej. en reposo, por la mañana"/></label>
-       <div class="form-actions premium-actions"><button class="btn premium-save" type="submit">▣ &nbsp; Guardar medición</button><button class="btn premium-clear" type="reset">Limpiar</button></div>
-      </form>
-     </div>
+ <div class="premium-topline">
+  <div class="premium-brand"><span class="premium-logo">✿</span><span>Salud<strong>Plus</strong></span></div>
+  <span class="premium-heart-mini">♡</span>
+ </div>
+ <div class="patient-summary" id="bpPatientSummary"><div><strong id="bpPatientName">Paciente sin configurar</strong><span id="bpPatientDetails">Completa el perfil clínico para mostrar sus datos aquí.</span></div><button type="button" class="btn secondary small" onclick="showView('perfil')">Editar perfil</button></div>
+ <form id="bpForm">
+  <div class="premium-dual-intro">
+   <div class="premium-heart-platform"><div class="premium-big-heart">♥<svg viewBox="0 0 220 80" aria-hidden="true"><path d="M0 42 H54 L69 42 L83 18 L98 65 L116 29 L130 42 H160 L175 42 L188 25 L199 56 L210 42 H220"/></svg></div><div class="premium-rings"></div></div>
+   <div><strong>Registro de ambos brazos</strong><span>Ingresa cada medición por separado en un solo registro.</span></div>
+  </div>
+  <div class="premium-dual-arms">
+   <section class="premium-arm-panel">
+    <header><span class="arm-symbol">◉</span><div><strong>Brazo izquierdo</strong><small>Medición izquierda</small></div><span class="arm-tag">IZQ.</span></header>
+    <div class="premium-arm-fields">
+     <label><span>Sistólica</span><input name="leftSys" type="number" inputmode="numeric" min="50" max="300" placeholder="120"/></label>
+     <label><span>Diastólica</span><input name="leftDia" type="number" inputmode="numeric" min="30" max="200" placeholder="80"/></label>
+     <label><span>Pulso</span><input name="leftPulse" type="number" inputmode="numeric" min="20" max="250" placeholder="72"/></label>
+    </div>
+   </section>
+   <section class="premium-arm-panel right">
+    <header><span class="arm-symbol">◉</span><div><strong>Brazo derecho</strong><small>Medición derecha</small></div><span class="arm-tag">DER.</span></header>
+    <div class="premium-arm-fields">
+     <label><span>Sistólica</span><input name="rightSys" type="number" inputmode="numeric" min="50" max="300" placeholder="120"/></label>
+     <label><span>Diastólica</span><input name="rightDia" type="number" inputmode="numeric" min="30" max="200" placeholder="80"/></label>
+     <label><span>Pulso</span><input name="rightPulse" type="number" inputmode="numeric" min="20" max="250" placeholder="72"/></label>
+    </div>
+   </section>
+  </div>
+  <p class="premium-dual-help">Puedes registrar un brazo o ambos en el mismo registro. Completa sistólica y diastólica de cada brazo que hayas medido.</p>
+  <div class="premium-footer">
+   <label class="premium-date"><span>▦</span><input name="date" type="date" required/></label>
+   <label class="premium-date"><span>◷</span><input name="time" type="time" required/></label>
+   <button class="btn premium-save" type="submit"><span>▣</span> Guardar</button>
+  </div>
+  <div class="premium-extras">
+   <label><span>N.º de toma</span><select name="take"><option>1</option><option>2</option><option>3</option></select></label>
+   <label class="premium-notes"><span>Notas (opcional)</span><input name="notes" placeholder="Ej. en reposo, por la mañana"/></label>
+   <button class="btn premium-clear" type="reset">Limpiar valores</button>
+  </div>
+ </form>
+</div>
 <div class="card" id="bpAverageCard"><div class="bpwrap"><div class="bpmain">
-      <div class="muted" style="font-size:13px" data-i18n>Clasificación del promedio (ambos brazos)</div>
+      <div class="muted" style="font-size:13px" data-i18n>Clasificación del promedio</div>
       <div class="value" id="bpCombinedAvg">—</div>
       <div id="bpAverageStatus" class="bp-status" hidden></div>
       <div class="muted" style="font-size:13px" id="bpAverageAdvice">Registra mediciones para ver la clasificación orientativa.</div>
@@ -721,7 +726,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=41"></script>
+<script src="app.js?v=44"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>

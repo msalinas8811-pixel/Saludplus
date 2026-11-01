@@ -394,10 +394,20 @@ function render() {
   $('bpDiff').textContent = recent.length ? Math.round(average(recent.map(x => Math.abs(num(x.ls) - num(x.rs))))) + ' mmHg' : '—';
   $('bpCount').textContent = `${bp.length} ${t('registros')}`;
 
-  $('bpList').innerHTML = bp.length ? bp.map(x => listItem(
-    `${fmtDate(x.date)} · ${esc(x.time)} · ${t('Toma')} ${esc(x.take)}`,
-    `${t('Izquierdo')} ${x.ls}/${x.ld} · ${t('pulso')} ${x.lp || '—'} | ${t('Derecho')} ${x.rs}/${x.rd} · ${t('pulso')} ${x.rp || '—'}\n${t('PAM aprox.')}: ${Math.round(pam(x.ls, x.ld))} / ${Math.round(pam(x.rs, x.rd))} · ${t('Dif. sistólica')}: ${Math.abs(+x.ls - +x.rs)} mmHg${x.notes ? '\n' + esc(x.notes) : ''}`,
-    `<button class="btn secondary small" type="button" onclick="selectBPRecord('${x.id}')">Ver gráfica</button>` + removeBtn('bp', x.id))).join('') : empty('Aún no hay mediciones.');
+  $('bpList').innerHTML = bp.length ? bp.map(x => {
+    const leftOK = Number(x.ls)>0 && Number(x.ld)>0, rightOK = Number(x.rs)>0 && Number(x.rd)>0;
+    const chosen = preferredArmReading(x);
+    const arms = [
+      leftOK ? `Izquierdo ${x.ls}/${x.ld} · pulso ${x.lp || '—'}` : '',
+      rightOK ? `Derecho ${x.rs}/${x.rd} · pulso ${x.rp || '—'}` : ''
+    ].filter(Boolean).join('  |  ');
+    const pams = [leftOK ? `Izq. ${Math.round(pam(x.ls,x.ld))}` : '', rightOK ? `Der. ${Math.round(pam(x.rs,x.rd))}` : ''].filter(Boolean).join(' · ');
+    const diff = leftOK && rightOK ? ` · Diferencia sistólica ${Math.abs(+x.ls - +x.rs)} mmHg` : '';
+    return listItem(
+      `${fmtDate(x.date)} · ${esc(x.time)} · ${t('Toma')} ${esc(x.take)}`,
+      `${arms}\nPAM aprox.: ${pams} mmHg${diff}${chosen ? ` · Referencia: brazo ${chosen.arm}` : ''}${x.notes ? '\n' + esc(x.notes) : ''}`,
+      `<button class="btn secondary small" type="button" onclick="selectBPRecord('${x.id}')">Ver gráfica</button>` + removeBtn('bp', x.id));
+  }).join('') : empty('Aún no hay mediciones.');
 
   $('glucoseAvg').textContent = gl.length ? `${t('Promedio de registros')}: ${Math.round(average(gl.map(x => +x.value)))} mg/dL` : `${t('Promedio')}: —`;
   if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN, gl.length ? gl[0].when : '');
@@ -584,16 +594,20 @@ function bindForms() {
   });
   $('bpForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target);
-    const arm = f.get('primaryArm') || 'left';
-    const ps = Number(f.get('primarySys')), pd = Number(f.get('primaryDia'));
-    const os = f.get('otherSys') ? Number(f.get('otherSys')) : null;
-    const od = f.get('otherDia') ? Number(f.get('otherDia')) : null;
-    if ((os && !od) || (!os && od)) { toast('Completa sistólica y diastólica del segundo brazo, o déjalas ambas vacías.'); return; }
-    const record = { id: uid(), date: f.get('date'), time: f.get('time'), take: f.get('take'), notes: f.get('notes'), primaryArm: arm };
-    record.ls = arm === 'left' ? ps : os; record.ld = arm === 'left' ? pd : od;
-    record.lp = arm === 'left' ? (f.get('primaryPulse') ? Number(f.get('primaryPulse')) : null) : (f.get('otherPulse') ? Number(f.get('otherPulse')) : null);
-    record.rs = arm === 'right' ? ps : os; record.rd = arm === 'right' ? pd : od;
-    record.rp = arm === 'right' ? (f.get('primaryPulse') ? Number(f.get('primaryPulse')) : null) : (f.get('otherPulse') ? Number(f.get('otherPulse')) : null);
+    const read = (sysName, diaName, pulseName, label) => {
+      const s = f.get(sysName), d = f.get(diaName), p = f.get(pulseName);
+      const hasS = s !== '', hasD = d !== '';
+      if (hasS !== hasD) { toast(`Completa sistólica y diastólica del ${label}, o deja ambas vacías.`); return false; }
+      return { sys: hasS ? Number(s) : null, dia: hasD ? Number(d) : null, pulse: p ? Number(p) : null, present: hasS && hasD };
+    };
+    const left = read('leftSys','leftDia','leftPulse','brazo izquierdo');
+    if (!left) return;
+    const right = read('rightSys','rightDia','rightPulse','brazo derecho');
+    if (!right) return;
+    if (!left.present && !right.present) { toast('Ingresa al menos una medición completa.'); return; }
+    const record = { id: uid(), date: f.get('date'), time: f.get('time'), take: f.get('take'), notes: f.get('notes') };
+    record.ls = left.sys; record.ld = left.dia; record.lp = left.pulse;
+    record.rs = right.sys; record.rd = right.dia; record.rp = right.pulse;
     data.bp.push(record);
     e.target.reset(); setDefaults(); save(); toast(t('Medición guardada.'));
   });
