@@ -93,3 +93,12 @@ VERSIÓN 40 — DISEÑO 6 SALUDPLUS PREMIUM
 - Se conservan nombres de campos, guardado y almacenamiento previo.
 - Los resúmenes y promedios ahora eligen por sesión el brazo con sistólica más alta; si solo hay un brazo, usan esa lectura. No se promedian los dos brazos entre sí.
 - Se conserva historial anterior y clave local de almacenamiento.
+
+
+VERSIÓN 41 — ORDEN SIMPLIFICADO DE PRESIÓN ARTERIAL
+- Debajo del nuevo registro se muestra la clasificación del promedio.
+- Después aparece Interpretación según perfil.
+- A continuación aparece Historial.
+- Al final queda únicamente el acceso a Mapa de presión.
+- Se ocultan de esta pantalla los paneles secundarios de referencia, velocímetros y avisos antiguos, manteniendo sus nodos internos ocultos cuando son necesarios para compatibilidad con funciones existentes.
+- No se elimina la funcionalidad del mapa ni los registros guardados.

@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=40">
+<link rel="stylesheet" href="styles.css?v=41">
 </head>
 <body>
 
@@ -266,14 +266,22 @@
        <div class="form-actions premium-actions"><button class="btn premium-save" type="submit">▣ &nbsp; Guardar medición</button><button class="btn premium-clear" type="reset">Limpiar</button></div>
       </form>
      </div>
-    <div class="card age-clinical-card" id="ageClinicalCard" aria-live="polite"><div class="row between wrap"><div><h3 style="margin:0">Interpretación según perfil</h3><p class="muted" id="clinicalProfileLine">Completa tu fecha de nacimiento en Mi perfil.</p></div><span class="badge" id="clinicalAgeBadge">Perfil pendiente</span></div><div class="clinical-metrics" id="clinicalMetrics"><div class="clinical-metric status-unknown"><small>Presión más reciente</small><strong>—</strong><span>Esperando registros</span></div><div class="clinical-metric status-unknown"><small>PAM aproximada</small><strong>—</strong><span>No es un diagnóstico</span></div><div class="clinical-metric status-unknown"><small>Pulso registrado</small><strong>—</strong><span>Depende de edad y actividad</span></div></div><p class="fine" id="clinicalGuidance">La clasificación se selecciona según edad y referencia clínica. No sustituye una valoración profesional.</p></div>
-    <div class="stack">
-     <div class="card" id="bpAverageCard"><div class="bpwrap"><div class="bpmain">
+<div class="card" id="bpAverageCard"><div class="bpwrap"><div class="bpmain">
       <div class="muted" style="font-size:13px" data-i18n>Clasificación del promedio (ambos brazos)</div>
       <div class="value" id="bpCombinedAvg">—</div>
       <div id="bpAverageStatus" class="bp-status" hidden></div>
       <div class="muted" style="font-size:13px" id="bpAverageAdvice">Registra mediciones para ver la clasificación orientativa.</div>
      </div><div id="bpGauge"></div></div></div>
+<div class="card age-clinical-card" id="ageClinicalCard" aria-live="polite"><div class="row between wrap"><div><h3 style="margin:0">Interpretación según perfil</h3><p class="muted" id="clinicalProfileLine">Completa tu fecha de nacimiento en Mi perfil.</p></div><span class="badge" id="clinicalAgeBadge">Perfil pendiente</span></div><div class="clinical-metrics" id="clinicalMetrics"><div class="clinical-metric status-unknown"><small>Presión más reciente</small><strong>—</strong><span>Esperando registros</span></div><div class="clinical-metric status-unknown"><small>PAM aproximada</small><strong>—</strong><span>No es un diagnóstico</span></div><div class="clinical-metric status-unknown"><small>Pulso registrado</small><strong>—</strong><span>Depende de edad y actividad</span></div></div><p class="fine" id="clinicalGuidance">La clasificación se selecciona según edad y referencia clínica. No sustituye una valoración profesional.</p></div>
+<div class="card"><div class="row between" style="margin-bottom:10px"><h3 style="margin:0" data-i18n>Historial</h3><span class="muted" style="font-size:13px" id="bpCount">0 registros</span></div><div id="bpList" class="list"><div class="empty" data-i18n>Aún no hay mediciones.</div></div></div>
+<div class="card map-entry-card"><div class="row between wrap" style="align-items:center;gap:12px">
+      <div><h3 data-i18n>Mapa de presión</h3><p class="muted" data-i18n>Organiza las lecturas domiciliarias por hora y observa su evolución diaria.</p></div>
+      <button class="btn secondary" type="button" onclick="showView('mapa-presion')" data-i18n>Abrir mapa</button>
+     </div></div>
+<div class="bp-hidden-support" hidden aria-hidden="true">
+    
+    <div class="stack">
+     
      <div class="card" id="bpSelectedCard">
       <div class="row between wrap"><div><h3>Medición seleccionada</h3><p class="muted" id="bpSelectedDateTime">Selecciona un registro del historial para ver su velocímetro.</p></div><span class="badge">Historial</span></div>
       <div class="value" id="bpSelectedValue">—</div><div id="bpSelectedGauge"></div>
@@ -303,14 +311,11 @@
      <div class="card tile reference-tile"><div class="label" data-i18n>Diferencia sistólica entre brazos</div><div class="value" id="bpDiff">—</div><div class="reference-note"><strong>Referencia:</strong><br>Más de 10 mmHg: repetir y confirmar la diferencia. Si persiste, las mediciones posteriores suelen hacerse en el brazo con la cifra mayor.</div></div>
      <div class="notice reference-caution"><strong>Importante:</strong> Estas cifras de sistólica y diastólica corresponden a referencias para adultos en mediciones domiciliarias, basadas en ESC 2024. No deben aplicarse automáticamente a niños o adolescentes: sus valores se interpretan según edad, sexo, estatura y criterio profesional. *El umbral se valora con el promedio de sistólica y/o diastólica, no con una cifra aislada.</div>
 
-     <div class="card map-entry-card"><div class="row between wrap" style="align-items:center;gap:12px">
-      <div><h3 data-i18n>Mapa de presión</h3><p class="muted" data-i18n>Organiza las lecturas domiciliarias por hora y observa su evolución diaria.</p></div>
-      <button class="btn secondary" type="button" onclick="showView('mapa-presion')" data-i18n>Abrir mapa</button>
-     </div></div>
-     <div class="card"><div class="row between" style="margin-bottom:10px"><h3 style="margin:0" data-i18n>Historial</h3><span class="muted" style="font-size:13px" id="bpCount">0 registros</span></div><div id="bpList" class="list"><div class="empty" data-i18n>Aún no hay mediciones.</div></div></div>
+     
+     
      <p class="notice" data-i18n>La PAM se estima como (sistólica + 2 × diastólica) / 3. Las diferencias entre brazos y los promedios son datos descriptivos, no un diagnóstico. Para seguimiento habitual, mide en condiciones consistentes y sigue las indicaciones de tu profesional.</p>
-    </div>
-   </section>
+    </div></div>
+</section>
 
    <section id="mapa-presion" class="view">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
@@ -716,7 +721,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=40"></script>
+<script src="app.js?v=41"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>
