@@ -1275,3 +1275,73 @@ a{color:var(--brand-strong)}
  .glucose-hero-copy span{font-size:13px}
  .glucose-steps{display:grid;grid-template-columns:1fr}
 }
+
+/* v57 — Diseño 2: registro dentro del glucómetro + rangos + historial */
+.glucose-design2{padding:18px;border-radius:26px;background:radial-gradient(circle at 8% 10%,#0b70ad 0,transparent 34%),linear-gradient(145deg,#061b42,#073b70 58%,#05254b);border:1px solid #1389b8;box-shadow:0 16px 40px #061b4230;color:#f4fbff;margin-bottom:16px}
+.glucose-design2-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.glucose-design2 .glucose-brandline{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:900}
+.glucose-design2 .glucose-brandline strong span{color:#28d3dc}
+.glucose-design2 .glucose-brandmark{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#087caf;color:#63e5e9;font-size:24px}
+.glucose-head-caption{font-size:11px;letter-spacing:1.5px;color:#9bd9ed;font-weight:800}
+.glucose-design2-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:16px;align-items:stretch}
+.glucose-device-form{margin:0;min-width:0}
+.glucose-device{position:relative;max-width:440px;margin:auto;padding:18px 16px 32px;border-radius:38px;background:linear-gradient(145deg,#dceaf4 0%,#8baec9 12%,#d7e8f2 24%,#7399b7 82%,#d8edf7 100%);border:3px solid #dff8ff;box-shadow:inset 0 2px 7px #fff,0 14px 26px #00162f88}
+.glucose-device:before{content:"";position:absolute;inset:8px;border-radius:31px;border:2px solid #547d9c;pointer-events:none}
+.glucose-device-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px;color:#12385b;font-size:21px;font-weight:900;margin:0 0 12px}
+.glucose-device-top small{font-size:11px;align-self:flex-end;margin-bottom:4px;color:#426984}
+.glucose-drop{color:#ec4666;font-size:20px;text-shadow:0 0 10px #ff4f79}
+.glucose-device-screen{position:relative;z-index:1;background:linear-gradient(145deg,#dffbff,#a9d9e9);border:3px solid #087fae;border-radius:17px;padding:11px 13px 13px;box-shadow:inset 0 2px 9px #2d789344,0 0 0 3px #ffffff9c;margin-bottom:13px}
+.glucose-device-screen label{display:block;color:#244e69;font-size:12px;font-weight:800;margin-bottom:4px}
+.glucose-input-line{display:flex;align-items:center;gap:7px}
+.glucose-input-line input{min-width:0;width:100%;border:0!important;outline:0!important;background:transparent!important;color:#092f50!important;font-size:clamp(40px,8vw,58px)!important;font-weight:900!important;line-height:1.1!important;padding:0!important;box-shadow:none!important;text-align:center}
+.glucose-input-line input::placeholder{color:#64869b;opacity:.7}
+.glucose-input-line span{font-size:15px;font-weight:850;color:#244e69;white-space:nowrap}
+.glucose-moment-label{position:relative;z-index:1;color:#244e69;font-size:13px;font-weight:850;margin:0 0 5px}
+.glucose-moment-select{position:relative;z-index:1;width:100%;min-height:47px;padding:10px 12px;border-radius:12px;border:2px solid #2a83ad;background:#eafaff;color:#143b5a;font-size:15px;font-weight:800;box-sizing:border-box;margin-bottom:12px}
+.glucose-device-datetime{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
+.glucose-device-datetime label,.glucose-notes-label{display:flex;flex-direction:column;gap:5px;color:#244e69;font-size:12px;font-weight:850;min-width:0}
+.glucose-device-datetime input{width:100%;min-width:0;box-sizing:border-box;border:1px solid #8ab5ca;border-radius:10px;padding:9px 7px;min-height:42px;background:#effaff;color:#173b58;font-size:14px}
+.glucose-notes-label{position:relative;z-index:1;margin-bottom:12px}
+.glucose-notes-label textarea{width:100%;box-sizing:border-box;resize:vertical;border:1px solid #8ab5ca;border-radius:10px;padding:9px;background:#effaff;color:#173b58;font-size:14px}
+.glucose-register-btn{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:54px;border:2px solid #75f1d7;border-radius:30px;background:linear-gradient(100deg,#19c84d,#00a9a9);color:#fff;font-size:19px;font-weight:900;box-shadow:0 5px 15px #007f8b66;cursor:pointer}
+.glucose-register-btn span{font-size:24px}
+.glucose-strip-art{position:absolute;bottom:-27px;left:calc(50% - 13px);width:26px;height:36px;background:linear-gradient(90deg,#fff,#dceaf2,#fff);border:1px solid #8ab5ca;border-radius:0 0 5px 5px;box-shadow:0 5px 10px #00162f55}
+.glucose-strip-art i{display:block;width:8px;height:8px;border-radius:50%;background:#df345a;margin:5px auto}
+.glucose-reference-column{display:flex;flex-direction:column;gap:13px;min-width:0}
+.glucose-reference-card,.glucose-latest-card{padding:15px;border:1px solid #16a6d1;border-radius:20px;background:linear-gradient(145deg,#08345f,#05264c);box-shadow:inset 0 1px 0 #ffffff14}
+.glucose-reference-card h3{margin:0 0 4px;color:#fff;font-size:19px}
+.glucose-reference-card>p{margin:0 0 12px;color:#b8d9e9;font-size:12px;line-height:1.45}
+.glucose-reference-row{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid #ffffff1c}
+.glucose-reference-row:last-of-type{border-bottom:0}
+.ref-dot{width:12px;height:12px;flex:0 0 12px;border-radius:50%;margin-top:3px}
+.ref-green .ref-dot{background:#42c978}.ref-yellow .ref-dot{background:#f0bf38}.ref-red .ref-dot{background:#ef5968}.ref-blue .ref-dot{background:#32c4dc}
+.glucose-reference-row strong{display:block;color:#f4fbff;font-size:13px}
+.glucose-reference-row small{display:block;color:#b5d3e4;font-size:11px;line-height:1.4;margin-top:2px}
+.glucose-reference-note{font-size:10px;line-height:1.45;color:#b9d8e8;padding-top:10px;border-top:1px solid #ffffff20}
+.latest-card-title{font-size:13px;font-weight:800;color:#c5e7f5}
+.latest-card-title span{color:#48d7e5;margin-right:6px}
+.latest-value{display:flex;align-items:baseline;gap:7px;margin:5px 0}
+.latest-value strong{font-size:clamp(34px,6vw,46px);line-height:1;color:#fff}
+.latest-value span{color:#b9d9e9;font-size:13px}
+.latest-meta{font-size:11px;color:#b4d4e5}
+.glucose-gauge-design2,.glucose-history-design2{margin:14px 0;border:1px solid #b9ddeb!important;border-radius:20px!important}
+.glucose-section-title{display:flex;align-items:center;gap:11px}
+.glucose-section-title>span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#e0f6fa;color:#087fae;font-size:12px;font-weight:900;flex:0 0 32px}
+.glucose-section-title h3{margin:0;font-size:18px}
+.glucose-section-title p{margin:3px 0 0;color:#6d8596;font-size:12px}
+.glucose-trend{padding:8px 4px 12px;margin-bottom:8px;border-bottom:1px solid #dce8ef}
+.glucose-trend svg{width:100%;height:auto;display:block}
+.trend-labels{display:flex;justify-content:space-between;gap:4px;color:#758b9b;font-size:10px}
+@media(max-width:650px){
+ .glucose-design2{padding:14px;border-radius:22px}
+ .glucose-design2-grid{grid-template-columns:minmax(0,1fr)}
+ .glucose-device{max-width:100%;width:100%;box-sizing:border-box}
+ .glucose-reference-column{display:grid;grid-template-columns:1fr}
+ .glucose-head-caption{font-size:9px}
+}
+@media(prefers-reduced-motion:no-preference){
+ .glucose-drop{animation:glucoseDropPulse 2.2s ease-in-out infinite}
+ .glucose-device{animation:glucoseDeviceFloat 5s ease-in-out infinite}
+ @keyframes glucoseDropPulse{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.12)}}
+ @keyframes glucoseDeviceFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+}

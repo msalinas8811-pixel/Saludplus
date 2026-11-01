@@ -425,6 +425,16 @@ function render() {
   $('glucoseAvg').textContent = gl.length ? `${t('Promedio de registros')}: ${Math.round(average(gl.map(x => +x.value)))} mg/dL` : `${t('Promedio')}: —`;
   if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN, gl.length ? gl[0].when : '');
   if ($('glucoseHeroValue')) $('glucoseHeroValue').textContent = gl.length ? String(gl[0].value) : '---';
+  if ($('glucoseLatestMeta')) $('glucoseLatestMeta').textContent = gl.length ? `${fmtDate(gl[0].date)} · ${esc(gl[0].time || '')} · ${t(gl[0].when || '')}` : 'Aún no hay mediciones registradas';
+  if ($('glucoseTrend')) {
+    const recent = gl.slice(0,7).reverse();
+    if (recent.length) {
+      const vals = recent.map(x => +x.value), minV = Math.min(...vals,60), maxV = Math.max(...vals,180);
+      const y = v => 92 - ((v-minV)/(maxV-minV || 1))*62;
+      const pts = vals.map((v,i)=>`${20+i*(260/Math.max(1,vals.length-1))},${y(v)}`).join(' ');
+      $('glucoseTrend').innerHTML = `<svg viewBox="0 0 300 112" role="img" aria-label="Tendencia de las últimas ${recent.length} mediciones"><line x1="12" y1="92" x2="288" y2="92" stroke="#9ab8ca" stroke-opacity=".45"/><polyline points="${pts}" fill="none" stroke="#16b8c8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${vals.map((v,i)=>`<circle cx="${20+i*(260/Math.max(1,vals.length-1))}" cy="${y(v)}" r="4.5" fill="#22c6d4" stroke="#fff" stroke-width="1.5"/>`).join('')}</svg><div class="trend-labels">${recent.map(x=>`<span>${esc(fmtDate(x.date))}</span>`).join('')}</div>`;
+    } else $('glucoseTrend').innerHTML = '<div class="empty">La gráfica aparecerá cuando guardes mediciones.</div>';
+  }
   $('glucoseList').innerHTML = gl.length ? gl.map(x => listItem(`${esc(x.value)} mg/dL · ${fmtDate(x.date)} ${esc(x.time)}`, `${esc(t(x.when || ''))}${x.notes ? '\n' + esc(x.notes) : ''}`, removeBtn('glucose', x.id))).join('') : empty('Aún no hay mediciones.');
 
   $('medList').innerHTML = data.meds.length ? data.meds.map(x => {
@@ -629,6 +639,11 @@ function bindForms() {
     e.preventDefault(); const f = new FormData(e.target);
     data.glucose.push({ id: uid(), date: f.get('date'), time: f.get('time'), value: +f.get('value'), when: f.get('when'), notes: f.get('notes') });
     e.target.reset(); setDefaults(); save(); toast(t('Medición guardada.'));
+  });
+  const glucoseInput = $('glucoseInput');
+  if (glucoseInput) glucoseInput.addEventListener('input', () => {
+    const display = $('glucoseEntryPreview');
+    if (display) display.textContent = glucoseInput.value || '---';
   });
   $('medForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target);

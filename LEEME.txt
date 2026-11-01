@@ -228,3 +228,13 @@ VERSIÓN 56 — ORDEN DE GLUCOSA Y RETIRADA DEL MAPA DEL MENÚ
   5. Nota informativa
 - Se conserva el formulario, historial, promedio y lógica de interpretación existente.
 - Se conserva la clave de almacenamiento salud360_pwa_v1.
+
+
+VERSIÓN 57 — DISEÑO 2 DE GLUCOSA CON REGISTRO INTEGRADO
+- Se reconstruyó la pantalla de glucosa siguiendo el concepto 2: glucómetro central con registro dentro de su pantalla, panel de referencias, última medición, velocímetro e historial.
+- El resultado se introduce directamente en el display del glucómetro; se mantienen momento, fecha, hora y notas.
+- La última lectura guardada aparece en el panel lateral.
+- Se añadió gráfica sencilla con las últimas siete lecturas, generada desde el historial guardado.
+- Rangos mostrados como referencias generales de laboratorio en ayunas, con advertencia de que un glucómetro doméstico no confirma diagnósticos.
+- Se conserva el formulario y estructura de datos de glucosa y la clave local salud360_pwa_v1.
+- Se conserva el acceso a registros existentes. No se borraron datos del mapa ni de presión.
