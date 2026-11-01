@@ -717,39 +717,10 @@ function bindForms() {
     save(); f.reset(); f.elements.date.value = today(); f.elements.time.value = nowTime();
     $('chartType').value = target; renderCharts(); toast(t('Control guardado en este dispositivo.'));
   });
-  const patientForm = $('patientForm');
-  if (patientForm) patientForm.addEventListener('submit', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const patient = {};
-    for (const [key, value] of formData.entries()) patient[key] = String(value ?? '').trim();
-    patient.name = String(patient.name || '').trim();
-    if (!patient.name) {
-      toast('Escribe el nombre completo del paciente antes de guardar.');
-      form.elements.name?.focus();
-      return;
-    }
-    const previousPatient = data.patient;
-    data.patient = patient;
-    // Guardar y verificar la escritura antes de cerrar el formulario.
-    const stored = persist();
-    let verified = false;
-    if (stored) {
-      try {
-        const check = JSON.parse(localStorage.getItem(KEY) || '{}');
-        verified = !!(check.patient && check.patient.name === patient.name);
-      } catch (_) { verified = false; }
-    }
-    if (!verified) {
-      data.patient = previousPatient || {};
-      toast('No se pudo confirmar el guardado. Revisa el almacenamiento del navegador e inténtalo nuevamente.');
-      return;
-    }
-    $('patientEditCard')?.classList.add('hidden');
-    render();
-    toast('Perfil del paciente guardado correctamente.');
+  $('patientForm').addEventListener('submit', e => {
+    e.preventDefault(); const f = new FormData(e.target); data.patient = {};
+    for (const [k, v] of f.entries()) data.patient[k] = String(v).trim();
+    save(); $('patientEditCard').classList.add('hidden'); toast(t('Datos del paciente guardados en este dispositivo.'));
   });
   $('patientClear').addEventListener('click', async () => {
     if (await askConfirm(t('¿Limpiar los campos del formulario? Los datos guardados no se borran hasta que guardes el formulario vacío.'), t('Limpiar'))) $('patientForm').reset();
