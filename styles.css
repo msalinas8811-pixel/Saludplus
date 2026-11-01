@@ -996,3 +996,48 @@ dialog.sheet h3{margin:0 0 14px}
 
 
 /* v50: se restaura la paleta original del tensiómetro Diseño 6 */
+
+/* v51 — mapa de presión con la misma identidad del tensiómetro Diseño 6 */
+.map-pressure-screen .page-head h2{color:#123b58}
+.map-pressure-screen .map-disclaimer{
+ background:linear-gradient(145deg,#eaf7fd,#dceefa)!important;
+ border:1px solid #b9dced!important;border-left:4px solid #168fc2!important;
+ border-radius:16px!important;color:#315d78!important;padding:14px 16px!important;
+}
+.map-pressure-screen .card{
+ background:linear-gradient(145deg,#061c43 0%,#082e63 52%,#031735 100%)!important;
+ border:1px solid #145b8a!important;border-radius:22px!important;
+ color:#eaf7ff!important;
+ box-shadow:0 12px 30px rgba(3,28,66,.16),inset 0 1px 0 rgba(164,226,255,.12)!important;
+}
+.map-pressure-screen .card h3,.map-pressure-screen .card label,
+.map-pressure-screen .card .fine{color:#eaf7ff!important}
+.map-pressure-screen .card p.muted,.map-pressure-screen .card .muted{color:#a9c9df!important}
+.map-pressure-screen .card input,.map-pressure-screen .card select,
+.map-pressure-screen .card textarea{
+ background:#09264d!important;color:#f5fbff!important;
+ border:1px solid #286b99!important;border-radius:12px!important;
+ min-height:46px!important;
+}
+.map-pressure-screen .card input::placeholder,
+.map-pressure-screen .card textarea::placeholder{color:#9abbd2!important}
+.map-pressure-screen .card input:focus,.map-pressure-screen .card select:focus,
+.map-pressure-screen .card textarea:focus{outline:2px solid #42c5ef!important;outline-offset:1px}
+.map-pressure-screen .card .btn{
+ background:linear-gradient(110deg,#087fc0,#12a8cf)!important;
+ color:#fff!important;border:1px solid #54c9e8!important;border-radius:13px!important;
+}
+.map-pressure-screen .map-progress-track{background:#183b60!important}
+.map-pressure-screen .map-progress-track i{background:linear-gradient(90deg,#12bce5,#49d2e7)!important}
+.map-pressure-screen .map-grid,.map-pressure-screen .map-grid-v{stroke:#42617e!important}
+.map-pressure-screen .map-date-field{color:#eaf7ff!important}
+.map-pressure-screen .empty{color:#bdd5e5!important}
+.map-pressure-screen .item{
+ background:#09264d!important;border:1px solid #286b99!important;
+ border-radius:14px!important;color:#eaf7ff!important;
+}
+.map-pressure-screen .item p,.map-pressure-screen .item small{color:#b7d1e2!important}
+@media(max-width:560px){
+ .map-pressure-screen .card{padding:15px!important;border-radius:18px!important}
+ .map-pressure-screen .card .formgrid{gap:12px!important}
+}

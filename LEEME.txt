@@ -176,3 +176,9 @@ VERSIÓN 50 — RESTAURACIÓN DEL COLOR ORIGINAL
 - Se conservan las funciones añadidas después: registro simultáneo de ambos brazos, clasificación vinculada al registro, interpretación dinámica, historial compacto y mapa.
 - Se conserva la retirada visual de la tarjeta independiente "Medición seleccionada".
 - No se modifican datos ni la clave de almacenamiento local.
+
+
+VERSIÓN 51 — MAPA DE PRESIÓN CON DISEÑO DEL TENSIÓMETRO
+- La pantalla Mapa de presión adopta la identidad visual del monitor Diseño 6: azul marino profundo, acentos cian y tarjetas oscuras.
+- Se estilizaron formularios, campos, botones, avisos, progreso, gráficas y elementos del historial del mapa.
+- Se conserva la estructura y funcionalidad del mapa, los registros y el almacenamiento local.
