@@ -1418,3 +1418,29 @@ a{color:var(--brand-strong)}
 .visit-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:26px 10px;color:#e3f7ff;gap:6px}.visit-empty span{font-size:38px}.visit-empty small{font-size:12px;color:#b9e8f9}.visit-note{margin:12px 2px;color:var(--muted);font-size:11px;line-height:1.5}
 @media(max-width:680px){.visits-heading{padding:14px}.visits-summary{gap:6px}.visits-summary>div{padding:10px 4px}.visits-summary small{font-size:9px}.visit-card{gap:7px;padding:8px}.visit-date-block{width:56px;min-width:56px;padding:8px 3px}.visit-card-top{gap:5px}.visit-card-top>div strong{font-size:12px}.visit-status{font-size:9px;padding:4px 6px}.visit-meta{font-size:10px}}
 
+
+
+/* Inicio simplificado: conserva fecha, saludo, paciente y accesos principales. */
+#inicio .hello .quick { display: none !important; }
+#inicio .home-summary-heading,
+#inicio > .tiles,
+#inicio > .stack { display: none !important; }
+#inicio .home-patient-identity {
+  margin: 7px 0 0;
+  color: var(--muted, #8ca8bb);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.patient-summary-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.patient-summary-photo,.patient-summary-placeholder{width:88px;height:88px;border-radius:22px;object-fit:cover;background:linear-gradient(135deg,#0878db,#21c6d0);display:grid;place-items:center;color:white;font-size:34px;flex-shrink:0}
+.patient-summary-head h3{margin:5px 0}
+.patient-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 22px}
+.patient-summary-field{padding:11px;border-radius:12px;background:var(--surface-2,rgba(80,140,180,.08));min-width:0}
+.patient-summary-field small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}
+.patient-summary-field span{font-size:13px;overflow-wrap:anywhere}
+.patient-summary-table{width:100%;border-collapse:collapse;font-size:13px}
+.patient-summary-table th,.patient-summary-table td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line,rgba(120,160,190,.2))}
+.patient-summary-table td small{display:block;color:var(--muted);font-size:11px}
+#patientSummaryContent h3{margin:20px 0 9px}
+@media(max-width:420px){.patient-summary-grid{grid-template-columns:1fr}.patient-summary-photo,.patient-summary-placeholder{width:72px;height:72px}}

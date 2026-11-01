@@ -367,6 +367,8 @@ function render() {
   const hello = h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches';
   $('homeGreeting').textContent = name ? `${t(hello)}, ${name}` : t(hello);
   $('todayLabel').textContent = new Date().toLocaleDateString(locale(), { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const identity = $('homePatientIdentity');
+  if (identity) identity.textContent = data.patient?.name ? `${data.patient.name}${data.patient.age ? ` · ${data.patient.age} años` : ''}` : 'Registra el perfil del paciente';
 
   const latestPreferred = bp.length ? preferredArmReading(bp[0]) : null;
   $('homeBP').textContent = latestPreferred ? `${latestPreferred.sys}/${latestPreferred.dia}` : '—';
@@ -715,10 +717,25 @@ function bindForms() {
     save(); f.reset(); f.elements.date.value = today(); f.elements.time.value = nowTime();
     $('chartType').value = target; renderCharts(); toast(t('Control guardado en este dispositivo.'));
   });
-  $('patientForm').addEventListener('submit', e => {
-    e.preventDefault(); const f = new FormData(e.target); data.patient = {};
-    for (const [k, v] of f.entries()) data.patient[k] = String(v).trim();
-    save(); toast(t('Datos del paciente guardados en este dispositivo.'));
+  $('patientForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const form = e.currentTarget, f = new FormData(form), previous = data.patient || {};
+    const patient = { ...previous };
+    for (const [k, v] of f.entries()) {
+      if (k === 'photoFile') continue;
+      patient[k] = String(v).trim();
+    }
+    const photo = f.get('photoFile');
+    if (photo && photo.size) {
+      if (photo.size > 3 * 1024 * 1024) { toast('La fotografía debe pesar menos de 3 MB.'); return; }
+      try { patient.photo = await toDataURL(photo); } catch (_) { toast('No se pudo leer la fotografía.'); return; }
+    }
+    if (!patient.name) { toast('Escribe el nombre del paciente antes de guardar.'); form.elements.name.focus(); return; }
+    data.patient = patient;
+    const ok = save();
+    if (ok === false) { data.patient = previous; toast('No se pudo guardar el perfil.'); return; }
+    renderPatientSummary();
+    toast(t('Datos del paciente guardados en este dispositivo.'));
   });
   $('patientClear').addEventListener('click', async () => {
     if (await askConfirm(t('¿Limpiar los campos del formulario? Los datos guardados no se borran hasta que guardes el formulario vacío.'), t('Limpiar'))) $('patientForm').reset();
@@ -756,6 +773,43 @@ function medTaken(mid) {
 window.medTaken = medTaken;
 
 /* ---------- Paciente y agua ---------- */
+
+function renderPatientSummary() {
+  const host = $('patientSummaryContent');
+  if (!host) return;
+  const p = data.patient || {};
+  if (!p.name) {
+    host.innerHTML = '<p class="muted">Aún no hay un perfil guardado. Completa el formulario y selecciona «Guardar datos del paciente».</p>';
+    return;
+  }
+  const age = p.birthDate ? ageOnDate(p.birthDate) : null;
+  const fields = [
+    ['Fecha de nacimiento', p.birthDate], ['Edad', age === null ? '' : age + ' años'],
+    ['Sexo', p.sex], ['Teléfono', p.phone], ['Correo', p.email],
+    ['Peso', p.weightKg ? p.weightKg + ' kg' : ''], ['Estatura', p.heightCm ? p.heightCm + ' cm' : ''],
+    ['Grupo sanguíneo', p.blood], ['Hipertensión', p.hypertension === 'yes' ? 'Diagnosticada' : p.hypertension === 'suspected' ? 'En evaluación' : p.hypertension === 'no' ? 'No diagnosticada' : 'No indicado'],
+    ['Padecimientos', p.conditions], ['Alergias a medicamentos', p.medAllergies],
+    ['Otras alergias', p.otherAllergies], ['Contacto de emergencia', p.emergencyName],
+    ['Teléfono de emergencia', p.emergencyPhone], ['Notas médicas', p.medicalNotes]
+  ].filter(x => x[1]);
+  const bp = [...(data.bp || [])].sort(byDateDesc).slice(0,5);
+  const glucose = [...(data.glucose || [])].sort(byDateDesc).slice(0,5);
+  const meds = (data.meds || []).filter(m => !m.end || m.end >= today());
+  const photo = p.photo ? `<img src="${p.photo}" alt="Fotografía de ${esc(p.name)}" class="patient-summary-photo">` : '<div class="patient-summary-placeholder">👤</div>';
+  const detailRows = fields.map(([k,v]) => `<div class="patient-summary-field"><small>${esc(k)}</small><span>${esc(String(v))}</span></div>`).join('');
+  const bpRows = bp.map(x => {
+    const reading = preferredArmReading(x);
+    return `<tr><td>${esc(fmtDate(x.date))}<small>${esc(x.time || '')}</small></td><td>${reading ? `${Math.round(reading.sys)}/${Math.round(reading.dia)} mmHg` : '—'}</td><td>${esc(x.take || '—')}</td></tr>`;
+  }).join('') || '<tr><td colspan="3">Sin mediciones registradas</td></tr>';
+  const glucoseRows = glucose.map(x => `<tr><td>${esc(fmtDate(x.date))}<small>${esc(x.time || '')}</small></td><td>${esc(String(x.value ?? x.glucose ?? '—'))} mg/dL</td><td>${esc(x.when || '—')}</td></tr>`).join('') || '<tr><td colspan="3">Sin registros de glucosa</td></tr>';
+  const medRows = meds.map(m => `<tr><td>${esc(m.name || '—')}</td><td>${esc(m.dose || '—')}</td><td>${esc(m.time || '—')}</td></tr>`).join('') || '<tr><td colspan="3">Sin medicamentos activos registrados</td></tr>';
+  host.innerHTML = `<div class="patient-summary-head">${photo}<div><span class="eyebrow">EXPEDIENTE DEL PACIENTE</span><h3>${esc(p.name)}</h3><p class="muted">${age === null ? 'Edad no indicada' : age + ' años'} · ${esc(p.sex || 'Sexo no indicado')}</p></div></div>
+  <div class="row between wrap"><h3>Resumen del paciente</h3><button type="button" class="btn ghost small" onclick="document.getElementById('patientForm').scrollIntoView({behavior:'smooth'})">Editar perfil</button></div>
+  <div class="patient-summary-grid">${detailRows || '<p class="muted">No hay más datos del paciente.</p>'}</div>
+  <h3>Últimas mediciones de presión arterial</h3><div class="table-scroll"><table class="patient-summary-table"><thead><tr><th>Fecha</th><th>Resultado</th><th>Toma</th></tr></thead><tbody>${bpRows}</tbody></table></div>
+  <h3>Últimas mediciones de glucosa</h3><div class="table-scroll"><table class="patient-summary-table"><thead><tr><th>Fecha</th><th>Resultado</th><th>Momento</th></tr></thead><tbody>${glucoseRows}</tbody></table></div>
+  <h3>Medicamentos registrados</h3><div class="table-scroll"><table class="patient-summary-table"><thead><tr><th>Medicamento</th><th>Dosis</th><th>Horario</th></tr></thead><tbody>${medRows}</tbody></table></div>`;
+}
 function renderPatient() {
   const f = $('patientForm'), p = data.patient || {};
   Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
@@ -769,6 +823,7 @@ function renderPatient() {
   if (details) details.textContent = patientDetails;
   if (mapName) mapName.textContent = patientName;
   if (mapDetails) mapDetails.textContent = patientDetails;
+  renderPatientSummary();
 }
 function renderWater() {
   const w = data.water || (data.water = { goal: 2000, interval: 60, logs: [] }), day = today();
