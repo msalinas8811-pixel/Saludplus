@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=54">
+<link rel="stylesheet" href="styles.css?v=55">
 </head>
 <body>
 
@@ -323,7 +323,7 @@
     </div></div>
 </section>
 
-   <section id="mapa-presion" class="view map-pressure-screen">
+   <section id="mapa-presion" class="view map-pressure-screen" hidden aria-hidden="true">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
     <div class="page-head"><div><h2 data-i18n>Mapa de presión</h2><p data-i18n>Seguimiento domiciliario de las mediciones según la hora del día.</p></div></div>
     <div class="card bp-entry-card premium-monitor map-monitor-shell">
@@ -371,17 +371,28 @@
 
    <section id="glucosa" class="view">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
-    <div class="page-head"><div><h2 data-i18n>Control de glucosa</h2><p data-i18n>Anota el resultado y las circunstancias de la medición.</p></div></div>
-    <div class="stack">
+    <div class="page-head"><div><h2 data-i18n>Control de glucosa</h2><p data-i18n>Registra tus mediciones de forma sencilla.</p></div></div>
+    <div class="glucose-premium-shell">
+      <div class="glucose-brandline"><span class="glucose-brandmark">✿</span><strong>Salud<span>Plus</span></strong><span class="glucose-heart">♡</span></div>
+      <div class="glucose-hero">
+       <div class="glucose-meter-art" aria-label="Ilustración de un glucómetro digital">
+        <div class="meter-screen"><small>GLUCOSE</small><strong id="glucoseHeroValue">---</strong><span>mg/dL</span></div>
+        <div class="meter-button"></div><div class="meter-strip"><i></i></div>
+       </div>
+       <div class="glucose-hero-copy"><strong>Tu control de glucosa</strong><span>Introduce el valor que aparece en tu glucómetro. Es fácil y rápido.</span><small>Registro personal · mg/dL</small></div>
+      </div>
+      <div class="glucose-steps"><span>1. Prepara el glucómetro</span><span>2. Realiza la medición</span><span>3. Registra el resultado</span></div>
+    </div>
+    <div class="stack glucose-stack">
      <div class="card glucose-gauge-card">
       <div id="glucoseGauge" aria-live="polite"></div>
       <p class="fine" data-i18n>El velocímetro solo muestra la escala visual del registro. La interpretación depende del momento de medición y de los objetivos acordados con tu profesional de salud.</p>
      </div>
-     <div class="card"><h3 data-i18n>Nueva medición</h3>
+     <div class="card glucose-entry-card"><h3 data-i18n>Registrar medición</h3><p class="muted">Escribe el número grande que muestra tu glucómetro.</p>
       <form id="glucoseForm"><div class="formgrid">
        <div class="field"><label data-i18n>Fecha</label><input name="date" type="date" required></div>
        <div class="field"><label data-i18n>Hora</label><input name="time" type="time" required></div>
-       <div class="field"><label data-i18n>Glucosa (mg/dL)</label><input name="value" type="number" inputmode="numeric" min="20" max="800" required></div>
+       <div class="field glucose-value-field"><label data-i18n>Resultado de glucosa (mg/dL)</label><input name="value" type="number" inputmode="decimal" min="20" max="800" placeholder="Ej. 105" required></div>
        <div class="field"><label data-i18n>Momento</label><select name="when"><option>Ayunas</option><option>Antes de comer</option><option>2 horas después de comer</option><option>Antes de dormir</option><option>Otro</option></select></div>
        <div class="field full"><label data-i18n>Notas</label><textarea name="notes" placeholder="Comida, síntomas o indicaciones relevantes"></textarea></div>
       </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar glucosa</button></div></form>
@@ -736,7 +747,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=54"></script>
+<script src="app.js?v=55"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>

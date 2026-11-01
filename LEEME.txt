@@ -206,3 +206,12 @@ VERSIÓN 54 — MAPA CON EL MISMO ENCABEZADO Y CORAZÓN DEL REGISTRO
 - Debajo del corazón aparecen las funciones propias del mapa: aviso, configuración, registro de sesiones, gráfica, promedios e historial.
 - El resumen del paciente del mapa se sincroniza con el perfil clínico.
 - Se mantiene la función y estructura de datos del mapa; no se altera el almacenamiento local.
+
+
+VERSIÓN 55 — GLUCOSA VISUAL Y RETIRO DEL MAPA DE LA NAVEGACIÓN
+- Se retiró el acceso visible al Mapa de presión y se ocultó su pantalla; se conserva su estructura de compatibilidad y los datos bpMap en almacenamiento local, sin borrarlos.
+- Se renovó la cabecera de Glucosa con ilustración CSS de un glucómetro digital, pantalla grande, tira reactiva y gota representativa.
+- El valor más reciente guardado aparece en la pantalla ilustrada del glucómetro.
+- Se amplió visualmente el campo del resultado para facilitar su uso en móvil.
+- Se mantienen formulario, momento de medición, notas, historial, promedio y gráfica existente.
+- Se conserva la clave local salud360_pwa_v1.

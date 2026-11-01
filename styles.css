@@ -1232,3 +1232,46 @@ a{color:var(--brand-strong)}
  .map-pressure-screen .map-patient-summary .btn{align-self:flex-start}
  .map-pressure-screen .map-heart-intro{justify-content:flex-start}
 }
+
+/* v55 — glucosa: glucómetro visual, legible y amable */
+.view[hidden]{display:none!important}
+.glucose-premium-shell{
+ margin:0 0 16px;padding:18px;border-radius:26px;overflow:hidden;position:relative;
+ color:#edfaff;border:1px solid #155d8c;
+ background:radial-gradient(ellipse at 10% 20%,rgba(0,199,235,.18),transparent 38%),
+ linear-gradient(145deg,#061c43 0%,#082e63 55%,#031735 100%);
+ box-shadow:0 16px 36px rgba(3,28,66,.2),inset 0 1px 0 rgba(164,226,255,.16);
+}
+.glucose-brandline{display:flex;align-items:center;gap:10px;font-size:23px;font-weight:900}
+.glucose-brandline strong span{color:#2bd5df}
+.glucose-brandmark{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#087caf;color:#63e5e9;font-size:25px}
+.glucose-heart{margin-left:auto;color:#a9d5ed;font-size:30px}
+.glucose-hero{display:flex;align-items:center;justify-content:center;gap:22px;padding:22px 4px 16px}
+.glucose-meter-art{width:148px;height:190px;flex:0 0 148px;border-radius:24px;padding:15px;background:linear-gradient(145deg,#dce8ef,#9db4c4 45%,#d9e5ec);border:2px solid #f3fbff;box-shadow:inset 0 2px 5px #fff,0 12px 24px #00142d66;position:relative}
+.meter-screen{height:105px;border-radius:12px;background:linear-gradient(145deg,#d7f2e9,#b8d9ce);border:2px solid #718f87;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#153d39;box-shadow:inset 0 2px 8px #527a7033}
+.meter-screen small{font-size:9px;letter-spacing:2px;font-weight:800}
+.meter-screen strong{font-size:35px;line-height:1.1;font-weight:900}
+.meter-screen span{font-size:11px;font-weight:800}
+.meter-button{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,#f8ffff,#aabdc9);border:1px solid #8298a7;margin:10px auto}
+.meter-strip{position:absolute;bottom:-19px;left:62px;width:24px;height:32px;background:#f7fbff;border:1px solid #9bb6c5;border-radius:0 0 5px 5px}
+.meter-strip i{display:block;width:7px;height:7px;border-radius:50%;background:#d85e78;margin:4px auto}
+.glucose-hero-copy{display:flex;flex-direction:column;gap:8px;max-width:270px}
+.glucose-hero-copy strong{font-size:21px;color:#fff}
+.glucose-hero-copy span{color:#c2e2f2;line-height:1.5;font-size:15px}
+.glucose-hero-copy small{color:#7edce6;font-weight:700}
+.glucose-steps{display:flex;flex-wrap:wrap;gap:7px}
+.glucose-steps span{padding:8px 10px;border-radius:12px;background:#0b3965;border:1px solid #286b99;color:#d8f2fb;font-size:12px;font-weight:700}
+.glucose-entry-card{border:1px solid #b9ddeb!important;border-radius:20px!important}
+.glucose-value-field input{font-size:26px!important;font-weight:850!important;min-height:64px!important;border:2px solid #159ec0!important;border-radius:15px!important;padding:14px 16px!important}
+.glucose-value-field input::placeholder{font-size:20px;font-weight:500}
+.glucose-stack>.card{border-radius:19px}
+@media(max-width:560px){
+ .glucose-premium-shell{padding:15px;border-radius:22px}
+ .glucose-hero{gap:16px;justify-content:flex-start}
+ .glucose-meter-art{width:120px;height:164px;flex-basis:120px;padding:12px}
+ .meter-screen{height:91px}.meter-screen strong{font-size:29px}
+ .meter-strip{left:49px}
+ .glucose-hero-copy strong{font-size:18px}
+ .glucose-hero-copy span{font-size:13px}
+ .glucose-steps{display:grid;grid-template-columns:1fr}
+}
