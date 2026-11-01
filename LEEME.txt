@@ -182,3 +182,11 @@ VERSIÓN 51 — MAPA DE PRESIÓN CON DISEÑO DEL TENSIÓMETRO
 - La pantalla Mapa de presión adopta la identidad visual del monitor Diseño 6: azul marino profundo, acentos cian y tarjetas oscuras.
 - Se estilizaron formularios, campos, botones, avisos, progreso, gráficas y elementos del historial del mapa.
 - Se conserva la estructura y funcionalidad del mapa, los registros y el almacenamiento local.
+
+
+VERSIÓN 52 — MAPA CON DISEÑO IDÉNTICO AL MONITOR + PALETA DEL LOGO GLOBAL
+- La pantalla Mapa de presión ahora usa el mismo panel envolvente azul marino, luces cian y tarjetas internas azul profundo del registro de presión Diseño 6.
+- Formularios, campos, botones, gráficas, progreso, promedios y sesiones mantienen contraste para lectura.
+- Se armonizan en toda la app los colores de marca del logo: azul, cian/turquesa y verde como acento de éxito.
+- Se conservan los colores clínicos de estado en tonos discretos para que las categorías sigan diferenciándose.
+- Sin cambios en datos, estructura de registros ni clave de almacenamiento.

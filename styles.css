@@ -1041,3 +1041,87 @@ dialog.sheet h3{margin:0 0 14px}
  .map-pressure-screen .card{padding:15px!important;border-radius:18px!important}
  .map-pressure-screen .card .formgrid{gap:12px!important}
 }
+
+/* v52 — sistema visual global basado en el isotipo SaludPlus */
+:root{
+ --brand:#087fc3;--brand-strong:#075d9b;--brand-soft:#e4f5fb;--teal:#13aeb7;--leaf:#35b96b;
+ --line:#d4e6ef;--focus:#27b9d6;
+}
+@media(prefers-color-scheme:dark){
+ :root{
+  --brand:#20a5d5;--brand-strong:#54c4e6;--brand-soft:#12394c;
+  --teal:#26bec0;--leaf:#54c982;--line:#294b5d;
+ }
+}
+.brand b span{color:var(--teal)}
+.langpick button.on,.tab.active .ico{background:var(--brand)!important;color:#fff!important}
+.tab.active{color:var(--brand-strong)!important}
+.btn:not(.ghost),button.primary{
+ background:linear-gradient(110deg,#087fc3,#10aebd)!important;
+ border-color:#20b7ca!important;color:#fff!important;
+}
+a{color:var(--brand-strong)}
+:focus-visible{outline-color:#27b9d6!important}
+.progress i,.progress-bar,.chart-bar{background:linear-gradient(90deg,#087fc3,#12b6bd)!important}
+.shortcut-card,.card,.panel{border-color:var(--line)}
+/* Estados semánticos discretos: verde del logo para éxito, azul/cian para acciones */
+.badge.success,.status-success{background:#e6f7ed!important;color:#187849!important;border-color:#b9e6cb!important}
+.notice.success{border-left-color:#35b96b!important}
+.notice.info{border-left-color:#13aeb7!important}
+/* Mapa: misma composición visual del monitor principal */
+.map-pressure-screen .page-head{margin-bottom:14px}
+.map-pressure-screen .page-head h2{color:var(--ink)}
+.map-pressure-screen>.stack{
+ position:relative;isolation:isolate;overflow:hidden;
+ padding:clamp(14px,3vw,24px);
+ border:1px solid #145b91;border-radius:28px;
+ background:
+  radial-gradient(ellipse at 10% 12%,rgba(0,205,255,.19),transparent 38%),
+  radial-gradient(ellipse at 100% 0%,rgba(39,106,218,.22),transparent 40%),
+  linear-gradient(145deg,#061c43 0%,#082e63 50%,#031735 100%);
+ box-shadow:0 20px 48px rgba(3,28,66,.2),inset 0 1px 0 rgba(164,226,255,.17);
+}
+.map-pressure-screen>.stack:before{
+ content:"";position:absolute;z-index:-1;inset:0;opacity:.13;pointer-events:none;
+ background:repeating-linear-gradient(165deg,transparent 0 34px,rgba(51,196,255,.16) 35px 36px,transparent 37px 76px);
+}
+.map-pressure-screen .map-disclaimer{
+ background:rgba(7,47,91,.72)!important;border:1px solid rgba(102,193,229,.38)!important;
+ border-left:4px solid #18b9d0!important;border-radius:16px!important;
+ color:#dceffa!important;padding:14px 16px!important;
+}
+.map-pressure-screen .card{
+ position:relative;background:rgba(5,39,81,.78)!important;
+ border:1px solid rgba(76,163,211,.52)!important;border-radius:20px!important;
+ color:#edf8ff!important;
+ box-shadow:inset 0 1px 0 rgba(181,225,247,.09),0 8px 22px rgba(0,16,42,.12)!important;
+}
+.map-pressure-screen .card h3,.map-pressure-screen .card label{color:#f2f9ff!important}
+.map-pressure-screen .card p.muted,.map-pressure-screen .card .muted,
+.map-pressure-screen .card .fine{color:#a9c9df!important}
+.map-pressure-screen .card input,.map-pressure-screen .card select,
+.map-pressure-screen .card textarea{
+ background:#09264d!important;color:#f5fbff!important;
+ border:1px solid #286b99!important;border-radius:12px!important;min-height:46px!important;
+}
+.map-pressure-screen .card input::placeholder,.map-pressure-screen .card textarea::placeholder{color:#9abbd2!important}
+.map-pressure-screen .card input:focus,.map-pressure-screen .card select:focus,
+.map-pressure-screen .card textarea:focus{outline:2px solid #35c8e7!important;outline-offset:1px}
+.map-pressure-screen .card .btn:not(.ghost){
+ background:linear-gradient(110deg,#087fc3,#0ba7c3)!important;
+ color:#fff!important;border:1px solid #4bc8e5!important;border-radius:13px!important;
+}
+.map-pressure-screen .card .btn.ghost{background:rgba(7,48,89,.5)!important;color:#d9effb!important;border:1px solid #397ca7!important}
+.map-pressure-screen .map-progress-track{background:#183b60!important}
+.map-pressure-screen .map-progress-track i{background:linear-gradient(90deg,#0b91cb,#16b9bd)!important}
+.map-pressure-screen .map-grid,.map-pressure-screen .map-grid-v{stroke:#42617e!important}
+.map-pressure-screen .map-date-field{color:#eaf7ff!important}
+.map-pressure-screen .empty{color:#bdd5e5!important}
+.map-pressure-screen .item{background:#09264d!important;border:1px solid #286b99!important;border-radius:14px!important;color:#eaf7ff!important}
+.map-pressure-screen .item p,.map-pressure-screen .item small{color:#b7d1e2!important}
+.map-pressure-screen .map-averages>*{background:#09264d!important;border:1px solid #286b99!important;color:#edf8ff!important;border-radius:14px!important}
+@media(max-width:560px){
+ .map-pressure-screen>.stack{padding:12px;border-radius:22px}
+ .map-pressure-screen .card{padding:14px!important;border-radius:17px!important}
+ .map-pressure-screen .card .formgrid{gap:12px!important}
+}
