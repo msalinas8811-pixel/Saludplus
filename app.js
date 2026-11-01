@@ -1,4 +1,4 @@
-/* SaludPlus v61 · lógica principal
+/* SaludPlus v28 · lógica principal
    Los datos usan la misma clave de almacenamiento que las versiones anteriores, así que no se pierden al actualizar. */
 'use strict';
 
@@ -365,10 +365,8 @@ function render() {
   const name = (data.patient?.name || '').trim().split(/\s+/)[0];
   const h = new Date().getHours();
   const hello = h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches';
-  $('homeGreeting').textContent = t(hello);
+  $('homeGreeting').textContent = name ? `${t(hello)}, ${name}` : t(hello);
   $('todayLabel').textContent = new Date().toLocaleDateString(locale(), { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  const homeName = $('homePatientDisplay'); if (homeName) homeName.textContent = data.patient?.name || 'Paciente sin registrar';
-  const homeAge = $('homePatientAge'); if (homeAge) { const a = data.patient?.birthDate ? ageOnDate(data.patient.birthDate) : null; homeAge.textContent = a === null ? 'Edad no registrada' : `${a} años`; }
 
   const latestPreferred = bp.length ? preferredArmReading(bp[0]) : null;
   $('homeBP').textContent = latestPreferred ? `${latestPreferred.sys}/${latestPreferred.dia}` : '—';
@@ -720,7 +718,7 @@ function bindForms() {
   $('patientForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target); data.patient = {};
     for (const [k, v] of f.entries()) data.patient[k] = String(v).trim();
-    save(); $('patientEditCard').classList.add('hidden'); toast(t('Datos del paciente guardados en este dispositivo.'));
+    save(); toast(t('Datos del paciente guardados en este dispositivo.'));
   });
   $('patientClear').addEventListener('click', async () => {
     if (await askConfirm(t('¿Limpiar los campos del formulario? Los datos guardados no se borran hasta que guardes el formulario vacío.'), t('Limpiar'))) $('patientForm').reset();
@@ -760,12 +758,7 @@ window.medTaken = medTaken;
 /* ---------- Paciente y agua ---------- */
 function renderPatient() {
   const f = $('patientForm'), p = data.patient || {};
-  if (f) Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
-  const hasProfile = !!(p.name && p.name.trim());
-  const empty = $('patientEmptyState'), display = $('patientProfileDisplay');
-  if (empty) empty.classList.toggle('hidden', hasProfile);
-  if (display) display.classList.toggle('hidden', !hasProfile);
-  const editCard = $('patientEditCard');
+  Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
   const name = $('bpPatientName'), details = $('bpPatientDetails');
   const mapName = $('mapPatientName'), mapDetails = $('mapPatientDetails');
   const patientName = p.name || 'Paciente sin configurar';
@@ -776,32 +769,7 @@ function renderPatient() {
   if (details) details.textContent = patientDetails;
   if (mapName) mapName.textContent = patientName;
   if (mapDetails) mapDetails.textContent = patientDetails;
-  const displayName = $('profileDisplayName'), displayAge = $('profileDisplayAge');
-  if (displayName) displayName.textContent = patientName;
-  if (displayAge) displayAge.textContent = age === null ? 'Edad no registrada' : `${age} años · ${p.birthDate ? fmtDate(p.birthDate) : ''}`;
-  const fields = [
-    ['Nombre completo',p.name],['Fecha de nacimiento',p.birthDate ? fmtDate(p.birthDate) : ''],['Sexo',p.sex],['Peso',p.weightKg ? p.weightKg+' kg' : ''],['Estatura',p.heightCm ? p.heightCm+' cm' : ''],['Teléfono',p.phone],['Correo electrónico',p.email],['Grupo sanguíneo',p.blood],['Diagnóstico de hipertensión',({yes:'Sí, diagnosticada',no:'No diagnosticada',suspected:'En evaluación'})[p.hypertension] || ''],['Padecimientos',p.conditions],['Alergias a medicamentos',p.medAllergies],['Otras alergias',p.otherAllergies],['Medicamentos e indicaciones',p.currentMeds],['Contacto de emergencia',[p.emergencyName,p.emergencyPhone].filter(Boolean).join(' · ')],['Otros datos médicos',p.medicalNotes]
-  ];
-  const detailsBox = $('patientProfileDetails');
-  if (detailsBox) detailsBox.innerHTML = fields.filter(x=>x[1]).map(([label,value])=>`<div class="profile-detail"><small>${esc(label)}</small><strong>${esc(value)}</strong></div>`).join('') || '<p class="muted">Aún no hay datos adicionales registrados.</p>';
-  const bpRows = [...data.bp].filter(validBP).sort(byDateDesc).slice(0,10);
-  const bpBox = $('profileBpHistory');
-  if (bpBox) bpBox.innerHTML = bpRows.length ? bpRows.map(x=>{const r=preferredArmReading(x);return `<div class="profile-history-row"><span class="profile-history-icon">♥</span><div><strong>${Math.round(r.sys)}/${Math.round(r.dia)} mmHg</strong><small>${esc(fmtDate(x.date))} · ${esc(x.time||'Hora no indicada')} · Brazo ${esc(r.arm)}</small></div></div>`}).join('') : '<p class="muted">Todavía no hay registros de presión arterial.</p>';
-  const glucoseRows = [...data.glucose].filter(x=>Number.isFinite(num(x.value))).sort(byDateDesc).slice(0,10);
-  const glucoseBox = $('profileGlucoseHistory');
-  if (glucoseBox) glucoseBox.innerHTML = glucoseRows.length ? glucoseRows.map(x=>`<div class="profile-history-row"><span class="profile-history-icon glucose">◆</span><div><strong>${esc(x.value)} mg/dL</strong><small>${esc(fmtDate(x.date))} · ${esc(x.time||'Hora no indicada')} · ${esc(t(x.when||'Momento no indicado'))}</small></div></div>`).join('') : '<p class="muted">Todavía no hay registros de glucosa.</p>';
 }
-window.startPatientEdit = function(){
-  const card=$('patientEditCard'); if(!card)return;
-  card.classList.remove('hidden');
-  const f=$('patientForm'); if(f){f.reset();Object.keys(data.patient||{}).forEach(k=>{if(f.elements[k])f.elements[k].value=data.patient[k]||'';});}
-  card.scrollIntoView({behavior:'smooth',block:'start'});
-};
-window.deletePatientProfile = async function(){
-  if(!await askConfirm('¿Eliminar el perfil del paciente? Los historiales de presión y glucosa no se eliminarán.','Eliminar perfil'))return;
-  data.patient={}; persist(); render(); toast('Perfil eliminado. Los historiales se conservaron.');
-};
-
 function renderWater() {
   const w = data.water || (data.water = { goal: 2000, interval: 60, logs: [] }), day = today();
   const logs = w.logs.filter(x => x.date === day), sum = logs.reduce((a, x) => a + (+x.ml || 0), 0);
