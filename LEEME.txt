@@ -127,3 +127,12 @@ VERSIÓN 44 — REGISTRO DE AMBOS BRAZOS EN UNA SOLA TOMA
 - Se conserva el esquema de datos anterior (ls/ld/lp y rs/rd/rp), historial, promedios, perfil y mapa.
 - Los resúmenes siguen usando como referencia el brazo con mayor sistólica cuando existen ambos valores.
 - No se borra el historial ni cambia la clave de almacenamiento local.
+
+
+VERSIÓN 45 — CLASIFICACIÓN POR REGISTRO Y GRÁFICA SELECCIONABLE
+- La tarjeta de clasificación usa una sola medición guardada: por defecto la más reciente; al pulsar "Ver gráfica" usa el registro seleccionado.
+- Si el registro tiene ambos brazos, para clasificación se usa el brazo con sistólica más alta; los valores de cada brazo siguen visibles por separado en el historial.
+- Se movió "Medición seleccionada" fuera del contenedor oculto y ahora aparece debajo del historial.
+- Al pulsar "Ver gráfica", la gráfica y el valor mostrado cambian al registro elegido; al cargar la pantalla se muestra la medición más reciente.
+- Se actualizó el título a "Clasificación del registro" para no confundirlo con un promedio de varios registros.
+- Se conserva el historial y la clave local.

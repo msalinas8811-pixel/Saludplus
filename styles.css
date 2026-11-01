@@ -954,3 +954,11 @@ dialog.sheet h3{margin:0 0 14px}
  .premium-arm-fields label span{font-size:10px}
  .premium-arm-fields input{width:100%;font-size:22px;text-align:left}
 }
+
+/* v45 — gráfica del registro seleccionado visible en el historial */
+#bpSelectedCard{display:block!important;margin-top:10px;border:1px solid #cfe2ef;border-radius:18px;background:linear-gradient(145deg,#fff,#f5fbff);padding:16px}
+#bpSelectedCard .bp-speed-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#bpSelectedCard .speed-gauge{min-width:0}
+#bpSelectedCard .value{font-size:clamp(25px,5vw,36px);font-weight:850}
+#bpSelectedCard .row{gap:8px}
+@media(max-width:480px){#bpSelectedCard{padding:12px}#bpSelectedCard .bp-speed-wrap{gap:4px}}

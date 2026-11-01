@@ -5,6 +5,7 @@
 const KEY = 'salud360_pwa_v1';
 const emptyData = () => ({ bp: [], bpMap: { settings: { startDate: '', duration: 7, morningTime: '07:00', eveningTime: '20:00' }, sessions: [] }, glucose: [], pulse: [], weight: [], meds: [], visits: [], patient: {}, examPlans: [], examResults: [], reminders: { bpTimes: ['08:00', '20:00'] }, water: { goal: 2000, interval: 60, logs: [] } });
 let data = loadData();
+let selectedBPRecordId = null;
 
 function loadData() {
   try {
@@ -296,17 +297,21 @@ function renderCharts() {
 }
 
 /* ---------- Render principal ---------- */
-function selectBPRecord(id) {
+function selectBPRecord(id, shouldScroll = true) {
   const x = data.bp.find(r => r.id === id);
   if (!x) return;
-  const left = Number(x.ls), right = Number(x.rs), leftD = Number(x.ld), rightD = Number(x.rd);
-  const sys = [left,right].filter(Number.isFinite);
-  const dia = [leftD,rightD].filter(Number.isFinite);
-  const s = average(sys), d = average(dia);
-  $('bpSelectedDateTime').textContent = `${fmtDate(x.date)} · ${x.time || 'Hora no registrada'} · Toma ${x.take || '—'}`;
+  selectedBPRecordId = id;
+  const chosen = preferredArmReading(x);
+  if (!chosen) return;
+  const s = chosen.sys, d = chosen.dia;
+  $('bpSelectedDateTime').textContent = `${fmtDate(x.date)} · ${x.time || 'Hora no registrada'} · Toma ${x.take || '—'} · Brazo ${chosen.arm}`;
   $('bpSelectedValue').textContent = `${Math.round(s)}/${Math.round(d)} mmHg`;
   $('bpSelectedGauge').innerHTML = bpGauge(s,d);
-  $('bpSelectedCard').scrollIntoView({behavior:'smooth',block:'center'});
+  $('bpCombinedAvg').textContent = `${Math.round(s)}/${Math.round(d)} mmHg`;
+  $('bpAverageAdvice').textContent = `Clasificación de esta medición · brazo ${chosen.arm}. No es un diagnóstico.`;
+  setBPStatus('bpAverageCard', 'bpAverageStatus', 'bpAverageAdvice', s, d);
+  $('bpGauge').innerHTML = bpGauge(s,d);
+  if (shouldScroll) $('bpSelectedCard').scrollIntoView({behavior:'smooth',block:'center'});
 }
 window.selectBPRecord = selectBPRecord;
 
@@ -379,9 +384,14 @@ function render() {
   $('avgBPSub').textContent = ss.length ? `${recent.length} ${t('mediciones recientes incluidas; clasificación orientativa para adultos.')}` : t('Se calcula con las mediciones guardadas.');
   setBPStatus('avgBPCard', 'avgBPStatus', null, avgS, avgD);
   $('homeGauge').innerHTML = bpGauge(avgS, avgD); $('bpGauge').innerHTML = bpGauge(avgS, avgD);
-  $('bpCombinedAvg').textContent = avgText;
-  $('bpAverageAdvice').textContent = ss.length ? t('Clasificación orientativa para adultos; no sustituye una valoración clínica.') : t('Registra mediciones para ver la clasificación orientativa.');
-  setBPStatus('bpAverageCard', 'bpAverageStatus', 'bpAverageAdvice', avgS, avgD);
+  const classificationRecord = bp.find(r => r.id === selectedBPRecordId) || bp[0] || null;
+  const classificationReading = classificationRecord ? preferredArmReading(classificationRecord) : null;
+  const classS = classificationReading ? classificationReading.sys : null;
+  const classD = classificationReading ? classificationReading.dia : null;
+  $('bpCombinedAvg').textContent = classificationReading ? `${Math.round(classS)}/${Math.round(classD)} mmHg` : '—';
+  $('bpAverageAdvice').textContent = classificationReading ? `Clasificación de una medición guardada · brazo ${classificationReading.arm}. No sustituye una valoración profesional.` : t('Registra mediciones para ver la clasificación orientativa.');
+  setBPStatus('bpAverageCard', 'bpAverageStatus', 'bpAverageAdvice', classS, classD);
+  $('bpGauge').innerHTML = bpGauge(classS, classD);
   $('bpSysAvg').textContent = ss.length ? Math.round(avgS) + ' mmHg' : '—';
   $('bpDiaAvg').textContent = dd.length ? Math.round(avgD) + ' mmHg' : '—';
   $('bpSysMiniGauge').innerHTML = ss.length ? speedGauge(avgS, 80, 200, 'Sistólica', 'mmHg', '#315F9B', true) : '';
@@ -408,6 +418,8 @@ function render() {
       `${arms}\nPAM aprox.: ${pams} mmHg${diff}${chosen ? ` · Referencia: brazo ${chosen.arm}` : ''}${x.notes ? '\n' + esc(x.notes) : ''}`,
       `<button class="btn secondary small" type="button" onclick="selectBPRecord('${x.id}')">Ver gráfica</button>` + removeBtn('bp', x.id));
   }).join('') : empty('Aún no hay mediciones.');
+  const initialSelectedBP = bp.find(r => r.id === selectedBPRecordId) || bp[0];
+  if (initialSelectedBP) selectBPRecord(initialSelectedBP.id, false);
 
   $('glucoseAvg').textContent = gl.length ? `${t('Promedio de registros')}: ${Math.round(average(gl.map(x => +x.value)))} mg/dL` : `${t('Promedio')}: —`;
   if ($('glucoseGauge')) $('glucoseGauge').innerHTML = glucoseGauge(gl.length ? num(gl[0].value) : NaN, gl.length ? gl[0].when : '');
