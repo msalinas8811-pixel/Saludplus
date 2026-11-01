@@ -818,7 +818,18 @@ function renderPatient() {
   if (bpBox) bpBox.innerHTML = bpRows.length ? bpRows.map(x=>{const r=preferredArmReading(x);return `<div class="profile-history-row"><span class="profile-history-icon">♥</span><div><strong>${Math.round(r.sys)}/${Math.round(r.dia)} mmHg</strong><small>${esc(fmtDate(x.date))} · ${esc(x.time||'Hora no indicada')} · Brazo ${esc(r.arm)}</small></div></div>`}).join('') : '<p class="muted">Todavía no hay registros de presión arterial.</p>';
   const glucoseRows = [...data.glucose].filter(x=>Number.isFinite(num(x.value))).sort(byDateDesc).slice(0,10);
   const glucoseBox = $('profileGlucoseHistory');
-  if (glucoseBox) glucoseBox.innerHTML = glucoseRows.length ? glucoseRows.map(x=>`<div class="profile-history-row"><span class="profile-history-icon glucose">◆</span><div><strong>${esc(x.value)} mg/dL</strong><small>${esc(fmtDate(x.date))} · ${esc(x.time||'Hora no indicada')} · ${esc(t(x.when||'Momento no indicado'))}</small></div></div>`).join('') : '<p class="muted">Todavía no hay registros de glucosa.</p>';
+  if (glucoseBox) glucoseBox.innerHTML = glucoseRows.length ? glucoseRows.map(x=>`<div class="profile-history-row"><span class="profile-history-icon glucose">◆</span><div><strong>${esc(x.value)} mg/dL</strong><small>${esc(fmtDate(x.date))} · ${esc(x.time||'Hora no indicada')} · ${esc(t(x.when||'Momento no indicado'))}${x.notes ? ' · '+esc(x.notes) : ''}</small></div></div>`).join('') : '<p class="muted">Todavía no hay registros de glucosa.</p>';
+  // El expediente muestra los resultados ya registrados en el módulo Exámenes, sin duplicar ni mover sus datos.
+  const examBox = $('profileExamHistory');
+  if (examBox) {
+    const examRows = [...(data.examResults || [])].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    examBox.innerHTML = examRows.length ? examRows.map(r => {
+      const entries = Array.isArray(r.entries) ? r.entries : (Array.isArray(r.results) ? r.results : []);
+      const details = entries.map(en => `<div class="profile-exam-value"><strong>${esc(en.name || en.test || 'Resultado')}</strong><span>${esc(en.value ?? en.result ?? '—')}${en.unit ? ' '+esc(en.unit) : ''}</span>${en.ref ? `<small>Referencia del laboratorio: ${esc(en.ref)}</small>` : ''}</div>`).join('');
+      const files = (r.files || []).map(file => `<button class="btn ghost small" type="button" onclick="openExamFile('${esc(file.id)}','${esc(file.name).replace(/'/g,'')}')">Ver ${esc(file.name || 'documento')}</button>`).join('');
+      return `<article class="profile-exam-report"><div class="profile-exam-report-head"><span class="profile-history-icon exam">▤</span><div><strong>${esc(r.name || 'Examen')}</strong><small>Fecha de registro: ${esc(fmtDate(r.date))}${r.lab ? ' · '+esc(r.lab) : ''}</small></div><span class="profile-exam-status">${esc(({normal:'Normal',altered:'Alterado',review:'Pendiente de revisión'})[r.status] || 'Registrado')}</span></div>${r.summary ? `<p class="profile-exam-summary">${esc(r.summary)}</p>` : ''}${details ? `<div class="profile-exam-values">${details}</div>` : ''}${files ? `<div class="profile-exam-files">${files}</div>` : ''}</article>`;
+    }).join('') : '<p class="muted">Todavía no hay resultados de exámenes. Puedes registrarlos desde el módulo Exámenes.</p>';
+  }
 }
 window.startPatientEdit = function(){
   const card=$('patientEditCard'); if(!card)return;
