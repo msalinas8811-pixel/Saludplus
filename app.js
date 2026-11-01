@@ -439,10 +439,7 @@ function render() {
 
   renderMedicationDashboard();
 
-  $('visitList').innerHTML = data.visits.length ? [...data.visits].sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(x => listItem(
-    `${esc(x.doctor || t('Consulta médica'))} · ${fmtDate(x.date)}`,
-    `${esc(x.specialty || t('Especialidad no indicada'))}${x.nextDate ? '\n' + t('Próxima cita') + ': ' + fmtDate(x.nextDate) : ''}${x.notes ? '\n' + esc(x.notes) : ''}${x.fileName ? '\n' + t('Archivo') + ': ' + esc(x.fileName) : ''}`,
-    `${x.fileData ? `<button class="btn secondary small" type="button" onclick="openAttachment('${x.id}')">${esc(t('Ver archivo'))}</button>` : ''}${removeBtn('visits', x.id)}`)).join('') : empty('No hay consultas registradas.');
+  renderVisitsDashboard();
 
   $('backupStats').textContent = `${data.bp.length} ${t('mediciones de presión')} · ${data.glucose.length} ${t('registros de glucosa')} · ${data.meds.length} ${t('medicamentos')} · ${data.visits.length} ${t('consultas')} · ${(data.examPlans || []).length} ${t('exámenes programados')} · ${(data.examResults || []).length} ${t('resultados')}`;
   renderPatient(); renderClinicalProfile(); renderWater(); renderAlarms(); renderNotices(); renderHome(); renderExams();
@@ -508,6 +505,39 @@ function renderMedicationDashboard() {
     const details = `${esc(m.dose || '')} · ${esc(m.time || 'Sin hora')}${m.instructions ? ' · ' + esc(m.instructions) : ''}`;
     return `<article class="med-row ${done ? 'is-taken' : ''}"><div class="med-row-icon">${done ? '✓' : '💊'}</div><div class="med-row-info"><strong>${esc(m.name)}</strong><small>${details}</small></div><div class="med-row-actions"><button type="button" class="med-state ${done ? 'done' : ''}" ${done ? 'disabled' : ''} onclick="medTaken('${m.id}')">${done ? '✓ Tomado' : '○ Pendiente'}</button>${removeBtn('meds',m.id)}</div></article>`;
   }).join('') : '<div class="med-empty"><span>💊</span><strong>Aún no tienes medicamentos</strong><small>Agrega el primero para organizar tus recordatorios.</small></div>';
+}
+let visitFilter = 'upcoming';
+function setVisitFilter(filter) {
+  visitFilter = filter;
+  document.querySelectorAll('[data-visit-filter]').forEach(b => b.classList.toggle('active', b.dataset.visitFilter === filter));
+  renderVisitsDashboard();
+}
+window.setVisitFilter = setVisitFilter;
+function renderVisitsDashboard() {
+  const now = today();
+  const all = [...data.visits].sort((x,y) => (x.nextDate || x.date || '').localeCompare(y.nextDate || y.date || ''));
+  const upcoming = all.filter(v => v.nextDate && v.nextDate >= now);
+  const history = all.filter(v => !v.nextDate || v.nextDate < now);
+  $('visitsUpcomingCount').textContent = upcoming.length;
+  $('visitsTotalCount').textContent = all.length;
+  $('visitsFilesCount').textContent = all.filter(v => v.fileData).length;
+  $('visitsToday').textContent = new Date().toLocaleDateString('es-SV',{day:'numeric',month:'short',year:'numeric'});
+  const rows = visitFilter === 'upcoming' ? upcoming : visitFilter === 'history' ? history.slice().reverse() : all.slice().reverse();
+  $('visitsListTitle').textContent = visitFilter === 'upcoming' ? 'Próximas consultas' : visitFilter === 'history' ? 'Historial de consultas' : 'Todas mis consultas';
+  $('visitList').innerHTML = rows.length ? rows.map(v => {
+    const isUpcoming = !!(v.nextDate && v.nextDate >= now);
+    const date = v.nextDate || v.date;
+    const time = v.nextTime || '';
+    const status = isUpcoming ? 'Próxima' : 'Registrada';
+    const fileButton = v.fileData ? `<button type="button" class="visit-action" onclick="openAttachment('${v.id}')">📎 Ver documento</button>` : '';
+    return `<article class="visit-card ${isUpcoming ? 'visit-upcoming' : ''}">
+      <div class="visit-date-block"><strong>${fmtDate(date)}</strong><small>${time ? esc(time) : (isUpcoming ? 'Fecha de cita' : 'Consulta')}</small></div>
+      <div class="visit-card-content"><div class="visit-card-top"><span class="visit-specialty-icon">${isUpcoming ? '🩺' : '📋'}</span><div><strong>${esc(v.specialty || 'Consulta médica')}</strong><small>${esc(v.doctor || 'Médico no especificado')}</small></div><span class="visit-status ${isUpcoming ? 'next' : 'saved'}">${status}</span></div>
+       <div class="visit-meta">${v.notes ? esc(v.notes) : 'Sin observaciones registradas'}</div>
+       <div class="visit-actions">${fileButton}${removeBtn('visits',v.id)}</div>
+      </div>
+    </article>`;
+  }).join('') : '<div class="visit-empty"><span>🗓️</span><strong>No hay consultas en esta sección</strong><small>Registra una consulta o agrega la fecha de tu próxima cita.</small></div>';
 }
 function activeMeds() { const d = today(); return data.meds.filter(m => m.time && (!m.start || m.start <= d) && (!m.end || m.end >= d)); }
 function nextDose() {
@@ -665,6 +695,9 @@ function bindForms() {
     data.meds.push({ id: uid(), name: f.get('name'), dose: f.get('dose'), time: f.get('time'), start: f.get('start'), end: f.get('end'), prescription: f.get('prescription'), instructions: f.get('instructions'), taken: [] });
     e.target.reset(); setDefaults(); $('medFormCard').classList.add('hidden'); save(); toast(t('Medicamento guardado.'));
   });
+  $('toggleVisitForm').addEventListener('click', () => { $('visitFormCard').classList.toggle('hidden'); if (!$('visitFormCard').classList.contains('hidden')) $('visitFormCard').scrollIntoView({behavior:'smooth',block:'start'}); });
+  $('closeVisitForm').addEventListener('click', () => $('visitFormCard').classList.add('hidden'));
+  document.querySelectorAll('[data-visit-filter]').forEach(b => b.addEventListener('click', () => setVisitFilter(b.dataset.visitFilter)));
   $('visitForm').addEventListener('submit', async e => {
     e.preventDefault(); const form = e.target, f = new FormData(form), file = f.get('file');
     let fileData = null, fileName = '';
@@ -673,7 +706,7 @@ function bindForms() {
       fileData = await toDataURL(file); fileName = file.name;
     }
     data.visits.push({ id: uid(), date: f.get('date'), nextDate: f.get('nextDate'), nextTime: f.get('nextTime'), doctor: f.get('doctor'), specialty: f.get('specialty'), notes: f.get('notes'), fileData, fileName });
-    form.reset(); setDefaults(); save(); toast(t('Consulta guardada.'));
+    form.reset(); setDefaults(); $('visitFormCard').classList.add('hidden'); save(); toast(t('Consulta guardada.'));
   });
   $('extraControlForm').addEventListener('submit', e => {
     e.preventDefault(); const f = e.currentTarget, v = Object.fromEntries(new FormData(f));

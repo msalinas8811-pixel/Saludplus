@@ -521,23 +521,33 @@
     <p class="notice" data-i18n>Los horarios son recordatorios de apoyo. La página web no garantiza alarmas si el navegador está cerrado o el sistema suspende la app. Sigue siempre la receta y no cambies dosis u horarios sin consultar a un profesional sanitario.</p>
    </section>
 
-   <section id="consultas" class="view">
+   <section id="consultas" class="view visits-premium">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
-    <div class="page-head"><div><h2 data-i18n>Consultas y recetas</h2><p data-i18n>Guarda citas, indicaciones y archivos asociados.</p></div></div>
-    <div class="stack">
-     <div class="card"><h3 data-i18n>Registrar consulta</h3>
-      <form id="visitForm"><div class="formgrid">
-       <div class="field"><label data-i18n>Fecha de consulta</label><input name="date" type="date" required></div>
-       <div class="field"><label data-i18n>Próxima cita (si aplica)</label><input name="nextDate" type="date"></div>
-       <div class="field"><label data-i18n>Hora de próxima cita</label><input name="nextTime" type="time"></div>
-       <div class="field"><label data-i18n>Médico</label><input name="doctor" placeholder="Nombre del médico"></div>
-       <div class="field"><label data-i18n>Especialidad</label><input name="specialty" placeholder="Ej. cardiología"></div>
-       <div class="field full"><label data-i18n>Motivo / notas</label><textarea name="notes" placeholder="Motivo, indicaciones y seguimiento"></textarea></div>
-       <div class="field full"><label data-i18n>Adjuntar receta o documento (imagen o PDF)</label><input name="file" type="file" accept="image/*,.pdf,application/pdf"></div>
-      </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar consulta</button></div></form>
-     </div>
-     <div id="visitList" class="list"><div class="empty" data-i18n>No hay consultas registradas.</div></div>
+    <div class="visits-heading"><div class="visits-heading-icon">🗓️</div><div><p class="visits-kicker">SALUDPLUS · SEGUIMIENTO</p><h2>Mis Consultas</h2><p>Organiza tus próximas citas y conserva tu historial médico.</p></div></div>
+    <div class="visits-summary">
+     <div><span>📅</span><small>Próximas citas</small><strong id="visitsUpcomingCount">0</strong></div>
+     <div><span>🩺</span><small>Consultas registradas</small><strong id="visitsTotalCount">0</strong></div>
+     <div><span>📎</span><small>Documentos adjuntos</small><strong id="visitsFilesCount">0</strong></div>
     </div>
+    <button type="button" class="visit-add-main" id="toggleVisitForm">＋ Registrar consulta o cita</button>
+    <div class="card visit-form-card hidden" id="visitFormCard"><div class="row between"><h3>Registrar consulta</h3><button type="button" class="visit-close-form" id="closeVisitForm" aria-label="Cerrar">×</button></div>
+     <form id="visitForm"><div class="formgrid">
+      <div class="field"><label data-i18n>Fecha de consulta</label><input name="date" type="date" required></div>
+      <div class="field"><label data-i18n>Próxima cita (si aplica)</label><input name="nextDate" type="date"></div>
+      <div class="field"><label data-i18n>Hora de próxima cita</label><input name="nextTime" type="time"></div>
+      <div class="field"><label data-i18n>Médico</label><input name="doctor" placeholder="Nombre del médico"></div>
+      <div class="field"><label data-i18n>Especialidad</label><input name="specialty" placeholder="Ej. cardiología"></div>
+      <div class="field full"><label data-i18n>Motivo / notas</label><textarea name="notes" placeholder="Motivo, indicaciones y seguimiento"></textarea></div>
+      <div class="field full"><label data-i18n>Adjuntar receta o documento (imagen o PDF)</label><input name="file" type="file" accept="image/*,.pdf,application/pdf"></div>
+     </div><div class="form-actions"><button class="btn" type="submit" data-i18n>Guardar consulta</button></div></form>
+    </div>
+    <div class="visits-tabs" role="tablist" aria-label="Filtrar consultas">
+     <button type="button" class="active" data-visit-filter="upcoming">Próximas</button>
+     <button type="button" data-visit-filter="history">Historial</button>
+     <button type="button" data-visit-filter="all">Todas</button>
+    </div>
+    <div class="visits-list-panel"><div class="row between wrap"><h3 id="visitsListTitle">Próximas consultas</h3><span class="visit-today-chip" id="visitsToday"></span></div><div id="visitList" class="visit-cards"><div class="empty" data-i18n>No hay consultas registradas.</div></div></div>
+    <div class="visit-note">Los recordatorios de citas dependen de los permisos y de que el navegador permita ejecutar la aplicación. Conserva también tus citas en el calendario habitual.</div>
    </section>
 
    <section id="examenes" class="view">
