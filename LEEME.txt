@@ -215,3 +215,16 @@ VERSIÓN 55 — GLUCOSA VISUAL Y RETIRO DEL MAPA DE LA NAVEGACIÓN
 - Se amplió visualmente el campo del resultado para facilitar su uso en móvil.
 - Se mantienen formulario, momento de medición, notas, historial, promedio y gráfica existente.
 - Se conserva la clave local salud360_pwa_v1.
+
+
+VERSIÓN 56 — ORDEN DE GLUCOSA Y RETIRADA DEL MAPA DEL MENÚ
+- Se eliminó el acceso/atajo de Mapa de presión de la pantalla de inicio y el botón "Abrir mapa".
+- La pantalla del mapa permanece oculta y sus datos locales se conservan; no se borró bpMap del almacenamiento.
+- Nuevo orden de Glucosa:
+  1. Registro de glucosa (formulario)
+  2. Ilustración del glucómetro con el valor más reciente
+  3. Velocímetro/escala visual de glucosa
+  4. Historial y promedio
+  5. Nota informativa
+- Se conserva el formulario, historial, promedio y lógica de interpretación existente.
+- Se conserva la clave de almacenamiento salud360_pwa_v1.
