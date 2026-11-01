@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=46">
+<link rel="stylesheet" href="styles.css?v=47">
 </head>
 <body>
 
@@ -279,15 +279,15 @@
      </div><div id="bpGauge"></div></div></div>
 <div class="card age-clinical-card" id="ageClinicalCard" aria-live="polite"><div class="row between wrap"><div><h3 style="margin:0">Interpretación según perfil</h3><p class="muted" id="clinicalProfileLine">Completa tu fecha de nacimiento en Mi perfil.</p></div><span class="badge" id="clinicalAgeBadge">Perfil pendiente</span></div><div class="clinical-metrics" id="clinicalMetrics"><div class="clinical-metric status-unknown"><small>Presión más reciente</small><strong>—</strong><span>Esperando registros</span></div><div class="clinical-metric status-unknown"><small>PAM aproximada</small><strong>—</strong><span>No es un diagnóstico</span></div><div class="clinical-metric status-unknown"><small>Pulso registrado</small><strong>—</strong><span>Depende de edad y actividad</span></div></div><p class="fine" id="clinicalGuidance">La clasificación se selecciona según edad y referencia clínica. No sustituye una valoración profesional.</p></div>
 <div class="card"><div class="row between" style="margin-bottom:10px"><h3 style="margin:0" data-i18n>Historial</h3><span class="muted" style="font-size:13px" id="bpCount">0 registros</span></div><div id="bpList" class="list"><div class="empty" data-i18n>Aún no hay mediciones.</div></div>
-<div class="card" id="bpSelectedCard">
-      <div class="row between wrap"><div><h3>Medición seleccionada</h3><p class="muted" id="bpSelectedDateTime">Selecciona un registro del historial para ver su velocímetro.</p></div><span class="badge">Historial</span></div>
-      <div class="value" id="bpSelectedValue">—</div><div id="bpSelectedGauge"></div>
-     </div></div>
+</div>
 <div class="card map-entry-card"><div class="row between wrap" style="align-items:center;gap:12px">
       <div><h3 data-i18n>Mapa de presión</h3><p class="muted" data-i18n>Organiza las lecturas domiciliarias por hora y observa su evolución diaria.</p></div>
       <button class="btn secondary" type="button" onclick="showView('mapa-presion')" data-i18n>Abrir mapa</button>
      </div></div>
-<div class="bp-hidden-support" hidden aria-hidden="true">
+<div class="bp-hidden-support" hidden aria-hidden="true"><div class="card" id="bpSelectedCard">
+      <div class="row between wrap"><div><h3>Medición seleccionada</h3><p class="muted" id="bpSelectedDateTime">Selecciona un registro del historial para ver su velocímetro.</p></div><span class="badge">Historial</span></div>
+      <div class="value" id="bpSelectedValue">—</div><div id="bpSelectedGauge"></div>
+     </div>
     
     <div class="stack">
      
@@ -727,7 +727,7 @@
 </div>
 
 <script src="i18n.js?v=36"></script>
-<script src="app.js?v=46"></script>
+<script src="app.js?v=47"></script>
 <script src="exams.js?v=36"></script>
 <script src="examreport.js?v=36"></script>
 <script src="firebase-config.js?v=36"></script>

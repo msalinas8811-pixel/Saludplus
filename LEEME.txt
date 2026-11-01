@@ -144,3 +144,11 @@ VERSIÓN 46 — INTERPRETACIÓN DE PERFIL DINÁMICA Y NUEVA PALETA
 - La línea del perfil muestra fecha, hora y brazo de referencia.
 - Nuevo estilo azul/cian/turquesa inspirado en la referencia visual enviada; se conservan colores semánticos de estado y etiquetas para no depender solo del color.
 - Sin cambios en almacenamiento ni en registros.
+
+
+VERSIÓN 47 — QUITAR TARJETA DE MEDICIÓN SELECCIONADA Y ACLARAR MONITOR
+- Se retiró de la vista visible la tarjeta independiente "Medición seleccionada" debajo del historial.
+- Su estructura interna se conserva oculta para compatibilidad con la función de selección y actualización de la clasificación/perfil.
+- Se aclaró el fondo del tensiómetro y especialmente el panel del corazón: degradado azul, celeste y turquesa más luminoso, con texto oscuro en el área del corazón.
+- Se conserva la animación, los registros de ambos brazos, el historial, la clasificación y la interpretación dinámica.
+- Sin cambios en almacenamiento local.
