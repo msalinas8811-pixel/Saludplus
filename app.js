@@ -456,36 +456,13 @@ function bpClinicalStatus(sys,dia){const p=data.patient||{},age=ageOnDate(p.birt
 function renderClinicalProfile(){const box=$('clinicalMetrics');if(!box)return;const p=data.patient||{},age=ageOnDate(p.birthDate);$('clinicalAgeBadge').textContent=age===null?'Edad no disponible':age+' años';$('clinicalProfileLine').textContent=age===null?'Completa fecha de nacimiento en Mi perfil para elegir referencias.':age+' años'+(p.heightCm?' · Estatura '+p.heightCm+' cm':'');const sortedBP=[...data.bp].sort(byDateDesc);const x=sortedBP.find(r=>r.id===selectedBPRecordId&&validBP(r))||sortedBP.find(validBP);if(!x){box.innerHTML='<div class="clinical-metric status-unknown"><small>Presión más reciente</small><strong>—</strong><span>Sin registros</span></div><div class="clinical-metric status-unknown"><small>PAM aproximada</small><strong>—</strong><span>No es diagnóstico</span></div><div class="clinical-metric status-unknown"><small>Pulso</small><strong>—</strong><span>Sin registros</span></div>';$('clinicalGuidance').textContent='Registra una medición y completa el perfil para mostrar la referencia correspondiente a la edad.';return;}const chosen=preferredArmReading(x),s=Math.round(chosen.sys),d=Math.round(chosen.dia),m=pam(s,d),ps=[num(chosen.pulse)].filter(v=>Number.isFinite(v)&&v>0),st=bpClinicalStatus(s,d);$('clinicalProfileLine').textContent=(age===null?'Edad no disponible':age+' años')+(p.heightCm?' · Estatura '+p.heightCm+' cm':'')+' · '+fmtDate(x.date)+' '+(x.time||'')+' · Brazo '+chosen.arm;box.innerHTML=`<div class="clinical-metric ${st.cls}"><small>Presión más reciente</small><strong>${s}/${d}</strong><span>${esc(st.label)} · mmHg</span></div><div class="clinical-metric status-unknown"><small>PAM aproximada</small><strong>${m.toFixed(1)}</strong><span>mmHg · sin categoría automática por edad</span></div><div class="clinical-metric status-unknown"><small>Pulso registrado</small><strong>${ps.length?Math.round(average(ps)):'—'}</strong><span>lpm · depende de reposo, sueño, actividad y edad</span></div>`;$('clinicalGuidance').textContent=st.guidance+' Lectura: '+fmtDate(x.date)+' '+(x.time||'')+'.';}
 
 function renderHome() {
-  const p = data.patient || {};
-  const put = (id, value, fallback) => { const e = $(id); if (e) e.textContent = (value && String(value).trim()) ? String(value) : t(fallback); };
-  put('homePatientName', p.name, 'No registrado'); put('homeBloodType', p.blood, 'No registrado');
-  put('homeMedAllergies', p.medAllergies, 'No registradas'); put('homeOtherAllergies', p.otherAllergies, 'No registradas');
-  put('homeEmergency', [p.emergencyName, p.emergencyPhone].filter(Boolean).join(' · '), 'No registrado');
-  const call = $('homeEmergencyCall'), digits = String(p.emergencyPhone || '').replace(/[^\d+]/g, '');
-  call.classList.toggle('hidden', !digits); if (digits) call.href = 'tel:' + digits;
-
-  const pm = $('homePeriodMessage'); if (pm && !pm.dataset.set) pm.textContent = t('Selecciona el periodo y pulsa Actualizar promedios.');
-  const start = $('homeAvgStart'), end = $('homeAvgEnd');
-  if (start && !start.value) { const d = new Date(); d.setDate(d.getDate() - 6); start.value = isoDateLocal(d); }
-  if (end && !end.value) end.value = today();
-
-  const bps = [...data.bp].sort(byDateDesc);
-  $('homePressureTable').innerHTML = bps.length ? bps.slice(0, 12).map(x => {
-    const lOk = num(x.ls) > 0 && num(x.ld) > 0, rOk = num(x.rs) > 0 && num(x.rd) > 0;
-    const ps = [lOk ? pam(x.ls, x.ld) : null, rOk ? pam(x.rs, x.rd) : null].filter(v => v !== null);
-    return `<tr><td>${esc(fmtDate(x.date))}</td><td>${esc(x.time || '—')}</td><td>${lOk ? num(x.ls) + '/' + num(x.ld) : '—'}</td><td>${rOk ? num(x.rs) + '/' + num(x.rd) : '—'}</td><td>${ps.length ? average(ps).toFixed(1) : '—'}</td></tr>`;
-  }).join('') : `<tr><td colspan="5">${esc(t('Sin mediciones registradas.'))}</td></tr>`;
-
-  $('homeMedicationSchedule').innerHTML = data.meds.length ? data.meds.map(m => listItem(esc(m.name || t('Medicamento')), `${t('Dosis')}: ${esc(m.dose || t('No indicada'))} · ${t('Hora')}: ${esc(m.time || t('No indicada'))}${m.instructions ? ' · ' + esc(m.instructions) : ''}`)).join('') : empty('No hay medicamentos registrados.');
-
-  const visits = data.visits, td = today();
-  const upcoming = visits.filter(v => (v.nextDate && v.nextDate >= td) || (!v.nextDate && v.date >= td)).sort((a, b) => (a.nextDate || a.date || '').localeCompare(b.nextDate || b.date || ''));
-  const completed = visits.filter(v => v.date && v.date < td).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  const line = v => listItem(esc(fmtDate(v.nextDate && v.nextDate >= td ? v.nextDate : v.date)), `${esc(v.doctor || t('Consulta médica'))} · ${esc(v.specialty || '')}${v.notes ? ' · ' + esc(v.notes) : ''}`);
-  $('upcomingVisits').innerHTML = upcoming.length ? upcoming.slice(0, 3).map(line).join('') : empty('No hay citas futuras registradas.');
-  $('homeUpcomingAppointments').innerHTML = upcoming.length ? upcoming.map(line).join('') : empty('No hay próximas citas registradas.');
-  $('homeCompletedAppointments').innerHTML = completed.length ? completed.slice(0, 8).map(v => listItem(esc(fmtDate(v.date)), `${esc(v.doctor || t('Consulta médica'))} · ${esc(v.specialty || '')}${v.notes ? ' · ' + esc(v.notes) : ''}`)).join('') : empty('No hay citas anteriores registradas.');
-  renderNextDose();
+  const d = new Date();
+  const label = $('todayLabel'), greeting = $('homeGreeting');
+  if (label) label.textContent = d.toLocaleDateString('es-SV',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  if (greeting) {
+    const hour = d.getHours();
+    greeting.textContent = hour < 12 ? 'Buenos días' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
+  }
 }
 
 function renderMedicationDashboard() {
@@ -715,10 +692,14 @@ function bindForms() {
     save(); f.reset(); f.elements.date.value = today(); f.elements.time.value = nowTime();
     $('chartType').value = target; renderCharts(); toast(t('Control guardado en este dispositivo.'));
   });
+  $('patientProfileSummary').addEventListener('click', e => { if (e.target.closest('#registerPatientProfile')) openPatientForm('Registrar perfil del paciente'); });
+  $('editPatientProfile').addEventListener('click', () => openPatientForm('Editar perfil del paciente'));
+  $('closePatientForm').addEventListener('click', () => $('patientFormCard').classList.add('hidden'));
+  $('deletePatientProfile').addEventListener('click', async () => { if (await askConfirm('¿Eliminar el perfil del paciente? Los registros de presión y glucosa se conservarán.', 'Eliminar perfil')) { data.patient = {}; save(); $('patientForm').reset(); $('patientFormCard').classList.add('hidden'); toast('Perfil eliminado. El historial de mediciones se conserva.'); } });
   $('patientForm').addEventListener('submit', e => {
     e.preventDefault(); const f = new FormData(e.target); data.patient = {};
     for (const [k, v] of f.entries()) data.patient[k] = String(v).trim();
-    save(); toast(t('Datos del paciente guardados en este dispositivo.'));
+    save(); $('patientFormCard').classList.add('hidden'); toast(t('Datos del paciente guardados en este dispositivo.'));
   });
   $('patientClear').addEventListener('click', async () => {
     if (await askConfirm(t('¿Limpiar los campos del formulario? Los datos guardados no se borran hasta que guardes el formulario vacío.'), t('Limpiar'))) $('patientForm').reset();
@@ -728,7 +709,6 @@ function bindForms() {
   $('chartStart').addEventListener('change', renderCharts);
   $('chartEnd').addEventListener('change', renderCharts);
   $('chartAllDatesBtn').addEventListener('click', () => { $('chartStart').value = ''; $('chartEnd').value = ''; renderCharts(); });
-  $('homeUpdateAverages').addEventListener('click', calculateHomePeriodAverages);
   $('nextDoseBtn').addEventListener('click', e => medTaken(e.currentTarget.dataset.id));
 }
 function toDataURL(file) { return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); }); }
@@ -756,11 +736,50 @@ function medTaken(mid) {
 window.medTaken = medTaken;
 
 /* ---------- Paciente y agua ---------- */
+function openPatientForm(title) {
+  $('patientFormTitle').textContent = title;
+  $('patientFormCard').classList.remove('hidden');
+  $('patientFormCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
 function renderPatient() {
   const f = $('patientForm'), p = data.patient || {};
-  Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
-  const name = $('bpPatientName'), details = $('bpPatientDetails');
-  const mapName = $('mapPatientName'), mapDetails = $('mapPatientDetails');
+  if (f) Object.keys(p).forEach(k => { if (f.elements[k] && document.activeElement !== f.elements[k]) f.elements[k].value = p[k] || ''; });
+  const hasProfile = Object.values(p).some(v => String(v || '').trim());
+  const summary = $('patientProfileSummary'), actions = $('patientProfileActions'), formCard = $('patientFormCard');
+  if (summary) {
+    if (!hasProfile) {
+      summary.innerHTML = `<div class="profile-empty"><span>👤</span><strong>Aún no has registrado el perfil del paciente</strong><small>Guarda tus datos personales y médicos para tenerlos organizados.</small><button type="button" class="btn" id="registerPatientProfile">＋ Registrar perfil del paciente</button></div>`;
+    } else {
+      const age = p.birthDate ? ageOnDate(p.birthDate) : null;
+      const rows = [
+        ['Fecha de nacimiento',p.birthDate ? fmtDate(p.birthDate) : 'No indicada'],
+        ['Edad',age === null ? 'No indicada' : age + ' años'],
+        ['Sexo',p.sex || 'No indicado'],['Peso',p.weightKg ? p.weightKg + ' kg' : 'No indicado'],
+        ['Estatura',p.heightCm ? p.heightCm + ' cm' : 'No indicada'],['Grupo sanguíneo',p.blood || 'No indicado'],
+        ['Teléfono',p.phone || 'No indicado'],['Correo',p.email || 'No indicado'],
+        ['Hipertensión',p.hypertension === 'yes' ? 'Diagnosticada' : p.hypertension === 'suspected' ? 'En evaluación' : p.hypertension === 'no' ? 'No indicada' : 'No indicado'],
+        ['Contacto de emergencia',[p.emergencyName,p.emergencyPhone].filter(Boolean).join(' · ') || 'No indicado'],
+        ['Padecimientos',p.conditions || 'No indicados'],['Alergias a medicamentos',p.medAllergies || 'No indicadas'],
+        ['Otras alergias',p.otherAllergies || 'No indicadas'],['Medicamentos actuales',p.currentMeds || 'No indicados'],
+        ['Otros datos médicos',p.medicalNotes || '—']
+      ];
+      summary.innerHTML = `<div class="profile-person-card"><div class="profile-avatar">👤</div><div class="profile-person-main"><h3>${esc(p.name || 'Paciente')}</h3><strong>${age === null ? 'Edad no indicada' : age + ' años'}${p.sex ? ' · ' + esc(p.sex) : ''}</strong><span>${p.blood ? 'Grupo sanguíneo ' + esc(p.blood) : 'Grupo sanguíneo no indicado'}</span></div></div><div class="profile-detail-grid">${rows.map(([k,v])=>`<div class="profile-detail"><small>${esc(k)}</small><strong>${esc(v)}</strong></div>`).join('')}</div>`;
+    }
+  }
+  if (actions) actions.classList.toggle('hidden',!hasProfile);
+  if (formCard && !hasProfile) formCard.classList.add('hidden');
+  const bp = [...(data.bp || [])].sort(byDateDesc);
+  const gl = [...(data.glucose || [])].sort(byDateDesc);
+  const latestBP = bp.find(x => preferredArmReading(x));
+  const latestGl = gl[0];
+  const bpVal = latestBP ? preferredArmReading(latestBP) : null;
+  $('profileBPLast').textContent = bpVal ? `${bpVal.sys}/${bpVal.dia} mmHg` : '—';
+  $('profileBPLastDate').textContent = latestBP ? `${fmtDate(latestBP.date)} · ${latestBP.time || ''}` : 'Sin mediciones registradas';
+  $('profileBPHistory').innerHTML = bp.length ? bp.slice(0,7).map(x => { const r=preferredArmReading(x); return r ? `<div class="profile-history-row"><span>${fmtDate(x.date)} · ${esc(x.time || '')}</span><strong>${r.s}/${r.d} mmHg</strong></div>` : ''; }).join('') : '<div class="profile-history-empty">Aún no hay registros de presión.</div>';
+  $('profileGlucoseLast').textContent = latestGl ? `${latestGl.value} mg/dL` : '—';
+  $('profileGlucoseLastDate').textContent = latestGl ? `${fmtDate(latestGl.date)} · ${latestGl.time || ''}` : 'Sin mediciones registradas';
+  $('profileGlucoseHistory').innerHTML = gl.length ? gl.slice(0,7).map(x => `<div class="profile-history-row"><span>${fmtDate(x.date)} · ${esc(x.time || '')}${x.when ? ' · ' + esc(x.when) : ''}</span><strong>${esc(x.value)} mg/dL</strong></div>`).join('') : '<div class="profile-history-empty">Aún no hay registros de glucosa.</div>';
+  const name = $('bpPatientName'), details = $('bpPatientDetails'), mapName = $('mapPatientName'), mapDetails = $('mapPatientDetails');
   const patientName = p.name || 'Paciente sin configurar';
   const age = p.birthDate ? ageOnDate(p.birthDate) : null;
   const bits = [age === null ? 'Edad no indicada' : age + ' años', p.sex || 'Sexo no indicado', p.hypertension === 'yes' ? 'Hipertensión diagnosticada' : (p.hypertension === 'suspected' ? 'Hipertensión en evaluación' : ''), p.conditions || 'Sin otros padecimientos registrados'];
@@ -770,6 +789,7 @@ function renderPatient() {
   if (mapName) mapName.textContent = patientName;
   if (mapDetails) mapDetails.textContent = patientDetails;
 }
+
 function renderWater() {
   const w = data.water || (data.water = { goal: 2000, interval: 60, logs: [] }), day = today();
   const logs = w.logs.filter(x => x.date === day), sum = logs.reduce((a, x) => a + (+x.ml || 0), 0);
