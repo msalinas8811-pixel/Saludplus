@@ -1475,8 +1475,8 @@ a{color:var(--brand-strong)}
 .exams-dashboard .exam-hero h2{margin:0 0 4px;color:#fff;font-size:clamp(21px,5vw,27px);line-height:1.15}
 .exams-dashboard .exam-hero p{margin:0;color:rgba(255,255,255,.9);font-size:14px}
 .exam-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 16px}
-.exam-stat-card{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:15px 7px;border:1px solid #d5e8f2;border-radius:18px;background:#fff;box-shadow:0 5px 14px rgba(22,83,116,.07);color:#17354b}
-.exam-stat-action{width:100%;font:inherit;text-align:center;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease;appearance:none;-webkit-appearance:none}.exam-stat-action:active{transform:scale(.98)}.exam-stat-action:focus-visible{outline:3px solid rgba(0,137,202,.3);outline-offset:3px}.exam-stat-action small{font-size:10px;color:#0787bd;font-weight:750;margin-top:2px}.exam-stat-card strong{font-size:25px;line-height:1.1;color:#102f49}
+.exam-stat-card{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:15px 7px;border:1px solid #d5e8f2;border-radius:18px;background:#fff;box-shadow:0 5px 14px rgba(22,83,116,.07);color:#17354b}.exam-stat-card{appearance:none;-webkit-appearance:none;width:100%;font:inherit;text-align:center;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease}.exam-stat-card:active{transform:scale(.98)}.exam-stat-card:focus-visible,.exam-category:focus-visible,.exam-filter-button:focus-visible{outline:3px solid rgba(0,139,202,.35);outline-offset:3px}
+.exam-stat-card strong{font-size:25px;line-height:1.1;color:#102f49}
 .exam-stat-card>span:last-child{font-size:13px;color:#526e80;font-weight:650}
 .exam-stat-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;font-size:22px;font-weight:800}
 .exam-stat-icon.lab{background:#e4f4ff;color:#078bd0}.exam-stat-icon.result{background:#e6faef;color:#159b59}.exam-stat-icon.files{background:#f0eaff;color:#8252d6}

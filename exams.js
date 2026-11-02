@@ -1,4 +1,4 @@
-/* SaludPlus v64 · control de exámenes
+/* SaludPlus v23 · control de exámenes
    - Controles programados (rutina, por padecimiento o por indicación médica) con fecha del próximo examen.
    - Resultados con archivo PDF/imagen. Los archivos se guardan en este dispositivo (IndexedDB), no en el servidor.
    - La IA solo recibe un resultado cuando la persona lo elige y lo autoriza en el chat. */
@@ -168,8 +168,6 @@ const numVal = (v) => { const n = Number(String(v).replace(',', '.').trim()); re
 const statusPill = (key, text) => `<span class="bp-status bp-${key === 'none' ? 'green' : key}" style="${key === 'none' ? 'background:var(--surface-2);color:var(--muted)' : ''}">${esc(t(text))}</span>`;
 const resPill = (k) => statusPill(k === 'altered' ? 'red' : k === 'review' ? 'yellow' : 'green', EXAM_STATUS[k] || EXAM_STATUS.review);
 
-let examDashboardMode = 'results';
-
 function renderExams() {
   examsNormalize();
   const att = examAttention();
@@ -184,7 +182,7 @@ function renderExams() {
   data.examPlans.forEach(p => { const k = planStatus(p).key; if (counts[k] !== undefined) counts[k]++; });
   const totalExamItems = data.examPlans.reduce((n, p) => n + (Array.isArray(p.items) ? p.items.length : 0), 0);
   const totalFiles = data.examResults.reduce((n, r) => n + (Array.isArray(r.files) ? r.files.length : 0), 0);
-  $('examSummary').innerHTML = `<button type="button" class="exam-stat-card exam-stat-action" data-exam-stat="plans" aria-label="Ver exámenes programados"><span class="exam-stat-icon lab">⚗</span><strong>${totalExamItems || data.examResults.length}</strong><span>Exámenes</span><small>Ver programación ›</small></button><button type="button" class="exam-stat-card exam-stat-action" data-exam-stat="results" aria-label="Ver resultados registrados"><span class="exam-stat-icon result">✓</span><strong>${data.examResults.length}</strong><span>Resultados</span><small>Ver resultados ›</small></button><button type="button" class="exam-stat-card exam-stat-action" data-exam-stat="files" aria-label="Ver archivos médicos"><span class="exam-stat-icon files">▤</span><strong>${totalFiles}</strong><span>Archivos</span><small>Ver documentos ›</small></button>`;
+  $('examSummary').innerHTML = `<button type="button" class="exam-stat-card" data-exam-stat="plans" aria-label="Ver exámenes programados"><span class="exam-stat-icon lab">⚗</span><strong>${totalExamItems || data.examResults.length}</strong><span>Exámenes</span></button><button type="button" class="exam-stat-card" data-exam-stat="results" aria-label="Ver resultados registrados"><span class="exam-stat-icon result">✓</span><strong>${data.examResults.length}</strong><span>Resultados</span></button><button type="button" class="exam-stat-card" data-exam-stat="files" aria-label="Ver archivos médicos"><span class="exam-stat-icon files">▤</span><strong>${totalFiles}</strong><span>Archivos</span></button>`;
 
   const order = { red: 0, orange: 1, green: 2, none: 3 };
   const sorted = [...data.examPlans].sort((a, b) => order[planStatus(a).key] - order[planStatus(b).key] || (a.nextDate || '9').localeCompare(b.nextDate || '9'));
@@ -203,41 +201,18 @@ function renderExams() {
     const lines = es.length ? `<ul class="entrylist">${es.map(en => `<li class="${en.status === 'altered' ? 'alt' : en.status === 'normal' ? 'nor' : ''}">${esc(t(en.name))}: <strong>${esc(en.value || '—')}${en.unit ? ' ' + esc(en.unit) : ''}</strong>${en.status ? ` · ${esc(t(EXAM_STATUS[en.status]))}` : ''}${en.ref ? ` <small>· ${esc(t('Rango normal'))}: ${esc(en.ref)}</small>` : ''}</li>`).join('')}</ul>` : '';
     const sub = [`${fmtDate(r.date)}${r.lab ? ' · ' + esc(r.lab) : ''}`, r.summary ? esc(r.summary) : ''].filter(Boolean).join('\n');
     const canAsk = (r.files && r.files.length) || r.text || r.summary || es.length;
-    return `<div class="item exam-result-item" data-exam-search="${esc((r.name + " " + (r.lab || "") + " " + (r.summary || "") + " " + resultEntries(r).map(x => x.name + " " + x.value).join(" ") + " " + (r.files || []).map(x => x.name).join(" ")).toLowerCase())}"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
-  }).join('') : `<div class="empty">${esc(t(examDashboardMode === 'files' ? 'Aún no hay archivos médicos asociados a resultados.' : 'Aún no hay resultados guardados.'))}</div>`;
+    const searchText = [r.name, r.lab, r.summary, ...es.map(entryText), ...(r.files || []).map(f => f.name)].filter(Boolean).join(' ').toLowerCase();
+    return `<div class="item exam-result-item" data-exam-search="${esc(searchText)}" data-exam-has-files="${(r.files || []).length ? '1' : '0'}"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
+  }).join('') : `<div class="empty">${esc(t('Aún no hay resultados guardados.'))}</div>`;
 
   renderExamTrend();
-}
-
-function bindExamStatActions() {
-  const summary = $('examSummary');
-  if (!summary || summary.dataset.actionsBound) return;
-  summary.dataset.actionsBound = '1';
-  summary.addEventListener('click', e => {
-    const btn = e.target.closest('[data-exam-stat]');
-    if (!btn) return;
-    const action = btn.dataset.examStat;
-    const search = $('examSearchInput');
-    if (search) search.value = '';
-    document.querySelectorAll('[data-exam-filter]').forEach(b => b.classList.toggle('active', b.dataset.examFilter === 'all'));
-    if (action === 'plans') {
-      examDashboardMode = 'plans';
-      const fold = document.querySelector('.exam-more-options');
-      if (fold) fold.open = true;
-      const target = $('examPlanList');
-      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      applyExamDashboardFilters();
-    } else {
-      examDashboardMode = action;
-      renderExams();
-      $('examResultList')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
+  if (typeof applyExamDashboardFilters === 'function') applyExamDashboardFilters();
 }
 
 function bindExamDashboardFilters() {
   const input = $('examSearchInput');
   const clear = $('examClearSearch');
+  const summary = $('examSummary');
   const buttons = document.querySelectorAll('[data-exam-filter]');
   if (input && !input.dataset.bound) {
     input.dataset.bound = '1';
@@ -245,27 +220,61 @@ function bindExamDashboardFilters() {
   }
   if (clear && !clear.dataset.bound) {
     clear.dataset.bound = '1';
-    clear.addEventListener('click', () => { if (input) input.value = ''; applyExamDashboardFilters(); });
+    clear.addEventListener('click', () => { if (input) input.value = ''; applyExamDashboardFilters(); input?.focus(); });
   }
   buttons.forEach(btn => {
     if (btn.dataset.bound) return;
     btn.dataset.bound = '1';
     btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('[data-exam-filter]').forEach(b => b.classList.toggle('active', b === btn));
       applyExamDashboardFilters();
     });
   });
+  if (summary && !summary.dataset.bound) {
+    summary.dataset.bound = '1';
+    summary.addEventListener('click', e => {
+      const card = e.target.closest('[data-exam-stat]');
+      if (!card) return;
+      const target = card.dataset.examStat;
+      if (target === 'plans') {
+        const details = document.querySelector('.exam-more-options');
+        if (details) details.open = true;
+        $('examPlanList')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const filter = target === 'files' ? 'files' : 'all';
+        const filterButton = document.querySelector(`[data-exam-filter="${filter}"]`);
+        if (filterButton) document.querySelectorAll('[data-exam-filter]').forEach(b => b.classList.toggle('active', b === filterButton));
+        if (input) input.value = '';
+        applyExamDashboardFilters();
+        $('examResultList')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
 }
 function applyExamDashboardFilters() {
   const q = ($('examSearchInput')?.value || '').trim().toLowerCase();
   const active = document.querySelector('[data-exam-filter].active')?.dataset.examFilter || 'all';
-  document.querySelectorAll('#examResultList .exam-result-item').forEach(card => {
+  const cards = [...document.querySelectorAll('#examResultList .exam-result-item')];
+  let visible = 0;
+  cards.forEach(card => {
     const text = card.dataset.examSearch || '';
-    const category = /perfil|hemograma|biometr|glucosa|colesterol|triglic|laboratorio|sangre|orina/.test(text) ? 'lab'
-      : /electro|ecg|cardio|ecocardi|holter/.test(text) ? 'cardio'
-      : /rayos|ultra|tomograf|radiograf|imagen|resonancia/.test(text) ? 'image' : 'other';
-    card.hidden = (!!q && !text.includes(q)) || (active !== 'all' && category !== active);
+    const category = /perfil|hemograma|biometr|glucosa|colesterol|triglic|laboratorio|sangre|orina|plaquetas|creatinina/.test(text) ? 'lab'
+      : /electro|ecg|cardio|ecocardi|holter|corazon|corazón/.test(text) ? 'cardio'
+      : /rayos|ultra|tomograf|radiograf|imagen|resonancia|ecograf/.test(text) ? 'image' : 'other';
+    const matchesText = !q || text.includes(q);
+    const matchesCategory = active === 'all' || (active === 'files' ? card.dataset.examHasFiles === '1' : category === active);
+    card.hidden = !(matchesText && matchesCategory);
+    if (!card.hidden) visible++;
   });
+  const count = $('examResultCount');
+  if (count) count.textContent = `${visible} ${t('resultados')}`;
+  const list = $('examResultList');
+  if (list) {
+    let empty = list.querySelector('.exam-filter-empty');
+    if (!visible && cards.length) {
+      if (!empty) { empty = document.createElement('div'); empty.className = 'empty exam-filter-empty'; empty.textContent = t('No hay resultados que coincidan con este filtro.'); list.appendChild(empty); }
+    } else if (empty) empty.remove();
+  }
 }
 function renderExamTrend() {
   const sel = $('examTrendSel'); if (!sel) return;
@@ -629,6 +638,7 @@ function bindExams() {
     if (e.target.matches('[data-f="name"]')) { const u = row.querySelector('[data-f="unit"]'), r = row.querySelector('[data-f="ref"]'); if (!u.value) u.value = unitFor(e.target.value); if (!r.value) r.value = refFor(e.target.value); updateRow(row); }
   });
   $('resultRows').addEventListener('input', e => { const row = e.target.closest('.resrow'); if (row && e.target.matches('[data-f="value"],[data-f="ref"]')) updateRow(row); });
+  bindExamDashboardFilters();
   $('newPlanBtn').addEventListener('click', () => openPlanDialog(null));
   $('newResultBtn').addEventListener('click', () => openResultDialog(''));
   $('planForm').addEventListener('submit', savePlan);
