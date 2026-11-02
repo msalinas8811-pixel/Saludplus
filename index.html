@@ -12,7 +12,7 @@
 <link rel="icon" href="saludplus-logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
-<link rel="stylesheet" href="styles.css?v=62">
+<link rel="stylesheet" href="styles.css?v=63">
 </head>
 <body>
 
@@ -550,28 +550,37 @@
     <div class="visit-note">Los recordatorios de citas dependen de los permisos y de que el navegador permita ejecutar la aplicación. Conserva también tus citas en el calendario habitual.</div>
    </section>
 
-   <section id="examenes" class="view">
+   <section id="examenes" class="view exams-dashboard">
     <button type="button" class="back-home-btn" onclick="showView('inicio')"><span aria-hidden="true">←</span> <span data-i18n>Volver a Inicio</span></button>
-    <div class="page-head"><div><h2 data-i18n>Control de exámenes</h2><p data-i18n>Organiza tus exámenes en grupos (rutinarios, por receta, por padecimiento) y anota el resultado de cada uno.</p></div></div>
-    <div class="stack">
-     <div class="card" id="examSummary"></div>
-     <div class="row wrap" style="gap:8px">
-      <button class="btn" type="button" id="newPlanBtn" data-i18n>Nuevo grupo de exámenes</button>
-      <button class="btn secondary" type="button" id="newResultBtn" data-i18n>Registrar resultado</button>
-     </div>
-     <div class="card"><h3 data-i18n>Grupos sugeridos</h3>
-      <p class="muted" style="font-size:13px;margin-bottom:10px" data-i18n>Son ideas generales. Tu médico decide qué exámenes necesitas y cada cuánto; ajusta las fechas a su indicación.</p>
-      <div id="examTemplates" class="chipgrid"></div>
-     </div>
-     <div><h3 style="margin:4px 2px 10px" data-i18n>Mis grupos de exámenes</h3><div id="examPlanList" class="list"></div></div>
-     <div class="card" id="examTrendCard" hidden>
-      <div class="row between wrap"><h3 style="margin:0" data-i18n>Evolución de un resultado</h3><select id="examTrendSel" class="seg-select" aria-label="Examen"></select></div>
-      <p class="fine" id="examTrendUnit"></p>
-      <div id="examTrendChart" class="chart-wrap"></div>
-     </div>
-     <div><div class="row between" style="margin:4px 2px 10px"><h3 style="margin:0" data-i18n>Resultados</h3><span class="muted" style="font-size:13px" id="examResultCount"></span></div><div id="examResultList" class="list"></div></div>
-     <p class="notice info" data-i18n>Los archivos de resultados se guardan solo en este dispositivo y no entran en el respaldo JSON. La IA solo lee un resultado cuando lo eliges en el asistente y lo autorizas.</p>
+    <div class="exam-hero">
+     <div class="exam-hero-icon" aria-hidden="true">▤</div>
+     <div><h2 data-i18n>Exámenes y Resultados</h2><p data-i18n>Expediente de laboratorio y estudios</p></div>
     </div>
+    <div class="exam-stat-grid" id="examSummary"></div>
+    <div class="exam-search-row">
+     <label class="exam-search"><span aria-hidden="true">⌕</span><input id="examSearchInput" type="search" placeholder="Buscar examen o resultado..." aria-label="Buscar examen o resultado"></label>
+     <button class="exam-filter-button" type="button" id="examClearSearch" aria-label="Limpiar búsqueda">×</button>
+    </div>
+    <div class="exam-category-row" role="group" aria-label="Filtrar exámenes">
+     <button type="button" class="exam-category active" data-exam-filter="all">Todos</button>
+     <button type="button" class="exam-category" data-exam-filter="lab">Laboratorio</button>
+     <button type="button" class="exam-category" data-exam-filter="image">Imagen</button>
+     <button type="button" class="exam-category" data-exam-filter="cardio">Cardiología</button>
+     <button type="button" class="exam-category" data-exam-filter="other">Otros</button>
+    </div>
+    <div class="exam-recent-heading"><h3 data-i18n>Exámenes recientes</h3><span id="examResultCount"></span></div>
+    <div id="examResultList" class="list exam-result-dashboard-list"></div>
+    <button class="exam-primary-action" type="button" id="newResultBtn"><span aria-hidden="true">＋</span> <span data-i18n>Registrar nuevo examen</span></button>
+    <details class="exam-more-options">
+     <summary>Programación y grupos de exámenes</summary>
+     <div class="exam-more-content">
+      <div class="row wrap" style="gap:8px"><button class="btn" type="button" id="newPlanBtn" data-i18n>Nuevo grupo de exámenes</button></div>
+      <div class="card"><h3 data-i18n>Grupos sugeridos</h3><p class="muted" style="font-size:13px;margin-bottom:10px" data-i18n>Son ideas generales. Tu médico decide qué exámenes necesitas y cada cuánto; ajusta las fechas a su indicación.</p><div id="examTemplates" class="chipgrid"></div></div>
+      <div><h3 style="margin:4px 2px 10px" data-i18n>Mis grupos de exámenes</h3><div id="examPlanList" class="list"></div></div>
+      <div class="card" id="examTrendCard" hidden><div class="row between wrap"><h3 style="margin:0" data-i18n>Evolución de un resultado</h3><select id="examTrendSel" class="seg-select" aria-label="Examen"></select></div><p class="fine" id="examTrendUnit"></p><div id="examTrendChart" class="chart-wrap"></div></div>
+     </div>
+    </details>
+    <p class="notice info" data-i18n>Los archivos de resultados se guardan solo en este dispositivo y no entran en el respaldo JSON. La IA solo lee un resultado cuando lo eliges en el asistente y lo autorizas.</p>
    </section>
 
    <section id="paciente" class="view">
@@ -812,7 +821,7 @@
 
 <script src="i18n.js?v=36"></script>
 <script src="app.js?v=62"></script>
-<script src="exams.js?v=62"></script>
+<script src="exams.js?v=63"></script>
 <script src="examreport.js?v=62"></script>
 <script src="firebase-config.js?v=36"></script>
 <script src="ai-firebase.js?v=36"></script>

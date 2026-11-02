@@ -180,7 +180,9 @@ function renderExams() {
   const list = $('examPlanList'); if (!list) return;
   const counts = { red: 0, orange: 0, green: 0 };
   data.examPlans.forEach(p => { const k = planStatus(p).key; if (counts[k] !== undefined) counts[k]++; });
-  $('examSummary').innerHTML = `<div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kpi"><span>${esc(t('Vencidos'))}</span><strong style="color:var(--bad)">${counts.red}</strong></div><div class="kpi"><span>${esc(t('Próximos (30 días)'))}</span><strong style="color:var(--orange)">${counts.orange}</strong></div><div class="kpi"><span>${esc(t('Al día'))}</span><strong style="color:var(--ok)">${counts.green}</strong></div></div>`;
+  const totalExamItems = data.examPlans.reduce((n, p) => n + (Array.isArray(p.items) ? p.items.length : 0), 0);
+  const totalFiles = data.examResults.reduce((n, r) => n + (Array.isArray(r.files) ? r.files.length : 0), 0);
+  $('examSummary').innerHTML = `<div class="exam-stat-card"><span class="exam-stat-icon lab">⚗</span><strong>${totalExamItems || data.examResults.length}</strong><span>Exámenes</span></div><div class="exam-stat-card"><span class="exam-stat-icon result">✓</span><strong>${data.examResults.length}</strong><span>Resultados</span></div><div class="exam-stat-card"><span class="exam-stat-icon files">▤</span><strong>${totalFiles}</strong><span>Archivos</span></div>`;
 
   const order = { red: 0, orange: 1, green: 2, none: 3 };
   const sorted = [...data.examPlans].sort((a, b) => order[planStatus(a).key] - order[planStatus(b).key] || (a.nextDate || '9').localeCompare(b.nextDate || '9'));
@@ -199,12 +201,44 @@ function renderExams() {
     const lines = es.length ? `<ul class="entrylist">${es.map(en => `<li class="${en.status === 'altered' ? 'alt' : en.status === 'normal' ? 'nor' : ''}">${esc(t(en.name))}: <strong>${esc(en.value || '—')}${en.unit ? ' ' + esc(en.unit) : ''}</strong>${en.status ? ` · ${esc(t(EXAM_STATUS[en.status]))}` : ''}${en.ref ? ` <small>· ${esc(t('Rango normal'))}: ${esc(en.ref)}</small>` : ''}</li>`).join('')}</ul>` : '';
     const sub = [`${fmtDate(r.date)}${r.lab ? ' · ' + esc(r.lab) : ''}`, r.summary ? esc(r.summary) : ''].filter(Boolean).join('\n');
     const canAsk = (r.files && r.files.length) || r.text || r.summary || es.length;
-    return `<div class="item exam-result-item"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
+    return `<div class="item exam-result-item" data-exam-search="${esc((r.name + " " + (r.lab || "") + " " + (r.summary || "")).toLowerCase())}"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
   }).join('') : `<div class="empty">${esc(t('Aún no hay resultados guardados.'))}</div>`;
 
   renderExamTrend();
 }
 
+function bindExamDashboardFilters() {
+  const input = $('examSearchInput');
+  const clear = $('examClearSearch');
+  const buttons = document.querySelectorAll('[data-exam-filter]');
+  if (input && !input.dataset.bound) {
+    input.dataset.bound = '1';
+    input.addEventListener('input', applyExamDashboardFilters);
+  }
+  if (clear && !clear.dataset.bound) {
+    clear.dataset.bound = '1';
+    clear.addEventListener('click', () => { if (input) input.value = ''; applyExamDashboardFilters(); });
+  }
+  buttons.forEach(btn => {
+    if (btn.dataset.bound) return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      applyExamDashboardFilters();
+    });
+  });
+}
+function applyExamDashboardFilters() {
+  const q = ($('examSearchInput')?.value || '').trim().toLowerCase();
+  const active = document.querySelector('[data-exam-filter].active')?.dataset.examFilter || 'all';
+  document.querySelectorAll('#examResultList .exam-result-item').forEach(card => {
+    const text = card.dataset.examSearch || '';
+    const category = /perfil|hemograma|biometr|glucosa|colesterol|triglic|laboratorio|sangre|orina/.test(text) ? 'lab'
+      : /electro|ecg|cardio|ecocardi|holter/.test(text) ? 'cardio'
+      : /rayos|ultra|tomograf|radiograf|imagen|resonancia/.test(text) ? 'image' : 'other';
+    card.hidden = (!!q && !text.includes(q)) || (active !== 'all' && category !== active);
+  });
+}
 function renderExamTrend() {
   const sel = $('examTrendSel'); if (!sel) return;
   const groups = {};
