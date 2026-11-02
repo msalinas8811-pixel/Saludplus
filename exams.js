@@ -1,4 +1,4 @@
-/* SaludPlus v23 · control de exámenes
+/* SaludPlus v64 · control de exámenes
    - Controles programados (rutina, por padecimiento o por indicación médica) con fecha del próximo examen.
    - Resultados con archivo PDF/imagen. Los archivos se guardan en este dispositivo (IndexedDB), no en el servidor.
    - La IA solo recibe un resultado cuando la persona lo elige y lo autoriza en el chat. */
@@ -168,6 +168,8 @@ const numVal = (v) => { const n = Number(String(v).replace(',', '.').trim()); re
 const statusPill = (key, text) => `<span class="bp-status bp-${key === 'none' ? 'green' : key}" style="${key === 'none' ? 'background:var(--surface-2);color:var(--muted)' : ''}">${esc(t(text))}</span>`;
 const resPill = (k) => statusPill(k === 'altered' ? 'red' : k === 'review' ? 'yellow' : 'green', EXAM_STATUS[k] || EXAM_STATUS.review);
 
+let examDashboardMode = 'results';
+
 function renderExams() {
   examsNormalize();
   const att = examAttention();
@@ -182,7 +184,7 @@ function renderExams() {
   data.examPlans.forEach(p => { const k = planStatus(p).key; if (counts[k] !== undefined) counts[k]++; });
   const totalExamItems = data.examPlans.reduce((n, p) => n + (Array.isArray(p.items) ? p.items.length : 0), 0);
   const totalFiles = data.examResults.reduce((n, r) => n + (Array.isArray(r.files) ? r.files.length : 0), 0);
-  $('examSummary').innerHTML = `<div class="exam-stat-card"><span class="exam-stat-icon lab">⚗</span><strong>${totalExamItems || data.examResults.length}</strong><span>Exámenes</span></div><div class="exam-stat-card"><span class="exam-stat-icon result">✓</span><strong>${data.examResults.length}</strong><span>Resultados</span></div><div class="exam-stat-card"><span class="exam-stat-icon files">▤</span><strong>${totalFiles}</strong><span>Archivos</span></div>`;
+  $('examSummary').innerHTML = `<button type="button" class="exam-stat-card exam-stat-action" data-exam-stat="plans" aria-label="Ver exámenes programados"><span class="exam-stat-icon lab">⚗</span><strong>${totalExamItems || data.examResults.length}</strong><span>Exámenes</span><small>Ver programación ›</small></button><button type="button" class="exam-stat-card exam-stat-action" data-exam-stat="results" aria-label="Ver resultados registrados"><span class="exam-stat-icon result">✓</span><strong>${data.examResults.length}</strong><span>Resultados</span><small>Ver resultados ›</small></button><button type="button" class="exam-stat-card exam-stat-action" data-exam-stat="files" aria-label="Ver archivos médicos"><span class="exam-stat-icon files">▤</span><strong>${totalFiles}</strong><span>Archivos</span><small>Ver documentos ›</small></button>`;
 
   const order = { red: 0, orange: 1, green: 2, none: 3 };
   const sorted = [...data.examPlans].sort((a, b) => order[planStatus(a).key] - order[planStatus(b).key] || (a.nextDate || '9').localeCompare(b.nextDate || '9'));
@@ -201,10 +203,36 @@ function renderExams() {
     const lines = es.length ? `<ul class="entrylist">${es.map(en => `<li class="${en.status === 'altered' ? 'alt' : en.status === 'normal' ? 'nor' : ''}">${esc(t(en.name))}: <strong>${esc(en.value || '—')}${en.unit ? ' ' + esc(en.unit) : ''}</strong>${en.status ? ` · ${esc(t(EXAM_STATUS[en.status]))}` : ''}${en.ref ? ` <small>· ${esc(t('Rango normal'))}: ${esc(en.ref)}</small>` : ''}</li>`).join('')}</ul>` : '';
     const sub = [`${fmtDate(r.date)}${r.lab ? ' · ' + esc(r.lab) : ''}`, r.summary ? esc(r.summary) : ''].filter(Boolean).join('\n');
     const canAsk = (r.files && r.files.length) || r.text || r.summary || es.length;
-    return `<div class="item exam-result-item" data-exam-search="${esc((r.name + " " + (r.lab || "") + " " + (r.summary || "")).toLowerCase())}"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
-  }).join('') : `<div class="empty">${esc(t('Aún no hay resultados guardados.'))}</div>`;
+    return `<div class="item exam-result-item" data-exam-search="${esc((r.name + " " + (r.lab || "") + " " + (r.summary || "") + " " + resultEntries(r).map(x => x.name + " " + x.value).join(" ") + " " + (r.files || []).map(x => x.name).join(" ")).toLowerCase())}"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
+  }).join('') : `<div class="empty">${esc(t(examDashboardMode === 'files' ? 'Aún no hay archivos médicos asociados a resultados.' : 'Aún no hay resultados guardados.'))}</div>`;
 
   renderExamTrend();
+}
+
+function bindExamStatActions() {
+  const summary = $('examSummary');
+  if (!summary || summary.dataset.actionsBound) return;
+  summary.dataset.actionsBound = '1';
+  summary.addEventListener('click', e => {
+    const btn = e.target.closest('[data-exam-stat]');
+    if (!btn) return;
+    const action = btn.dataset.examStat;
+    const search = $('examSearchInput');
+    if (search) search.value = '';
+    document.querySelectorAll('[data-exam-filter]').forEach(b => b.classList.toggle('active', b.dataset.examFilter === 'all'));
+    if (action === 'plans') {
+      examDashboardMode = 'plans';
+      const fold = document.querySelector('.exam-more-options');
+      if (fold) fold.open = true;
+      const target = $('examPlanList');
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      applyExamDashboardFilters();
+    } else {
+      examDashboardMode = action;
+      renderExams();
+      $('examResultList')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 }
 
 function bindExamDashboardFilters() {
