@@ -199,7 +199,7 @@ function renderExams() {
     const lines = es.length ? `<ul class="entrylist">${es.map(en => `<li class="${en.status === 'altered' ? 'alt' : en.status === 'normal' ? 'nor' : ''}">${esc(t(en.name))}: <strong>${esc(en.value || '—')}${en.unit ? ' ' + esc(en.unit) : ''}</strong>${en.status ? ` · ${esc(t(EXAM_STATUS[en.status]))}` : ''}${en.ref ? ` <small>· ${esc(t('Rango normal'))}: ${esc(en.ref)}</small>` : ''}</li>`).join('')}</ul>` : '';
     const sub = [`${fmtDate(r.date)}${r.lab ? ' · ' + esc(r.lab) : ''}`, r.summary ? esc(r.summary) : ''].filter(Boolean).join('\n');
     const canAsk = (r.files && r.files.length) || r.text || r.summary || es.length;
-    return `<div class="item"><div style="min-width:0;flex:1"><strong>${esc(r.name)} ${resPill(r.status)}</strong><p>${sub}</p>${lines}${files ? `<div class="chipline">${files}</div>` : ''}</div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
+    return `<div class="item exam-result-item"><div style="min-width:0;flex:1"><button class="exam-result-open" type="button" onclick="openExamDetail('${r.id}')"><strong>${esc(r.name)}</strong>${resPill(r.status)}<span class="exam-result-arrow">›</span></button><p>${sub}</p><small class="exam-result-hint">${es.length} ${esc(t('parámetros'))} · ${(r.files || []).length} ${esc(t('archivos'))} · ${esc(t('Ver detalle'))}</small></div><div class="actions">${canAsk ? `<button class="btn secondary small" type="button" onclick="askAboutResult('${r.id}')">${esc(t('Preguntar a la IA'))}</button>` : ''}${(r.files && r.files.length) || r.text ? `<button class="btn secondary small" type="button" onclick="readSavedResult('${r.id}')">${esc(t('Leer informe con IA'))}</button>` : ''}<button class="btn ghost small" type="button" onclick="addFilesToResult('${r.id}')">${esc(t('Agregar archivo'))}</button><button class="btn danger small" type="button" onclick="removeExamResult('${r.id}')">${esc(t('Eliminar'))}</button></div></div>`;
   }).join('') : `<div class="empty">${esc(t('Aún no hay resultados guardados.'))}</div>`;
 
   renderExamTrend();
@@ -312,6 +312,7 @@ async function removeExamResult(id) {
 }
 
 let pendingFiles = [];
+let editingExamResultId = null;
 const rowHtml = (name, locked) => `<div class="resrow"><div class="rname">${locked ? `<strong>${esc(t(name))}</strong><input type="hidden" data-f="name" value="${esc(name)}">` : `<input data-f="name" list="examNames" value="${esc(name)}" maxlength="80" placeholder="${esc(t('Nombre del examen'))}" aria-label="${esc(t('Nombre del examen'))}"><button type="button" class="rdel" aria-label="${esc(t('Quitar'))}">×</button>`}</div><input data-f="value" maxlength="60" placeholder="${esc(t('Resultado'))}" aria-label="${esc(t('Resultado'))}" autocomplete="off"><input data-f="unit" maxlength="14" value="${esc(unitFor(name))}" placeholder="${esc(t('Unidad'))}" aria-label="${esc(t('Unidad'))}"><select data-f="status" aria-label="${esc(t('Estado'))}"><option value="">—</option><option value="normal">${esc(t('Normal'))}</option><option value="altered">${esc(t('Alterado'))}</option></select><div class="rref"><label>${esc(t('Rango normal'))}</label><input data-f="ref" maxlength="40" value="${esc(refFor(name))}" placeholder="${esc(t('Ej. 70–99'))}" aria-label="${esc(t('Rango normal'))}"><span class="rflag" aria-live="polite"></span></div></div>`;
 /* Compara el resultado con el rango y, si el estado no se ha elegido a mano, lo sugiere. */
 function updateRow(row) {
@@ -333,13 +334,21 @@ function refreshResultRows() {
   $('resultRows').innerHTML = items.length ? items.map(n => rowHtml(n, true)).join('') : rowHtml(p && !items.length ? p.name : '', false);
   bindRowDelete($('resultRows'));
 }
-function openResultDialog(planId) {
+function openResultDialog(planId, resultId) {
   examsNormalize();
-  const f = $('resultForm'); f.reset(); pendingFiles = []; renderPendingFiles();
+  const f = $('resultForm'); f.reset(); pendingFiles = []; editingExamResultId = resultId || null; renderPendingFiles();
+  const existing = editingExamResultId ? data.examResults.find(x => x.id === editingExamResultId) : null;
   f.elements.planId.innerHTML = `<option value="">${esc(t('Examen sin grupo'))}</option>` + data.examPlans.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('');
-  f.elements.planId.value = planId || '';
-  f.elements.date.value = today();
+  f.elements.planId.value = existing ? (existing.planId || '') : (planId || '');
+  f.elements.date.value = existing?.date || today();
+  if (existing && !existing.planId) f.elements.name.value = existing.name || '';
   refreshResultRows();
+  if (existing) {
+    f.elements.lab.value = existing.lab || ''; f.elements.summary.value = existing.summary || ''; f.elements.text.value = existing.text || '';
+    const rows = $('resultRows'); rows.innerHTML = (resultEntries(existing).length ? resultEntries(existing) : [{name:existing.name,value:'',unit:'',status:'',ref:''}]).map(en => rowHtml(en.name, false)).join('');
+    rows.querySelectorAll('.resrow').forEach((row, i) => { const en = resultEntries(existing)[i] || {}; ['value','unit','status','ref'].forEach(k => { const el=row.querySelector(`[data-f="${k}"]`); if(el) el.value=en[k]||''; }); updateRow(row); });
+    $('resultDialogTitle').textContent = t('Editar resultado');
+  } else $('resultDialogTitle').textContent = t('Registrar resultado');
   $('resultErr').textContent = '';
   openSheet('resultDialog');
 }
@@ -377,11 +386,29 @@ async function saveResult(e) {
     files.push({ id, name: file.name, type: file.type || (isPdf(file) ? 'application/pdf' : 'image/jpeg'), size: file.size });
   }
   const status = entries.some(x => x.status === 'altered') ? 'altered' : (entries.length && entries.every(x => x.status === 'normal')) ? 'normal' : 'review';
-  const res = { id: uid(), planId: plan ? plan.id : '', name, date: f.date.value, lab: f.lab.value.trim(), status, entries, summary: f.summary.value.trim(), text: f.text.value.trim().slice(0, 8000), files };
-  data.examResults.push(res); applyResultToPlan(res);
+  const previous = editingExamResultId ? data.examResults.find(x => x.id === editingExamResultId) : null;
+  const res = { ...(previous || {}), id: previous?.id || uid(), planId: plan ? plan.id : '', name, date: f.date.value, lab: f.lab.value.trim(), status, entries, summary: f.summary.value.trim(), text: f.text.value.trim().slice(0, 8000), files: [...(previous?.files || []), ...files] };
+  if (previous) Object.assign(previous, res); else data.examResults.push(res);
+  applyResultToPlan(res); editingExamResultId = null;
   closeSheet('resultDialog'); if (btn) btn.disabled = false;
   save(); toast(stored ? t('Resultado guardado en este dispositivo.') : t('Resultado guardado, pero el navegador no permitió guardar el archivo de forma permanente.'));
 }
+
+/* ---------- Vista detallada del examen: tabla + documentos asociados ---------- */
+function openExamDetail(id) {
+  const r = data.examResults.find(x => x.id === id); if (!r) return;
+  const es = resultEntries(r), files = r.files || [];
+  const plan = data.examPlans.find(p => p.id === r.planId);
+  const rows = es.length ? es.map(en => `<tr><td>${esc(en.name || '—')}</td><td><strong>${esc(en.value || '—')}</strong></td><td>${esc(en.unit || '—')}</td><td>${esc(en.ref || '—')}</td></tr>`).join('') : `<tr><td colspan="4" class="exam-detail-empty">${esc(t('No hay parámetros registrados para este resultado.'))}</td></tr>`;
+  const docs = files.length ? files.map(f => `<div class="exam-doc-row"><div class="exam-pdf-icon">${/pdf/i.test(f.type || f.name) ? 'PDF' : 'IMG'}</div><div class="exam-doc-info"><strong>${esc(f.name)}</strong><small>${esc((f.type || '').toUpperCase() || 'ARCHIVO')} · ${fmtSize(f.size)} · ${fmtDate(r.date)}</small></div><button type="button" class="exam-doc-action" aria-label="${esc(t('Ver archivo'))}" onclick="openExamFile('${f.id}','${esc(f.name).replace(/'/g, '')}')">◉</button><button type="button" class="exam-doc-action" aria-label="${esc(t('Descargar archivo'))}" onclick="downloadExamFile('${f.id}','${esc(f.name).replace(/'/g, '')}')">↓</button></div>`).join('') : `<p class="exam-detail-muted">${esc(t('Todavía no hay archivos asociados a este examen.'))}</p>`;
+  $('examDetailContent').innerHTML = `<header class="exam-detail-header"><button type="button" class="exam-detail-back" onclick="closeSheet('examDetailDialog')">←</button><div class="exam-detail-brand"><span>✚</span> SaludPlus</div><button type="button" class="exam-detail-more" onclick="askAboutResult('${r.id}')">⋮</button></header><div class="exam-detail-body"><section class="exam-detail-hero"><div class="exam-detail-icon">⚗</div><div class="exam-detail-title"><h2 id="examDetailTitle">${esc(r.name)}</h2><p>♙ ${esc(r.lab || t('Laboratorio no especificado'))}</p><p>▦ ${fmtDate(r.date)}</p></div>${resPill(r.status)}</section><section class="exam-detail-card"><h3><span>▦</span> ${esc(t('Resultados'))}</h3><div class="exam-table-wrap"><table class="exam-detail-table"><thead><tr><th>${esc(t('Parámetro'))}</th><th>${esc(t('Resultado'))}</th><th>${esc(t('Unidad'))}</th><th>${esc(t('Referencia'))}</th></tr></thead><tbody>${rows}</tbody></table></div></section><section class="exam-detail-card"><h3><span>ⓘ</span> ${esc(t('Información del examen'))}</h3><dl class="exam-info-grid"><dt>${esc(t('Tipo'))}:</dt><dd>${esc(plan ? (EXAM_CATS[plan.cat] || 'Laboratorio') : 'Laboratorio')}</dd><dt>${esc(t('Laboratorio'))}:</dt><dd>${esc(r.lab || '—')}</dd><dt>${esc(t('Médico solicitante'))}:</dt><dd>${esc(r.doctor || r.physician || '—')}</dd><dt>${esc(t('Observaciones'))}:</dt><dd>${esc(r.summary || '—')}</dd></dl></section><section class="exam-detail-files"><h3>📎 ${esc(t('Archivo del examen'))}</h3>${docs}</section><div class="exam-detail-actions"><button type="button" class="exam-edit-btn" onclick="editExamResult('${r.id}')">✎ ${esc(t('Editar'))}</button><button type="button" class="exam-attach-btn" onclick="addFilesToResult('${r.id}')">📎 ${esc(t('Otro archivo'))}</button><button type="button" class="exam-delete-btn" onclick="removeExamResult('${r.id}').then(()=>closeSheet('examDetailDialog'))">▤ ${esc(t('Eliminar'))}</button></div></div>`;
+  openSheet('examDetailDialog');
+}
+function editExamResult(id) { closeSheet('examDetailDialog'); const r = data.examResults.find(x => x.id === id); if (r) openResultDialog(r.planId || '', id); }
+async function downloadExamFile(id, name) { const blob = await FileStore.get(id); if (!blob) { toast(t('Este archivo no está disponible en este dispositivo.')); return; } const url=URL.createObjectURL(blob), a=document.createElement('a'); a.href=url; a.download=name || 'archivo'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),60000); }
+window.downloadExamFile = downloadExamFile;
+window.openExamDetail = openExamDetail;
+window.editExamResult = editExamResult;
 
 /* Agrega más soporte (informe del laboratorio) a un resultado ya guardado. */
 let addFilesTarget = null;
