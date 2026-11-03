@@ -1507,41 +1507,40 @@ a{color:var(--brand-strong)}
 .exam-result-dashboard-list [hidden]{display:none!important}
 @media(max-width:390px){.exam-stat-grid{gap:7px}.exam-stat-card{padding:12px 4px}.exam-stat-card strong{font-size:22px}.exam-category{padding:8px 12px}.exams-dashboard .exam-hero{padding:17px 14px}}
 
-/* v66: corrección de scroll en detalle de examen para iOS/PWA */
-.exam-detail-dialog{
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-  overscroll-behavior:contain;
+/* SaludPlus v67: robust exam-detail scrolling on iOS Safari/PWA */
+#examDetailDialog.exam-detail-dialog {
+  display: none;
+  flex-direction: column;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: contain;
 }
-#examDetailContent{
-  display:flex;
-  flex:1 1 auto;
-  flex-direction:column;
-  min-height:0;
-  height:100%;
+#examDetailDialog.exam-detail-dialog[open] { display: flex; }
+#examDetailDialog #examDetailContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
-.exam-detail-header{
-  flex:0 0 76px;
+#examDetailDialog .exam-detail-header { flex: 0 0 68px; }
+#examDetailDialog .exam-detail-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }
-.exam-detail-body{
-  flex:1 1 auto;
-  min-height:0;
-  height:auto;
-  overflow-y:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-y:contain;
-  touch-action:pan-y;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom));
-}
-@media(max-width:560px){
-  .exam-detail-header{flex-basis:68px}
-  .exam-detail-body{
-    height:auto;
-    padding-bottom:calc(28px + env(safe-area-inset-bottom));
-  }
-  .exam-detail-actions{
-    padding-bottom:calc(12px + env(safe-area-inset-bottom));
-  }
+#examDetailDialog .exam-detail-actions { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+@media (max-width: 560px) {
+  #examDetailDialog.exam-detail-dialog { width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 0; }
+  #examDetailDialog .exam-detail-header { flex-basis: 68px; }
+  #examDetailDialog .exam-detail-body { height: auto; }
 }
