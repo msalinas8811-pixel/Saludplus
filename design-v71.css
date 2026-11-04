@@ -1,0 +1,123 @@
+/* SaludPlus v71 · capa de movimiento: aurora, latido, iconos vivos, indicador deslizante */
+:root{--pop:cubic-bezier(.34,1.56,.64,1)}
+@property --water-progress{syntax:'<percentage>';inherits:true;initial-value:0%}
+@property --med-progress{syntax:'<percentage>';inherits:true;initial-value:0%}
+.water-ring,.med-progress-ring{transition:--water-progress 1s var(--ease-out),--med-progress 1s var(--ease-out)}
+
+/* Fondo vivo */
+.fx-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.fx-bg .blob{position:absolute;border-radius:50%;will-change:transform}
+.fx-bg .b1{width:90vmax;height:90vmax;left:-35vmax;top:-45vmax;background:radial-gradient(closest-side,rgba(56,214,255,.42),transparent);animation:v71a 22s ease-in-out infinite alternate}
+.fx-bg .b2{width:80vmax;height:80vmax;right:-40vmax;top:20vh;background:radial-gradient(closest-side,rgba(60,120,255,.5),transparent);animation:v71b 26s ease-in-out infinite alternate}
+.fx-bg .b3{width:70vmax;height:70vmax;left:-20vmax;bottom:-40vmax;background:radial-gradient(closest-side,rgba(130,90,255,.28),transparent);animation:v71c 30s ease-in-out infinite alternate}
+@keyframes v71a{to{transform:translate3d(18vmax,12vmax,0) scale(1.15)}}
+@keyframes v71b{to{transform:translate3d(-16vmax,-10vmax,0) scale(.9)}}
+@keyframes v71c{to{transform:translate3d(14vmax,-12vmax,0) scale(1.2)}}
+.fx-bg .spark{position:absolute;bottom:-20px;width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle,#fff,rgba(120,225,255,.0) 70%);opacity:0;animation:v71rise var(--d) linear infinite}
+@keyframes v71rise{0%{opacity:0;transform:translate3d(0,0,0)}12%{opacity:.8}85%{opacity:.5}100%{opacity:0;transform:translate3d(24px,-105vh,0)}}
+
+/* Latido */
+.brand-mark svg{animation:v71beat 1.5s ease-in-out infinite;transform-origin:50% 55%}
+@keyframes v71beat{0%,60%,100%{transform:scale(1)}12%{transform:scale(1.14)}24%{transform:scale(.98)}36%{transform:scale(1.08)}}
+.appbar{overflow:visible}
+.ecg-run{position:absolute;left:0;right:0;bottom:-16px;width:100%;height:26px;opacity:.4;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.ecg-run path{fill:none;stroke:#8fe9ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 4px #38d6ff);animation:v71run 5s linear infinite}
+@keyframes v71run{from{transform:translateX(0)}to{transform:translateX(-300px)}}
+
+/* Tarjetas del inicio */
+body .shortcut-card{transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out)}
+body .shortcut-card:active{transform:perspective(700px) scale(.96)!important}
+.js-intro .shortcut-card{animation:v71pop .6s var(--pop) both!important;animation-delay:calc(var(--i,0) * 70ms)!important}
+@keyframes v71pop{from{opacity:0;transform:translateY(26px) scale(.82) rotate(-2deg)}to{opacity:1;transform:none}}
+.shortcut-card::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(0) skewX(-18deg);animation:v71sweep 7s ease-in-out infinite;animation-delay:calc(var(--i,0) * .9s + 1.5s);pointer-events:none}
+@keyframes v71sweep{0%,70%{transform:translateX(0) skewX(-18deg)}100%{transform:translateX(520%) skewX(-18deg)}}
+.shortcut-card .shortcut-icon{animation:v71float 4.6s ease-in-out infinite;animation-delay:calc(var(--i,0) * -.7s)}
+@keyframes v71float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.shortcut-label{margin-top:2px}
+.tile-live{position:relative;display:inline-block;margin-top:4px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);color:#d9f3ff;font-size:.85rem;font-weight:700;font-variant-numeric:tabular-nums;text-shadow:none;white-space:nowrap}
+.tile-live.flip{animation:v71flip .5s var(--ease-out)}
+@keyframes v71flip{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.shortcut-exams .tile-live{margin-top:0;margin-left:auto}
+.shortcut-exams .shortcut-label{margin-right:8px}
+.tile-bar{display:block;width:70%;height:6px;margin:6px auto 0;border-radius:6px;background:rgba(255,255,255,.2);overflow:hidden}
+.tile-bar b{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#38d6ff,#7fe9c3);border-radius:6px;transition:transform 1s var(--ease-out)}
+
+/* Iconos ilustrados con vida */
+.shortcut-icon svg{overflow:visible}
+.a-num,.a-beat,.a-btn,.a-drop,.a-wave,.a-dropw,.a-p1,.a-p2,.a-chk{transform-box:fill-box;transform-origin:center}
+.a-num{animation:v71tick 3s steps(1) infinite}
+.a-num.b{animation-delay:.4s}
+@keyframes v71tick{0%{opacity:1}92%{opacity:.35}96%{opacity:1}}
+.a-beat{animation:v71beat 1.2s ease-in-out infinite}
+.a-btn{animation:v71blink 1.8s ease-in-out infinite}
+@keyframes v71blink{50%{opacity:.35}}
+.a-drop{animation:v71drop 2.4s ease-in-out infinite}
+@keyframes v71drop{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(5px) scale(.9,1.1)}70%{transform:translateY(-1px) scale(1.08,.94)}}
+.a-wave{animation:v71wave 2.2s linear infinite}
+@keyframes v71wave{to{transform:translateX(22px)}}
+.a-dropw{animation:v71bob 2.8s ease-in-out infinite}
+@keyframes v71bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px) rotate(4deg)}}
+.a-p1{animation:v71p1 4s ease-in-out infinite}.a-p2{animation:v71p2 4s ease-in-out infinite}
+@keyframes v71p1{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(-3px,-5px) rotate(-6deg)}}
+@keyframes v71p2{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(3px,5px) rotate(6deg)}}
+.a-chk{animation:v71chk 4.5s var(--pop) infinite}
+@keyframes v71chk{0%,70%,100%{transform:scale(1)}80%{transform:scale(1.25)}90%{transform:scale(.95)}}
+.a-orbit{transform-box:view-box!important;transform-origin:48px 48px!important;animation:v71spin 5s linear infinite}
+@keyframes v71spin{to{transform:rotate(360deg)}}
+
+/* Avatar con halo giratorio */
+.hello-avatar{position:relative;animation:none}
+.hello-avatar::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,#38d6ff,transparent 35%,#7fe9c3 60%,transparent 85%,#38d6ff);animation:v71spin 6s linear infinite;z-index:-1;-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px))}
+.hello-card{animation:v71card .6s var(--ease-out) both}
+@keyframes v71card{from{opacity:0;transform:translateY(-14px) scale(.97)}to{opacity:1;transform:none}}
+.hello-card::after{animation:v71glowx 6s ease-in-out infinite alternate}
+@keyframes v71glowx{from{transform:translateX(-12%)}to{transform:translateX(12%)}}
+
+/* Barra inferior: indicador que se desliza */
+.tabbar{overflow:visible}
+.tab-glow{position:absolute;top:-2px;left:0;width:44px;height:4px;border-radius:4px;background:linear-gradient(90deg,#38d6ff,#7fe9c3);box-shadow:0 0 14px #38d6ff,0 0 28px rgba(56,214,255,.6);transition:transform .5s var(--pop),opacity .2s;pointer-events:none}
+.tabbar .tab.active .ico{animation:v71tabpop .5s var(--pop)}
+@keyframes v71tabpop{from{transform:scale(.8) translateY(4px)}to{transform:none}}
+
+/* Pantallas internas */
+.view.active>*{animation:v69in .45s var(--ease-out) both}
+.view.active>:first-child{animation-name:v71slide}
+@keyframes v71slide{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.premium-arm-panel:first-child{animation:v71fromL .55s var(--ease-out) .15s both}
+.premium-arm-panel.right{animation:v71fromR .55s var(--ease-out) .25s both}
+@keyframes v71fromL{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes v71fromR{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.premium-arm-fields input:focus,.glucose-input-line input:focus{animation:v71focus .35s var(--ease-out)}
+@keyframes v71focus{from{transform:scale(.97)}to{transform:none}}
+.glucose-device-screen{position:relative;overflow:hidden}
+.glucose-device-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:v71scan 5s ease-in-out infinite;pointer-events:none}
+@keyframes v71scan{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.water-bottle{animation:v71bottle 5s ease-in-out infinite}
+@keyframes v71bottle{0%,100%{transform:scale(.82) translateY(0)}50%{transform:scale(.82) translateY(-5px)}}
+.water-ring-inner>span svg{animation:v71bob 2.8s ease-in-out infinite}
+.med-pill-icon,.visits-heading-icon,.exam-hero-icon,.water-drop-mark{animation:v71float 4s ease-in-out infinite}
+.exam-stat-card{animation:v71pop .55s var(--pop) both}.exam-stat-card:nth-child(2){animation-delay:.08s}.exam-stat-card:nth-child(3){animation-delay:.16s}
+.exam-category{animation:v71pop .5s var(--pop) both}.exam-category:nth-child(2){animation-delay:.05s}.exam-category:nth-child(3){animation-delay:.1s}.exam-category:nth-child(4){animation-delay:.15s}.exam-category:nth-child(5){animation-delay:.2s}
+.hh-card{animation:v71pop .6s var(--pop) both}.hh-card+.hh-card{animation-delay:.12s}
+.spark{stroke-dasharray:420;stroke-dashoffset:0}
+.hh-card .spark path:nth-child(2){stroke-dasharray:420;animation:v71line 1.2s var(--ease-out) .3s both}
+@keyframes v71line{from{stroke-dashoffset:420}to{stroke-dashoffset:0}}
+.hh-pill.ok{animation:v71glowok 2.6s ease-in-out infinite}
+@keyframes v71glowok{50%{box-shadow:0 0 14px rgba(37,197,101,.8)}}
+.round-btn .dot{animation:v71blink 1.4s ease-in-out infinite}
+
+/* Onda al tocar y destellos */
+.has-rip{position:relative;overflow:hidden}
+.rip{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,255,255,0) 70%);transform:scale(0);animation:v71rip .6s var(--ease-out) forwards;pointer-events:none}
+@keyframes v71rip{to{transform:scale(1);opacity:0}}
+.burst{position:fixed;z-index:200;width:9px;height:9px;margin:-4px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);pointer-events:none;animation:v71burst .85s var(--ease-out) forwards}
+@keyframes v71burst{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+
+/* Apagado y accesibilidad */
+html[data-motion="off"] .fx-bg .spark,html[data-motion="off"] .ecg-run,html[data-motion="off"] .shortcut-card::after{display:none}
+html[data-motion="off"] *{animation:none!important}
+@media (prefers-reduced-motion:reduce){.fx-bg .spark,.ecg-run,.shortcut-card::after{display:none}*{animation:none!important}}
+body .shortcut-profile{grid-column:auto!important;flex-direction:column!important;align-items:center!important;min-height:178px!important;padding:14px 8px 16px!important}
+body .shortcut-exams{grid-column:1/-1!important;flex-direction:row!important;flex-wrap:wrap;justify-content:center;gap:6px 14px!important;min-height:0!important;padding:14px 16px!important}
+body .shortcut-exams .tile-live{margin:0}
+body .shortcut-exams .shortcut-icon{width:72px!important;height:72px!important}

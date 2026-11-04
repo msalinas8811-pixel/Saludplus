@@ -13,6 +13,10 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
 <link rel="stylesheet" href="styles.css?v=65">
+<link rel="stylesheet" href="design-v68.css?v=68">
+<link rel="stylesheet" href="design-v69.css?v=69">
+<link rel="stylesheet" href="design-v70.css?v=70">
+<link rel="stylesheet" href="design-v71.css?v=71">
 </head>
 <body>
 
@@ -48,8 +52,12 @@
 
  <div class="main-col">
   <header class="appbar">
-   <div class="brand"><img src="saludplus-logo.svg" alt="Logo SaludPlus"><div><b>Salud<span>Plus</span></b><small data-i18n>Control hoy, bienestar mañana</small></div></div>
-   <div class="langpick" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
+   <button type="button" class="brand brand-btn" onclick="showView('inicio')" aria-label="Ir a Inicio"><span class="brand-mark" id="brandMark"></span><b>Salud<span>Plus</span></b></button>
+   <div class="appbar-actions">
+    <button type="button" class="round-btn" id="bellBtn" onclick="showView('avisos')" aria-label="Avisos y recordatorios"><span class="rb-ico" data-art="bell"></span><i class="dot" hidden></i></button>
+    <button type="button" class="round-btn" id="cfOpen" aria-label="Ajustes: tamaño de letra, contraste e idioma"><span class="rb-ico" data-art="gear"></span></button>
+   </div>
+   <div class="langpick" id="appLang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button></div>
   </header>
 
   <main class="content">
@@ -58,7 +66,11 @@
    <!-- ================= HOY ================= -->
    <section id="inicio" class="view active">
     <div class="hello">
-     <div><p class="eyebrow" id="todayLabel"></p><h1 id="homeGreeting">Hola</h1><p class="home-patient-identity" id="homePatientIdentity"></p></div>
+     <p class="hello-date"><span class="hd-ico" data-art="cal"></span><span class="eyebrow" id="todayLabel"></span></p>
+     <div class="hello-card">
+      <div class="hello-avatar" id="homeAvatar" aria-hidden="true"></div>
+      <div class="hello-text"><h1 id="homeGreeting">Hola</h1><p class="home-patient-identity" id="homePatientIdentity"></p></div>
+     </div>
      <div class="quick">
       <button class="btn small" type="button" onclick="showView('presion')"><svg class="i" style="width:18px;height:18px"><use href="#i-plus"/></svg><span data-i18n>Presión</span></button>
       <button class="btn small secondary" type="button" onclick="showView('glucosa')"><svg class="i" style="width:18px;height:18px"><use href="#i-plus"/></svg><span data-i18n>Glucosa</span></button>
@@ -75,41 +87,13 @@
       </div>
      </div>
      <div class="shortcut-grid">
-      <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')" aria-label="Abrir presión arterial">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-activity"/></svg></span>
-       <span class="shortcut-copy"><strong data-i18n>Presión arterial</strong><small data-i18n>Registrar y consultar</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
-      <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')" aria-label="Abrir glucosa">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-drop"/></svg></span>
-       <span class="shortcut-copy"><strong data-i18n>Glucosa</strong><small data-i18n>Registrar y consultar</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
-      <button class="shortcut-card shortcut-water" type="button" onclick="showView('agua')" aria-label="Abrir control de agua">
-       <span class="shortcut-icon" aria-hidden="true">💧</span>
-       <span class="shortcut-copy"><strong data-i18n>Agua</strong><small data-i18n>Control diario</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
-      <button class="shortcut-card shortcut-meds" type="button" onclick="showView('medicamentos')" aria-label="Abrir medicinas">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-pill"/></svg></span>
-       <span class="shortcut-copy"><strong data-i18n>Medicinas</strong><small data-i18n>Horarios y recordatorios</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
-      <button class="shortcut-card shortcut-visits" type="button" onclick="showView('consultas')" aria-label="Abrir consultas">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span>
-       <span class="shortcut-copy"><strong data-i18n>Consultas</strong><small data-i18n>Citas y seguimiento</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
-      <button class="shortcut-card shortcut-exams" type="button" onclick="showView('examenes')" aria-label="Abrir exámenes">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
-       <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
-      <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')" aria-label="Abrir mi perfil">
-       <span class="shortcut-icon" aria-hidden="true">👤</span>
-       <span class="shortcut-copy"><strong data-i18n>Mi perfil</strong><small data-i18n>Mis datos y configuración</small></span>
-       <span class="shortcut-arrow" aria-hidden="true">›</span>
-      </button>
+      <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')" aria-label="Abrir presión arterial"><span class="shortcut-icon" data-art="bp" aria-hidden="true"></span><span class="shortcut-label">Presión<br>Arterial</span></button>
+      <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')" aria-label="Abrir glucosa"><span class="shortcut-icon" data-art="glucose" aria-hidden="true"></span><span class="shortcut-label">Glucosa</span></button>
+      <button class="shortcut-card shortcut-water" type="button" onclick="showView('agua')" aria-label="Abrir control de agua"><span class="shortcut-icon" data-art="water" aria-hidden="true"></span><span class="shortcut-label">Agua<br>Hidratación</span></button>
+      <button class="shortcut-card shortcut-meds" type="button" onclick="showView('medicamentos')" aria-label="Abrir medicinas"><span class="shortcut-icon" data-art="meds" aria-hidden="true"></span><span class="shortcut-label">Medicamentos<br>Recordatorios</span></button>
+      <button class="shortcut-card shortcut-visits" type="button" onclick="showView('consultas')" aria-label="Abrir consultas"><span class="shortcut-icon" data-art="visits" aria-hidden="true"></span><span class="shortcut-label">Consultas<br>y Citas</span></button>
+      <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')" aria-label="Abrir mi perfil"><span class="shortcut-icon" data-art="profile" aria-hidden="true"></span><span class="shortcut-label">Perfil del<br>Paciente</span></button>
+      <button class="shortcut-card shortcut-exams" type="button" onclick="showView('examenes')" aria-label="Abrir exámenes"><span class="shortcut-icon" data-art="exams" aria-hidden="true"></span><span class="shortcut-label">Exámenes y Resultados</span></button>
      </div>
     </section>
 
@@ -827,5 +811,8 @@
 <script src="firebase-config.js?v=36"></script>
 <script src="ai-firebase.js?v=36"></script>
 <script src="chat.js?v=36"></script>
+<script src="art.js?v=70"></script>
+<script src="ux.js?v=70"></script>
+<script src="fx.js?v=71"></script>
 </body>
 </html>

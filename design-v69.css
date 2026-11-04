@@ -1,0 +1,208 @@
+/* SaludPlus v69 · sistema de diseño "cuaderno clínico moderno"
+   Base clara y fresca, un color por función, números grandes, movimiento corto. */
+:root{
+  --bg:#edf3f1;--surface:#fff;--ink:#0c2a30;--ink-soft:#496269;--line:#d2dfdc;
+  --brand:#0a7f78;--brand-ink:#07625d;--warm:#e3f3f0;--focus:#ff9f1c;
+  --c-bp:#e0475b;--c-glu:#e5801a;--c-wat:#1b8fd1;--c-med:#7557d6;--c-vis:#0a7f78;--c-exa:#2f66d0;--c-pro:#51697a;
+  --shadow-1:0 1px 2px rgba(12,42,48,.06),0 6px 18px rgba(12,42,48,.07);
+  --shadow-2:0 2px 4px rgba(12,42,48,.07),0 14px 34px rgba(12,42,48,.12);
+}
+body{background:var(--bg)!important;color:var(--ink)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 380px at 100% -60px,rgba(10,127,120,.12),transparent 70%),radial-gradient(700px 320px at -10% 8%,rgba(27,143,209,.09),transparent 70%)}
+h1,h2,h3{letter-spacing:-.015em}
+.value,.speed-value,strong[id],.big{font-variant-numeric:tabular-nums}
+
+/* acento por pantalla */
+#presion,#mapa-presion{--accent:var(--c-bp);--accent-soft:#fdecef}
+#glucosa{--accent:var(--c-glu);--accent-soft:#fdf0e1}
+#agua{--accent:var(--c-wat);--accent-soft:#e3f2fb}
+#medicamentos{--accent:var(--c-med);--accent-soft:#eeeafb}
+#consultas{--accent:var(--c-vis);--accent-soft:#e3f3f0}
+#examenes,#examrep{--accent:var(--c-exa);--accent-soft:#e6edfb}
+#paciente{--accent:var(--c-pro);--accent-soft:#e8eef2}
+#avisos,#asistente,#reportes,#graficas,#respaldo,#inicio{--accent:var(--brand);--accent-soft:var(--warm)}
+
+/* ===== Encabezados de pantalla ===== */
+.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin:0 0 16px;padding:18px 18px 18px 22px;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:26px!important;box-shadow:var(--shadow-1)!important;color:var(--ink)!important}
+.view>.page-head::before,.water-heading::before,.med-hero::before,.visits-heading::before,.exam-hero::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:6px;border-radius:0 6px 6px 0;background:var(--accent)}
+.view>.page-head h2,.water-heading h2,.med-hero h2,.visits-heading h2,.exam-hero h2{margin:0;font-size:1.45rem;line-height:1.15;color:var(--ink)!important;font-weight:800}
+.view>.page-head p,.water-heading p,.med-hero p,.visits-heading p,.exam-hero p{margin:4px 0 0;color:var(--ink-soft)!important;font-size:.98rem;text-shadow:none!important}
+.water-kicker,.med-kicker,.visits-kicker{display:none!important}
+.water-drop-mark,.med-pill-icon,.visits-heading-icon,.exam-hero-icon{flex:none;display:grid!important;place-items:center;width:56px;height:56px;border-radius:18px!important;background:var(--accent)!important;color:#fff!important;font-size:0!important;box-shadow:none!important;filter:none!important}
+.water-drop-mark svg,.med-pill-icon svg,.visits-heading-icon svg,.exam-hero-icon svg{width:30px;height:30px}
+.ecg{position:absolute;right:10px;bottom:6px;width:120px;height:34px;opacity:.55;pointer-events:none}
+.ecg path{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.view.active .ecg path{animation:v69draw .9s var(--ease-out) .15s both}
+@keyframes v69draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.back-home-btn{position:static!important;margin:2px 0 12px!important;min-height:44px;padding:0 16px 0 12px;font-size:.98rem;background:var(--surface)!important;box-shadow:var(--shadow-1)!important;border-color:var(--line)!important}
+
+/* ===== Paneles claros (reemplazan los azul oscuro) ===== */
+body .premium-monitor,body .glucose-design2,body .water-progress-card,body .water-main-panel,body .med-list-panel,body .visits-list-panel,body .age-clinical-card,body .glucose-reference-card,body .glucose-latest-card,body .water-add-card,body .water-benefits,body .water-bottle-panel,body .med-form-card,body .visit-form-card{background:var(--surface)!important;color:var(--ink)!important;border:1px solid var(--line)!important;border-radius:24px!important;box-shadow:var(--shadow-1)!important;backdrop-filter:none!important;background-image:none!important}
+body :is(.premium-monitor,.glucose-design2,.water-progress-card,.water-main-panel,.med-list-panel,.visits-list-panel,.age-clinical-card,.glucose-reference-card,.glucose-latest-card,.water-add-card,.water-benefits,.med-hero,.visits-heading,.water-heading,.exam-hero,.patient-summary,.med-next,.med-progress,.water-mini-card,.map-disclaimer) :is(h1,h2,h3,h4,p,span,small,strong,b,label,div,li,em,i):not(.ecg *){color:var(--ink)!important;text-shadow:none!important}
+body :is(.premium-monitor,.glucose-design2,.med-list-panel,.visits-list-panel,.water-main-panel) :is(small,.muted,.fine){color:var(--ink-soft)!important}
+.premium-monitor,.glucose-design2{padding:16px!important}
+.patient-summary{background:var(--accent-soft)!important;border:1px solid var(--line)!important;border-radius:18px!important;padding:14px!important;color:var(--ink)!important}
+.premium-topline,.glucose-design2-head,.glucose-strip-art,.water-bottle-glow,.med-hero-art,.premium-heart-platform,.arm-symbol,.premium-heart-mini{display:none!important}
+.premium-dual-intro{display:block!important;margin:6px 2px 12px}
+.premium-dual-intro strong{font-size:1.15rem}
+
+/* Presión: dos brazos */
+.premium-dual-arms{display:grid;gap:12px}
+.premium-arm-panel{background:var(--accent-soft)!important;border:1px solid var(--line)!important;border-left:6px solid var(--accent)!important;border-radius:20px!important;padding:14px!important;box-shadow:none!important}
+.premium-arm-panel.right{border-left-color:var(--c-vis)!important}
+.premium-arm-panel header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.arm-tag{padding:4px 12px;border-radius:999px;background:var(--accent)!important;color:#fff!important;font-size:.85rem!important;font-weight:800!important}
+.premium-arm-panel.right .arm-tag{background:var(--c-vis)!important}
+.premium-arm-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.premium-arm-fields label{display:flex;flex-direction:column;gap:6px;font-size:.92rem}
+.premium-arm-fields input{text-align:center;font-size:1.6rem!important;font-weight:800;min-height:64px;padding:6px!important;font-variant-numeric:tabular-nums}
+.premium-footer{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.premium-footer .premium-save{grid-column:1/-1}
+.premium-date{display:flex;flex-direction:column;gap:6px;background:transparent!important;border:0!important;padding:0!important}
+.premium-date>span{display:none!important}
+.premium-save,.premium-clear{min-height:58px;border-radius:16px!important;font-weight:800!important}
+.premium-save{background:var(--accent)!important;color:#fff!important;border:0!important;box-shadow:0 8px 20px -6px var(--accent)!important}
+.premium-save *{color:#fff!important}
+.premium-clear{background:#fff!important;color:var(--ink)!important;border:2px solid var(--line)!important}
+.premium-dual-help{font-size:.9rem;color:var(--ink-soft)!important}
+
+/* Glucosa */
+.glucose-device{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+.glucose-device-top{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.glucose-device-top .glucose-drop{width:14px;height:14px;border-radius:5px;transform:rotate(45deg);background:var(--accent);font-size:0!important;display:inline-block}
+.glucose-device-top strong{font-size:1.2rem}
+.glucose-device-screen{background:var(--accent-soft)!important;border:2px solid var(--accent)!important;border-radius:22px!important;padding:16px!important;box-shadow:none!important}
+.glucose-input-line{display:flex;align-items:baseline;gap:10px}
+.glucose-input-line input{flex:1;min-width:0;font-size:3.4rem!important;line-height:1;font-weight:850;color:var(--accent)!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:70px;font-variant-numeric:tabular-nums}
+.glucose-input-line span{font-weight:800;color:var(--ink-soft)!important}
+.glucose-moment-label{margin:14px 0 6px;font-weight:700}
+.glucose-device-datetime{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.glucose-device-datetime label,.glucose-notes-label{display:flex;flex-direction:column;gap:6px;font-weight:650}
+.glucose-register-btn{width:100%;min-height:58px;margin-top:14px;border:0;border-radius:16px;background:var(--accent);color:#fff!important;font:800 1.08rem/1 var(--font);box-shadow:0 8px 20px -6px var(--accent);transition:transform .16s var(--ease-out)}
+.glucose-register-btn:active{transform:scale(.97)}
+.glucose-register-btn span{display:none}
+.glucose-design2-grid{display:grid;gap:14px}
+
+/* Agua */
+.water-dashboard{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;display:grid;gap:14px}
+.water-bottle-panel{display:grid;place-items:center;padding:18px 10px!important;background:linear-gradient(180deg,#f2f9fe,#fff)!important}
+.water-bottle .bottle-body,.water-bottle .bottle-cap,.water-bottle .bottle-neck{border-color:var(--accent)!important}
+.water-bottle .bottle-cap{background:var(--accent)!important}
+.bottle-scale span{color:var(--ink-soft)!important}
+.bottle-caption{color:var(--ink-soft)!important}
+.water-top-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.water-mini-card{background:var(--accent-soft)!important;border:1px solid var(--line)!important;border-radius:18px!important;padding:12px!important;box-shadow:none!important}
+.water-mini-icon{display:none!important}
+.water-add-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.water-add-grid>button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:92px;border:2px solid var(--line)!important;border-radius:18px!important;background:#fff!important;color:var(--ink)!important;box-shadow:none!important;transition:transform .16s var(--ease-out),border-color .16s,background-color .16s}
+.water-add-grid>button:active{transform:scale(.96);background:var(--accent-soft)!important;border-color:var(--accent)!important}
+.water-add-grid>button span{font-size:0!important}
+.water-add-grid>button span svg{width:30px;height:30px;color:var(--accent)}
+.water-add-grid>button strong{font-size:1.05rem}
+.water-undo{min-height:46px;border:0;background:transparent;color:var(--brand-ink);font-weight:700}
+.water-benefit-grid{display:grid;gap:8px}
+.water-mascot,.water-ring-inner>span{font-size:0!important}
+.water-ring-inner>span svg,.water-mascot svg{width:28px;height:28px;color:var(--accent)}
+.water-encouragement,#waterEncouragement{color:var(--accent)!important}
+
+/* Medicinas */
+.med-hero{flex-wrap:wrap}
+.med-hero-copy{display:flex;gap:14px;align-items:center;flex:1 1 100%}
+.med-progress,.med-next{flex:1 1 100%;background:var(--accent-soft)!important;border:1px solid var(--line)!important;border-radius:18px!important;padding:12px 14px!important}
+.med-next>span{font-size:0!important}
+.med-next>span svg{width:26px;height:26px;color:var(--accent)}
+.med-add-main,.visit-add-main,.exam-primary-action{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:60px;margin:0 0 14px;border:0;border-radius:18px;background:var(--accent)!important;color:#fff!important;font:800 1.1rem/1 var(--font);box-shadow:0 10px 24px -8px var(--accent);transition:transform .16s var(--ease-out)}
+.med-add-main:active,.visit-add-main:active,.exam-primary-action:active{transform:scale(.97)}
+.med-date-chip,.visit-today-chip{background:var(--accent-soft)!important;color:var(--ink)!important;border:1px solid var(--line)!important;border-radius:999px;padding:6px 12px;font-weight:700}
+
+/* Consultas */
+.visits-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.visits-summary>div,.exam-stat-grid>*{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 8px;text-align:center;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:20px!important;box-shadow:var(--shadow-1)!important;color:var(--ink)!important}
+.visits-summary>div span{font-size:0}
+.visits-summary strong{font-size:1.8rem;line-height:1;color:var(--accent)!important}
+.visits-summary small{font-size:.85rem;color:var(--ink-soft)!important}
+.visits-tabs{display:flex;gap:6px;padding:5px;margin-bottom:12px;background:#dfe9e6!important;border-radius:16px!important}
+.visits-tabs button{flex:1;min-height:46px;border:0;border-radius:12px;background:transparent!important;color:var(--ink-soft)!important;font:700 1rem/1 var(--font);transition:background-color .2s var(--ease-out),color .2s}
+.visits-tabs button.active{background:#fff!important;color:var(--accent)!important;box-shadow:var(--shadow-1)}
+
+/* Exámenes */
+.exam-search{background:#fff!important;border:2px solid var(--line)!important;border-radius:16px!important}
+.exam-search input{border:0!important;box-shadow:none!important;background:transparent!important}
+.exam-category-row{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.exam-category{flex:none;min-height:46px;padding:0 18px;border:2px solid var(--line)!important;border-radius:999px!important;background:#fff!important;color:var(--ink-soft)!important;font:700 1rem/1 var(--font);transition:transform .16s var(--ease-out),background-color .16s,color .16s}
+.exam-category:active{transform:scale(.97)}
+.exam-category.active{background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important}
+.exam-more-options{background:#fff;border:1px solid var(--line);border-radius:20px;padding:4px 14px;margin:14px 0}
+.exam-more-options summary{min-height:54px;display:flex;align-items:center;font-weight:750}
+
+/* Tarjetas, formularios y botones generales con la nueva paleta */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-1)}
+.btn:not(.secondary):not(.ghost):not(.danger){background:var(--brand)!important;box-shadow:0 8px 18px -8px var(--brand)!important}
+.btn.secondary{color:var(--brand-ink)!important;border-color:var(--brand)!important}
+input:focus,select:focus,textarea:focus{border-color:var(--accent,var(--brand));box-shadow:0 0 0 4px color-mix(in srgb,var(--accent,var(--brand)) 20%,transparent)}
+.view input,.view select,.view textarea{background:#fff!important;color:var(--ink)!important}
+.view input::placeholder,.view textarea::placeholder{color:#7a9096!important}
+.view input[type=file]{background:#f2f8f6!important}
+.view input[type=file]::file-selector-button{background:var(--accent,var(--brand))}
+.shortcut-bp .shortcut-icon{background:var(--c-bp)}.shortcut-glucose .shortcut-icon{background:var(--c-glu)}.shortcut-water .shortcut-icon{background:var(--c-wat)}.shortcut-meds .shortcut-icon{background:var(--c-med)}.shortcut-visits .shortcut-icon{background:var(--c-vis)}.shortcut-exams .shortcut-icon{background:var(--c-exa)}.shortcut-profile .shortcut-icon{background:var(--c-pro)}
+.shortcut-card{border-color:transparent!important;box-shadow:var(--shadow-1)!important}
+.home-shortcuts{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+.tabbar{background:rgba(255,255,255,.94)}
+.tabbar .tab.active{color:var(--brand-ink)}
+.subnav button.active{background:var(--brand);border-color:var(--brand)}
+.comfort-btn{color:var(--brand-ink)}
+
+/* Entrada escalonada de bloques al abrir una pantalla */
+.view.active>*{animation:v69in .3s var(--ease-out) both}
+.view.active>*:nth-child(2){animation-delay:40ms}.view.active>*:nth-child(3){animation-delay:80ms}.view.active>*:nth-child(4){animation-delay:120ms}.view.active>*:nth-child(5){animation-delay:160ms}.view.active>*:nth-child(n+6){animation-delay:200ms}
+@keyframes v69in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.view.active{animation:none}
+html[data-motion="off"] .view.active>*,html[data-motion="off"] .ecg path{animation:none!important}
+@media (prefers-reduced-motion:reduce){.view.active>*,.view.active .ecg path{animation:none!important}}
+@media (min-width:700px){.premium-dual-arms{grid-template-columns:1fr 1fr}.glucose-design2-grid{grid-template-columns:1fr}}
+
+/* --- ajustes tras revisión --- */
+.ecg{top:10px!important;bottom:auto!important;right:12px!important;width:64px!important;height:22px!important;opacity:.7}
+.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero{padding-right:84px!important}
+.premium-arm-fields label{background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important;color:var(--ink)!important}
+.premium-arm-fields input{font-size:1.45rem!important;width:100%;padding:4px!important}
+#bpPatientSummary .btn,.patient-summary .btn{background:var(--accent)!important;color:#fff!important;border:0!important;box-shadow:none!important}
+body .glucose-device{animation:none!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;max-width:none!important}
+.glucose-device::before,.glucose-device::after{display:none!important}
+.view .glucose-input-line input{background:transparent!important;border:0!important;box-shadow:none!important}
+.glucose-input-line input::placeholder{color:color-mix(in srgb,var(--accent) 45%,#fff)!important}
+.glucose-device-top{padding:0 2px}
+body .water-bottle-panel{min-height:0!important;flex-direction:column!important;padding:14px 10px!important}
+.water-bottle{transform:scale(.82);transform-origin:top center;margin-bottom:-36px}
+body .bottle-caption{writing-mode:horizontal-tb!important;transform:none!important;position:static!important;margin-top:8px;color:var(--ink-soft)!important}
+body .water-ring{background:conic-gradient(var(--accent) var(--water-progress),#d6e8f3 0)!important;box-shadow:none!important}
+body .water-ring:before{background:#fff!important;border:0!important}
+body .med-progress-ring{background:conic-gradient(var(--accent) var(--med-progress),#ddd8f3 0)!important;box-shadow:none!important}
+body .med-progress-ring:before{background:#fff!important;border:0!important}
+.water-progress-card{display:flex;align-items:center;gap:14px}
+body :is(.water-heading,.med-hero,.visits-heading,.exam-hero) :is(.water-drop-mark,.med-pill-icon,.visits-heading-icon,.exam-hero-icon){color:#fff!important}
+.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero{padding-right:74px!important}
+body .btn.secondary,body button.secondary{background:#fff!important;color:var(--brand-ink)!important;border:2px solid var(--brand)!important;box-shadow:none!important}
+body .btn.danger{background:#fff!important;color:#b3261e!important;border:2px solid #b3261e!important;box-shadow:none!important}
+body .premium-monitor label,body .premium-monitor .premium-notes,body .water-add-card form,body .water-add-card form>div{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+.premium-notes{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.premium-footer+*{margin-top:10px}
+#waterCustomForm>div{display:flex;gap:10px;align-items:stretch}
+#waterCustomForm input{flex:1;min-width:0}
+#waterCustomForm button{flex:none;min-width:58px;border:0;border-radius:14px;background:var(--accent)!important;color:#fff!important;font-weight:800;font-size:1.3rem}
+.water-benefit-grid{grid-template-columns:repeat(2,1fr)}
+.water-benefit-grid>div{display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:var(--accent-soft);font-size:.9rem}
+.water-benefit-grid>div>span{flex:none;font-size:0!important;color:var(--accent)!important;display:grid;place-items:center;width:28px;height:28px}
+.water-benefit-grid>div>span svg{width:22px;height:22px}
+.water-benefit-grid small{color:var(--ink)!important;font-size:.9rem!important}
+body .age-clinical-card,body .age-clinical-card *{opacity:1!important}
+.premium-save>span{display:none!important}
+body .btn.premium-clear{background:#fff!important;color:var(--ink)!important;border:2px solid var(--line)!important;box-shadow:none!important}
+body .view .premium-arm-fields input,body .view .premium-notes input,body .view .premium-notes select,body .view #waterCustomForm input{border:2px solid var(--line)!important;border-radius:14px!important}
+body .muted,body .fine{color:var(--ink-soft)!important}
+body #waterCustomForm input{width:auto!important;min-width:0;flex:1 1 auto;padding:10px 12px!important}
+body .water-add-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px}
+body .water-add-grid>button{width:auto!important;min-width:0!important;grid-column:auto!important;padding:8px 4px!important}
+body .water-add-grid>button strong{white-space:nowrap;font-size:1rem}
+body .water-add-grid>form{grid-column:1/-1!important}
+body .view :is(.water-drop-mark,.med-pill-icon,.visits-heading-icon,.exam-hero-icon) svg{color:#fff!important;stroke:#fff!important}

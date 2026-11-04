@@ -1,0 +1,166 @@
+/* SaludPlus v70 · azul inmersivo con cristal y brillo (según el diseño de referencia) */
+:root{
+  --b1:#0d58c8;--b2:#0a3f9c;--b3:#062b6c;--b4:#041f4f;--cy:#38d6ff;--glass:rgba(255,255,255,.12);--glass-line:rgba(255,255,255,.3);
+  --brand:#1368d6;--brand-ink:#0b4fae;--warm:#e6f1ff;--focus:#ffd24a;
+}
+html{background:#041f4f}
+body{background:linear-gradient(180deg,var(--b1) 0,var(--b2) 26%,var(--b3) 60%,var(--b4) 100%) fixed!important;color:#fff}
+body::before{background:radial-gradient(520px 320px at 85% -40px,rgba(56,214,255,.38),transparent 70%),radial-gradient(520px 360px at -10% 30%,rgba(46,140,255,.35),transparent 70%),radial-gradient(500px 300px at 100% 90%,rgba(56,214,255,.18),transparent 70%)!important}
+.content,.main-col{color:#fff}
+.card,.premium-monitor,.glucose-design2,.med-list-panel,.visits-list-panel,.notice,.exam-more-options,.water-progress-card,.water-add-card,.water-benefits,.water-bottle-panel,.water-main-panel{color:var(--ink)}
+body .view>.muted,body .view>.fine,body .view>p,body .content .footer,body .hello .muted{color:rgba(255,255,255,.82)!important}
+body .view>h2,body .view>h3,body .exam-recent-heading h3,body .home-summary-heading h2{color:#fff!important}
+body .exam-recent-heading span{color:#bfe6ff!important}
+
+/* ---- barra superior ---- */
+.appbar{background:transparent!important;border:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding:calc(10px + env(safe-area-inset-top)) 16px 6px!important;position:relative!important}
+.brand-btn{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;color:#fff;font:800 1.55rem/1 var(--font);letter-spacing:-.02em;cursor:pointer;text-shadow:0 2px 14px rgba(2,20,60,.5)}
+.brand-btn b{color:#fff;font-size:inherit}.brand-btn b span{color:#7fe3ff}
+.brand-mark{display:grid;place-items:center;width:46px;height:42px;filter:drop-shadow(0 4px 10px rgba(2,20,60,.45))}
+.appbar-actions{display:flex;gap:10px;margin-left:auto}
+.round-btn{position:relative;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:1.5px solid var(--glass-line);background:var(--glass);color:#fff;cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 6px 16px rgba(2,20,60,.3),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .16s var(--ease-out)}
+.round-btn:active{transform:scale(.94)}
+.rb-ico{display:grid;place-items:center}.rb-ico svg{width:26px;height:26px}
+.round-btn .dot{position:absolute;top:8px;right:9px;width:13px;height:13px;border-radius:50%;background:#ff4458;border:2px solid #0a3f9c;box-shadow:0 0 10px #ff4458}
+#appLang{display:none}
+.comfort-sheet #appLang{display:inline-flex}
+.comfort-sheet .langpick button{min-height:46px;min-width:64px;font-size:1rem}
+.comfort-sheet,.comfort-sheet p,.comfort-sheet b{color:var(--ink)}
+
+/* ---- volver ---- */
+body .back-home-btn{display:inline-flex!important;align-items:center;gap:4px;min-height:46px;padding:0 16px 0 8px!important;margin:6px 0 12px!important;border:1.5px solid var(--glass-line)!important;background:var(--glass)!important;color:#fff!important;border-radius:999px!important;box-shadow:0 6px 16px rgba(2,20,60,.25),inset 0 1px 0 rgba(255,255,255,.3)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.back-home-btn .bk svg{width:26px;height:26px;display:block}
+.back-home-btn .bk-t{font-weight:700;font-size:1rem}
+
+/* ---- inicio ---- */
+.hello{display:grid;gap:14px;padding:2px 0 6px}
+.hello-date{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 0;font-size:1.05rem;color:#fff}
+.hello-date .hd-ico svg{width:26px;height:26px;display:block;color:#bfe6ff}
+.hello-date .eyebrow{color:#fff!important;font-weight:600;font-size:1.05rem;text-transform:capitalize}
+.hello-card{position:relative;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:30px;border:1.5px solid var(--glass-line);background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.06));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 16px 34px rgba(2,16,48,.4),inset 0 1px 0 rgba(255,255,255,.4);overflow:hidden}
+.hello-card::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-38px;height:80px;background:radial-gradient(60% 100% at 50% 0,rgba(56,214,255,.45),transparent 70%);pointer-events:none}
+.hello-avatar{flex:none;width:92px;height:92px;border-radius:50%;overflow:hidden;border:3px solid #8fe6ff;box-shadow:0 0 0 4px rgba(56,214,255,.25),0 0 24px rgba(56,214,255,.6);background:#1c6fe0;display:grid;place-items:center}
+.hello-avatar img,.hello-avatar svg{width:100%;height:100%;object-fit:cover;display:block}
+.hello-text{min-width:0}
+.hello h1{margin:0;font-size:1.7rem;line-height:1.15;color:#fff;font-weight:800;text-shadow:0 2px 12px rgba(2,20,60,.45)}
+.home-patient-identity{margin:4px 0 0;color:#cfeaff!important;font-size:1.05rem;font-weight:600}
+.quick{display:flex;gap:10px}
+.quick .btn{flex:1 1 0;min-width:0;padding:0 8px;font-size:.98rem}
+body .quick .btn:not(.secondary){background:linear-gradient(180deg,#3ea6ff,#1368d6)!important;box-shadow:0 8px 20px rgba(2,20,60,.4),0 0 16px rgba(56,214,255,.35)!important}
+body .quick .btn.secondary{background:var(--glass)!important;color:#fff!important;border:1.5px solid var(--glass-line)!important}
+.shortcuts-heading{display:none}
+.home-shortcuts{margin-top:4px}
+.shortcut-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}
+body .shortcut-card{position:relative;overflow:hidden;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center;gap:6px!important;min-height:178px!important;padding:14px 8px 16px!important;text-align:center;border-radius:30px!important;border:1.5px solid rgba(120,225,255,.75)!important;background:linear-gradient(160deg,rgba(80,170,255,.42),rgba(10,64,160,.6) 62%,rgba(6,44,120,.75))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -20px 30px rgba(56,214,255,.12),0 0 22px rgba(56,214,255,.35),0 14px 28px rgba(2,14,44,.5)!important;color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .18s var(--ease-out),box-shadow .18s var(--ease-out)}
+.shortcut-card::before{content:"";position:absolute;left:8%;right:8%;top:0;height:46%;border-radius:0 0 60% 60%/0 0 100% 100%;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent);pointer-events:none}
+body .shortcut-card .shortcut-icon{width:96px!important;height:96px!important;border-radius:0!important;background:none!important;filter:drop-shadow(0 8px 10px rgba(2,14,44,.45))}
+.shortcut-card .shortcut-icon svg{width:100%;height:100%;display:block}
+.shortcut-label{position:relative;color:#fff;font-weight:800;font-size:1.15rem;line-height:1.15;text-shadow:0 2px 8px rgba(2,14,44,.55)}
+.shortcut-exams{grid-column:1/-1;min-height:0!important;flex-direction:row!important;gap:14px!important;padding:12px 16px!important}
+.shortcut-exams .shortcut-icon{width:64px!important;height:64px!important}
+@media (hover:hover) and (pointer:fine){body .shortcut-card:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 30px rgba(56,214,255,.55),0 18px 34px rgba(2,14,44,.55)!important}}
+body .shortcut-card:active{transform:scale(.97)}
+.js-intro .shortcut-card{animation:v70pop .4s var(--ease-out) both;animation-delay:calc(var(--i,0) * 55ms)}
+@keyframes v70pop{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+
+/* ---- encabezados de pantalla en cristal ---- */
+body :is(.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero){background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.07))!important;border:1.5px solid var(--glass-line)!important;box-shadow:0 14px 30px rgba(2,16,48,.35),inset 0 1px 0 rgba(255,255,255,.4)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff!important;border-radius:28px!important}
+body :is(.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero)::before{display:none}
+body :is(.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero) :is(h2,h3,strong,b){color:#fff!important}
+body :is(.view>.page-head,.water-heading,.med-hero,.visits-heading,.exam-hero) :is(p,small,span,div){color:#d6ecff!important}
+body :is(.med-hero,.visits-heading,.exam-hero,.water-heading) :is(.water-drop-mark,.med-pill-icon,.visits-heading-icon,.exam-hero-icon){background:rgba(255,255,255,.92)!important;box-shadow:0 0 18px rgba(56,214,255,.5)!important;border-radius:50%!important}
+body .view :is(.water-drop-mark,.med-pill-icon,.visits-heading-icon,.exam-hero-icon) svg{color:var(--accent)!important;stroke:var(--accent)!important}
+body .ecg path{stroke:#8fe6ff}
+body .med-progress,body .med-next{background:rgba(255,255,255,.14)!important;border:1px solid var(--glass-line)!important}
+body .med-progress-ring:before{background:#0a3f9c!important}
+body .med-progress-ring{background:conic-gradient(#38d6ff var(--med-progress),rgba(255,255,255,.25) 0)!important}
+body .med-progress-ring *{color:#fff!important}
+body .med-next *{color:#fff!important}
+body .med-next>span svg{color:#8fe6ff!important}
+
+/* tarjetas blancas sobre azul: sombra más profunda */
+body .card,body .premium-monitor,body .glucose-design2,body .med-list-panel,body .visits-list-panel,body .water-add-card,body .water-benefits,body .water-bottle-panel,body .water-main-panel,body .water-progress-card,body .age-clinical-card{box-shadow:0 14px 30px rgba(2,16,48,.35)!important;border:1px solid rgba(255,255,255,.7)!important}
+body .water-dashboard{padding:0!important}
+body .muted,body .fine{color:var(--ink-soft)!important}
+body .view>.muted,body .view>.fine{color:rgba(255,255,255,.82)!important}
+
+/* ---- exámenes (como la referencia) ---- */
+.exam-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+body .exam-stat-card{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 6px;border:0;border-radius:22px;color:var(--ink)!important;box-shadow:0 12px 24px rgba(2,16,48,.3),inset 0 1px 0 #fff;cursor:pointer;transition:transform .16s var(--ease-out)}
+body .exam-stat-card:active{transform:scale(.96)}
+.exam-stat-card:nth-child(1){background:linear-gradient(180deg,#f2f8ff,#cfe3fb)}
+.exam-stat-card:nth-child(2){background:linear-gradient(180deg,#f3fff7,#c9f1d9)}
+.exam-stat-card:nth-child(3){background:linear-gradient(180deg,#f7f3ff,#ddd0fb)}
+.exam-stat-card strong{font-size:1.9rem;line-height:1.1;color:var(--ink)!important}
+.exam-stat-card span:last-child{font-size:.95rem;font-weight:700;color:var(--ink)!important}
+.exam-stat-icon{display:grid;place-items:center;width:42px;height:42px;font-size:0}
+.exam-stat-icon svg{width:36px;height:36px}
+.exam-stat-card:nth-child(1) .exam-stat-icon{color:#2f86e6}.exam-stat-card:nth-child(2) .exam-stat-icon{color:#22a85a}.exam-stat-card:nth-child(3) .exam-stat-icon{color:#7a52d6}
+.exam-search-row{display:flex;gap:10px;margin-bottom:12px}
+body .exam-search{flex:1;display:flex;align-items:center;gap:8px;padding:0 14px;border:0!important;border-radius:18px!important;box-shadow:0 8px 18px rgba(2,16,48,.25)}
+.exam-search>span{display:grid;place-items:center;color:#4a6a86}.exam-search>span svg{width:24px;height:24px}
+body .exam-search input{color:var(--ink)!important}
+body .exam-filter-button{flex:none;width:56px;border:0;border-radius:18px;background:#fff;color:#1368d6;font-size:0;display:grid;place-items:center;box-shadow:0 8px 18px rgba(2,16,48,.25)}
+.exam-filter-button svg{width:26px;height:26px}
+.exam-category-row{gap:10px}
+body .exam-category{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:84px;min-height:84px;padding:8px 12px;border:0!important;border-radius:22px!important;background:linear-gradient(180deg,#fff,#e4effc)!important;color:var(--ink)!important;box-shadow:0 8px 18px rgba(2,16,48,.25);font-size:.92rem}
+.cat-ico svg{width:30px;height:30px;display:block;color:#2f86e6}
+.exam-category[data-exam-filter=cardio] .cat-ico{color:#e0475b}.exam-category[data-exam-filter=image] .cat-ico svg{color:#8a5ad8}
+body .exam-category.active{background:linear-gradient(180deg,#4aa4ff,#1560d8)!important;color:#fff!important;box-shadow:0 0 20px rgba(56,214,255,.55),0 8px 18px rgba(2,16,48,.3)}
+body .exam-category.active .cat-ico svg{color:#fff!important}
+.exam-recent-heading{display:flex;align-items:baseline;justify-content:space-between;margin:10px 2px}
+body .exam-result-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:22px;background:#fff!important;border:0!important;box-shadow:0 10px 22px rgba(2,16,48,.28);color:var(--ink)!important}
+.ex-ico{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#dff4f7;color:#1c8aa0}.ex-ico svg{width:28px;height:28px}
+.exam-result-item p,.exam-result-item small{color:var(--ink-soft)!important}
+body .exam-primary-action{background:linear-gradient(180deg,#4aa4ff,#1560d8)!important;box-shadow:0 0 22px rgba(56,214,255,.45),0 12px 24px rgba(2,16,48,.4)!important;border:1.5px solid rgba(255,255,255,.35)}
+body .exam-more-options summary{color:var(--ink)}
+
+/* ---- perfil ---- */
+#patientSummaryCard{background:linear-gradient(135deg,#fff,#e8f2ff)!important;border-radius:28px}
+.patient-summary-head{display:flex;gap:14px;align-items:center}
+.patient-summary-photo,.patient-summary-placeholder{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid #8fe6ff;box-shadow:0 0 18px rgba(56,214,255,.55);display:grid;place-items:center;background:#e1f1ff;font-size:2rem}
+
+/* ---- navegación inferior en cristal oscuro ---- */
+body .tabbar{background:linear-gradient(180deg,rgba(8,52,130,.82),rgba(4,28,76,.95))!important;border-top:1.5px solid rgba(120,225,255,.45)!important;box-shadow:0 -10px 30px rgba(2,14,44,.5),0 -1px 0 rgba(255,255,255,.1) inset!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+body .tabbar .tab{color:rgba(255,255,255,.75)!important}
+body .tabbar .tab .ico{background:transparent}
+body .tabbar .tab.active{color:#fff!important}
+body .tabbar .tab.active .ico{background:linear-gradient(180deg,#46a9ff,#1262d8)!important;box-shadow:0 0 20px rgba(56,214,255,.7),inset 0 1px 0 rgba(255,255,255,.5)!important;color:#fff!important}
+body .tabbar .tab.active .ico svg{color:#fff;stroke:#fff}
+.notice-count{background:#ff4458!important;color:#fff!important;box-shadow:0 0 10px rgba(255,68,88,.7)}
+body .subnav button{background:var(--glass)!important;border:1.5px solid var(--glass-line)!important;color:#fff!important}
+body .subnav button.active{background:#fff!important;color:var(--brand-ink)!important}
+
+/* botones generales sobre el azul */
+body .btn:not(.secondary):not(.ghost):not(.danger){background:linear-gradient(180deg,#3ea6ff,#1368d6)!important;box-shadow:0 8px 18px rgba(2,20,60,.35)!important;color:#fff!important}
+body .btn.secondary{color:#0b4fae!important;border-color:#1368d6!important}
+
+/* movimiento: luz que respira solo en el avatar (un único adorno continuo) */
+.hello-avatar{animation:v70glow 3.2s ease-in-out infinite}
+@keyframes v70glow{0%,100%{box-shadow:0 0 0 4px rgba(56,214,255,.2),0 0 18px rgba(56,214,255,.45)}50%{box-shadow:0 0 0 6px rgba(56,214,255,.3),0 0 30px rgba(56,214,255,.75)}}
+html[data-motion="off"] .hello-avatar,html[data-motion="off"] .js-intro .shortcut-card{animation:none!important}
+@media (prefers-reduced-motion:reduce){.hello-avatar,.js-intro .shortcut-card{animation:none!important}}
+html[data-contrast="high"] body{background:#031a44!important}
+html[data-contrast="high"] .shortcut-card{border-color:#fff!important}
+@media (min-width:700px){.shortcut-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.shortcut-exams{grid-column:auto}.shortcut-exams{flex-direction:column!important}}
+body .shortcut-card .shortcut-icon{border:0!important;box-shadow:none!important;outline:0!important;padding:0!important}
+.shortcut-card .shortcut-icon::before,.shortcut-card .shortcut-icon::after{display:none!important}
+.hello-date .eyebrow{text-transform:none!important}
+.hello-date .eyebrow::first-letter{text-transform:uppercase}
+.round-btn .dot{top:6px;right:7px}
+.exam-result-dashboard-list .empty,.exam-result-dashboard-list>p,#examResultList .empty{color:#cfeaff!important;border-color:rgba(255,255,255,.4)!important}
+.health-history{display:grid;gap:12px}
+.hh-title{margin:6px 2px 0;font-size:1.3rem;color:#fff!important}
+.hh-card{padding:14px;border-radius:24px;color:#fff;background:linear-gradient(160deg,rgba(40,120,235,.55),rgba(6,44,120,.85));border:1.5px solid rgba(120,225,255,.55);box-shadow:0 0 18px rgba(56,214,255,.22),0 12px 26px rgba(2,14,44,.45)}
+.hh-top{display:flex;align-items:center;gap:12px}
+.hh-ico{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.14)}
+.hh-ico svg{width:26px;height:26px}
+.hh-card.bp .hh-ico{color:#ff6b86}.hh-card.glu .hh-ico{color:#d9a6ff}
+.hh-top strong{display:block;font-size:1.1rem}.hh-top small{color:#bfe3ff;font-size:.85rem}
+.hh-top>div{flex:1;min-width:0}
+.hh-pill{padding:6px 12px;border-radius:999px;font-weight:800;font-size:.9rem}
+.hh-pill.ok{background:#25c565;color:#fff}.hh-pill.warn{background:#ffb02e;color:#3a2600}
+.hh-val{margin:8px 0 2px;font-size:2rem;font-weight:850;font-variant-numeric:tabular-nums}.hh-val small{font-size:.95rem;font-weight:700;color:#bfe3ff}
+.spark{display:block;width:100%;height:78px;margin-top:4px}
+.hh-dates{display:flex;justify-content:space-between;color:#bfe3ff;font-size:.82rem}
+.hh-empty{padding:14px;border-radius:18px;border:1.5px dashed rgba(255,255,255,.4);color:#d6ecff;text-align:center}
