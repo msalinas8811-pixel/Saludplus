@@ -534,12 +534,25 @@ function renderVisitsDashboard() {
     const time = v.nextTime || '';
     const status = isUpcoming ? 'Próxima' : 'Registrada';
     const fileButton = v.fileData ? `<button type="button" class="visit-action" onclick="openAttachment('${v.id}')">📎 Ver documento</button>` : '';
+    const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    const fd = d => d ? `${+String(d).slice(8,10)} ${MES[(+String(d).slice(5,7))-1] || ''} ${String(d).slice(0,4)}` : '';
+    const diff = Math.round((new Date(date + 'T00:00:00') - new Date(now + 'T00:00:00')) / 86400000);
+    const when = !isUpcoming ? '' : diff === 0 ? 'Hoy' : diff === 1 ? 'Mañana' : `Faltan ${diff} días`;
+    const ico = n => `<svg class="i"><use href="#${n}"/></svg>`;
+    const done = isUpcoming && v.date ? `<div class="vc-prev">Consulta realizada el ${esc(fd(v.date))}</div>` : '';
     return `<article class="visit-card ${isUpcoming ? 'visit-upcoming' : ''}">
-      <div class="visit-date-block"><b>${esc(String(date).slice(8,10))}</b><span>${esc(['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][(+String(date).slice(5,7))-1] || '')} ${esc(String(date).slice(0,4))}</span><small>${time ? esc(time) : (isUpcoming ? 'Cita' : 'Consulta')}</small></div>
-      <div class="visit-card-content"><div class="visit-card-top"><span class="visit-specialty-icon"><svg class="i"><use href="#${isUpcoming ? 'i-cal' : 'i-file'}"/></svg></span><div><strong>${esc(v.specialty || 'Consulta médica')}</strong><small>${esc(v.doctor || 'Médico no especificado')}</small></div><span class="visit-status ${isUpcoming ? 'next' : 'saved'}">${status}</span></div>
-       <div class="visit-meta">${v.notes ? esc(v.notes) : 'Sin observaciones registradas'}</div>
-       <div class="visit-actions">${fileButton}${removeBtn('visits',v.id)}</div>
+      <div class="vc-head"><span class="visit-status ${isUpcoming ? 'next' : 'saved'}">${status}</span>${when ? `<span class="vc-when ${diff <= 1 ? 'soon' : ''}">${when}</span>` : ''}</div>
+      <div class="vc-info">
+       <div class="vc-pair">
+        <div class="vc-row"><i>${ico('i-cal')}</i><span><small>${isUpcoming ? 'Fecha de la cita' : 'Fecha de la consulta'}</small><b>${esc(fd(date))}</b></span></div>
+        <div class="vc-row"><i>🕒</i><span><small>Hora</small><b>${time ? esc(time) : 'Sin hora'}</b></span></div>
+       </div>
+       <div class="vc-row"><i>🩺</i><span><small>Médico</small><b>${esc(v.doctor || 'No especificado')}</b></span></div>
+       <div class="vc-row"><i>🏷️</i><span><small>Especialidad</small><b>${esc(v.specialty || 'Consulta médica')}</b></span></div>
       </div>
+      <div class="vc-notes"><small>Motivo / notas</small><p>${v.notes ? esc(v.notes) : 'Sin observaciones registradas'}</p></div>
+      ${done}
+      <div class="visit-actions">${fileButton}${removeBtn('visits',v.id)}</div>
     </article>`;
   }).join('') : '<div class="visit-empty"><span>🗓️</span><strong>No hay consultas en esta sección</strong><small>Registra una consulta o agrega la fecha de tu próxima cita.</small></div>';
 }

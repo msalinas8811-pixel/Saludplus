@@ -44,3 +44,24 @@ body #consultas .visit-actions button{min-height:38px;padding:0 14px;border-radi
 body #consultas .visit-actions .visit-action{color:#2a56e8!important;border-color:#c5d4f2!important}
 body #consultas .visit-empty{display:grid;justify-items:center;gap:4px;padding:26px 16px;border-radius:20px;background:#fff;color:#31456f;text-align:center;box-shadow:0 6px 16px rgba(30,70,150,.1)}
 body #consultas .visit-empty strong{color:#0b1f4d}
+/* tarjeta de cita ordenada: estado, fecha/hora, médico, especialidad, motivo */
+body #consultas .visit-card{display:grid!important;grid-template-columns:1fr!important;gap:10px;padding:14px!important}
+body #consultas .vc-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+body #consultas .vc-when{padding:4px 10px;border-radius:999px;background:#e4ecfb;color:#2a56e8;font-size:.76rem;font-weight:800}
+body #consultas .vc-when.soon{background:#ffe9c7;color:#8a5200}
+body #consultas .vc-main{display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;align-items:stretch}
+body #consultas .vc-main .visit-date-block{display:grid;align-content:center;justify-items:center;gap:1px;border-radius:16px;padding:8px 4px}
+body #consultas .vc-main .visit-date-block small{margin-top:4px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.25);font-size:.8rem;font-weight:800}
+body #consultas .vc-info{display:grid;gap:8px;min-width:0}
+body #consultas .vc-row{display:flex;align-items:center;gap:10px;min-width:0}
+body #consultas .vc-row>i{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:11px;background:#e4ecfb;font-style:normal;font-size:1rem;color:#2a56e8}
+body #consultas .vc-row>i svg{width:18px;height:18px}
+body #consultas .vc-row>span{display:grid;min-width:0}
+body #consultas .vc-row small{color:#4a5f8a;font-size:.7rem;font-weight:600;line-height:1.1}
+body #consultas .vc-row b{color:#0b1f4d;font-size:.92rem;line-height:1.25;overflow-wrap:anywhere}
+body #consultas .vc-notes{padding:10px 12px;border-radius:14px;background:#f2f8ff;border:1px solid #dbe6fb}
+body #consultas .vc-notes small{display:block;color:#4a5f8a;font-size:.7rem;font-weight:700}
+body #consultas .vc-notes p{margin:2px 0 0;color:#31456f;font-size:.86rem;line-height:1.35}
+body #consultas .vc-prev{color:#4a5f8a;font-size:.78rem}
+body #consultas .vc-pair{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px;padding-bottom:10px;border-bottom:1px dashed #c5d4f2}
+body #consultas .visit-card .vc-info{gap:10px}
