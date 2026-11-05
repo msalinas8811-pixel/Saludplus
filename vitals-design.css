@@ -1,0 +1,114 @@
+/* Presión y Glucosa con la paleta de Exámenes y Resultados */
+body :is(#presion,#glucosa).view.active{padding:12px;border-radius:30px;background:linear-gradient(180deg,#2c5fc7 0,#4f8be0 150px,#a9c9f5 300px,#e6f0fd 470px,#f5f9ff 100%);box-shadow:0 14px 40px rgba(20,60,140,.22);display:grid;gap:14px;align-content:start}
+body :is(#presion,#glucosa) .back-home-btn{margin:0;min-height:40px;font-size:.9rem;padding:0 14px;justify-self:start}
+body :is(#presion,#glucosa) .page-head{margin:0;padding:14px 16px;border-radius:22px;background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.35)!important;box-shadow:none!important}
+body :is(#presion,#glucosa) .page-head h2{margin:0;color:#fff!important;font-size:1.25rem!important}
+body :is(#presion,#glucosa) .page-head p{margin:3px 0 0;color:rgba(255,255,255,.92)!important;font-size:.85rem}
+/* contenedores principales: blancos */
+body #presion .premium-monitor,body #glucosa .glucose-design2{background:#fff!important;border:0!important;border-radius:24px!important;box-shadow:0 8px 22px rgba(30,70,150,.16)!important;padding:14px!important;color:#0b1f4d!important;overflow:visible}
+body #presion .premium-monitor::before,body #presion .premium-monitor::after,body #glucosa .glucose-design2::before,body #glucosa .glucose-design2::after{display:none!important}
+body #presion .premium-topline,body #presion .premium-heart-platform,body #presion .premium-dual-help,body #glucosa .glucose-design2-head,body #glucosa .glucose-device-top,body #glucosa .glucose-strip-art{display:none!important}
+body #presion .premium-dual-intro{display:block!important;margin:0 0 10px;padding:0!important;background:none!important;border:0!important}
+body #presion .premium-dual-intro strong{display:block;color:#0b1f4d!important;font-size:1.05rem}
+body #presion .premium-dual-intro span{color:#4a5f8a!important;font-size:.85rem}
+/* resumen del paciente */
+body #presion .patient-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px!important;padding:12px 14px!important;border-radius:16px!important;background:#eef3fd!important;border:0!important;color:#0b1f4d!important}
+body #presion .patient-summary strong{color:#0b1f4d!important;font-size:.95rem}
+body #presion .patient-summary span{display:block;color:#4a5f8a!important;font-size:.78rem}
+body #presion .patient-summary .btn{min-height:36px;padding:0 12px;border-radius:12px;font-size:.82rem;background:#fff!important;color:#2a56e8!important;border:1.5px solid #c5d4f2!important;box-shadow:none!important}
+/* brazos */
+body #presion .premium-dual-arms{display:grid!important;gap:12px;grid-template-columns:1fr!important}
+body #presion .premium-arm-panel{padding:12px!important;border-radius:18px!important;background:#f4f8ff!important;border:1px solid #dbe6fb!important;box-shadow:none!important;color:#0b1f4d!important}
+body #presion .premium-arm-panel header{display:flex;align-items:center;gap:10px;margin-bottom:10px;color:#0b1f4d!important}
+body #presion .premium-arm-panel header strong{color:#0b1f4d!important;font-size:.98rem}
+body #presion .premium-arm-panel header small{color:#4a5f8a!important;font-size:.78rem}
+body #presion .arm-symbol{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#dff0fd!important;color:#1f8ce0!important;font-size:.9rem}
+body #presion .premium-arm-panel.right .arm-symbol{background:#e9e4fb!important;color:#6a4fd6!important}
+body #presion .arm-tag{margin-left:auto;padding:3px 10px;border-radius:999px;background:#e4ecfb!important;color:#2a56e8!important;font-size:.7rem;font-weight:800;border:0!important}
+body #presion .premium-arm-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+body #presion .premium-arm-fields label{display:grid;gap:4px;color:#31456f!important;font-size:.8rem;font-weight:700;background:none!important;border:0!important;padding:0!important}
+body #presion .premium-arm-fields label span{color:#31456f!important}
+/* campos generales */
+body :is(#presion,#glucosa) form input:not([type=checkbox]),body :is(#presion,#glucosa) form select,body :is(#presion,#glucosa) form textarea{min-height:46px;border-radius:14px!important;border:1.5px solid #c5d4f2!important;background:#fff!important;color:#0b1f4d!important;font-size:1rem!important;box-shadow:none!important;padding:8px 10px;width:100%;box-sizing:border-box;-webkit-text-fill-color:#0b1f4d}
+body :is(#presion,#glucosa) form input::placeholder,body :is(#presion,#glucosa) form textarea::placeholder{color:#8091b5!important;-webkit-text-fill-color:#8091b5}
+body :is(#presion,#glucosa) form input:focus,body :is(#presion,#glucosa) form select:focus,body :is(#presion,#glucosa) form textarea:focus{outline:none;border-color:#2a56e8!important;box-shadow:0 0 0 4px rgba(42,86,232,.18)!important}
+body #presion .premium-arm-fields input{text-align:center;font-size:1.2rem!important;font-weight:800;padding:6px 4px}
+body :is(#presion,#glucosa) form input[type=date],body :is(#presion,#glucosa) form input[type=time]{color-scheme:light}
+/* fecha, hora, guardar */
+body #presion .premium-footer{display:grid!important;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;padding:0!important;background:none!important;border:0!important}
+body #presion .premium-date{display:flex!important;align-items:center;gap:8px;padding:0 10px!important;border-radius:14px!important;background:#fff!important;border:1.5px solid #c5d4f2!important;min-height:46px;color:#2a56e8!important}
+body #presion .premium-date span{color:#2a56e8!important;font-size:1rem}
+body #presion .premium-date input{border:0!important;min-height:42px;padding:0!important;font-size:.95rem!important;background:none!important}
+body :is(#presion .premium-save,#glucosa .glucose-register-btn){display:flex!important;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;border-radius:16px!important;border:0!important;background:linear-gradient(135deg,#3d9bff,#2a56e8)!important;color:#fff!important;font-size:1rem;font-weight:800;box-shadow:0 10px 22px rgba(42,86,232,.38)!important;cursor:pointer;transition:transform .16s cubic-bezier(.23,1,.32,1)}
+body #presion .premium-save{grid-column:1/-1}
+body :is(#presion .premium-save,#glucosa .glucose-register-btn):active{transform:scale(.97)}
+body #presion .premium-extras{display:grid!important;grid-template-columns:90px 1fr;gap:10px;margin-top:12px;padding:0!important;background:none!important;border:0!important}
+body #presion .premium-extras label{display:grid;gap:4px;color:#31456f!important;font-size:.8rem;font-weight:700}
+body #presion .premium-extras label span{color:#31456f!important}
+body #presion .premium-clear{grid-column:1/-1;min-height:42px;border-radius:14px!important;background:#fff!important;color:#2a56e8!important;border:1.5px solid #c5d4f2!important;box-shadow:none!important;font-weight:800}
+/* glucosa */
+body #glucosa .glucose-design2-grid{display:grid!important;grid-template-columns:1fr!important;gap:14px}
+body #glucosa .glucose-device{padding:0!important;background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;display:grid;gap:10px;color:#0b1f4d!important}
+body #glucosa .glucose-device::before,body #glucosa .glucose-device::after{display:none!important}
+body #glucosa .glucose-device-screen{padding:14px!important;border-radius:18px!important;background:linear-gradient(160deg,#eaf3ff,#d3e5fc)!important;border:0!important;box-shadow:none!important}
+body #glucosa .glucose-device-screen label{color:#31456f!important;font-size:.85rem;font-weight:700}
+body #glucosa .glucose-input-line{display:flex!important;align-items:center;gap:10px;background:none!important;border:0!important;padding:0!important}
+body #glucosa .glucose-input-line input{font-size:2rem!important;font-weight:800;text-align:left;min-height:54px}
+body #glucosa .glucose-input-line span{color:#31456f!important;font-weight:800}
+body #glucosa .glucose-moment-label{color:#31456f!important;font-size:.85rem;font-weight:700;margin:2px 0 -4px}
+body #glucosa .glucose-device-datetime{display:grid!important;grid-template-columns:1fr 1fr;gap:10px}
+body #glucosa .glucose-device-datetime label,body #glucosa .glucose-notes-label{color:#31456f!important;font-size:.8rem;font-weight:700;display:grid;gap:4px}
+body #glucosa .glucose-notes-label textarea{min-height:64px}
+body #glucosa .glucose-reference-column{display:grid;gap:12px}
+body #glucosa .glucose-reference-card,body #glucosa .glucose-latest-card{padding:14px!important;border-radius:18px!important;background:#f4f8ff!important;border:1px solid #dbe6fb!important;box-shadow:none!important;color:#0b1f4d!important}
+body #glucosa .glucose-reference-card h3,body #glucosa .latest-card-title{color:#0b1f4d!important;font-size:1rem}
+body #glucosa .glucose-reference-card p,body #glucosa .glucose-reference-row small,body #glucosa .glucose-reference-note,body #glucosa .latest-meta{color:#4a5f8a!important;font-size:.8rem}
+body #glucosa .glucose-reference-row strong{color:#0b1f4d!important;font-size:.92rem}
+body #glucosa .glucose-reference-row{border-color:#dbe6fb!important}
+body #glucosa .latest-value strong{color:#0b1f4d!important;font-size:2rem}
+body #glucosa .latest-value span{color:#31456f!important}
+/* tarjetas inferiores */
+body :is(#presion,#glucosa) .card:not(.premium-monitor),body #glucosa .glucose-gauge-design2,body #glucosa .glucose-history-design2{border:0!important;border-radius:22px!important;background:#fff!important;box-shadow:0 8px 22px rgba(30,70,150,.14)!important;margin:0!important}
+body :is(#presion,#glucosa) .card:not(.premium-monitor) h3{color:#0b1f4d!important}
+body #glucosa .glucose-section-title span{background:#e4ecfb!important;color:#2a56e8!important}
+body :is(#presion,#glucosa) .notice{margin:0;background:#e4efff!important;border:1px solid #c5d8f7!important;color:#1d3a73!important;border-radius:16px}
+body #presion .premium-date{display:block!important;padding:0!important}
+body #presion .premium-date>span{display:none!important}
+body #presion .premium-date input{min-height:46px!important;padding:0 10px!important;width:100%!important;border:0!important}
+body #presion .premium-extras label,body #presion .premium-extras label.premium-notes{background:none!important;border:0!important;padding:0!important;box-shadow:none!important;min-height:0!important}
+body #presion .premium-extras label>span{display:block;color:#31456f!important;font-size:.8rem!important;opacity:1!important}
+body #presion .premium-save>span{display:none}
+body #glucosa .glucose-input-line input{flex:1;min-width:0;width:auto}
+body #glucosa .glucose-register-btn>span{display:none}
+body :is(#presion,#glucosa) button{animation:none!important}
+body :is(#presion,#glucosa) .card:not(.premium-monitor) :is(p,.muted,.fine,small,span){color:#4a5f8a}
+body :is(#presion,#glucosa) .card:not(.premium-monitor) :is(h3,strong,.value){color:#0b1f4d}
+body :is(#presion,#glucosa) .item button.btn,body :is(#presion,#glucosa) .item .btn.small{min-height:38px;border-radius:12px;font-size:.84rem;font-weight:800;background:#2a56e8!important;color:#fff!important;border:0!important;box-shadow:none!important}
+body :is(#presion,#glucosa) .item .btn.danger,body :is(#presion,#glucosa) .item button[onclick*=remove]{background:#fff!important;color:#b3122a!important;border:1.5px solid #f2c4cb!important}
+body #presion :is(#clinicalProfileLine,#clinicalGuidance,.clinical-metric span,.clinical-metric small){color:#4a5f8a!important}
+body #glucosa .glucose-device{animation:none!important;transform:none!important}
+/* ---- fecha y hora: dos campos medianos lado a lado ---- */
+body #presion .premium-footer{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important;align-items:end}
+body :is(#presion .premium-date,#glucosa .glucose-device-datetime label){position:relative;display:grid!important;gap:5px;min-width:0;width:100%;max-width:100%;padding:0!important;margin:0!important;border:0!important;background:none!important;color:#31456f!important;font-size:.78rem!important;font-weight:700;line-height:1.2}
+body #presion .premium-footer .premium-date:nth-child(1)::before{content:"Fecha"}
+body #presion .premium-footer .premium-date:nth-child(2)::before{content:"Hora"}
+body #presion .premium-date::before{display:block;color:#31456f;font-size:.78rem;font-weight:700}
+body #presion .premium-date>span{display:none!important}
+body :is(#presion .premium-date input,#glucosa .glucose-device-datetime input){display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;height:44px!important;min-height:44px!important;margin:0!important;padding:0 10px!important;box-sizing:border-box!important;border:1.5px solid #c5d4f2!important;border-radius:12px!important;background-color:#fff!important;color:#0b1f4d!important;font:600 .92rem/1 inherit!important;text-align:left!important;-webkit-appearance:none!important;appearance:none!important;-webkit-text-fill-color:#0b1f4d;position:static!important;transform:none!important}
+body :is(#presion .premium-date input,#glucosa .glucose-device-datetime input)::-webkit-date-and-time-value{text-align:left;min-height:1.2em;margin:0}
+body :is(#presion .premium-date input,#glucosa .glucose-device-datetime input)::-webkit-calendar-picker-indicator{opacity:.7;margin:0;padding:0}
+body #glucosa .glucose-device-datetime{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important}
+@media(max-width:360px){body :is(#presion .premium-date input,#glucosa .glucose-device-datetime input){font-size:.8rem!important;padding:0 6px!important}body :is(#presion .premium-date input,#glucosa .glucose-device-datetime input)::-webkit-calendar-picker-indicator{display:none}}
+/* ---- texto centrado verticalmente en todos los campos ---- */
+body :is(#presion,#glucosa) form :is(input:not([type=checkbox]):not([type=radio]),select){height:46px!important;min-height:46px!important;padding-top:0!important;padding-bottom:0!important;line-height:normal!important;display:flex!important;align-items:center!important}
+body :is(#presion,#glucosa) form select{display:block!important;line-height:44px!important;padding-top:0!important;padding-bottom:0!important}
+body #presion .premium-arm-fields input{height:48px!important;min-height:48px!important;text-align:center!important;justify-content:center}
+body #glucosa .glucose-input-line input{height:56px!important;min-height:56px!important}
+body :is(#presion,#glucosa) form :is(input[type=date],input[type=time]){display:flex!important;align-items:center!important;justify-content:flex-start;padding-top:0!important;padding-bottom:0!important}
+body :is(#presion,#glucosa) form :is(input[type=date],input[type=time])::-webkit-date-and-time-value{display:flex;align-items:center;height:100%;min-height:0;margin:0;padding:0;line-height:normal}
+body :is(#presion,#glucosa) form :is(input[type=date],input[type=time])::-webkit-datetime-edit{display:flex;align-items:center;height:100%;padding:0}
+body :is(#presion,#glucosa) form :is(input[type=date],input[type=time])::-webkit-datetime-edit-fields-wrapper{display:flex;align-items:center;height:100%}
+body :is(#presion,#glucosa) form :is(input[type=number],input[type=text],input:not([type])){-webkit-appearance:none;appearance:none}
+body :is(#presion,#glucosa) form textarea{padding-top:11px!important}
+body #glucosa .glucose-input-line input{padding-left:14px!important;padding-right:6px!important}
+body #presion .premium-extras input[name=notes]{padding-left:12px!important}

@@ -1,0 +1,20 @@
+/* Encabezados con corazón latiendo y onda de corazón vivo */
+body .hl-host{position:relative;overflow:hidden;padding-right:84px!important;padding-bottom:30px!important}
+body .hl-wrap{position:absolute;right:14px;top:50%;margin-top:-26px;width:52px;height:52px;display:grid;place-items:center;pointer-events:none}
+body .hl-heart{display:block;width:44px;height:44px;transform-origin:50% 55%;animation:hlbeat 1.2s cubic-bezier(.23,1,.32,1) infinite;filter:drop-shadow(0 4px 10px rgba(209,26,71,.55))}
+body .hl-heart svg{display:block;width:100%;height:100%}
+body .hl-ring{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(255,140,165,.75);opacity:0;animation:hlring 1.2s ease-out infinite}
+body .hl-ring.r2{animation-delay:.18s}
+body .hl-line{position:absolute;left:0;right:0;bottom:0;height:28px;pointer-events:none}
+body .hl-ecg{display:block;width:100%;height:100%}
+body .hl-ecg path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+body .hl-base{stroke:rgba(255,255,255,.28);stroke-width:1.5}
+body .hl-run{stroke:#fff;stroke-width:2.4;stroke-dasharray:70 330;stroke-dashoffset:70;animation:hlrun 2.6s linear infinite;filter:drop-shadow(0 0 4px rgba(255,255,255,.9))}
+@keyframes hlbeat{0%{transform:scale(1)}12%{transform:scale(1.18)}24%{transform:scale(.97)}38%{transform:scale(1.1)}55%,100%{transform:scale(1)}}
+@keyframes hlring{0%{opacity:.8;transform:scale(.7)}70%{opacity:0}100%{opacity:0;transform:scale(1.9)}}
+@keyframes hlrun{from{stroke-dashoffset:70}to{stroke-dashoffset:-400}}
+body #inicio .hello.hl-host{padding-bottom:34px!important}
+body #inicio .hello .hl-wrap{margin-top:-30px;width:60px;height:60px}
+body #inicio .hello .hl-heart{width:52px;height:52px}
+body #inicio .hello .hl-line{height:32px}
+@media(prefers-reduced-motion:reduce){body .hl-heart,body .hl-ring,body .hl-run{animation:none}body .hl-run{stroke-dasharray:none;opacity:.7}}

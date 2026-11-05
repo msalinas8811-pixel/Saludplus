@@ -1,0 +1,44 @@
+/* Inicio: encabezado claro + botones medianos */
+body #inicio .hello{display:block;margin:6px 0 14px;padding:16px 18px;border-radius:22px;background:linear-gradient(135deg,#2c5fc7,#4f8be0);color:#fff;box-shadow:0 10px 24px rgba(40,90,190,.22)}
+body #inicio .hello .eyebrow{margin:0 0 4px;color:rgba(255,255,255,.88);font-size:.85rem;font-weight:600;text-transform:none;letter-spacing:0}
+body #inicio .hello .eyebrow::first-letter{text-transform:uppercase}
+body #inicio .hello h1{margin:0;color:#fff;font-size:1.45rem;line-height:1.2;font-weight:800}
+body #inicio .hello .home-patient-identity{margin:4px 0 0;color:rgba(255,255,255,.92);font-size:.9rem}
+body #inicio .hello .home-patient-identity:empty{display:none}
+body #inicio .home-shortcuts{margin:0;padding:0;background:none;border:0;box-shadow:none}
+body #inicio .shortcut-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body #inicio .shortcut-card{position:relative;display:flex;align-items:center;gap:10px;min-height:74px;padding:12px 10px;border-radius:18px;background:#fff;border:0;color:#0d2b3e;text-align:left;box-shadow:0 6px 16px rgba(30,70,150,.13);cursor:pointer;overflow:hidden;transition:transform .16s cubic-bezier(.23,1,.32,1),box-shadow .2s}
+body #inicio .shortcut-card::before,body #inicio .shortcut-card::after{display:none!important}
+body #inicio .shortcut-card:active{transform:scale(.97)}
+body #inicio .shortcut-icon{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:14px;background:#e8f0fe;color:#2a56e8;font-size:0}
+body #inicio .shortcut-icon svg{width:22px;height:22px;stroke:currentColor}
+body #inicio .shortcut-copy{display:grid;gap:2px;min-width:0;flex:1}
+body #inicio .shortcut-copy strong{color:#0d2b3e;font-size:.95rem;font-weight:800;line-height:1.15}
+body #inicio .shortcut-copy small{color:#556f82;font-size:.75rem;line-height:1.25}
+body #inicio .shortcut-arrow{display:none}
+body #inicio .shortcut-bp .shortcut-icon{background:#fde4e8;color:#e0364f}
+body #inicio .shortcut-glucose .shortcut-icon{background:#fdeadb;color:#e0792a}
+body #inicio .shortcut-water .shortcut-icon{background:#dff0fd;color:#1f8ce0}
+body #inicio .shortcut-meds .shortcut-icon{background:#e9e4fb;color:#6a4fd6}
+body #inicio .shortcut-visits .shortcut-icon{background:#dff4ea;color:#1f9d68}
+body #inicio .shortcut-exams .shortcut-icon{background:#dff4f4;color:#1d9aa6}
+body #inicio .shortcut-profile .shortcut-icon{background:#e8f0fe;color:#2a56e8}
+body #inicio .shortcut-profile{grid-column:1/-1}
+@media(prefers-color-scheme:dark){body #inicio .shortcut-card{background:#fff}}
+/* ---- botones de color con dibujo ---- */
+body #inicio .shortcut-card{min-height:92px;padding:12px 10px 12px 12px;border-radius:20px;color:#fff;box-shadow:0 10px 22px rgba(20,40,110,.22);flex-direction:row-reverse;justify-content:space-between}
+body #inicio .shortcut-card::before{display:block!important;content:"";position:absolute;right:-18px;top:-26px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.14)}
+body #inicio .shortcut-icon{position:relative;z-index:1;width:60px;height:60px;background:none!important;border-radius:0;color:inherit}
+body #inicio .shortcut-icon .art{width:60px;height:60px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+body #inicio .shortcut-copy{position:relative;z-index:1}
+body #inicio .shortcut-copy strong{color:#fff;font-size:1rem;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+body #inicio .shortcut-copy small{color:rgba(255,255,255,.94);font-size:.76rem}
+body #inicio .shortcut-bp{background:linear-gradient(135deg,#e8445f,#b21f45)}
+body #inicio .shortcut-glucose{background:linear-gradient(135deg,#f08a24,#c25b0c)}
+body #inicio .shortcut-water{background:linear-gradient(135deg,#2e9cf0,#1a62c4)}
+body #inicio .shortcut-meds{background:linear-gradient(135deg,#8a5be8,#5a34b8)}
+body #inicio .shortcut-visits{background:linear-gradient(135deg,#25b673,#12805a)}
+body #inicio .shortcut-exams{background:linear-gradient(135deg,#1fb8b0,#0f7f8f)}
+body #inicio .shortcut-profile{background:linear-gradient(135deg,#4f6cf0,#2c3fb5);min-height:84px}
+body #inicio .shortcut-bp .shortcut-icon,body #inicio .shortcut-glucose .shortcut-icon,body #inicio .shortcut-water .shortcut-icon,body #inicio .shortcut-meds .shortcut-icon,body #inicio .shortcut-visits .shortcut-icon,body #inicio .shortcut-exams .shortcut-icon,body #inicio .shortcut-profile .shortcut-icon{background:none!important;color:inherit}
+body #inicio .shortcut-icon{border:0!important;box-shadow:none!important;outline:0}

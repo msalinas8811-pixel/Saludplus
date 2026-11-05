@@ -13,6 +13,13 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>SaludPlus</title>
 <link rel="stylesheet" href="styles.css?v=65">
+<link rel="stylesheet" href="exams-design.css?v=70">
+<link rel="stylesheet" href="home-design.css?v=70">
+<link rel="stylesheet" href="visits-design.css?v=70">
+<link rel="stylesheet" href="vitals-design.css?v=72">
+<link rel="stylesheet" href="care-design.css?v=77">
+<link rel="stylesheet" href="reports-design.css?v=80">
+<link rel="stylesheet" href="hero-live.css?v=72">
 </head>
 <body>
 
@@ -67,53 +74,46 @@
     </div>
 
     <section class="home-shortcuts" aria-labelledby="shortcutTitle">
-     <div class="shortcuts-heading">
-      <div>
-       <p class="eyebrow" data-i18n>Accesos directos</p>
-       <h2 id="shortcutTitle" data-i18n>¿Qué deseas hacer?</h2>
-       <p class="muted" data-i18n>Toca una tarjeta para abrir la función.</p>
-      </div>
-     </div>
      <div class="shortcut-grid">
       <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')" aria-label="Abrir presión arterial">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-activity"/></svg></span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="8" width="34" height="42" rx="9" fill="#fff"/><rect x="15" y="13" width="24" height="17" rx="5" fill="#1d3f9e"/><text x="27" y="26" font-size="10" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial">120</text><path d="M27 42s-7-4-7-8.5a3.8 3.8 0 017-2 3.8 3.8 0 017 2C34 38 27 42 27 42z" fill="#ff4d6d"/><path d="M44 36c9 0 12 4 12 9s-4 8-12 8" fill="none" stroke="#ffd1d9" stroke-width="3" stroke-linecap="round"/><circle cx="55" cy="48" r="6" fill="#ffd1d9"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Presión arterial</strong><small data-i18n>Registrar y consultar</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-glucose" type="button" onclick="showView('glucosa')" aria-label="Abrir glucosa">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-drop"/></svg></span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><rect x="16" y="6" width="30" height="46" rx="9" fill="#fff"/><rect x="21" y="11" width="20" height="18" rx="5" fill="#1d3f9e"/><path d="M31 14s5 5 5 8.4a5 5 0 01-10 0C26 19 31 14 31 14z" fill="#ff4d6d"/><circle cx="31" cy="39" r="4.5" fill="#ffd9a8"/><rect x="26" y="50" width="10" height="9" rx="2" fill="#ffd9a8"/><path d="M52 14s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z" fill="#ff6b6b"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Glucosa</strong><small data-i18n>Registrar y consultar</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-water" type="button" onclick="showView('agua')" aria-label="Abrir control de agua">
-       <span class="shortcut-icon" aria-hidden="true">💧</span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><rect x="24" y="5" width="16" height="8" rx="3" fill="#fff"/><path d="M26 13h12v6c6 3 9 8 9 14v18a6 6 0 01-6 6H23a6 6 0 01-6-6V33c0-6 3-11 9-14z" fill="#fff" fill-opacity=".92"/><path d="M17 38h30v13a6 6 0 01-6 6H23a6 6 0 01-6-6z" fill="#38b6ff"/><path d="M50 12s6 6 6 10.5a6 6 0 01-12 0C44 18 50 12 50 12z" fill="#bfe9ff"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Agua</strong><small data-i18n>Control diario</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-meds" type="button" onclick="showView('medicamentos')" aria-label="Abrir medicinas">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-pill"/></svg></span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><g transform="rotate(-40 30 32)"><rect x="6" y="20" width="48" height="22" rx="11" fill="#fff"/><path d="M30 20h13a11 11 0 010 22H30z" fill="#ff7eb6"/></g><circle cx="48" cy="49" r="9" fill="#ffe08a"/><path d="M42 49h12" stroke="#e0a21b" stroke-width="2.5" stroke-linecap="round"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Medicinas</strong><small data-i18n>Horarios y recordatorios</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-visits" type="button" onclick="showView('consultas')" aria-label="Abrir consultas">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="12" width="44" height="42" rx="9" fill="#fff"/><path d="M8 21a9 9 0 019-9h26a9 9 0 019 9v4H8z" fill="#ff5a5f"/><rect x="18" y="6" width="5" height="11" rx="2.5" fill="#fff"/><rect x="37" y="6" width="5" height="11" rx="2.5" fill="#fff"/><g fill="#cfe0ff"><rect x="15" y="31" width="8" height="6" rx="2"/><rect x="26" y="31" width="8" height="6" rx="2"/><rect x="15" y="41" width="8" height="6" rx="2"/></g><circle cx="47" cy="46" r="11" fill="#23c16b"/><path d="M41.5 46l4 4 7-8" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Consultas</strong><small data-i18n>Citas y seguimiento</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-exams" type="button" onclick="showView('examenes')" aria-label="Abrir exámenes">
-       <span class="shortcut-icon" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 6h26l12 12v34a6 6 0 01-6 6H12a6 6 0 01-6-6V12a6 6 0 016-6z" transform="translate(2 0)" fill="#fff"/><path d="M40 6v12h12" fill="#bfe9ee"/><g stroke="#8fb9c4" stroke-width="3" stroke-linecap="round"><path d="M14 26h20M14 34h14"/></g><path d="M40 36h10M42 36v8l-5 9a2 2 0 002 3h12a2 2 0 002-3l-5-9v-8" fill="#20c4b8" stroke="#0e8f89" stroke-width="2" stroke-linejoin="round"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')" aria-label="Abrir mi perfil">
-       <span class="shortcut-icon" aria-hidden="true">👤</span>
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="#fff" fill-opacity=".95"/><circle cx="32" cy="25" r="9" fill="#5b7cff"/><path d="M14 50c2-9 9-13 18-13s16 4 18 13a26 26 0 01-36 0z" fill="#5b7cff"/><circle cx="48" cy="48" r="9" fill="#23c16b"/><path d="M48 43v10M43 48h10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Mi perfil</strong><small data-i18n>Mis datos y configuración</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
      </div>
     </section>
 
-    <div class="home-summary-heading">
+    <div id="homeLegacy" hidden><div class="home-summary-heading">
      <h2 data-i18n>Resumen de salud</h2>
      <p class="muted" data-i18n>Tus últimos registros y próximos eventos.</p>
     </div>
@@ -218,6 +218,7 @@
 
      <p class="notice" data-i18n>SaludPlus ayuda a organizar mediciones y documentos; no diagnostica ni sustituye a un profesional sanitario. Si tienes síntomas preocupantes, busca atención médica.</p>
     </div>
+   </div>
    </section>
 
    <!-- ================= CONTROLES ================= -->
@@ -502,7 +503,7 @@
     <div class="med-hero">
      <div class="med-hero-copy"><div class="med-pill-icon">💊</div><div><p class="med-kicker">SALUDPLUS · CUIDADO DIARIO</p><h2>Mis Medicamentos</h2><p>Registra, organiza y consulta tus recordatorios.</p></div></div>
      <div class="med-hero-art"><div class="med-bottle"><span>＋</span></div><div class="med-capsule">💊</div></div>
-     <div class="med-progress"><div class="med-progress-ring" id="medProgressRing"><div><strong id="medTakenCount">0 de 0</strong><small>tomados hoy</small><b id="medTakenPercent">0%</b></div></div></div>
+     <div class="med-progress"><div class="med-progress-ring" id="medProgressRing"><div><strong id="medTakenCount">0 de 0</strong><small>medicamentos tomados hoy</small><b id="medTakenPercent">0%</b></div><span class="mp-bar"><i></i></span></div></div>
      <div class="med-next" id="medNextReminder"><span>🔔</span><div><small>Próximo recordatorio</small><strong id="medNextTime">Sin horarios pendientes</strong><small id="medNextName">Agrega tus medicamentos</small></div></div>
     </div>
     <button type="button" class="med-add-main" id="toggleMedForm">＋ Agregar medicamento</button>
@@ -827,5 +828,8 @@
 <script src="firebase-config.js?v=36"></script>
 <script src="ai-firebase.js?v=36"></script>
 <script src="chat.js?v=36"></script>
+<script src="exams-ui.js?v=69"></script>
+<script src="reports-ui.js?v=79"></script>
+<script src="hero-live.js?v=72"></script>
 </body>
 </html>

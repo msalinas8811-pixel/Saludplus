@@ -1,0 +1,167 @@
+/* ---- Exámenes: calcado del diseño del usuario ---- */
+body #examenes.ex-ui.active{display:block;padding:14px;border-radius:30px;background:linear-gradient(180deg,#2c5fc7 0,#4f8be0 150px,#a9c9f5 300px,#e6f0fd 470px,#f5f9ff 100%);box-shadow:0 14px 40px rgba(20,60,140,.22)}
+body #examenes .back-home-btn{margin:0 0 10px}
+body #examenes .exam-hero{margin:0 0 14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);box-shadow:none}
+body #examenes .exam-hero-icon{background:#fff;color:#2a56e8}
+body #examenes .exam-hero-icon svg{width:30px;height:30px}
+body .ex-sheet{display:grid;gap:14px;background:none;padding:0}
+body .ex-sheet .exam-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0}
+body .ex-sheet .exam-stat-card{padding:12px 4px;border-radius:22px;min-height:112px;animation:none;box-shadow:0 8px 20px rgba(30,70,150,.18)}
+body .ex-sheet .exam-stat-card strong{font-size:1.9rem}
+body .ex-sheet .exam-stat-card span:last-child{font-size:.95rem;font-weight:700}
+body .ex-sheet .exam-search-row{display:flex;gap:10px;margin:0}
+body .ex-sheet .exam-search{flex:1;min-width:0;min-height:54px;border-radius:18px;background:#fff;border:0;box-shadow:0 6px 16px rgba(30,70,150,.14)}
+body .ex-sheet .exam-filter-button{min-width:56px;min-height:54px;border-radius:18px;background:#fff;border:0;box-shadow:0 6px 16px rgba(30,70,150,.14)}
+body .ex-sheet .exam-category-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:0;overflow:visible;background:none!important}
+body .ex-sheet .exam-category{min-height:84px;padding:8px 2px;border-radius:20px;font-size:.78rem;font-weight:700;flex-direction:column;gap:6px;background:#fff;color:#0b1f4d;border:0;box-shadow:0 6px 14px rgba(30,70,150,.12)}
+body .ex-sheet .exam-category.active{background:linear-gradient(160deg,#3d9bff,#2a56e8);color:#fff}
+body .ex-rh{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+body .ex-rh h3{margin:0!important;color:#0b1f4d!important;font-size:1.35rem!important;font-weight:800}
+body .ex-all{border:0;background:none;color:#2a56e8;font-weight:800;font-size:1rem;min-height:44px;cursor:pointer}
+body .ex-sheet .list{display:grid;gap:12px}
+body .ex-sheet .empty{display:grid;gap:4px;padding:22px 16px;border-radius:20px;border:1.5px dashed #b9c9ea;background:#f4f8ff;text-align:center}
+body .ex-sheet .empty b{color:#0b1f4d!important}body .ex-sheet .empty span{color:#31456f!important;font-size:.92rem}
+/* fila de resultado */
+body .ex-sheet .item{position:relative;display:grid!important;grid-template-columns:60px 1fr;column-gap:14px;row-gap:10px;align-items:center;padding:14px;border-radius:22px;background:#fff!important;border:0!important;box-shadow:0 8px 20px rgba(30,70,150,.14);color:#0b1f4d}
+body .ex-sheet .item::before,body .ex-sheet .item::after{display:none!important}
+body .rico{display:grid;place-items:center;width:60px;height:60px;border-radius:20px;grid-row:1}
+body .rico .ic{width:30px;height:30px}
+body .rico.t-lab{background:#dff4f4;color:#1d9aa6}body .rico.t-blood{background:#fde4e4;color:#e0392f}body .rico.t-heart{background:#fde3f0;color:#e02f7a}body .rico.t-img{background:#efe3fc;color:#8a4fd6}
+body .ex-sheet .item>div:not(.actions){min-width:0}
+body .ex-sheet .exam-result-open{display:flex;align-items:center;gap:8px;width:100%;padding:0;background:none;border:0;text-align:left;cursor:pointer;color:#0b1f4d;flex-wrap:wrap}
+body .ex-sheet .exam-result-open strong{font-size:1.1rem;font-weight:800;color:#0b1f4d;flex:1 1 100%}
+body .ex-sheet .exam-result-arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1.7rem;color:#2a56e8}
+body .ex-sheet .item p{margin:2px 0 0;color:#31456f;font-size:.92rem;white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+body .ex-sheet .exam-result-hint{display:none}
+body .ex-sheet .bp-status{font-size:.85rem;padding:4px 14px;font-weight:800}
+body .ex-sheet .actions{grid-column:1/-1;display:none;grid-template-columns:1fr 1fr;gap:8px}
+body .ex-sheet .item.open .actions{display:grid}
+body .ex-more{position:absolute;right:12px;bottom:8px;width:36px;height:36px;border-radius:12px;border:0;background:#eef3fd;color:#31456f;font-size:1.2rem;font-weight:800;cursor:pointer}
+body .ex-sheet .ab{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:14px;font-size:.92rem;font-weight:800;border:1.5px solid #c5d4f2;background:#fff!important;color:#2a56e8!important;cursor:pointer}
+body .ex-sheet .ab-openResultDialog,body .ex-sheet .ab-askAboutResult{background:#2a56e8!important;color:#fff!important;border-color:transparent}
+body .ex-sheet .ab-del{grid-column:1/-1;background:transparent!important;border:0;color:#b3122a!important}
+body .ex-sheet .chipline{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+body .ex-sheet .filechip{background:#eef3fd;border:0;color:#31456f;border-radius:999px;font-size:.82rem}
+body .ex-sheet .entrylist{display:none}
+/* botones */
+body .ex-sheet #newResultBtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:62px;border-radius:22px;border:0;background:linear-gradient(135deg,#3d9bff,#2a56e8)!important;color:#fff!important;font-size:1.2rem;font-weight:800;box-shadow:0 12px 26px rgba(42,86,232,.45);cursor:pointer;transition:transform .16s cubic-bezier(.23,1,.32,1)}
+body .ex-sheet #newResultBtn:active{transform:scale(.97)}
+body .ex-sheet #newResultBtn .plus{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#2a56e8}
+body .ex-sheet #exNewPlan{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border-radius:20px;border:1.5px solid #c5d4f2;background:#fff;color:#2a56e8;font-size:1.05rem;font-weight:800;cursor:pointer}
+/* controles programados */
+body .ex-plans{display:grid;gap:10px}
+body .ex-plans h3{margin:0!important;color:#0b1f4d!important;font-size:1.2rem!important}
+body .ex-att{display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;color:#fff}
+body .ex-att.red{background:linear-gradient(135deg,#e0452d,#b5172e)}
+body .ex-att.orange{background:linear-gradient(135deg,#f0a21b,#d97a0b);color:#2a1600}
+body .ex-att .ico{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.25);flex:none}
+body .ex-att div{display:grid;gap:2px;flex:1;min-width:0}body .ex-att b{font-size:1rem}body .ex-att span{font-size:.88rem;opacity:.92}
+body .ex-go{min-height:44px;padding:0 16px;border-radius:14px;border:0;background:#fff;color:#0b1f4d;font-weight:800;cursor:pointer}
+body .ex-ui .exam-more-options{margin-top:14px;background:#fff;border:1px solid #d3dff6;border-radius:22px;padding:4px 14px;color:#0b1f4d;box-shadow:0 6px 16px rgba(30,70,150,.1)}
+body .ex-ui .exam-more-options summary{min-height:52px;display:flex;align-items:center;font-weight:800;color:#0b1f4d;cursor:pointer}
+body .ex-ui .exam-more-options .card{color:#0b1f4d}
+body .ex-note{display:grid;gap:4px;margin-top:14px;padding:14px 16px;border-radius:18px;background:#e4efff!important;border:1px solid #c5d8f7!important;color:#1d3a73!important;font-size:.9rem!important}
+body .ex-note b{color:#0b1f4d}
+body .ex-sheet .ex-ico{display:none!important}
+body .ex-sheet{min-width:0;box-sizing:border-box}
+body .ex-sheet>*{min-width:0}
+body .ex-sheet .exam-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+body .ex-sheet .exam-category-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+body .ex-sheet [data-exam-filter=files]{display:none}
+body .ex-sheet .exam-result-open{display:grid;grid-template-columns:1fr auto;gap:6px 8px;padding-right:30px}
+body .ex-sheet .exam-result-open strong{grid-column:1/-1;font-size:1.05rem}
+body .ex-sheet .exam-result-open .bp-status{grid-column:1;justify-self:start}
+body .ex-sheet .item>div:not(.actions){padding-right:0}
+body .ex-sheet .exam-category-row{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+body .ex-sheet .exam-category{font-size:.72rem;padding:8px 0;min-height:80px}
+body .ex-sheet .item p{-webkit-line-clamp:2;padding-right:34px}
+body .ex-sheet .item.open{padding-bottom:52px}
+body .ex-more{bottom:10px}
+
+body #examenes .exam-stat-icon svg,body #examenes .ex-search-ic svg{width:24px;height:24px}
+body #examenes .exam-stat-icon{background:none!important;font-size:0}
+body #examenes .exam-stat-icon.lab{color:#2f86e6}body #examenes .exam-stat-icon.result{color:#22a85a}body #examenes .exam-stat-icon.files{color:#7a52d6}
+body #examenes .exam-stat-card:nth-child(1){background:linear-gradient(180deg,#f2f8ff,#cfe3fb)}
+body #examenes .exam-stat-card:nth-child(2){background:linear-gradient(180deg,#f3fff7,#c9f1d9)}
+body #examenes .exam-stat-card:nth-child(3){background:linear-gradient(180deg,#f7f3ff,#ddd0fb)}
+body #examenes .exam-stat-card{display:flex;flex-direction:column;align-items:center;gap:2px;border:0;color:#0b1f4d}
+body #examenes .exam-stat-card strong,body #examenes .exam-stat-card span:last-child{color:#0b1f4d}
+body #examenes .exam-search{display:flex;align-items:center;gap:10px;padding:0 16px}
+body #examenes .exam-search input{flex:1;min-width:0;border:0;background:none;font-size:1rem;color:#0b1f4d;outline:none;box-shadow:none;min-height:50px}
+body #examenes .exam-search .ex-search-ic{color:#4a5f8a;display:grid}
+body #examenes .exam-filter-button{display:grid;place-items:center;color:#2a56e8;font-size:1.6rem;cursor:pointer;border:0}
+body #examenes .exam-category{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:0;cursor:pointer;font-family:inherit}
+body #examenes .exam-category .cic{display:grid;place-items:center;width:34px;height:34px;border-radius:50%}
+body #examenes .exam-category .cic svg{width:20px;height:20px}
+body #examenes .exam-category .c-lab{background:#dff4f4;color:#1d9aa6}body #examenes .exam-category .c-img{background:#efe3fc;color:#8a4fd6}body #examenes .exam-category .c-heart{background:#fde3f0;color:#e02f7a}body #examenes .exam-category .c-more{background:#eef3fd;color:#2a56e8}body #examenes .exam-category .c-all{background:rgba(255,255,255,.25);color:#2a56e8}
+body #examenes .exam-category.active .c-all{background:rgba(255,255,255,.28);color:#fff}
+body #examenes .exam-category:not(.active){color:#0b1f4d}
+@media(prefers-color-scheme:dark){body #examenes .back-home-btn{color:#fff}}
+body #examenes svg.ic{width:20px;height:20px;flex:none}
+body #examenes .exam-hero-icon svg.ic{width:30px;height:30px}
+body #examenes .exam-stat-icon svg.ic{width:26px;height:26px}
+body #examenes .ex-search-ic svg.ic{width:22px;height:22px}
+body #examenes .exam-filter-button svg.ic{width:22px;height:22px}
+body #examenes .rico svg.ic{width:30px;height:30px}
+body #examenes .exam-category .cic svg.ic{width:20px;height:20px}
+body #examenes .ex-att .ico svg.ic{width:24px;height:24px}
+body #examenes #newResultBtn .plus svg.ic{width:20px;height:20px}
+body #examenes .ex-sheet [data-exam-filter=files]{display:none}
+body #examenes .ex-sheet .item{box-sizing:border-box}
+/* ---- tamaño mediano ---- */
+body #examenes.ex-ui{padding:12px}
+body #examenes .ex-sheet{gap:12px}
+body #examenes .exam-hero{padding:14px 16px;gap:12px}
+body #examenes .exam-hero h2{font-size:1.2rem!important}
+body #examenes .exam-hero p{font-size:.85rem}
+body #examenes .exam-hero-icon{width:44px;height:44px}
+body #examenes .exam-hero-icon svg.ic{width:22px;height:22px}
+body #examenes .back-home-btn{min-height:40px;font-size:.9rem;padding:0 14px}
+body #examenes .ex-sheet .exam-stat-card{min-height:84px;padding:8px 4px;border-radius:18px}
+body #examenes .ex-sheet .exam-stat-card strong{font-size:1.45rem}
+body #examenes .ex-sheet .exam-stat-card span:last-child{font-size:.8rem}
+body #examenes .exam-stat-icon{width:28px;height:28px}
+body #examenes .exam-stat-icon svg.ic{width:20px;height:20px}
+body #examenes .ex-sheet .exam-search{min-height:46px;border-radius:15px;padding:0 12px}
+body #examenes .exam-search input{min-height:44px;font-size:.92rem}
+body #examenes .ex-sheet .exam-filter-button{min-width:46px;min-height:46px;border-radius:15px}
+body #examenes .exam-filter-button svg.ic{width:18px;height:18px}
+body #examenes .ex-sheet .exam-category{min-height:66px;padding:6px 0;border-radius:16px;font-size:.68rem;gap:4px}
+body #examenes .exam-category .cic{width:28px;height:28px}
+body #examenes .exam-category .cic svg.ic{width:16px;height:16px}
+body #examenes .ex-rh h3{font-size:1.1rem!important}
+body #examenes .ex-all{font-size:.9rem;min-height:36px}
+body #examenes .ex-sheet .item{grid-template-columns:46px 1fr;column-gap:12px;padding:11px 12px;border-radius:18px}
+body #examenes .rico{width:46px;height:46px;border-radius:15px}
+body #examenes .rico svg.ic{width:22px;height:22px}
+body #examenes .ex-sheet .exam-result-open strong{font-size:.98rem}
+body #examenes .ex-sheet .item p{font-size:.84rem}
+body #examenes .ex-sheet .bp-status{font-size:.75rem;padding:3px 10px}
+body #examenes .ex-sheet .exam-result-arrow{font-size:1.4rem}
+body #examenes .ex-more{width:30px;height:30px;border-radius:10px;font-size:1rem}
+body #examenes .ex-sheet .ab{min-height:40px;font-size:.84rem;border-radius:12px}
+body #examenes .ex-sheet #newResultBtn{min-height:50px;border-radius:16px;font-size:1rem;gap:10px}
+body #examenes .ex-sheet #newResultBtn .plus{width:26px;height:26px}
+body #examenes #newResultBtn .plus svg.ic{width:16px;height:16px}
+body #examenes .ex-sheet #exNewPlan{min-height:44px;border-radius:15px;font-size:.92rem}
+body #examenes .ex-att{padding:11px 12px;border-radius:16px}
+body #examenes .ex-att .ico{width:34px;height:34px;border-radius:11px}
+body #examenes .ex-att .ico svg.ic{width:18px;height:18px}
+body #examenes .ex-go{min-height:38px;font-size:.88rem}
+body #examenes .exam-more-options summary{min-height:46px;font-size:.92rem}
+body #examenes .ex-note{font-size:.82rem!important;padding:12px 14px}
+/* ---- controles programados ---- */
+body #examenes #examPlanList{display:grid;gap:10px}
+body #examenes #examPlanList .item{display:block!important;padding:14px;border-radius:18px;background:#fff!important;border:0!important;box-shadow:0 8px 20px rgba(30,70,150,.14)}
+body #examenes #examPlanList .item>div:first-child{display:block;min-width:0}
+body #examenes #examPlanList .item strong{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:1rem;color:#0b1f4d}
+body #examenes #examPlanList .item p{display:block;margin:8px 0 0;padding:0;color:#31456f;font-size:.85rem;line-height:1.55;white-space:pre-line;-webkit-line-clamp:unset;overflow:visible}
+body #examenes #examPlanList .chipline{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+body #examenes #examPlanList .filechip{padding:4px 10px!important;font-size:.78rem;background:#eef3fd;color:#31456f;border-radius:999px;border:0;white-space:normal}
+body #examenes #examPlanList .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+body #examenes #examPlanList .ab-del{grid-column:1/-1}
+body #examenes #examPlanList .ab-openResultDialog{grid-column:1/-1}
+body #examenes #examPlanList .ab-del{grid-column:auto;border:1.5px solid #f2c4cb;background:#fff!important;min-height:40px}
+body #examenes #examPlanList .ab-openResultDialog{border:0}
+
+body #examenes.ex-ui:not(.active){display:none}

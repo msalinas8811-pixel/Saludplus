@@ -499,6 +499,8 @@ function renderMedicationDashboard() {
   $('medTakenCount').textContent = `${taken.length} de ${active.length}`;
   $('medTakenPercent').textContent = pct + '%';
   $('medProgressRing').style.setProperty('--med-progress', pct + '%');
+  { let d=$('medDots'); if(!d){d=document.createElement('div');d.id='medDots';d.className='med-dots';$('medProgressRing').parentNode.appendChild(d);}
+    d.innerHTML=active.map(m=>`<i class="${taken.includes(m)?'on':''}" title="${(m.name||'').replace(/"/g,'')}"></i>`).join(''); }
   $('medTodayDate').textContent = new Date().toLocaleDateString('es-SV',{weekday:'short',day:'numeric',month:'long'});
   $('medNextTime').textContent = next ? next.time : (active.length ? 'Tomas de hoy registradas' : 'Sin horarios pendientes');
   $('medNextName').textContent = next ? `${next.name} · ${next.dose}` : (active.length ? '¡Buen seguimiento!' : 'Agrega tus medicamentos');
@@ -533,8 +535,8 @@ function renderVisitsDashboard() {
     const status = isUpcoming ? 'Próxima' : 'Registrada';
     const fileButton = v.fileData ? `<button type="button" class="visit-action" onclick="openAttachment('${v.id}')">📎 Ver documento</button>` : '';
     return `<article class="visit-card ${isUpcoming ? 'visit-upcoming' : ''}">
-      <div class="visit-date-block"><strong>${fmtDate(date)}</strong><small>${time ? esc(time) : (isUpcoming ? 'Fecha de cita' : 'Consulta')}</small></div>
-      <div class="visit-card-content"><div class="visit-card-top"><span class="visit-specialty-icon">${isUpcoming ? '🩺' : '📋'}</span><div><strong>${esc(v.specialty || 'Consulta médica')}</strong><small>${esc(v.doctor || 'Médico no especificado')}</small></div><span class="visit-status ${isUpcoming ? 'next' : 'saved'}">${status}</span></div>
+      <div class="visit-date-block"><b>${esc(String(date).slice(8,10))}</b><span>${esc(['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][(+String(date).slice(5,7))-1] || '')} ${esc(String(date).slice(0,4))}</span><small>${time ? esc(time) : (isUpcoming ? 'Cita' : 'Consulta')}</small></div>
+      <div class="visit-card-content"><div class="visit-card-top"><span class="visit-specialty-icon"><svg class="i"><use href="#${isUpcoming ? 'i-cal' : 'i-file'}"/></svg></span><div><strong>${esc(v.specialty || 'Consulta médica')}</strong><small>${esc(v.doctor || 'Médico no especificado')}</small></div><span class="visit-status ${isUpcoming ? 'next' : 'saved'}">${status}</span></div>
        <div class="visit-meta">${v.notes ? esc(v.notes) : 'Sin observaciones registradas'}</div>
        <div class="visit-actions">${fileButton}${removeBtn('visits',v.id)}</div>
       </div>
