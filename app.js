@@ -1040,6 +1040,39 @@ function clinicalReportHtml() {
   window.regenReport = clinicalReportHtml;
   window.currentHealthReport = { period: 'clinical', label: 'Reporte clínico personal', range: { start: 'todos', end: today() }, bps: vb, gls: gl, avgSys: avgBP, avgDia, avgPam, avgG: gl.length ? average(gl.map(x => num(x.value))) : null };
 }
+
+/* Expediente médico imprimible / PDF: encabezado + ficha del paciente + todas las secciones */
+function buildPrintRecord() {
+  clinicalReportHtml();
+  const p = data.patient || {}, v = x => esc(x || '—');
+  let age = '';
+  if (p.birthDate) { const b = new Date(p.birthDate + 'T00:00:00'), n = new Date(); let y = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) y--; if (y >= 0 && y < 130) age = ` (${y} años)`; }
+  const sections = Array.from($('reportOutput').children).filter(c => c.classList && c.classList.contains('report-block') && !c.querySelector('h2') && !/^1\./.test((c.querySelector('h3') || {}).textContent || '')).map((c, i) => { const h = c.querySelector('h3'); if (h) h.textContent = h.textContent.replace(/^\d+\.\s*/, (i + 1) + '. '); return c.outerHTML; }).join('');
+  const now = new Date(), stamp = now.toLocaleDateString('es-SV', { day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + now.toLocaleTimeString('es-SV', { hour: '2-digit', minute: '2-digit' });
+  let pr = $('printRecord'); if (!pr) { pr = document.createElement('div'); pr.id = 'printRecord'; document.body.appendChild(pr); }
+  const alert = (p.medAllergies || p.otherAllergies) ? `<div class="pr-alert"><b>Alergias:</b> ${esc([p.medAllergies, p.otherAllergies].filter(Boolean).join(' · '))}</div>` : '';
+  pr.innerHTML = `
+   <header class="pr-head">
+    <img src="saludplus-logo.svg" alt="" class="pr-logo" onerror="this.style.display='none'">
+    <div class="pr-titles"><h1>EXPEDIENTE MÉDICO Y CONTROL DE SALUD</h1><p>Historia clínica personal · Seguimiento de presión, glucosa, medicamentos, citas y exámenes</p></div>
+    <div class="pr-meta"><span>Fecha de emisión</span><b>${esc(stamp)}</b></div>
+   </header>
+   <section class="pr-patient">
+    <h2>Datos del paciente</h2>
+    <div class="pr-grid">
+     <div><span>Nombre completo</span><b>${v(p.name)}</b></div>
+     <div><span>Fecha de nacimiento</span><b>${p.birthDate ? esc(fmtDate(p.birthDate)) + esc(age) : '—'}</b></div>
+     <div><span>Sexo</span><b>${v(p.sex)}</b></div>
+     <div><span>Grupo sanguíneo</span><b>${v(p.blood)}</b></div>
+     <div><span>Teléfono</span><b>${v(p.phone)}</b></div>
+     <div><span>Correo</span><b>${v(p.email)}</b></div>
+     <div><span>Contacto de emergencia</span><b>${v(p.emergencyName)}${p.emergencyPhone ? ' · ' + esc(p.emergencyPhone) : ''}</b></div>
+    </div>
+    ${alert}
+   </section>
+   <div class="pr-body">${sections}</div>
+   <footer class="pr-foot">Documento generado desde SaludPlus con datos ingresados por el paciente. No sustituye el expediente clínico oficial ni el criterio de un profesional de la salud. Contiene información médica privada.</footer>`;
+}
 function bindReports() {
   $('generateReportBtn').addEventListener('click', reportHtml);
   $('clinicalReportBtn').addEventListener('click', () => { clinicalReportHtml(); $('reportOutput').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
@@ -1047,7 +1080,7 @@ function bindReports() {
   $('reportPeriod').addEventListener('change', reportHtml);
   $('reportDate').addEventListener('change', reportHtml);
   $('exportReportBtn').addEventListener('click', exportReportCSV);
-  $('printReportBtn').addEventListener('click', () => { if (!window.currentHealthReport && !reportHtml()) return; window.print(); });
+  $('printReportBtn').addEventListener('click', () => { buildPrintRecord(); window.print(); });
   const end = $('averageEndDate'), start = $('averageStartDate'), ref = $('reportDate');
   if (!end.value) end.value = today();
   if (!start.value) { const d = new Date(); d.setDate(d.getDate() - 6); start.value = isoDateLocal(d); }

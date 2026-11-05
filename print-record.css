@@ -1,0 +1,37 @@
+/* Expediente médico: solo visible al imprimir / guardar PDF */
+#printRecord{display:none}
+@page{size:A4;margin:14mm 12mm 16mm}
+@media print{
+  body>*:not(#printRecord){display:none!important}
+  html,body{background:#fff!important}
+  #printRecord{display:block!important;color:#0b1f4d;font:10.5pt/1.4 "Segoe UI",Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printRecord .pr-head{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,#2c5fc7,#4f8be0);color:#fff}
+  #printRecord .pr-logo{width:46px;height:46px;border-radius:12px;background:#fff;padding:4px}
+  #printRecord .pr-titles{flex:1}
+  #printRecord .pr-titles h1{margin:0;font-size:15pt;letter-spacing:.02em;color:#fff}
+  #printRecord .pr-titles p{margin:3px 0 0;font-size:8.5pt;opacity:.92;color:#fff}
+  #printRecord .pr-meta{text-align:right;font-size:8pt}
+  #printRecord .pr-meta span{display:block;opacity:.85}
+  #printRecord .pr-meta b{font-size:9pt}
+  #printRecord .pr-patient{margin:12px 0;padding:10px 14px;border:1.5px solid #c5d4f2;border-radius:12px;background:#f5f9ff;break-inside:avoid}
+  #printRecord .pr-patient h2{margin:0 0 8px;font-size:11pt;color:#2a56e8}
+  #printRecord .pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 14px}
+  #printRecord .pr-grid span{display:block;font-size:7.5pt;color:#4a5f8a;text-transform:uppercase;letter-spacing:.04em}
+  #printRecord .pr-grid b{font-size:10pt}
+  #printRecord .pr-alert{margin-top:10px;padding:6px 10px;border-radius:8px;background:#ffe9e9;border:1px solid #f2c4cb;color:#8a1020;font-size:9.5pt}
+  #printRecord .report-block{margin:0 0 12px;padding:0;border:0;box-shadow:none;background:none;break-inside:auto}
+  #printRecord .report-block>h3{margin:0 0 6px;padding:5px 10px;border-radius:8px;background:#e4ecfb;color:#0b1f4d;font-size:11pt;break-after:avoid}
+  #printRecord h4{margin:10px 0 4px;color:#2a56e8;font-size:10pt}
+  #printRecord table{width:100%;border-collapse:collapse;font-size:8.8pt;min-width:0!important}
+  #printRecord th{background:#eef3fd;color:#0b1f4d;text-align:left;font-weight:700}
+  #printRecord th,#printRecord td{padding:4px 6px;border:1px solid #c5d4f2;vertical-align:top;white-space:normal!important}
+  #printRecord thead{display:table-header-group}
+  #printRecord tr{break-inside:avoid}
+  #printRecord .tablewrap{overflow:visible}
+  #printRecord .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+  #printRecord .kpi{padding:6px 8px;border:1px solid #c5d4f2;border-radius:8px;background:#f5f9ff}
+  #printRecord .kpi span{font-size:7.5pt;color:#4a5f8a;display:block}
+  #printRecord .kpi strong{font-size:11pt}
+  #printRecord p{margin:3px 0}
+  #printRecord .pr-foot{margin-top:14px;padding-top:8px;border-top:1.5px solid #c5d4f2;font-size:7.5pt;color:#4a5f8a;text-align:center}
+}
