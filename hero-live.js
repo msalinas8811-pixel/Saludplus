@@ -12,6 +12,6 @@
     el.appendChild(w);
     var e = document.createElement('span'); e.className = 'hl-line'; e.setAttribute('aria-hidden', 'true'); e.innerHTML = ECG; el.appendChild(e);
   }
-  function init() { ['#inicio .hello', '#presion .page-head', '#glucosa .page-head', '#examenes .exam-hero', '#consultas .visits-heading', '#agua .water-heading', '#medicamentos .med-hero', '#reportes .page-head', '#examrep .page-head', '#asistente .page-head'].forEach(add); }
+  function init() { ['#inicio .hello', '#presion .page-head', '#glucosa .page-head', '#examenes .exam-hero', '#consultas .visits-heading', '#agua .water-heading', '#medicamentos .med-hero', '#reportes .page-head', '#examrep .page-head', '#asistente .page-head', '#guia .page-head'].forEach(add); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

@@ -84,8 +84,11 @@ const NAV = [
   { id: 'inicio', label: 'Inicio', icon: 'home', views: ['inicio'] },
   { id: 'avisos', label: 'Avisos', icon: 'bell', views: ['avisos'] },
   { id: 'asistente', label: 'Asistente', icon: 'chat', views: ['asistente'] },
+  { id: 'guia', label: 'Guía', icon: 'book', views: ['guia'] },
   { id: 'reportes', label: 'Reportes', icon: 'file', views: ['reportes', 'examrep', 'respaldo'] }
 ];
+const AI_ON = !(window.SP_FEATURES && window.SP_FEATURES.assistant === false);
+if (!AI_ON) { const i = NAV.findIndex(n => n.id === 'asistente'); if (i >= 0) NAV.splice(i, 1); document.documentElement.classList.add('no-ai'); }
 const SUBLABEL = { 'mapa-presion': 'Mapa de presión', presion: 'Presión', glucosa: 'Glucosa', agua: 'Agua', graficas: 'Evolución', medicamentos: 'Medicinas', consultas: 'Consultas', examenes: 'Exámenes', paciente: 'Perfil', reportes: 'Reportes', examrep: 'Exámenes', respaldo: 'Respaldo', inicio: 'Inicio', asistente: 'Asistente' };
 let currentView = 'inicio';
 const groupOf = (view) => NAV.find(g => g.views.includes(view)) || NAV[0];
@@ -100,7 +103,7 @@ function buildNav() {
   }));
 }
 function showView(id) {
-  if (!$(id)) id = 'inicio';
+  if (!$(id) || (id === 'asistente' && !AI_ON)) id = 'inicio';
   currentView = id;
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
   const g = groupOf(id);

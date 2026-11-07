@@ -13,3 +13,7 @@ window.SP_FIREBASE = {
   appCheckDebug: false,  // true solo para probar en tu computadora
   model: 'gemini-3.6-flash'
 };
+
+/* Interruptor del asistente de IA. false = apagado: se ocultan sus botones y la app NO llama a Gemini (costo $0 por usuario).
+   Para volver a activarlo pon true (y revisa costos, App Check y cuotas en FIREBASE-PASO-A-PASO.txt). */
+window.SP_FEATURES = { assistant: false };

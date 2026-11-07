@@ -45,3 +45,6 @@ body #inicio .shortcut-icon{border:0!important;box-shadow:none!important;outline
 body #inicio .shortcut-profile{grid-column:auto!important}
 body #inicio .shortcut-ai{background:linear-gradient(135deg,#8a6cf5,#4b35c4);min-height:84px}
 body #inicio .shortcut-ai .shortcut-icon{background:#efeaff;border:0!important}
+/* IA apagada (SP_FEATURES.assistant=false): se oculta todo lo relacionado */
+html.no-ai #inicio .shortcut-ai,html.no-ai #readFormBtn,html.no-ai [onclick*="readSavedResult"],html.no-ai [onclick*="askAboutResult"]{display:none!important}
+html.no-ai #inicio .shortcut-profile{grid-column:1/-1!important}

@@ -5,7 +5,7 @@
 (function () {
   const VER = '12.0.0', CDN = 'https://www.gstatic.com/firebasejs/' + VER + '/';
   const cfg = () => window.SP_FIREBASE || {};
-  const configured = () => { const c = cfg(); return !!(c.apiKey && c.projectId && c.appId); };
+  const configured = () => { if (window.SP_FEATURES && window.SP_FEATURES.assistant === false) return false; const c = cfg(); return !!(c.apiKey && c.projectId && c.appId); };
   let lib = null;
 
   async function load() {

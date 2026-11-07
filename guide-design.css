@@ -1,0 +1,128 @@
+/* Guía de presión arterial · paleta de Exámenes, tamaño mediano */
+body #guia.view.active{padding:12px;border-radius:30px;background:linear-gradient(180deg,#2c5fc7 0,#4f8be0 150px,#a9c9f5 300px,#e6f0fd 470px,#f5f9ff 100%);box-shadow:0 14px 40px rgba(20,60,140,.22);display:grid;gap:12px;align-content:start;color:#0b1f4d}
+body #guia>*{margin:0!important;min-width:0}
+body #guia .back-home-btn{min-height:40px;font-size:.9rem;padding:0 14px;justify-self:start}
+body #guia .page-head{padding:14px 84px 38px 16px!important;border-radius:22px;background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.35)!important;box-shadow:none!important}
+body #guia .page-head h2{margin:0;color:#fff!important;font-size:1.25rem!important}
+body #guia .page-head p{margin:3px 0 0;color:rgba(255,255,255,.92)!important;font-size:.85rem}
+#guia .gd-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border-radius:18px;background:rgba(255,255,255,.3)}
+#guia .gd-tabs button{display:grid;justify-items:center;gap:1px;min-height:52px;padding:4px 2px;border:0;border-radius:14px;background:transparent;color:#fff;font:inherit;font-size:.74rem;font-weight:800;cursor:pointer}
+#guia .gd-tabs button span{font-size:1.1rem}
+#guia .gd-tabs button.on{background:#fff;color:#2a56e8;box-shadow:0 6px 14px rgba(20,60,140,.22)}
+#gdPanels{display:grid;gap:12px}
+#gdPanels .gd-panel{display:grid;gap:12px}
+#gdPanels .gd-panel[hidden]{display:none}
+#guia .gd-card{background:#fff;border-radius:22px;padding:14px;box-shadow:0 8px 22px rgba(30,70,150,.14)}
+#guia .gd-card h3{margin:0 0 4px;color:#0b1f4d;font-size:1.02rem}
+#guia .gd-sub{margin:0 0 10px;color:#4a5f8a;font-size:.84rem}
+#guia .gd-fine{margin:10px 0 0;color:#4a5f8a;font-size:.76rem;line-height:1.4}
+/* reloj */
+#guia .gd-timer{background:linear-gradient(160deg,#fff,#eef4ff)}
+#guia .gd-time{margin:6px 0 10px;text-align:center;font-size:2.6rem;font-weight:800;color:#2a56e8;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+#guia .gd-bar{height:12px;border-radius:999px;background:#e4ecfb;overflow:hidden}
+#guia .gd-bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#3dd9a0,#17a673);transition:width .5s ease}
+#guia .gd-timer .gd-bar i{background:linear-gradient(90deg,#3d9bff,#2a56e8);transition:width 1s linear}
+#guia .gd-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
+#guia .gd-alert .gd-row{grid-template-columns:1fr 1fr}
+#guia .gd-btn{min-height:48px;padding:0 16px;border:0;border-radius:14px;background:linear-gradient(135deg,#3d9bff,#2a56e8);color:#fff;font:inherit;font-size:.92rem;font-weight:800;box-shadow:0 8px 18px rgba(42,86,232,.32);cursor:pointer}
+#guia .gd-btn.ghost{background:#fff;color:#2a56e8;border:1.5px solid #c5d4f2;box-shadow:none}
+#guia .gd-btn:active{transform:scale(.98)}
+#guia .gd-done{margin:10px 0 0;text-align:center;color:#12805a;font-weight:800}
+/* listas */
+#guia .gd-prog{display:grid;gap:6px;margin-bottom:10px;color:#31456f;font-size:.82rem;font-weight:700}
+#guia .gd-list{display:grid;gap:8px}
+#guia .gd-step{display:grid;grid-template-columns:26px 36px minmax(0,1fr);gap:10px;align-items:center;width:100%;padding:10px;border:1.5px solid #dbe6fb;border-radius:16px;background:#f5f9ff;color:#0b1f4d;font:inherit;text-align:left;cursor:pointer;transition:background .2s,border-color .2s}
+#guia .gd-ck{width:24px;height:24px;border-radius:50%;border:2px solid #b9c9ea;background:#fff;display:grid;place-items:center;transition:all .2s}
+#guia .gd-step[aria-pressed=true]{background:#eafaf2;border-color:#8fdcb8}
+#guia .gd-step[aria-pressed=true] .gd-ck{background:#22a86b;border-color:#22a86b}
+#guia .gd-step[aria-pressed=true] .gd-ck:after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+#guia .gd-emoji{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:#e4ecfb;font-size:1.15rem}
+#guia .gd-tx{display:grid;min-width:0}
+#guia .gd-tx b{font-size:.9rem;line-height:1.25}
+#guia .gd-tx small{color:#4a5f8a;font-size:.76rem;line-height:1.3}
+#guia .gd-ready{display:grid;gap:8px;margin-top:12px;padding:12px;border-radius:16px;background:#eafaf2;border:1.5px solid #8fdcb8;color:#12604a;text-align:center}
+#guia .gd-ready[hidden]{display:none}
+#guia .gd-msg{margin:10px 0 0;text-align:center;color:#2a56e8;font-weight:800;font-size:.86rem}
+/* lectura */
+#guia .gd-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+#guia .gd-inputs label{display:grid;gap:4px;color:#31456f;font-size:.78rem;font-weight:700}
+#guia .gd-inputs input{height:52px;border:1.5px solid #c5d4f2;border-radius:14px;background:#fff;color:#0b1f4d;font:inherit;font-size:1.5rem;font-weight:800;text-align:center;width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none}
+#guia .gd-inputs input:focus{outline:none;border-color:#2a56e8;box-shadow:0 0 0 4px rgba(42,86,232,.18)}
+#guia .gd-last,#guia #gdLast{width:100%}
+#guia .gd-scale{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:3px;height:12px;margin:16px 0 14px}
+#guia .gd-scale span{border-radius:6px}
+#guia .gd-scale em{display:none;position:absolute;top:-4px;width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid #2a56e8;box-shadow:0 2px 8px rgba(0,0,0,.25);transition:left .3s ease}
+#guia .gd-result{--zc:#4a5f8a;display:grid;gap:4px;padding:12px 14px;border-radius:16px;background:#f5f9ff;border-left:6px solid var(--zc)}
+#guia .gd-result b{color:var(--zc);font-size:1.05rem}
+#guia .gd-result span{color:#31456f;font-size:.86rem;line-height:1.4}
+#guia .gd-legend{display:grid;gap:8px}
+#guia .gd-legend div{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:center;font-size:.86rem}
+#guia .gd-legend i{width:14px;height:14px;border-radius:5px}
+#guia .gd-legend span{color:#4a5f8a;font-size:.8rem}
+/* consejos */
+#guia .gd-tips{display:grid;gap:8px}
+#guia .gd-tip{border:1.5px solid #dbe6fb;border-radius:16px;background:#f5f9ff}
+#guia .gd-tip summary{display:grid;grid-template-columns:36px 1fr 16px;gap:10px;align-items:center;padding:10px;list-style:none;cursor:pointer}
+#guia .gd-tip summary::-webkit-details-marker{display:none}
+#guia .gd-tip summary b{font-size:.9rem}
+#guia .gd-tip summary i{font-style:normal;color:#2a56e8;font-size:1.3rem;transition:transform .2s}
+#guia .gd-tip[open] summary i{transform:rotate(90deg)}
+#guia .gd-tip p{margin:0;padding:0 12px 12px 58px;color:#31456f;font-size:.84rem;line-height:1.45}
+/* ayuda */
+#guia .gd-alert{padding:14px;border-radius:20px;background:#fff;border-left:6px solid;box-shadow:0 8px 22px rgba(30,70,150,.14)}
+#guia .gd-alert b{display:block;font-size:1rem;margin-bottom:4px}
+#guia .gd-alert p{margin:0;color:#31456f;font-size:.86rem;line-height:1.45}
+#guia .gd-alert.red{border-color:#c62039}#guia .gd-alert.red b{color:#b3122a}
+#guia .gd-alert.amber{border-color:#e58f12}#guia .gd-alert.amber b{color:#8a5200}
+#guia .gd-alert.blue{border-color:#2a56e8}#guia .gd-alert.blue b{color:#1d3a73}
+#guia .gd-panel>.gd-fine{margin:0 4px;color:#31456f}
+@media (prefers-reduced-motion:reduce){#guia *{transition:none!important}}
+/* video animado */
+#guia .gd-video{padding:12px}
+#guia .gdv{border-radius:18px;overflow:hidden;line-height:0;box-shadow:inset 0 0 0 1.5px #dbe6fb}
+#guia .gdv svg{width:100%;height:auto;display:block}
+#guia .gdv-sc{opacity:0;transition:opacity .35s}
+#guia .gdv[data-s="1"] .gdv-s1,#guia .gdv[data-s="2"] .gdv-s2,#guia .gdv[data-s="3"] .gdv-s3,#guia .gdv[data-s="4"] .gdv-s4,#guia .gdv[data-s="5"] .gdv-s5,#guia .gdv[data-s="6"] .gdv-s6,#guia .gdv[data-s="7"] .gdv-s7{opacity:1}
+#guia .gdv-bar{height:5px;margin:10px 0;border-radius:999px;background:#e4ecfb;overflow:hidden}
+#guia .gdv-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3d9bff,#2a56e8)}
+#guia .gdv-cap{display:grid;gap:3px;min-height:64px}
+#guia .gdv-cap b{color:#0b1f4d;font-size:1rem;line-height:1.25}
+#guia .gdv-cap span{color:#31456f;font-size:.86rem;line-height:1.4}
+#guia .gdv-ctl{display:grid;grid-template-columns:52px 1fr 52px;gap:8px;margin-top:8px}
+#guia .gdv-ctl .gd-btn{padding:0;font-size:1.3rem}
+#guia .gdv-ctl #gdvPlay{font-size:.92rem}
+#guia .gdv-dots{display:flex;justify-content:center;gap:8px;margin-top:10px}
+#guia .gdv-dots button{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#c5d4f2;cursor:pointer}
+#guia .gdv-dots button.on{width:24px;border-radius:6px;background:#2a56e8}
+/* animaciones de las escenas */
+#guia .gdv-bounce,#guia .gdv-pop,#guia .gdv-heart,#guia .gdv-torso,#guia .gdv-arm,#guia .gdv-cuff,#guia .gdv-bracket,#guia .gdv-no{transform-box:fill-box}
+#guia .gdv-bounce{animation:gdvBounce 1.2s ease-in-out infinite}
+#guia .gdv-pop{transform-origin:center;animation:gdvPop 1s ease-in-out infinite}
+#guia .gdv-d2{animation-delay:.3s}
+#guia .gdv-heart{transform-origin:center;animation:gdvBeat 1s ease-in-out infinite}
+#guia .gdv-torso{transform-origin:center bottom}
+#guia .gdv[data-s="6"] .gdv-torso{animation:gdvBreath 3s ease-in-out infinite}
+#guia .gdv[data-s="4"] .gdv-arm{animation:gdvArm 2s ease-in-out infinite}
+#guia .gdv-dash{stroke-dashoffset:0;animation:gdvDash 1s linear infinite}
+#guia .gdv[data-s="5"] .gdv-cuff{transform-origin:center;animation:gdvPop 1.2s ease-in-out infinite}
+#guia .gdv[data-s="7"] .gdv-cuff{transform-origin:center;animation:gdvInflate 3s ease-in-out infinite}
+#guia .gdv-bracket{animation:gdvBounce 1.2s ease-in-out infinite}
+#guia .gdv-no{animation:gdvPop 1.4s ease-in-out infinite;transform-origin:center}
+#guia .gdv-wave{animation:gdvWave 1.6s ease-in-out infinite}
+#guia .gdv-dsp0,#guia .gdv-dsp1{opacity:0}
+#guia .gdv[data-s="7"] .gdv-dsp0{animation:gdvD0 6s ease-in-out infinite}
+#guia .gdv[data-s="7"] .gdv-dsp1{animation:gdvD1 6s ease-in-out infinite}
+#guia .gdv:not([data-s="7"]) .gdv-dsp1{opacity:1}
+#guia .gdv[data-s="7"] .gdv-second{animation:gdvD1 6s ease-in-out infinite}
+#guia .gdv.paused *{animation-play-state:paused!important}
+@keyframes gdvBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes gdvPop{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes gdvBeat{0%,100%{transform:scale(1)}20%{transform:scale(1.3)}40%{transform:scale(1)}60%{transform:scale(1.2)}}
+@keyframes gdvBreath{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.05)}}
+@keyframes gdvArm{0%,100%{transform:translateY(5px)}50%{transform:translateY(-1px)}}
+@keyframes gdvDash{to{stroke-dashoffset:-22}}
+@keyframes gdvInflate{0%{transform:scale(.9)}40%{transform:scale(1.28)}60%{transform:scale(1.28)}100%{transform:scale(.9)}}
+@keyframes gdvWave{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes gdvD0{0%,40%{opacity:1}50%,100%{opacity:0}}
+@keyframes gdvD1{0%,45%{opacity:0}55%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){#guia .gdv svg *{animation:none!important}}
