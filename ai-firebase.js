@@ -22,7 +22,23 @@
     lib = { ai, service: ai.getAI(fb, { backend: new ai.GoogleAIBackend() }) };
     return lib;
   }
-  const modelName = () => cfg().model || 'gemini-3.6-flash';
+  const FALLBACKS = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-3.5-flash'];
+  let okModel = null;
+  const modelName = () => okModel || cfg().model || 'gemini-3.6-flash';
+  const isQuota = e => /429|quota|rate|RESOURCE_EXHAUSTED|not found|404|no longer available/i.test(String((e && e.message) || e) + String((e && e.code) || ''));
+  /* Si el modelo principal está sin cupo o no existe, prueba con modelos más ligeros (con más cupo gratis). */
+  async function gen(ai, service, modelOpts, request, ms) {
+    const list = [okModel, cfg().model || 'gemini-3.6-flash', ...FALLBACKS].filter((m, i, a) => m && a.indexOf(m) === i);
+    let last;
+    for (const name of list) {
+      try {
+        const model = ai.getGenerativeModel(service, Object.assign({ model: name }, modelOpts));
+        const r = await withTimeout(model.generateContent(request), ms);
+        okModel = name; return r;
+      } catch (e) { last = e; if (!isQuota(e)) throw e; }
+    }
+    throw last;
+  }
   const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(Object.assign(new Error('timeout'), { name: 'TimeoutError' })), ms))]);
 
   /* Convierte los errores del SDK en mensajes claros. */
@@ -62,8 +78,7 @@
     contents.push({ role: 'user', parts: [{ text: userText }, ...parts(body.attachments)] });
     try {
       const { ai, service } = await load();
-      const model = ai.getGenerativeModel(service, { model: modelName(), systemInstruction: system, generationConfig: { maxOutputTokens: 4096 } });
-      const r = await withTimeout(model.generateContent({ contents }), hasDoc ? 100000 : 45000);
+      const r = await gen(ai, service, { systemInstruction: system, generationConfig: { maxOutputTokens: 4096 } }, { contents }, hasDoc ? 100000 : 45000);
       const text = String(r.response.text() || '').trim();
       if (!text) throw new Error('empty');
       return text;
@@ -88,8 +103,7 @@
         readable: S.boolean(), lab: S.string(), date: S.string(),
         items: S.array({ items: S.object({ properties: { name: S.string(), value: S.string(), unit: S.string(), ref: S.string() } }) })
       } });
-      const model = ai.getGenerativeModel(service, { model: modelName(), systemInstruction: system, generationConfig: { responseMimeType: 'application/json', responseSchema: schema, maxOutputTokens: 8192 } });
-      const r = await withTimeout(model.generateContent({ contents: [{ role: 'user', parts: [{ text: 'Extrae los resultados de este informe.' }, ...parts(items)] }] }), 110000);
+      const r = await gen(ai, service, { systemInstruction: system, generationConfig: { responseMimeType: 'application/json', responseSchema: schema, maxOutputTokens: 8192 } }, { contents: [{ role: 'user', parts: [{ text: 'Extrae los resultados de este informe.' }, ...parts(items)] }] }, 110000);
       let j; try { j = JSON.parse(r.response.text()); } catch (e) { throw new Error('No se pudo interpretar la lectura del informe. Inténtalo de nuevo.'); }
       const cut = (v, n) => String(v == null ? '' : v).slice(0, n).trim();
       const list = (Array.isArray(j.items) ? j.items : []).slice(0, 80).map(x => ({ name: cut(x.name, 80), value: cut(x.value, 60), unit: cut(x.unit, 24), ref: cut(x.ref, 60) })).filter(x => x.name && x.value);
@@ -100,8 +114,7 @@
   async function test() {
     try {
       const { ai, service } = await load();
-      const model = ai.getGenerativeModel(service, { model: modelName(), generationConfig: { maxOutputTokens: 256 } });
-      const r = await withTimeout(model.generateContent('Responde solo con la palabra: listo'), 30000);
+      const r = await gen(ai, service, { generationConfig: { maxOutputTokens: 256 } }, 'Responde solo con la palabra: listo', 30000);
       return String(r.response.text() || '').trim();
     } catch (e) { throw new Error(friendly(e)); }
   }
