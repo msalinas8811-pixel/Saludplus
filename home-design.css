@@ -42,3 +42,6 @@ body #inicio .shortcut-exams{background:linear-gradient(135deg,#1fb8b0,#0f7f8f)}
 body #inicio .shortcut-profile{background:linear-gradient(135deg,#4f6cf0,#2c3fb5);min-height:84px}
 body #inicio .shortcut-bp .shortcut-icon,body #inicio .shortcut-glucose .shortcut-icon,body #inicio .shortcut-water .shortcut-icon,body #inicio .shortcut-meds .shortcut-icon,body #inicio .shortcut-visits .shortcut-icon,body #inicio .shortcut-exams .shortcut-icon,body #inicio .shortcut-profile .shortcut-icon{background:none!important;color:inherit}
 body #inicio .shortcut-icon{border:0!important;box-shadow:none!important;outline:0}
+body #inicio .shortcut-profile{grid-column:auto!important}
+body #inicio .shortcut-ai{background:linear-gradient(135deg,#8a6cf5,#4b35c4);min-height:84px}
+body #inicio .shortcut-ai .shortcut-icon{background:#efeaff;border:0!important}

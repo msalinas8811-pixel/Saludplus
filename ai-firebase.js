@@ -22,7 +22,7 @@
     lib = { ai, service: ai.getAI(fb, { backend: new ai.GoogleAIBackend() }) };
     return lib;
   }
-  const modelName = () => cfg().model || 'gemini-3.8-flash';
+  const modelName = () => cfg().model || 'gemini-3.6-flash';
   const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(Object.assign(new Error('timeout'), { name: 'TimeoutError' })), ms))]);
 
   /* Convierte los errores del SDK en mensajes claros. */

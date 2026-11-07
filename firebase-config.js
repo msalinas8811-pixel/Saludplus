@@ -11,5 +11,5 @@ window.SP_FIREBASE = {
   appCheckSiteKey: '6Ldv_fYtAAAAAFdg0lowMft1yOtBwTZlvho6co3B',   // clave del sitio de Fraud Defense / reCAPTCHA Enterprise (recomendado)
   appCheckProvider: 'enterprise', // 'enterprise' (por defecto) o 'v3' si tuvieras una clave clásica
   appCheckDebug: false,  // true solo para probar en tu computadora
-  model: 'gemini-3.8-flash'
+  model: 'gemini-3.6-flash'
 };

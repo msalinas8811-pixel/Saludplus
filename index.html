@@ -14,11 +14,12 @@
 <title>SaludPlus</title>
 <link rel="stylesheet" href="styles.css?v=65">
 <link rel="stylesheet" href="exams-design.css?v=70">
-<link rel="stylesheet" href="home-design.css?v=70">
+<link rel="stylesheet" href="home-design.css?v=71">
 <link rel="stylesheet" href="visits-design.css?v=72">
 <link rel="stylesheet" href="vitals-design.css?v=72">
 <link rel="stylesheet" href="care-design.css?v=77">
 <link rel="stylesheet" href="reports-design.css?v=80">
+<link rel="stylesheet" href="assistant-design.css?v=81">
 <link rel="stylesheet" href="print-record.css?v=80">
 <link rel="stylesheet" href="hero-live.css?v=72">
 </head>
@@ -104,6 +105,11 @@
       <button class="shortcut-card shortcut-exams" type="button" onclick="showView('examenes')" aria-label="Abrir exámenes">
        <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 6h26l12 12v34a6 6 0 01-6 6H12a6 6 0 01-6-6V12a6 6 0 016-6z" transform="translate(2 0)" fill="#fff"/><path d="M40 6v12h12" fill="#bfe9ee"/><g stroke="#8fb9c4" stroke-width="3" stroke-linecap="round"><path d="M14 26h20M14 34h14"/></g><path d="M40 36h10M42 36v8l-5 9a2 2 0 002 3h12a2 2 0 002-3l-5-9v-8" fill="#20c4b8" stroke="#0e8f89" stroke-width="2" stroke-linejoin="round"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
+       <span class="shortcut-arrow" aria-hidden="true">›</span>
+      </button>
+      <button class="shortcut-card shortcut-ai" type="button" onclick="showView('asistente')" aria-label="Abrir asistente de salud con IA">
+       <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h38a6 6 0 016 6v20a6 6 0 01-6 6H30l-10 9v-9h-10a6 6 0 01-6-6V18a6 6 0 016-6z" transform="translate(0 0)" fill="#fff"/><circle cx="22" cy="28" r="3.4" fill="#7a5cf0"/><circle cx="32" cy="28" r="3.4" fill="#7a5cf0"/><circle cx="42" cy="28" r="3.4" fill="#7a5cf0"/><path d="M50 4l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffd45c"/></svg></span>
+       <span class="shortcut-copy"><strong data-i18n>Asistente IA</strong><small data-i18n>Preguntas de salud</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
       <button class="shortcut-card shortcut-profile" type="button" onclick="showView('paciente')" aria-label="Abrir mi perfil">
@@ -826,8 +832,8 @@
 <script src="app.js?v=62"></script>
 <script src="exams.js?v=65"></script>
 <script src="examreport.js?v=62"></script>
-<script src="firebase-config.js?v=36"></script>
-<script src="ai-firebase.js?v=36"></script>
+<script src="firebase-config.js?v=37"></script>
+<script src="ai-firebase.js?v=37"></script>
 <script src="chat.js?v=36"></script>
 <script src="exams-ui.js?v=69"></script>
 <script src="reports-ui.js?v=79"></script>
