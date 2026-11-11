@@ -1,35 +1,101 @@
-/* SaludPlus v90 alpha — nueva identidad visual */
-:root{--v90-ink:#102b46;--v90-muted:#647d91;--v90-line:#dce8f0;--v90-bg:#f2f8fc;--v90-blue:#087fc4;--v90-cyan:#16c4d0;--v90-teal:#0ba99b;--v90-card:#fff;--v90-shadow:0 10px 30px rgba(17,67,101,.08)}
+/* SaludPlus v90 — rediseño visual completo de la experiencia */
+:root{--v90-navy:#073454;--v90-blue:#087fc4;--v90-cyan:#12b9c8;--v90-teal:#0ba89c;--v90-ink:#15344d;--v90-muted:#6a8295;--v90-border:#dce9f1;--v90-bg:#f2f7fb;--v90-card:#fff;--v90-shadow:0 12px 32px rgba(10,62,96,.075)}
 html,body{background:var(--v90-bg)!important;color:var(--v90-ink)!important}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.01em}
-.app{background:transparent!important}
-.sidebar{background:linear-gradient(180deg,#062c4d,#075b83 72%,#087c9b)!important;color:#fff!important;border:0!important;box-shadow:8px 0 32px rgba(3,44,75,.12)}
-.sidebar .brand b,.sidebar .brand small,.sidebar .fine{color:#fff!important}
-.sidebar .side-nav button{color:#d7f3fb!important;border-radius:14px;margin:4px 10px;width:calc(100% - 20px);transition:.2s}
-.sidebar .side-nav button.active,.sidebar .side-nav button:hover{background:linear-gradient(100deg,#13b8d2,#087fbd)!important;color:#fff!important;box-shadow:0 8px 20px #001d3740}
-.appbar{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--v90-line)!important;backdrop-filter:blur(18px)}
-.content{max-width:1280px!important;padding-top:clamp(18px,3vw,34px)!important}
-.view h1,.view h2{color:var(--v90-ink)!important;letter-spacing:-.035em}
-.hello{padding:clamp(20px,3vw,30px)!important;border-radius:26px!important;background:linear-gradient(115deg,#06345b 0%,#087fb8 58%,#11b7bd 100%)!important;color:#fff!important;box-shadow:0 16px 34px rgba(5,96,143,.18)!important}
-.hello h1,.hello .eyebrow,.hello p{color:#fff!important}
-.home-patient-identity{color:#d7f7ff!important}
-.shortcut-grid{gap:13px!important}
-.shortcut-card{min-height:104px!important;border:1px solid rgba(12,105,155,.12)!important;border-radius:20px!important;background:var(--v90-card)!important;box-shadow:var(--v90-shadow)!important;transition:transform .18s,box-shadow .18s!important}
-.shortcut-card:active{transform:scale(.985)}
-.shortcut-card .shortcut-copy strong{color:var(--v90-ink)!important;font-size:15px!important}
-.shortcut-card .shortcut-copy small{color:var(--v90-muted)!important}
-.shortcut-arrow{color:var(--v90-blue)!important}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.012em}
+.app{min-height:100dvh;background:radial-gradient(ellipse at 75% 0%,rgba(17,185,200,.075),transparent 34%),var(--v90-bg)!important}
+.appbar{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--v90-border)!important;box-shadow:0 3px 18px rgba(16,58,86,.035);backdrop-filter:blur(18px)}
+.brand b{color:#123d5d!important;letter-spacing:-.04em}.brand b span{color:var(--v90-cyan)!important}
+.brand img{filter:drop-shadow(0 3px 6px rgba(4,93,142,.14))}
+.content{width:min(100%,1320px)!important;margin-inline:auto!important;padding:26px clamp(15px,3vw,34px) 110px!important}
+.view{animation:v90-enter .32s ease both}
+@keyframes v90-enter{from{opacity:.35;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.view h1,.view h2,.view h3{color:var(--v90-ink)!important;letter-spacing:-.035em}
+.hello{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:clamp(24px,4vw,38px)!important;min-height:170px;border:0!important;border-radius:28px!important;background:linear-gradient(115deg,#062d4d 0%,#075e91 52%,#10aeb9 100%)!important;box-shadow:0 20px 42px rgba(5,79,124,.2)!important;color:white!important}
+.hello:before{content:"";position:absolute;z-index:-1;width:330px;height:330px;border:1px solid #ffffff20;border-radius:50%;right:-100px;top:-190px;box-shadow:0 0 0 28px #ffffff0b,0 0 0 58px #ffffff08}
+.hello:after{content:"";position:absolute;z-index:-1;width:180px;height:180px;border-radius:50%;right:16%;bottom:-145px;background:#32e2db22;filter:blur(3px)}
+.hello .eyebrow{color:#aeeef3!important;text-transform:uppercase;letter-spacing:.13em;font-size:11px;font-weight:800}
+.hello h1{margin:7px 0!important;color:white!important;font-size:clamp(29px,4.5vw,42px)!important;font-weight:800;line-height:1.08}
+.hello p,.hello .home-patient-identity{color:#d9f5fc!important;font-size:14px}
+.hello .quick{display:flex!important;gap:9px;flex-wrap:wrap}
+.hello .quick .btn{min-height:44px;padding:0 16px!important;border:1px solid #ffffff45!important;background:#ffffff1b!important;color:#fff!important;box-shadow:none!important;backdrop-filter:blur(8px)}
+.v90-section-intro{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:27px 2px 13px}
+.v90-kicker{display:block;margin-bottom:5px;color:#078eae;font-size:10px;font-weight:850;letter-spacing:.16em}
+.v90-section-intro h2{margin:0!important;font-size:22px!important}
+.v90-section-intro p{margin:4px 0 0;color:var(--v90-muted);font-size:13px}
+.v90-private{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid #cfece7;border-radius:99px;background:#f1fbf8;color:#28786f;font-size:11px;font-weight:700;white-space:nowrap}
+.v90-private span{width:7px;height:7px;border-radius:50%;background:#0fb58c;box-shadow:0 0 0 3px #0fb58c20}
+.home-shortcuts{margin:0!important}
+.shortcut-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:13px!important}
+.shortcut-card{position:relative;display:flex!important;align-items:center;gap:13px;min-width:0;min-height:112px!important;padding:17px!important;overflow:hidden;border:1px solid var(--v90-border)!important;border-radius:20px!important;background:var(--v90-card)!important;box-shadow:0 6px 20px rgba(17,66,96,.045)!important;text-align:left;transition:transform .2s,box-shadow .2s,border-color .2s!important}
+.shortcut-card:before{content:"";position:absolute;inset:auto -30px -48px auto;width:120px;height:120px;border-radius:50%;background:var(--shortcut-tint,#e7f7fb);opacity:.65}
+.shortcut-card:hover{transform:translateY(-3px);border-color:#a8d8e8!important;box-shadow:0 14px 30px rgba(17,89,126,.1)!important}
+.shortcut-bp{--shortcut-tint:#e1f3ff}.shortcut-glucose{--shortcut-tint:#e5f8f3}.shortcut-water{--shortcut-tint:#e2f5ff}.shortcut-meds{--shortcut-tint:#f5eefe}.shortcut-visits{--shortcut-tint:#fff1e6}.shortcut-exams{--shortcut-tint:#e9f5ff}.shortcut-profile{--shortcut-tint:#e7f8f7}
+.shortcut-icon{position:relative;z-index:1;display:grid;place-items:center;flex:0 0 54px;width:54px;height:54px;border-radius:17px;background:linear-gradient(145deg,#e9f7ff,#d7f0f6)!important}
+.shortcut-icon .art{width:47px!important;height:47px!important}
+.shortcut-copy{position:relative;z-index:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.shortcut-copy strong{color:var(--v90-ink)!important;font-size:14px!important;line-height:1.25}
+.shortcut-copy small{color:var(--v90-muted)!important;font-size:11px!important;line-height:1.35}
+.shortcut-arrow{position:relative;z-index:1;margin-left:auto;color:#078bb5!important;font-size:25px!important}
 .shortcut-ai{display:none!important}
-.card,.tile,.fold,.exam-detail-card,.exam-stat-card{border:1px solid var(--v90-line)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--v90-shadow)!important}
-.btn{border-radius:14px!important;font-weight:750!important;box-shadow:0 5px 13px rgba(5,110,170,.12)}
-.btn:not(.ghost):not(.danger){background:linear-gradient(105deg,#087fc4,#08a9bd)!important}
-input,select,textarea{border-radius:12px!important;border-color:#ccdeea!important;min-height:46px}
-input:focus,select:focus,textarea:focus{outline:3px solid rgba(8,166,196,.16)!important;border-color:#079dc0!important}
-.subnav{background:#fff!important;border:1px solid var(--v90-line)!important;border-radius:16px!important;padding:6px!important}
-.subnav button.active{background:linear-gradient(100deg,#087fc4,#12b6bd)!important;color:white!important;border-radius:11px!important}
-.tabbar{background:rgba(255,255,255,.96)!important;border-top:1px solid var(--v90-line)!important;box-shadow:0 -8px 28px rgba(20,70,100,.08)!important;backdrop-filter:blur(16px)}
+#homeLegacy{display:block!important;margin-top:24px}
+#homeLegacy .home-summary-heading{display:flex!important;align-items:end;justify-content:space-between;gap:12px;margin:0 2px 13px}
+#homeLegacy .home-summary-heading h2{font-size:22px!important}
+#homeLegacy .home-summary-heading p{font-size:13px;color:var(--v90-muted)}
+#homeLegacy .tiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:13px!important}
+#homeLegacy .tile{min-width:0!important;margin:0!important;padding:19px!important;border:1px solid var(--v90-border)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--v90-shadow)!important}
+#homeLegacy .tile.wide{grid-column:span 2}
+#homeLegacy .tile .label{display:flex;align-items:center;gap:8px;color:#54748a;font-size:12px;font-weight:750}
+#homeLegacy .tile .label .i{color:#0a9db7}
+#homeLegacy .tile .value{margin:8px 0;color:#123e5d;font-size:clamp(25px,3vw,34px)!important;font-weight:850;letter-spacing:-.045em}
+#homeLegacy .tile .muted{color:var(--v90-muted)!important}
+#homeLegacy .ring{filter:drop-shadow(0 4px 9px #0b9cb522)}
+#homeLegacy .stack{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px!important;margin-top:14px!important}
+#homeLegacy .stack>.card,#homeLegacy .fold{margin:0!important;padding:19px!important;border:1px solid var(--v90-border)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--v90-shadow)!important}
+#homeLegacy .fold{grid-column:span 2}
+.card,.fold,.exam-detail-card,.exam-stat-card{border-color:var(--v90-border)!important;border-radius:20px!important;box-shadow:var(--v90-shadow)!important}
+.view>.page-head{margin:4px 0 18px!important;padding:20px 22px!important;border:0!important;border-radius:22px!important;background:linear-gradient(110deg,#07385c,#087fb2 68%,#12b8bd)!important;color:#fff!important;box-shadow:0 12px 26px rgba(6,99,145,.13)}
+.view>.page-head h2,.view>.page-head p{color:#fff!important}
+.view>.page-head h2{font-size:clamp(23px,4vw,30px)!important}
+.view>.page-head p{margin-top:4px;color:#d5f5fb!important;font-size:13px}
+.back-home-btn{border-radius:12px!important;border:1px solid #cfe2ed!important;background:#fff!important;color:#0877a9!important;font-weight:700!important}
+.btn{min-height:42px;border-radius:13px!important;font-weight:750!important}
+.btn:not(.ghost):not(.danger){background:linear-gradient(105deg,#087fc4,#09aebc)!important;box-shadow:0 6px 14px rgba(5,112,170,.13)!important}
+input,select,textarea{border-radius:12px!important;border-color:#cbdde8!important;background:#fff!important;color:#15344d!important}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(8,166,196,.15)!important;border-color:#079db8!important}
+.subnav{background:#fff!important;border:1px solid var(--v90-border)!important;border-radius:15px!important;padding:5px!important;box-shadow:0 5px 15px rgba(20,70,100,.04)}
+.subnav button{border-radius:10px!important;font-weight:700!important}
+.subnav button.active{background:linear-gradient(100deg,#087fc4,#12b6bd)!important;color:white!important}
+.tabbar{background:rgba(255,255,255,.96)!important;border-top:1px solid var(--v90-border)!important;box-shadow:0 -8px 28px rgba(20,70,100,.08)!important;backdrop-filter:blur(16px)}
+.tabbar button{border-radius:13px!important}
 .tabbar button.active{color:#078ebc!important}
-.notice{border-radius:14px!important}
+.list .item,.list>article{border-radius:14px!important}
+.notice{border-radius:15px!important}
 dialog{border-radius:22px!important}
-@media(max-width:760px){.content{padding:16px 14px calc(92px + env(safe-area-inset-bottom))!important}.hello{margin:0 0 16px!important;border-radius:22px!important}.shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.shortcut-card{min-width:0;padding:13px!important}.shortcut-icon{transform:scale(.88);transform-origin:left center}.shortcut-copy strong{font-size:13px!important}.shortcut-copy small{font-size:11px!important}.tabbar{padding-bottom:env(safe-area-inset-bottom)!important}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media(min-width:900px){.content{padding-bottom:45px!important}.shortcut-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){
+ .content{padding:17px 14px calc(92px + env(safe-area-inset-bottom))!important}
+ .hello{display:block!important;min-height:0;padding:25px 21px!important;margin-bottom:3px!important;border-radius:23px!important}
+ .hello h1{font-size:30px!important}
+ .hello .quick{margin-top:18px}
+ .v90-section-intro{align-items:start;flex-direction:column;margin-top:23px}
+ .v90-private{align-self:flex-start}
+ .shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .shortcut-card{min-height:102px!important;padding:12px!important;gap:9px!important;border-radius:17px!important}
+ .shortcut-icon{width:43px;height:43px;flex-basis:43px;border-radius:13px}
+ .shortcut-icon .art{width:39px!important;height:39px!important}
+ .shortcut-copy strong{font-size:12px!important}
+ .shortcut-copy small{font-size:10px!important}
+ .shortcut-arrow{font-size:20px!important}
+ #homeLegacy{margin-top:21px}
+ #homeLegacy .home-summary-heading{display:block!important}
+ #homeLegacy .home-summary-heading h2{font-size:20px!important}
+ #homeLegacy .tiles{grid-template-columns:1fr!important;gap:10px!important}
+ #homeLegacy .tile.wide{grid-column:auto}
+ #homeLegacy .tile{padding:16px!important;border-radius:17px!important}
+ #homeLegacy .stack{grid-template-columns:1fr!important;gap:10px!important}
+ #homeLegacy .fold{grid-column:auto}
+ .view>.page-head{padding:17px!important;border-radius:18px!important}
+ .tabbar{padding-bottom:env(safe-area-inset-bottom)!important}
+}
+@media(max-width:360px){.shortcut-card{gap:6px!important;padding:10px!important}.shortcut-icon{width:38px;height:38px;flex-basis:38px}.shortcut-icon .art{width:34px!important;height:34px!important}}
+@media(prefers-reduced-motion:reduce){.view{animation:none!important}*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}

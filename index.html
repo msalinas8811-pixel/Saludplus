@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="care-design.css?v=77">
 <link rel="stylesheet" href="reports-design.css?v=80">
 <link rel="stylesheet" href="guide-design.css?v=86">
-<link rel="stylesheet" href="v90-design.css?v=1">
+<link rel="stylesheet" href="v90-design.css?v=2">
 <link rel="stylesheet" href="print-record.css?v=80">
 <link rel="stylesheet" href="hero-live.css?v=72">
 </head>
@@ -109,7 +109,7 @@
        <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
-      <button class="shortcut-card shortcut-ai" type="button" onclick="showView('asistente')" aria-label="Abrir asistente de salud con IA">
+      <button class="shortcut-card shortcut-ai" type="button" hidden aria-hidden="true" tabindex="-1">
        <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h38a6 6 0 016 6v20a6 6 0 01-6 6H30l-10 9v-9h-10a6 6 0 01-6-6V18a6 6 0 016-6z" transform="translate(0 0)" fill="#fff"/><circle cx="22" cy="28" r="3.4" fill="#7a5cf0"/><circle cx="32" cy="28" r="3.4" fill="#7a5cf0"/><circle cx="42" cy="28" r="3.4" fill="#7a5cf0"/><path d="M50 4l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffd45c"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Asistente IA</strong><small data-i18n>Preguntas de salud</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
@@ -122,7 +122,7 @@
      </div>
     </section>
 
-    <div id="homeLegacy" hidden><div class="home-summary-heading">
+    <div id="homeLegacy"><div class="home-summary-heading">
      <h2 data-i18n>Resumen de salud</h2>
      <p class="muted" data-i18n>Tus últimos registros y próximos eventos.</p>
     </div>
