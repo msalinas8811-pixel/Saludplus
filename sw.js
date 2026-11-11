@@ -1,9 +1,9 @@
 /* SaludPlus v25 · service worker
    - Páginas: red primero (para recibir actualizaciones) y copia local si no hay conexión.
    - Archivos estáticos: copia local primero y se refrescan en segundo plano. */
-const CACHE = 'saludplus-v84';
+const CACHE = 'saludplus-v90-alpha-2';
 const FILES = [
-  './', './index.html', './styles.css?v=65', './i18n.js?v=57', './app.js?v=62', './exams.js?v=65', './exams-ui.js?v=70', './exams-design.css?v=70', './home-design.css?v=72', './visits-design.css?v=72', './vitals-design.css?v=72', './hero-live.css?v=72', './print-record.css?v=80', './assistant-design.css?v=81', './guide-design.css?v=86', './guide-ui.js?v=87', './reports-design.css?v=80', './reports-ui.js?v=79', './care-design.css?v=77', './hero-live.js?v=72', './examreport.js?v=62', './chat.js?v=57', './firebase-config.js?v=57', './ai-firebase.js?v=57',
+  './', './index.html', './styles.css?v=65', './i18n.js?v=57', './app.js?v=62', './exams.js?v=65', './exams-ui.js?v=70', './exams-design.css?v=70', './home-design.css?v=72', './visits-design.css?v=72', './vitals-design.css?v=72', './hero-live.css?v=72', './print-record.css?v=80', './guide-design.css?v=86', './guide-ui.js?v=87', './reports-design.css?v=80', './reports-ui.js?v=79', './care-design.css?v=77', './hero-live.js?v=72', './examreport.js?v=62', './v90-design.css?v=2',
   './manifest.json', './icon-192.png', './icon-512.png', './saludplus-logo.svg'
 ];
 
@@ -19,10 +19,6 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // el servidor de IA nunca pasa por la caché
-  if (url.pathname.endsWith('/firebase-config.js')) { // la configuración se actualiza al instante
-    e.respondWith(fetch(req, { cache: 'no-store' }).then(r => { if (r.ok) { const c = r.clone(); caches.open(CACHE).then(x => x.put(req, c)); } return r; }).catch(() => caches.match(req)));
-    return;
-  }
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req, { cache: 'no-store' }).then(r => {
       const copy = r.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); return r;

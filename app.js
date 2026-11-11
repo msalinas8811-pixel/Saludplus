@@ -27,7 +27,7 @@ function persist() {
   try { localStorage.setItem(KEY, JSON.stringify(data)); return true; }
   catch (e) { toast(t('No se pudo guardar: el almacenamiento del dispositivo está lleno. Exporta un respaldo y borra archivos adjuntos grandes.')); return false; }
 }
-function save() { persist(); render(); }
+function save() { if (persist()) render(); }
 
 /* ---------- Utilidades ---------- */
 const $ = (id) => document.getElementById(id);

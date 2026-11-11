@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0879c9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a161e" media="(prefers-color-scheme: dark)">
-<meta name="description" content="SaludPlus: seguimiento personal de presión arterial, glucosa, agua, medicamentos y consultas, con asistente de salud con IA.">
+<meta name="description" content="SaludPlus: organiza tus mediciones, medicamentos, citas y documentos de salud de forma privada en tu dispositivo.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SaludPlus">
 <link rel="manifest" href="manifest.json">
@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="care-design.css?v=77">
 <link rel="stylesheet" href="reports-design.css?v=80">
 <link rel="stylesheet" href="guide-design.css?v=86">
-<link rel="stylesheet" href="assistant-design.css?v=81">
+<link rel="stylesheet" href="v90-design.css?v=2">
 <link rel="stylesheet" href="print-record.css?v=80">
 <link rel="stylesheet" href="hero-live.css?v=72">
 </head>
@@ -77,7 +77,7 @@
      </div>
     </div>
 
-    <section class="home-shortcuts" aria-labelledby="shortcutTitle">
+    <section class="home-shortcuts" aria-labelledby="shortcutTitle"><div class="v90-section-intro"><div><span class="v90-kicker">TU CENTRO DE BIENESTAR</span><h2>Accesos rápidos</h2><p>Registra y consulta tu información de salud.</p></div><span class="v90-private"><span></span> Datos en este dispositivo</span></div>
      <div class="shortcut-grid">
       <button class="shortcut-card shortcut-bp" type="button" onclick="showView('presion')" aria-label="Abrir presión arterial">
        <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="8" width="34" height="42" rx="9" fill="#fff"/><rect x="15" y="13" width="24" height="17" rx="5" fill="#1d3f9e"/><text x="27" y="26" font-size="10" font-weight="800" fill="#fff" text-anchor="middle" font-family="Arial">120</text><path d="M27 42s-7-4-7-8.5a3.8 3.8 0 017-2 3.8 3.8 0 017 2C34 38 27 42 27 42z" fill="#ff4d6d"/><path d="M44 36c9 0 12 4 12 9s-4 8-12 8" fill="none" stroke="#ffd1d9" stroke-width="3" stroke-linecap="round"/><circle cx="55" cy="48" r="6" fill="#ffd1d9"/></svg></span>
@@ -109,7 +109,7 @@
        <span class="shortcut-copy"><strong data-i18n>Exámenes</strong><small data-i18n>Resultados y archivos</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
       </button>
-      <button class="shortcut-card shortcut-ai" type="button" onclick="showView('asistente')" aria-label="Abrir asistente de salud con IA">
+      <button class="shortcut-card shortcut-ai" type="button" hidden aria-hidden="true" tabindex="-1">
        <span class="shortcut-icon" aria-hidden="true"><svg class="art" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h38a6 6 0 016 6v20a6 6 0 01-6 6H30l-10 9v-9h-10a6 6 0 01-6-6V18a6 6 0 016-6z" transform="translate(0 0)" fill="#fff"/><circle cx="22" cy="28" r="3.4" fill="#7a5cf0"/><circle cx="32" cy="28" r="3.4" fill="#7a5cf0"/><circle cx="42" cy="28" r="3.4" fill="#7a5cf0"/><path d="M50 4l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffd45c"/></svg></span>
        <span class="shortcut-copy"><strong data-i18n>Asistente IA</strong><small data-i18n>Preguntas de salud</small></span>
        <span class="shortcut-arrow" aria-hidden="true">›</span>
@@ -122,7 +122,7 @@
      </div>
     </section>
 
-    <div id="homeLegacy" hidden><div class="home-summary-heading">
+    <div id="homeLegacy"><div class="home-summary-heading">
      <h2 data-i18n>Resumen de salud</h2>
      <p class="muted" data-i18n>Tus últimos registros y próximos eventos.</p>
     </div>
@@ -843,8 +843,6 @@
 <script src="app.js?v=62"></script>
 <script src="exams.js?v=65"></script>
 <script src="examreport.js?v=62"></script>
-<script src="ai-firebase.js?v=39"></script>
-<script src="chat.js?v=36"></script>
 <script src="exams-ui.js?v=69"></script>
 <script src="guide-ui.js?v=87"></script>
 <script src="reports-ui.js?v=79"></script>
