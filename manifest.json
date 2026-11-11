@@ -1,7 +1,7 @@
 {
   "name": "SaludPlus",
   "short_name": "SaludPlus",
-  "description": "Seguimiento de presión arterial, glucosa, agua, medicamentos y consultas, con asistente de salud con IA.",
+  "description": "Organiza tus mediciones, medicamentos, citas y documentos de salud de forma privada en tu dispositivo.",
   "lang": "es",
   "start_url": "./index.html",
   "scope": "./",

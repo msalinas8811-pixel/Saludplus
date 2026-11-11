@@ -1,0 +1,35 @@
+/* SaludPlus v90 alpha — nueva identidad visual */
+:root{--v90-ink:#102b46;--v90-muted:#647d91;--v90-line:#dce8f0;--v90-bg:#f2f8fc;--v90-blue:#087fc4;--v90-cyan:#16c4d0;--v90-teal:#0ba99b;--v90-card:#fff;--v90-shadow:0 10px 30px rgba(17,67,101,.08)}
+html,body{background:var(--v90-bg)!important;color:var(--v90-ink)!important}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.01em}
+.app{background:transparent!important}
+.sidebar{background:linear-gradient(180deg,#062c4d,#075b83 72%,#087c9b)!important;color:#fff!important;border:0!important;box-shadow:8px 0 32px rgba(3,44,75,.12)}
+.sidebar .brand b,.sidebar .brand small,.sidebar .fine{color:#fff!important}
+.sidebar .side-nav button{color:#d7f3fb!important;border-radius:14px;margin:4px 10px;width:calc(100% - 20px);transition:.2s}
+.sidebar .side-nav button.active,.sidebar .side-nav button:hover{background:linear-gradient(100deg,#13b8d2,#087fbd)!important;color:#fff!important;box-shadow:0 8px 20px #001d3740}
+.appbar{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--v90-line)!important;backdrop-filter:blur(18px)}
+.content{max-width:1280px!important;padding-top:clamp(18px,3vw,34px)!important}
+.view h1,.view h2{color:var(--v90-ink)!important;letter-spacing:-.035em}
+.hello{padding:clamp(20px,3vw,30px)!important;border-radius:26px!important;background:linear-gradient(115deg,#06345b 0%,#087fb8 58%,#11b7bd 100%)!important;color:#fff!important;box-shadow:0 16px 34px rgba(5,96,143,.18)!important}
+.hello h1,.hello .eyebrow,.hello p{color:#fff!important}
+.home-patient-identity{color:#d7f7ff!important}
+.shortcut-grid{gap:13px!important}
+.shortcut-card{min-height:104px!important;border:1px solid rgba(12,105,155,.12)!important;border-radius:20px!important;background:var(--v90-card)!important;box-shadow:var(--v90-shadow)!important;transition:transform .18s,box-shadow .18s!important}
+.shortcut-card:active{transform:scale(.985)}
+.shortcut-card .shortcut-copy strong{color:var(--v90-ink)!important;font-size:15px!important}
+.shortcut-card .shortcut-copy small{color:var(--v90-muted)!important}
+.shortcut-arrow{color:var(--v90-blue)!important}
+.shortcut-ai{display:none!important}
+.card,.tile,.fold,.exam-detail-card,.exam-stat-card{border:1px solid var(--v90-line)!important;border-radius:20px!important;background:#fff!important;box-shadow:var(--v90-shadow)!important}
+.btn{border-radius:14px!important;font-weight:750!important;box-shadow:0 5px 13px rgba(5,110,170,.12)}
+.btn:not(.ghost):not(.danger){background:linear-gradient(105deg,#087fc4,#08a9bd)!important}
+input,select,textarea{border-radius:12px!important;border-color:#ccdeea!important;min-height:46px}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(8,166,196,.16)!important;border-color:#079dc0!important}
+.subnav{background:#fff!important;border:1px solid var(--v90-line)!important;border-radius:16px!important;padding:6px!important}
+.subnav button.active{background:linear-gradient(100deg,#087fc4,#12b6bd)!important;color:white!important;border-radius:11px!important}
+.tabbar{background:rgba(255,255,255,.96)!important;border-top:1px solid var(--v90-line)!important;box-shadow:0 -8px 28px rgba(20,70,100,.08)!important;backdrop-filter:blur(16px)}
+.tabbar button.active{color:#078ebc!important}
+.notice{border-radius:14px!important}
+dialog{border-radius:22px!important}
+@media(max-width:760px){.content{padding:16px 14px calc(92px + env(safe-area-inset-bottom))!important}.hello{margin:0 0 16px!important;border-radius:22px!important}.shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.shortcut-card{min-width:0;padding:13px!important}.shortcut-icon{transform:scale(.88);transform-origin:left center}.shortcut-copy strong{font-size:13px!important}.shortcut-copy small{font-size:11px!important}.tabbar{padding-bottom:env(safe-area-inset-bottom)!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
