@@ -6502,6 +6502,289 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
 
 </style>
 <script id="panel-js">
+/* SaludPlus · traducción completa al inglés (complemento de i18n) */
+(function () {
+  'use strict';
+  if (typeof EN !== 'object') return;
+  Object.assign(EN, {
+    'Panel': 'Dashboard', 'de': 'of', 'Guía': 'Guide', 'Volver a Inicio': 'Back to Home', 'Navegación principal': 'Main navigation',
+    'Registrar y consultar': 'Log and review', 'Horarios y recordatorios': 'Schedules and reminders', 'Citas y seguimiento': 'Appointments and follow-up',
+    'Resultados y archivos': 'Results and files', 'Preguntas de salud': 'Health questions', 'Mi perfil': 'My profile', 'Mis datos y configuración': 'My data and settings',
+    'Mi panel de salud': 'My health dashboard', 'Presión y glucosa por fechas · reporte para el médico': 'Blood pressure and glucose by date · report for your doctor',
+    'Resumen de salud': 'Health summary', 'Tus últimos registros y próximos eventos.': 'Your latest readings and upcoming events.',
+    'Sistólica': 'Systolic', 'Diastólica': 'Diastolic', 'Sistólica (alta)': 'Systolic (upper)', 'Diastólica (baja)': 'Diastolic (lower)',
+    'Abrir presión arterial': 'Open blood pressure', 'Abrir glucosa': 'Open glucose', 'Abrir control de agua': 'Open water tracker', 'Abrir medicinas': 'Open medications',
+    'Abrir consultas': 'Open appointments', 'Abrir exámenes': 'Open exams', 'Abrir asistente de salud con IA': 'Open AI health assistant', 'Abrir mi perfil': 'Open my profile',
+    /* Presión */
+    'Registro de ambos brazos': 'Both-arm reading', 'Ingresa cada medición por separado en un solo registro.': 'Enter each arm separately in a single record.',
+    'Medición izquierda': 'Left arm reading', 'Medición derecha': 'Right arm reading',
+    'Puedes registrar un brazo o ambos en el mismo registro. Completa sistólica y diastólica de cada brazo que hayas medido.': 'You can log one arm or both in the same record. Fill in systolic and diastolic for each arm you measured.',
+    'Clasificación del registro': 'Reading classification', 'Interpretación según perfil': 'Interpretation for your profile', 'Presión más reciente': 'Latest blood pressure',
+    'mmHg · sin categoría automática por edad': 'mmHg · no automatic age category', 'lpm · depende de reposo, sueño, actividad y edad': 'bpm · depends on rest, sleep, activity and age',
+    'Ver gráfica': 'View chart', 'Mapa de presión': 'Blood pressure map', 'Organiza las lecturas domiciliarias por hora y observa su evolución diaria.': 'Organize home readings by time of day and see how they change daily.',
+    'Medición seleccionada': 'Selected reading', 'Referencia adultos en casa:': 'Adult home reference:', 'Menor de 120: no elevada': 'Under 120: not elevated',
+    '135 o más: umbral de hipertensión*': '135 or more: hypertension threshold*', 'Menor de 70: no elevada': 'Under 70: not elevated', '85 o más: umbral de hipertensión*': '85 or more: hypertension threshold*',
+    'Por encima de 100 mmHg': 'Above 100 mmHg',
+    'Es una PAM elevada respecto a esta referencia descriptiva, pero no significa automáticamente que los órganos estén sufriendo daño. Valora también la sistólica, la diastólica y las indicaciones clínicas.': 'This MAP is high compared with this descriptive reference, but it does not automatically mean your organs are being damaged. Also consider systolic, diastolic and your clinical instructions.',
+    'Más de 10 mmHg: repetir y confirmar la diferencia. Si persiste, las mediciones posteriores suelen hacerse en el brazo con la cifra mayor.': 'More than 10 mmHg: repeat and confirm the difference. If it persists, later readings are usually taken on the arm with the higher value.',
+    'Estas cifras de sistólica y diastólica corresponden a referencias para adultos en mediciones domiciliarias, basadas en ESC 2024. No deben aplicarse automáticamente a niños o adolescentes: sus valores se interpretan según edad, sexo, estatura y criterio profesional. *El umbral se valora con el promedio de sistólica y/o diastólica, no con una cifra aislada.': 'These systolic and diastolic values are adult references for home readings, based on ESC 2024. They should not be applied automatically to children or teenagers: their values are interpreted by age, sex, height and professional judgment. *The threshold is assessed with the average systolic and/or diastolic, not a single reading.',
+    'Seguimiento domiciliario de las mediciones según la hora del día.': 'Home tracking of readings by time of day.', 'Organiza y consulta tus mediciones por día y horario.': 'Organize and review your readings by day and time.',
+    'Este mapa organiza mediciones hechas en casa. No sustituye un MAPA clínico de 24 horas con un monitor automático. No hagas mediciones adicionales ni cambies tratamientos sin indicación profesional.': 'This map organizes readings taken at home. It does not replace a clinical 24-hour ambulatory monitoring (ABPM) with an automatic monitor. Do not take extra readings or change treatment without professional advice.',
+    'Los horarios son orientativos y se pueden ajustar a las indicaciones del profesional de salud.': 'Times are a guide and can be adjusted to your health professional’s instructions.',
+    'Duración del seguimiento': 'Tracking length', '3 días': '3 days', '7 días': '7 days', '30 días': '30 days', '90 días': '90 days', 'Todo': 'All',
+    'Hora orientativa de mañana': 'Suggested morning time', 'Hora orientativa de noche': 'Suggested evening time', 'Guardar configuración': 'Save settings',
+    'En protocolos domiciliarios habituales se realizan lecturas por la mañana y por la noche, con dos mediciones separadas por aproximadamente un minuto. El profesional debe confirmar el plan apropiado para cada paciente.': 'Usual home protocols take readings in the morning and evening, with two measurements about one minute apart. Your health professional should confirm the right plan for you.',
+    'Registrar sesión': 'Log session', 'Registra dos lecturas de la misma sesión. Selecciona el brazo indicado por tu profesional.': 'Log two readings from the same session. Choose the arm your health professional indicated.',
+    'Sesión': 'Session', 'Mañana': 'Morning', 'Noche': 'Evening', 'Hora de lectura 1': 'Reading 1 time', 'Lectura 1 · sistólica': 'Reading 1 · systolic', 'Lectura 1 · diastólica': 'Reading 1 · diastolic',
+    'Hora de lectura 2': 'Reading 2 time', 'Lectura 2 · sistólica': 'Reading 2 · systolic', 'Lectura 2 · diastólica': 'Reading 2 · diastolic', 'Guardar sesión': 'Save session',
+    'Gráfica diaria': 'Daily chart', 'La gráfica muestra las lecturas según su hora real.': 'The chart shows readings at their actual time.', 'Ver día': 'View day',
+    'Registra una sesión para generar la gráfica.': 'Log a session to build the chart.', 'Todavía no hay sesiones del mapa.': 'No map sessions yet.',
+    'Cuenta días con al menos una sesión; no indica cumplimiento clínico.': 'Counts days with at least one session; it does not measure clinical adherence.',
+    'Ej. en reposo, por la mañana': 'E.g. at rest, in the morning', 'Ej. antes del desayuno, reposo': 'E.g. before breakfast, at rest',
+    /* Glucosa */
+    'Registra tu lectura directamente en el glucómetro digital.': 'Enter the reading from your glucose meter.', 'CONTROL DE GLUCOSA': 'GLUCOSE TRACKING',
+    'Resultado de tu medición': 'Your reading', '¿Cuándo te mediste?': 'When did you measure?', 'Registrar medición': 'Save reading', 'Rangos de referencia': 'Reference ranges',
+    'Orientación general para adultos. No diagnostica.': 'General guidance for adults. Not a diagnosis.', 'Referencia habitual en pruebas de laboratorio': 'Usual laboratory reference',
+    'Requiere valoración profesional': 'Needs professional assessment', 'Requiere confirmación clínica': 'Needs clinical confirmation', 'Después de comer': 'After eating',
+    'La meta depende del tiempo transcurrido y del plan individual': 'The target depends on time since eating and your individual plan',
+    'Las cifras de ayuno corresponden a referencias de pruebas de laboratorio. Un glucómetro doméstico no confirma por sí solo un diagnóstico.': 'Fasting values are laboratory references. A home glucose meter cannot confirm a diagnosis on its own.',
+    'Última medición guardada': 'Last saved reading', 'Visualización de tu resultado': 'Your result at a glance', 'El velocímetro corresponde a la última lectura guardada.': 'The gauge shows your last saved reading.',
+    'Última glucosa': 'Latest glucose', 'Por encima del rango habitual en ayunas (100–125)': 'Above the usual fasting range (100–125)',
+    'La interpretación depende del momento de medición y de los objetivos acordados con tu profesional de salud. Los colores son orientativos.': 'Interpretation depends on when you measured and the targets agreed with your health professional. Colors are only a guide.',
+    'Historial de glucosa': 'Glucose history', 'Consulta tus mediciones anteriores.': 'Review your previous readings.',
+    'Los colores son orientativos y solo aplican a referencias en ayunas o a las 2 horas después de comer. Otros momentos requieren interpretar el resultado según el plan clínico individual. Un resultado aislado no establece un diagnóstico.': 'Colors are only a guide and apply only to fasting or 2-hours-after-eating references. Other times need to be interpreted according to your individual clinical plan. A single result does not establish a diagnosis.',
+    'Resultado de glucosa en miligramos por decilitro': 'Glucose result in milligrams per deciliter', 'Gráfica de evolución de glucosa': 'Glucose trend chart', 'Tendencia de las últimas 6 mediciones': 'Trend of the last 6 readings',
+    'Baja o valor elevado': 'Low or high value', 'Contexto sin rango estándar': 'Context without a standard range', 'Rango habitual según contexto': 'Usual range for this context', 'Por encima del rango de referencia': 'Above the reference range',
+    /* Agua */
+    'Control de hidratación': 'Hydration tracker', 'Registra y da seguimiento a tu consumo diario de agua.': 'Log and track your daily water intake.', 'Tu progreso de hoy': 'Today’s progress',
+    '¡Vas a tu ritmo!': 'You’re going at your own pace!', 'Escucha tu sed y mantén hábitos saludables.': 'Listen to your thirst and keep healthy habits.', '＋ Agregar agua': '＋ Add water',
+    '↶ Deshacer última toma': '↶ Undo last entry', '✦ Hábitos de hidratación': '✦ Hydration habits', 'Apoya la concentración': 'Supports focus', 'Apoya funciones del cuerpo': 'Supports body functions',
+    'Acompaña tu actividad': 'Goes with your activity', 'Meta y recordatorios': 'Goal and reminders', 'Configurar meta': 'Set goal', 'Agregar cantidad personalizada': 'Add custom amount',
+    'La cantidad adecuada varía según la edad, actividad, clima y salud. No es necesario forzar el consumo ni cumplir una cifra universal. Sigue las indicaciones de tu profesional sanitario si tienes restricciones de líquidos.': 'The right amount varies with age, activity, climate and health. There is no need to force yourself or meet a universal number. Follow your health professional’s advice if you have fluid restrictions.',
+    'En iPhone y navegadores, las alarmas web no están garantizadas si cierras la página o el sistema suspende la app.': 'On iPhone and in browsers, web alarms are not guaranteed if you close the page or the system suspends the app.',
+    /* Medicinas */
+    'Mis Medicamentos': 'My Medications', 'Registra, organiza y consulta tus recordatorios.': 'Log, organize and review your reminders.', 'medicamentos tomados hoy': 'medications taken today',
+    'Próximo recordatorio': 'Next reminder', '＋ Agregar medicamento': '＋ Add medication', '▦ Medicamentos de hoy': '▦ Today’s medications',
+    'Los horarios son recordatorios de apoyo. La página web no garantiza alarmas si el navegador está cerrado o el sistema suspende la app. Sigue siempre la receta y no cambies dosis u horarios sin consultar a un profesional sanitario.': 'Times are supportive reminders. The web page cannot guarantee alarms if the browser is closed or the system suspends the app. Always follow your prescription and do not change doses or times without asking a health professional.',
+    /* Consultas */
+    'Mis Consultas': 'My Appointments', 'Organiza tus próximas citas y conserva tu historial médico.': 'Organize upcoming appointments and keep your medical history.', 'Hora de próxima cita': 'Next appointment time',
+    'Próximas consultas': 'Upcoming appointments', 'Próxima': 'Next', 'Fecha de la cita': 'Appointment date', 'Sin hora': 'No time', 'Cardiología': 'Cardiology',
+    'Los recordatorios de citas dependen de los permisos y de que el navegador permita ejecutar la aplicación. Conserva también tus citas en el calendario habitual.': 'Appointment reminders depend on permissions and on the browser letting the app run. Also keep your appointments in your usual calendar.',
+    'Tienes una consulta pendiente': 'You have an upcoming appointment',
+    /* Exámenes */
+    'Exámenes y Resultados': 'Exams and Results', 'Expediente de laboratorio y estudios': 'Lab and test records', 'Con archivos': 'With files', 'Exámenes recientes': 'Recent exams', 'Ver todos ›': 'View all ›',
+    'Grupos sugeridos y evolución de valores': 'Suggested groups and value trends', 'Ver exámenes programados': 'View scheduled exams', 'Ver resultados registrados': 'View saved results', 'Ver archivos médicos': 'View medical files',
+    'Limpiar búsqueda': 'Clear search', 'Filtrar exámenes': 'Filter exams', 'Más opciones': 'More options', 'Archivo del examen': 'Exam file', 'Descargar archivo': 'Download file', 'Editar resultado': 'Edit result',
+    'Este archivo no está disponible en este dispositivo.': 'This file is not available on this device.', 'Información del examen': 'Exam information', 'Laboratorio no especificado': 'Laboratory not specified',
+    'Médico solicitante': 'Ordering doctor', 'No hay parámetros registrados para este resultado.': 'No values recorded for this result.', 'No hay resultados que coincidan con este filtro.': 'No results match this filter.',
+    'Otro archivo': 'Other file', 'Parámetro': 'Value', 'Referencia': 'Reference', 'Todavía no hay archivos asociados a este examen.': 'No files linked to this exam yet.', 'Ver detalle': 'View details',
+    'archivos': 'files', 'parámetros': 'values', 'Exámenes rutinarios': 'Routine exams', 'Control de diabetes': 'Diabetes control', 'Exámenes por receta médica': 'Exams by prescription',
+    'Laboratorio, indicaciones, quién lo pidió': 'Laboratory, instructions, who ordered it', 'Ej. diabetes, hipertensión': 'E.g. diabetes, hypertension', 'Resultado de examen': 'Exam result',
+    /* Perfil */
+    'EXPEDIENTE DEL PACIENTE': 'PATIENT RECORD', 'Resumen del paciente': 'Patient summary', 'Hipertensión': 'Hypertension', 'Últimas mediciones de presión arterial': 'Latest blood pressure readings',
+    'Últimas mediciones de glucosa': 'Latest glucose readings', 'Fotografía del paciente': 'Patient photo', 'La foto se guarda en este dispositivo.': 'The photo is stored on this device.',
+    'Diagnóstico de hipertensión': 'Hypertension diagnosis', 'Sí, diagnosticada': 'Yes, diagnosed', 'En evaluación': 'Being evaluated', 'Estatura (cm) · necesaria para referencias pediátricas': 'Height (cm) · needed for pediatric references',
+    'Fecha de actualización de estatura': 'Height last updated',
+    /* Avisos */
+    'Avisos y recordatorios': 'Alerts and reminders', 'Consulta tus mediciones programadas y próximas citas.': 'Review your scheduled readings and upcoming appointments.', 'Recordatorios para medir la presión': 'Blood pressure reminders',
+    'Guardar horarios': 'Save times', 'Próximos avisos': 'Upcoming alerts', 'Medición de presión arterial': 'Blood pressure reading', 'Próxima consulta médica': 'Next medical appointment', 'Cómo agregar otros avisos': 'How to add other alerts',
+    'Los avisos dentro de SaludPlus se revisan mientras la aplicación está abierta. Las notificaciones del navegador pueden depender de permisos y del sistema; no sustituyen una alarma médica o del teléfono.': 'SaludPlus checks alerts while the app is open. Browser notifications may depend on permissions and the system; they do not replace a medical or phone alarm.',
+    'Los horarios de medicinas se toman de Medicinas y las citas se muestran desde Consultas. Usa las tarjetas de Inicio para administrar esos datos.': 'Medication times come from Medications and appointments come from Appointments. Use the Home cards to manage that information.',
+    'Es momento de registrar tu presión arterial.': 'It’s time to log your blood pressure.', 'Hora de medir la presión': 'Time to measure your blood pressure', 'No fue posible solicitar el permiso.': 'The permission could not be requested.',
+    'Notificaciones autorizadas.': 'Notifications allowed.', 'Recordatorios de presión guardados.': 'Blood pressure reminders saved.', 'avisos programados': 'scheduled alerts',
+    'Tipo de asistencia': 'Type of help', 'Pregunta de salud': 'Health question',
+    /* Guía */
+    'Guía de presión arterial': 'Blood pressure guide', 'Aprende a medirla bien y a cuidarla día a día.': 'Learn to measure it correctly and take care of it every day.', 'Mi lectura': 'My reading',
+    '🎬 Mira cómo se mide': '🎬 Watch how to measure', 'Antes de medir': 'Before measuring', 'Altura del corazón': 'Heart level', '2–3 cm del codo': '2–3 cm above the elbow',
+    '1. Antes: sin café, ejercicio ni tabaco': '1. Before: no coffee, exercise or smoking', 'Espera 30 minutos. Todo eso sube la presión por un rato y falsea la lectura.': 'Wait 30 minutes. All of these raise blood pressure for a while and skew the reading.',
+    'Antes de medir, quédate sentado y tranquilo. Usa el reloj.': 'Before measuring, sit still and relax. Use the timer.', '✅ ¡Listo! Ya puedes medir.': '✅ Done! You can measure now.', '2 · Prepárate': '2 · Get ready',
+    'Sin café, ejercicio ni tabaco': 'No coffee, exercise or smoking', 'Espera al menos 30 minutos antes de medir.': 'Wait at least 30 minutes before measuring.', 'Ve al baño primero': 'Use the bathroom first',
+    'La vejiga llena puede subir la lectura.': 'A full bladder can raise the reading.', 'Siéntate con la espalda apoyada': 'Sit with your back supported', 'Pies planos en el suelo y piernas sin cruzar.': 'Feet flat on the floor and legs uncrossed.',
+    'Brazo apoyado a la altura del corazón': 'Arm supported at heart level', 'Sobre una mesa, con la palma hacia arriba y sin ropa apretada.': 'On a table, palm up and with no tight clothing.',
+    'Sobre la piel, 2 a 3 cm arriba del pliegue del codo y del tamaño correcto.': 'On bare skin, 2 to 3 cm above the elbow crease, and the right size.', 'Quieto y en silencio': 'Still and quiet',
+    'No hables, no mires el celular y respira tranquilo mientras mide.': 'Don’t talk or look at your phone, and breathe calmly while it measures.', 'Espera 1 minuto entre mediciones y anota las dos.': 'Wait 1 minute between readings and write both down.',
+    '¡Todo listo! 🎉': 'All set! 🎉', 'Mide dos veces y anota las lecturas.': 'Measure twice and write down the readings.', 'Registrar mi medición': 'Log my reading', '¿Cómo está mi lectura?': 'How is my reading?',
+    'Escribe tus números y mira en qué zona caen.': 'Enter your numbers and see which zone they fall in.', 'Usar mi última medición': 'Use my last reading', 'Escribe tus dos números': 'Enter your two numbers', 'Por ejemplo 120 y 80.': 'For example 120 and 80.',
+    'Es información general. Una sola lectura no da un diagnóstico: lo importante es el promedio de varios días. Solo tu médico puede interpretarla.': 'This is general information. A single reading is not a diagnosis: what matters is the average over several days. Only your doctor can interpret it.',
+    'Las zonas, de un vistazo': 'The zones at a glance', 'menos de 120 y 80': 'under 120 and 80', '120–129 y menos de 80': '120–129 and under 80', '130–139 o 80–89': '130–139 or 80–89', '140 o más, o 90 o más': '140 or more, or 90 or more', 'más de 180 o más de 120': 'over 180 or over 120',
+    'Mis hábitos de hoy': 'My habits today', 'Comí con poca sal': 'I ate with little salt', 'Menos de 1 cucharadita (5 g) de sal al día, contando la de los alimentos procesados.': 'Less than 1 teaspoon (5 g) of salt a day, including salt in processed foods.',
+    'Comí frutas y verduras': 'I ate fruit and vegetables', 'Llena la mitad del plato con verduras y suma fruta. La dieta DASH ayuda a bajar la presión.': 'Fill half your plate with vegetables and add fruit. The DASH diet helps lower blood pressure.',
+    'Me moví 30 minutos': 'I moved for 30 minutes', 'Caminar a paso rápido la mayoría de los días. La meta es 150 minutos por semana.': 'Brisk walking most days. The goal is 150 minutes a week.',
+    'Tomé suficiente agua': 'I drank enough water', 'Prefiere agua y evita bebidas azucaradas y energéticas.': 'Choose water and avoid sugary and energy drinks.', 'Dormí 7 a 8 horas': 'I slept 7 to 8 hours',
+    'Dormir mal sube la presión. Acuéstate a la misma hora.': 'Poor sleep raises blood pressure. Go to bed at the same time.', 'Descansé unos minutos': 'I rested for a few minutes',
+    'Tomé mis medicinas como indicó el médico': 'I took my medicines as prescribed', 'No las cambies ni las suspendas por tu cuenta.': 'Don’t change or stop them on your own.', 'Marca lo que ya hiciste hoy.': 'Check what you’ve already done today.',
+    'Reduce la sal': 'Cut down on salt', 'Cocina con hierbas, limón y ajo. Revisa las etiquetas: embutidos, sopas instantáneas, salsas y snacks suelen traer mucho sodio.': 'Cook with herbs, lemon and garlic. Check labels: cold cuts, instant soups, sauces and snacks often have a lot of sodium.',
+    'Cuida tu peso': 'Watch your weight', 'Bajar aunque sea unos kilos si hay sobrepeso suele bajar la presión. Hazlo de forma gradual.': 'Losing even a few kilos if you are overweight usually lowers blood pressure. Do it gradually.',
+    'El tabaco sube la presión al momento y daña las arterias. Pide ayuda para dejarlo.': 'Smoking raises blood pressure immediately and damages arteries. Ask for help to quit.', 'Modera el alcohol': 'Limit alcohol',
+    'Cuanto menos, mejor. Si tomas, que sea poco y no a diario.': 'The less the better. If you drink, keep it small and not daily.', 'Come alimentos con potasio': 'Eat foods with potassium',
+    'Banano, frijoles, papa con cáscara y vegetales de hoja ayudan. Si tienes problemas de riñón, consulta antes.': 'Bananas, beans, potatoes with skin and leafy greens help. If you have kidney problems, ask your doctor first.',
+    'Mide en casa y anota': 'Measure at home and keep a log', 'Mide a la misma hora, por la mañana y por la noche, 7 días seguidos antes de tu cita. SaludPlus lo organiza en Reportes.': 'Measure at the same times, morning and evening, for 7 days in a row before your appointment. SaludPlus organizes it in Reports.',
+    '🚑 Busca atención urgente': '🚑 Get urgent care', 'Si tu presión es muy alta (más de 180/120)': 'If your blood pressure is very high (over 180/120)',
+    'tienes dolor de pecho, falta de aire, dolor de cabeza fuerte, visión borrosa, confusión, dificultad para hablar o debilidad en un lado del cuerpo.': 'you have chest pain, shortness of breath, a severe headache, blurred vision, confusion, trouble speaking or weakness on one side of the body.',
+    '📞 Llama a tu médico pronto': '📞 Call your doctor soon', 'Si varias lecturas seguidas pasan de 130/80, o una pasa de 180/120 sin síntomas (descansa 5 minutos y repite primero). También si sientes mareos o desmayos con la presión baja.': 'If several readings in a row are above 130/80, or one is above 180/120 without symptoms (rest 5 minutes and repeat first). Also if you feel dizzy or faint with low blood pressure.',
+    '🗓️ Para tu próxima cita': '🗓️ For your next appointment', 'Lleva tu registro de 7 días y la lista de tus medicinas. SaludPlus lo arma por ti.': 'Bring your 7-day log and your medication list. SaludPlus puts it together for you.',
+    'Ver mis reportes': 'View my reports', 'Ir a Presión': 'Go to Blood pressure', 'Animación de cómo medir la presión arterial': 'Animation showing how to measure blood pressure',
+    'Esta guía es educativa y no reemplaza la valoración de un profesional de la salud. No cambies ni suspendas medicinas por tu cuenta.': 'This guide is educational and does not replace an assessment by a health professional. Do not change or stop medicines on your own.',
+    /* Panel */
+    'Panel de salud': 'Health dashboard', 'Presión arterial y glucosa por fechas.': 'Blood pressure and glucose by date.', 'Periodo': 'Period', 'Elegir periodo': 'Choose period', 'Desde': 'From', 'Hasta': 'To',
+    'Presión arterial por fecha': 'Blood pressure by date', 'Toca un punto para ver la medición.': 'Tap a point to see the reading.', 'Límite normal 120 / 80': 'Normal limit 120 / 80',
+    'Glucosa por fecha': 'Glucose by date', 'En rango o según contexto': 'In range or by context', 'Elevada o alta': 'Elevated or high', 'Baja (<70)': 'Low (<70)', 'Ayunas normal 70–99': 'Normal fasting 70–99',
+    'Cómo han estado tus mediciones': 'How your readings have been', 'Registro por fecha': 'Log by date', 'Ver todas las fechas': 'View all dates', 'Reporte para el médico': 'Report for your doctor',
+    'Un documento de una o dos hojas con tus datos, el resumen del periodo, las gráficas y cada medición de presión y glucosa por fecha. Elige “Guardar como PDF” al imprimir para compartirlo.': 'A short document with your details, the period summary, the charts and every blood pressure and glucose reading by date. Choose “Save as PDF” when printing to share it.',
+    'Nota para el médico (opcional)': 'Note for your doctor (optional)', 'Ej.: mareos por las mañanas, cambié la dosis hace 2 semanas': 'E.g. dizziness in the mornings, dose changed 2 weeks ago',
+    'Incluir medicamentos actuales': 'Include current medications', 'Generar reporte para el médico': 'Create report for your doctor', 'Usa el periodo elegido arriba. Contiene información médica privada.': 'Uses the period chosen above. Contains private medical information.',
+    'Presión y glucosa por fechas, lista para imprimir': 'Blood pressure and glucose by date, ready to print',
+    /* Reportes */
+    'Elige el periodo': 'Choose the period', 'Últimos 7 días': 'Last 7 days', 'Reporte y descargas': 'Report and downloads', 'Todo tu historial para el médico': 'Your full history for your doctor',
+    'Imprimir o guardar en PDF': 'Print or save as PDF', 'Abrir en Excel (CSV)': 'Open in Excel (CSV)', 'Ver o descargar en PDF': 'View or download as PDF', 'Archivo de respaldo': 'Backup file',
+
+    /* Complementos 2 */
+    'Avisos': 'Alerts', 'Inicio': 'Home', 'Control diario': 'Daily tracking', 'IZQ.': 'L', 'DER.': 'R', '○ Pendiente': '○ Pending', 'Pendiente': 'Pending', 'Tomado': 'Taken', '✓ Tomado': '✓ Taken',
+    'Consultas registradas': 'Saved visits', 'Documentos adjuntos': 'Attached documents', '＋ Registrar consulta o cita': '＋ Add visit or appointment', 'Todas': 'All', 'Todos': 'All', 'Otros': 'Other',
+    'Filtrar consultas': 'Filter appointments', 'Archivos': 'Files', 'Imagen': 'Imaging', 'Registrar nuevo examen': 'Add new exam', 'Programar un control': 'Schedule a check-up',
+    'Buscar examen o resultado...': 'Search exam or result...', 'Buscar examen o resultado': 'Search exam or result', 'Administrar consultas': 'Manage appointments',
+    'Medir': 'Measure', 'Mejorar': 'Improve', 'Ayuda': 'Help', '30 min antes': '30 min before', 'Pausar': 'Pause', 'Reproducir': 'Play', 'Continuar': 'Continue', 'Empezar reposo': 'Start rest',
+    'Mes': 'Month', 'Semana': 'Week', 'Paso siguiente': 'Next step', 'Paso anterior': 'Previous step',
+    'Paciente sin configurar': 'Patient not set up', 'Completa el perfil clínico para mostrar sus datos aquí.': 'Complete the clinical profile to show the details here.',
+    'Completa tu fecha de nacimiento en Mi perfil.': 'Add your date of birth in My profile.', 'No es un diagnóstico': 'Not a diagnosis', 'No es diagnóstico': 'Not a diagnosis', 'Depende de edad y actividad': 'Depends on age and activity',
+    'La clasificación se selecciona según edad y referencia clínica. No sustituye una valoración profesional.': 'The category is chosen by age and clinical reference. It does not replace a professional assessment.',
+    'Selecciona un registro del historial para ver su velocímetro.': 'Select a record in the history to see its gauge.', 'Aún no hay mediciones registradas': 'No readings saved yet',
+    '¡Cada vaso cuenta!': 'Every glass counts!', 'Sin horarios pendientes': 'No pending times', 'Agrega tus medicamentos': 'Add your medications',
+    'Programación y grupos de exámenes': 'Exam schedule and groups', 'Registra y guarda el perfil para generar el resumen del paciente.': 'Fill in and save the profile to build the patient summary.',
+    'La gráfica aparecerá cuando guardes mediciones.': 'The chart will appear once you save readings.', 'Aún no tienes medicamentos': 'You have no medications yet',
+    'Agrega el primero para organizar tus recordatorios.': 'Add the first one to organize your reminders.', '📎 Ver documento': '📎 View document', 'No hay consultas en esta sección': 'No appointments in this section',
+    'Registra una consulta o agrega la fecha de tu próxima cita.': 'Log a visit or add the date of your next appointment.', 'Promedio sistólica del día': 'Daily average systolic', 'Promedio diastólica del día': 'Daily average diastolic',
+    'Aún no hay un perfil guardado. Completa el formulario y selecciona «Guardar datos del paciente».': 'No profile saved yet. Fill in the form and choose “Save patient details”.',
+    'Sin mediciones registradas': 'No readings saved', 'Sin registros de glucosa': 'No glucose records', 'Sin medicamentos activos registrados': 'No active medications saved', 'No hay más datos del paciente.': 'No more patient details.',
+    'Tu privacidad': 'Your privacy', 'Todavía no hay resultados': 'No results yet', 'Toca “Registrar nuevo examen” para guardar el primero.': 'Tap “Add new exam” to save the first one.',
+    'Aún no tienes mediciones': 'You have no readings yet', 'Registra una en Presión y vuelve aquí.': 'Log one in Blood pressure and come back here.',
+    'Sin datos suficientes': 'Not enough data', 'Rango habitual en ayunas (70–99)': 'Usual fasting range (70–99)', 'Elevada en ayunas (≥126)': 'High when fasting (≥126)', 'Por debajo de 140 a las 2 h': 'Below 140 at 2 h',
+    'Elevada a las 2 h (140–199)': 'High at 2 h (140–199)', 'Elevada a las 2 h (≥200)': 'High at 2 h (≥200)', 'Interpretar según el momento y el plan clínico': 'Interpret by timing and your clinical plan',
+    'Registra mediciones para calcular la PAM promedio. La PAM aislada no diagnostica daño en órganos.': 'Log readings to calculate the average MAP. MAP alone does not diagnose organ damage.',
+    'Por debajo de 65 mmHg': 'Below 65 mmHg', 'Dentro de la referencia habitual para adultos (65–100)': 'Within the usual adult reference (65–100)',
+    'Es una referencia general de adultos, no un objetivo individual ni una garantía de que todo esté bien. Debe interpretarse junto con la presión sistólica, diastólica y el contexto clínico.': 'This is a general adult reference, not an individual target or a guarantee that all is well. It should be read together with systolic, diastolic and the clinical context.',
+    'Completa fecha de nacimiento': 'Add date of birth', 'Sin fecha de nacimiento no se asigna categoría por edad.': 'Without a date of birth no age category is assigned.', 'Requiere percentiles pediátricos': 'Needs pediatric percentiles',
+    'En menores de 13 años, la referencia AAP requiere edad, sexo y percentil de estatura. Esta versión no inventa percentiles: solicita interpretación profesional.': 'For children under 13, the AAP reference needs age, sex and height percentile. This version does not estimate percentiles: ask for a professional interpretation.',
+    'Referencia adolescente AAP: sistólica ≥140 o diastólica ≥90 mmHg. Repite correctamente y solicita valoración profesional.': 'AAP teen reference: systolic ≥140 or diastolic ≥90 mmHg. Repeat correctly and ask for a professional assessment.',
+    'Referencia adolescente AAP: sistólica 130–139 o diastólica 80–89 mmHg.': 'AAP teen reference: systolic 130–139 or diastolic 80–89 mmHg.', 'Presión elevada · AAP': 'Elevated blood pressure · AAP',
+    'Referencia AAP adolescente: sistólica 120–129 y diastólica menor de 80 mmHg.': 'AAP teen reference: systolic 120–129 and diastolic under 80 mmHg.', 'Dentro del rango de referencia AAP': 'Within the AAP reference range',
+    'Completa fecha de nacimiento en Mi perfil para elegir referencias.': 'Add your date of birth in My profile to choose references.', 'Tomas de hoy registradas': 'Today’s entries', '¡Buen seguimiento!': 'Great tracking!',
+    'Historial de consultas': 'Visit history', 'Todas mis consultas': 'All my appointments', 'Fecha de la consulta': 'Visit date', 'Sin observaciones registradas': 'No notes recorded',
+    '¿Eliminar esta sesión del mapa?': 'Delete this map session?', 'La segunda lectura debe ser posterior a la primera y estar separada aproximadamente por un minuto (máximo 10 minutos).': 'The second reading must come after the first, about one minute apart (10 minutes at most).',
+    'Revisa los valores de presión.': 'Check the blood pressure values.', 'Sesión del mapa guardada.': 'Map session saved.', 'Ingresa al menos una medición completa.': 'Enter at least one complete reading.',
+    'La fotografía debe pesar menos de 3 MB.': 'The photo must be under 3 MB.', 'No se pudo leer la fotografía.': 'The photo could not be read.', 'Escribe el nombre del paciente antes de guardar.': 'Enter the patient’s name before saving.',
+    'No se pudo guardar el perfil.': 'The profile could not be saved.', 'Notas médicas': 'Medical notes', 'Hipertensión diagnosticada': 'Diagnosed hypertension', 'Hipertensión en evaluación': 'Hypertension being evaluated',
+    '¡Has alcanzado tu meta configurada!': 'You reached your goal!', 'Sigue la indicación de tu receta': 'Follow your prescription', 'PRESIÓN ARTERIAL': 'BLOOD PRESSURE',
+    'Sistólica izquierda': 'Left systolic', 'Diastólica izquierda': 'Left diastolic', 'Sistólica derecha': 'Right systolic', 'Diastólica derecha': 'Right diastolic', 'Atención': 'Attention',
+    'Antes: sin café, ejercicio ni tabaco': 'Before: no coffee, exercise or smoking', 'Con la vejiga llena, la lectura sale más alta de lo real.': 'With a full bladder the reading comes out higher than it really is.',
+    'Siéntate bien': 'Sit properly', 'Espalda apoyada, pies planos en el piso y piernas sin cruzar. Descansa 5 minutos.': 'Back supported, feet flat on the floor and legs uncrossed. Rest 5 minutes.',
+    'Brazo a la altura del corazón': 'Arm at heart level', 'Apóyalo sobre una mesa, con la palma hacia arriba y sin ropa apretada.': 'Rest it on a table, palm up and with no tight clothing.',
+    'Coloca el brazalete': 'Put on the cuff', 'Sobre la piel, 2 a 3 cm arriba del pliegue del codo. Ni flojo ni muy apretado.': 'On bare skin, 2 to 3 cm above the elbow crease. Not loose, not too tight.',
+    'No hables ni uses el celular. Respira tranquilo mientras mide.': 'Don’t talk or use your phone. Breathe calmly while it measures.', 'Espera 1 minuto entre mediciones y anota las dos lecturas.': 'Wait 1 minute between readings and write down both.',
+    'Más baja de lo habitual': 'Lower than usual', 'Una presión baja es común en algunas personas. Si tienes mareo, visión borrosa o desmayos, consulta a tu médico.': 'Low blood pressure is common in some people. If you feel dizzy, have blurred vision or faint, see your doctor.',
+    'Muy bien. Mantén tus hábitos y sigue midiendo de vez en cuando.': 'Very good. Keep up your habits and keep measuring from time to time.', 'Está un poco alta. Cuida la sal, muévete y vuelve a medir en los próximos días.': 'It is a bit high. Watch your salt, move more and measure again in the next few days.',
+    'Hipertensión etapa 1': 'Stage 1 hypertension', 'Si se repite en varias mediciones, coméntalo con tu médico. Lleva tu registro de 7 días.': 'If it repeats over several readings, tell your doctor. Bring your 7-day log.',
+    'Hipertensión etapa 2': 'Stage 2 hypertension', 'Pide una cita pronto. Si ya tomas medicinas, no las cambies sin consultar.': 'Book an appointment soon. If you already take medicines, don’t change them without asking.',
+    'Descansa 5 minutos y mide otra vez. Si sigue así o tienes dolor de pecho, falta de aire, dolor de cabeza fuerte, visión borrosa o debilidad, busca atención urgente.': 'Rest 5 minutes and measure again. If it stays this high or you have chest pain, shortness of breath, a severe headache, blurred vision or weakness, get urgent care.',
+    '🎉 ¡Día completo! Tu corazón te lo agradece.': '🎉 Full day! Your heart thanks you.', '¡Vas muy bien, sigue así!': 'You’re doing great, keep it up!', 'Buen comienzo. Cada hábito suma.': 'Good start. Every habit counts.',
+    'Exámenes.': 'Exams.',
+
+    /* Complementos 3 */
+    'Asistente IA': 'AI assistant', 'Ninguna conocida': 'None known', 'Familiar (ejemplo)': 'Relative (sample)', 'Limpiar valores': 'Clear values',
+    'Lectura sobre umbral domiciliario · mmHg': 'Reading above home threshold · mmHg', 'PAM aproximada': 'Approx. MAP', 'Pulso registrado': 'Recorded pulse', '120–134: elevada': '120–134: elevated', '70–84: elevada': '70–84: elevated',
+    'Baja': 'Low', 'Alta': 'High', 'Referencia habitual*': 'Usual reference*', 'Referencia:': 'Reference:', 'Importante:': 'Important:', 'Configurar seguimiento': 'Set up tracking', 'Otra hora': 'Other time',
+    'Brazo utilizado': 'Arm used', 'Sesiones registradas': 'Sessions logged', 'SALUDPLUS · BIENESTAR': 'SALUDPLUS · WELLNESS', '1 litro': '1 liter', 'Personalizar': 'Custom', 'Contribuye al bienestar': 'Supports well-being',
+    'SALUDPLUS · CUIDADO DIARIO': 'SALUDPLUS · DAILY CARE', 'Nuevo medicamento': 'New medication', 'SALUDPLUS · SEGUIMIENTO': 'SALUDPLUS · FOLLOW-UP', 'Controles programados': 'Scheduled check-ups',
+    'Edad': 'Age', 'Padecimientos': 'Conditions', 'Medicamentos registrados': 'Saved medications', 'Horario': 'Time', 'No diagnosticada': 'Not diagnosed',
+    'Configura hasta dos horarios diarios. Puedes cambiarlos cuando lo necesites.': 'Set up to two daily times. You can change them whenever you need.', 'Primer recordatorio': 'First reminder', 'Segundo recordatorio': 'Second reminder',
+    'Recordatorio configurado': 'Reminder set', 'Administrar medicinas': 'Manage medications', 'Espalda': 'Back', 'Pies planos': 'Feet flat', '1.ª lectura': '1st reading', '2.ª lectura': '2nd reading',
+    'espera 1 minuto': 'wait 1 minute', '1 · Descansa 5 minutos': '1 · Rest 5 minutes', 'Reiniciar': 'Restart', 'Brazalete bien puesto': 'Cuff placed correctly', 'Mide dos veces': 'Measure twice', 'Muy alta': 'Very high',
+    'Respira lento 5 minutos: inhala 4 segundos, exhala 6.': 'Breathe slowly for 5 minutes: in for 4 seconds, out for 6.', 'Consejos que ayudan': 'Tips that help', 'No fumes': 'Don’t smoke', 'Entre fechas': 'Between dates',
+    'Secciones': 'Sections', 'Enviar': 'Send', 'Reiniciar reloj': 'Restart timer', 'Buscar examen': 'Search exam', 'Observaciones:': 'Notes:', 'Elevada': 'Elevated', 'Etapa 1': 'Stage 1', 'Etapa 2': 'Stage 2',
+    /* Expediente impreso */
+    'EXPEDIENTE MÉDICO Y CONTROL DE SALUD': 'MEDICAL RECORD AND HEALTH TRACKING', 'Historia clínica personal · Seguimiento de presión, glucosa, medicamentos, citas y exámenes': 'Personal medical history · Blood pressure, glucose, medications, appointments and exams',
+    'Fecha de emisión': 'Issue date', 'Datos del paciente': 'Patient details', 'Nombre completo': 'Full name', 'Correo': 'Email', 'Alergias:': 'Allergies:',
+    'Documento generado desde SaludPlus con datos ingresados por el paciente. No sustituye el expediente clínico oficial ni el criterio de un profesional de la salud. Contiene información médica privada.': 'Document created in SaludPlus from data entered by the patient. It does not replace the official medical record or the judgment of a health professional. Contains private medical information.',
+    /* Datos de ejemplo */
+    'Paciente de ejemplo': 'Sample patient', 'Hipertensión (ejemplo)': 'Hypertension (sample)', 'En reposo': 'At rest', 'Repetir en 3 meses': 'Repeat in 3 months', 'Con la cena': 'With dinner',
+    'Una tableta al día con agua': 'One tablet a day with water', 'Control de presión. Traer registro de tomas.': 'Blood pressure check. Bring your readings log.', 'Dra. Ejemplo · Cardiología': 'Dr. Example · Cardiology', 'Dra. Ejemplo': 'Dr. Example'
+  });
+
+  var MES = { ene: 'Jan', feb: 'Feb', mar: 'Mar', abr: 'Apr', may: 'May', jun: 'Jun', jul: 'Jul', ago: 'Aug', sep: 'Sep', sept: 'Sep', oct: 'Oct', nov: 'Nov', dic: 'Dec',
+    enero: 'January', febrero: 'February', marzo: 'March', abril: 'April', mayo: 'May', junio: 'June', julio: 'July', agosto: 'August', septiembre: 'September', octubre: 'October', noviembre: 'November', diciembre: 'December' };
+  var DIA = { dom: 'Sun', lun: 'Mon', mar: 'Tue', 'mié': 'Wed', mie: 'Wed', jue: 'Thu', vie: 'Fri', 'sáb': 'Sat', sab: 'Sat', domingo: 'Sunday', lunes: 'Monday', martes: 'Tuesday', 'miércoles': 'Wednesday', jueves: 'Thursday', viernes: 'Friday', 'sábado': 'Saturday' };
+  var mon = function (m) { return MES[m.toLowerCase().replace('.', '')] || m; };
+  /* Frases dentro de textos compuestos (con números o datos) */
+  var PAT = [
+    [/^(dom|lun|mar|mié|jue|vie|sáb|domingo|lunes|martes|miércoles|jueves|viernes|sábado)\.?,? (\d{1,2}) de ([a-zé]+)(?: de (\d{4}))?$/i, function (_, d, n, m, y) { return (DIA[d.toLowerCase()] || d) + ', ' + mon(m) + ' ' + n + (y ? ', ' + y : ''); }],
+    [/(\d{1,2}) de ([a-zé]+) de (\d{4})/gi, function (_, n, m, y) { return MES[m.toLowerCase()] ? mon(m) + ' ' + n + ', ' + y : _; }],
+    [/Consulta realizada el (\d{1,2}) ([a-z]+)\.? (\d{4})/gi, function (_, n, m, y) { return 'Visit on ' + mon(m) + ' ' + n + ', ' + y; }],
+    [/^(\d{1,2}) (ene|feb|mar|abr|may|jun|jul|ago|sep|sept|oct|nov|dic)\.? (\d{4})$/i, function (_, n, m, y) { return mon(m) + ' ' + n + ', ' + y; }],
+    [/^Paso (\d+)$/, 'Step $1'], [/^(\d+) sesiones$/, '$1 sessions'], [/^1 sesión$/, '1 session'], [/^(\d+) registro\(s\) en el período seleccionado\.$/, '$1 record(s) in the selected period.'], [/^Rango normal:/, 'Normal range:'],
+    [/^Faltan (\d+) días$/, 'In $1 days'], [/^Falta 1 día$/, 'In 1 day'],
+    [/^(\d+) de (\d+) listos$/, '$1 of $2 ready'], [/^(\d+) de (\d+)$/, '$1 of $2'],
+    [/^(\d+) \/ (\d+) días con registros$/, '$1 / $2 days with readings'],
+    [/No hay sesiones guardadas para ([\d/]+)\. Registra las lecturas de ese día para ver el mapa\./, 'No sessions saved for $1. Log that day’s readings to see the map.'],
+    [/(\d+) parámetros · (\d+) archivos · Ver detalle/, '$1 values · $2 files · View details'],
+    [/Cada año/g, 'Every year'], [/Cada (\d+) meses/g, 'Every $1 months'], [/Una vez/g, 'One time'], [/(\d+) exámenes/g, '$1 exams'], [/1 examen\b/g, '1 exam'],
+    [/^Vencido: /, 'Overdue: '], [/Exámenes rutinarios/g, 'Routine exams'], [/Control de diabetes/g, 'Diabetes control'], [/Exámenes por receta médica/g, 'Exams by prescription'],
+    [/Indicados en la última consulta/g, 'Ordered at the last visit'], [/Laboratorio de ejemplo/g, 'Sample laboratory'], [/Repetir en 3 meses/g, 'Repeat in 3 months'],
+    [/Paciente de ejemplo/g, 'Sample patient'], [/Dra\. Ejemplo/g, 'Dr. Example'], [/Familiar \(ejemplo\)/g, 'Relative (sample)'], [/Cardiología/g, 'Cardiology'], [/Hipertensión \(ejemplo\)/g, 'Hypertension (sample)'],
+    [/Control de presión\. Traer registro de tomas\./g, 'Blood pressure check. Bring your readings log.'], [/Una tableta al día con agua/g, 'One tablet a day with water'], [/Con la cena/g, 'With dinner'],
+    [/(\d+) años/g, '$1 years'], [/Sexo no indicado/g, 'Sex not specified'], [/Brazo Derecho/gi, 'Right arm'], [/Brazo Izquierdo/gi, 'Left arm'],
+    [/En adultos, ESC 2024 utiliza ≥135 sistólica y\/o ≥85 diastólica como umbral de hipertensión domiciliaria basado en promedios\. Esta es una lectura individual y no establece diagnóstico\./g, 'In adults, ESC 2024 uses ≥135 systolic and/or ≥85 diastolic as the home hypertension threshold, based on averages. This is a single reading and does not establish a diagnosis.'],
+    [/Lectura: /g, 'Reading: '], [/PAM aprox\.:/g, 'Approx. MAP:'], [/Izq\. /g, 'L '], [/Der\. /g, 'R '], [/Diferencia sistólica/g, 'Systolic difference'],
+    [/Referencia: brazo /g, 'Reference: '], [/\bIzquierdo\b/g, 'Left'], [/\bDerecho\b/g, 'Right'], [/\bpulso\b/g, 'pulse'],
+    [/^Sistólica: /, 'Systolic: '], [/^Diastólica: /, 'Diastolic: '], [/^Medicamento: /, 'Medication: '], [/En reposo/g, 'At rest'],
+    [/2 horas después de comer/g, '2 hours after eating'], [/\bAyunas\b/g, 'Fasting'], [/Antes de comer/g, 'Before eating'], [/Antes de dormir/g, 'Before bed'],
+    [/(\d+) mediciones/g, '$1 readings'], [/(\d+) medición\b/g, '$1 reading']
+  ];
+  var SP = /[áéíóúñ¿¡]|\b(de|del|la|las|los|el|para|con|por|sin|una|y|en|años|Izquierdo|Derecho|pulso|Ayunas|Faltan|Falta|Cada|Vencido|mediciones|Paso|Medicamento|sesiones|sesión|registro|Rango|ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic|dom|lun|jue|vie)\b/i;
+  function trString(s) {
+    var k = s.trim(); if (!k) return null;
+    if (Object.prototype.hasOwnProperty.call(EN, k)) return EN[k] === k ? null : s.replace(k, EN[k]);
+    if (!SP.test(k)) return null;
+    var out = k;
+    for (var i = 0; i < PAT.length; i++) out = out.replace(PAT[i][0], PAT[i][1]);
+    return out !== k ? s.replace(k, out) : null;
+  }
+  var orig = new WeakMap(), origAttr = new WeakMap(), ATTRS = ['aria-label', 'title', 'placeholder'];
+  var skip = function (el) { return !el || /^(SCRIPT|STYLE|TEXTAREA|OPTION)$/.test(el.tagName) || el.closest('[data-no-i18n],.chat-log'); };
+  function walk(root, fn) {
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), n;
+    var list = []; while ((n = w.nextNode())) list.push(n);
+    list.forEach(fn);
+  }
+  function toEN(root) {
+    root = root || document.body;
+    walk(root, function (n) {
+      if (skip(n.parentElement)) return;
+      var cur = n.nodeValue, o = orig.get(n); if (o && o.en === cur) return;
+      var tr = trString(cur); if (tr != null && tr !== cur) { var pe = n.parentElement; if (pe.hasAttribute('data-i18n') && pe.dataset.es === undefined) pe.dataset.es = pe.textContent.trim(); orig.set(n, { es: cur, en: tr }); n.nodeValue = tr; }
+    });
+    (root.querySelectorAll ? root : document).querySelectorAll('[aria-label],[title],[placeholder]').forEach(function (el) {
+      var m = origAttr.get(el) || {};
+      ATTRS.forEach(function (a) { var v = el.getAttribute(a); if (!v || (m[a] && m[a].en === v)) return; var tr = trString(v); if (tr != null && tr !== v) { if (a === 'placeholder' && el.dataset.esPh === undefined) el.dataset.esPh = v; m[a] = { es: v, en: tr }; el.setAttribute(a, tr); } });
+      origAttr.set(el, m);
+    });
+  }
+  function toES() {
+    walk(document.body, function (n) { var o = orig.get(n); if (o && n.nodeValue === o.en) { n.nodeValue = o.es; } orig.delete(n); });
+    document.querySelectorAll('[aria-label],[title],[placeholder]').forEach(function (el) { var m = origAttr.get(el); if (!m) return; ATTRS.forEach(function (a) { if (m[a] && el.getAttribute(a) === m[a].en) el.setAttribute(a, m[a].es); }); origAttr.delete(el); });
+  }
+  var pending = false, busy = false;
+  var mo = new MutationObserver(function () {
+    if (busy || pending || currentLang !== 'en') return; pending = true;
+    requestAnimationFrame(function () { pending = false; busy = true; try { toEN(document.body); } finally { mo.takeRecords(); busy = false; } });
+  });
+  function sync() { busy = true; try { if (currentLang === 'en') toEN(document.body); else toES(); } finally { mo.takeRecords(); busy = false; } }
+  var _apply = window.applyLanguage;
+  if (typeof _apply === 'function') window.applyLanguage = function (l) { var r = _apply.apply(this, arguments); sync(); return r; };
+  window.spTranslateEN = trString;
+  function start() { mo.observe(document.body, { childList: true, subtree: true, characterData: true }); sync(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+
 /* SaludPlus · Panel de salud (presión + glucosa por fechas) y reporte para el médico */
 (function () {
   'use strict';
@@ -6513,9 +6796,11 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
   var R = function (n) { return Math.round(n); };
   var avg = function (a) { return a.length ? a.reduce(function (s, v) { return s + v; }, 0) / a.length : null; };
   var f1 = function (n) { return n == null ? '—' : String(Math.round(n * 10) / 10).replace('.0', ''); };
-  var DOW = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+  var isEN = function () { return typeof currentLang !== 'undefined' && currentLang === 'en'; };
+  var L = function (es, en) { return isEN() ? en : es; };
+  var DOW = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'], DOW_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var shortDate = function (iso) { var p = iso.split('-'); return p[2] + '/' + p[1]; };
-  var longDate = function (iso) { var d = new Date(iso + 'T00:00:00'); return DOW[d.getDay()] + ' ' + shortDate(iso) + '/' + iso.slice(2, 4); };
+  var longDate = function (iso) { var d = new Date(iso + 'T00:00:00'); return (isEN() ? DOW_EN : DOW)[d.getDay()] + ' ' + shortDate(iso) + '/' + iso.slice(2, 4); };
 
   /* ---------- Datos ---------- */
   function currentRange() {
@@ -6542,19 +6827,21 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
   }
   function bpCat(s, d) {
     if (s >= 180 || d >= 120) return { k: 'crisis', label: 'Crisis' };
-    if (s >= 140 || d >= 90) return { k: 's2', label: 'Etapa 2' };
-    if (s >= 130 || d >= 80) return { k: 's1', label: 'Etapa 1' };
-    if (s >= 120) return { k: 'elev', label: 'Elevada' };
+    if (s >= 140 || d >= 90) return { k: 's2', label: L('Etapa 2', 'Stage 2') };
+    if (s >= 130 || d >= 80) return { k: 's1', label: L('Etapa 1', 'Stage 1') };
+    if (s >= 120) return { k: 'elev', label: L('Elevada', 'Elevated') };
     return { k: 'ok', label: 'Normal' };
   }
   function glCat(v, when) {
     var s = glucoseStatus(v, when);
-    if (s.key === 'low') return { k: 'low', label: 'Baja' };
-    if (s.key === 'usual') return { k: 'ok', label: 'En rango' };
-    if (s.key === 'elevated') return { k: 'elev', label: 'Elevada' };
-    if (s.key === 'high') return { k: 's2', label: 'Alta' };
-    return { k: 'ctx', label: 'Según contexto' };
+    if (s.key === 'low') return { k: 'low', label: L('Baja', 'Low') };
+    if (s.key === 'usual') return { k: 'ok', label: L('En rango', 'In range') };
+    if (s.key === 'elevated') return { k: 'elev', label: L('Elevada', 'Elevated') };
+    if (s.key === 'high') return { k: 's2', label: L('Alta', 'High') };
+    return { k: 'ctx', label: L('Según contexto', 'By context') };
   }
+  var WHEN_EN = { 'Ayunas': 'Fasting', 'Antes de comer': 'Before eating', '2 horas después de comer': '2 hours after eating', 'Antes de dormir': 'Before bed', 'Otro': 'Other' };
+  var whenTxt = function (w) { return isEN() && WHEN_EN[w] ? WHEN_EN[w] : (w || ''); };
   var pill = function (c) { return '<span class="pn-pill pn-' + c.k + '">' + esc(c.label) + '</span>'; };
   function stats(bp, gl) {
     var s = bp.map(function (x) { return x.sys; }), d = bp.map(function (x) { return x.dia; }), pl = bp.map(function (x) { return x.pulse; }).filter(function (v) { return v != null; });
@@ -6608,8 +6895,8 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
     var all = bp.map(function (x) { return x.sys; }).concat(bp.map(function (x) { return x.dia; }));
     var lo = Math.min(60, Math.floor((Math.min.apply(0, all) - 8) / 10) * 10), hi = Math.max(140, Math.ceil((Math.max.apply(0, all) + 8) / 10) * 10);
     return chart({ key: 'bp', from: r.from, to: r.to, yMin: lo, yMax: hi, step: hi - lo > 100 ? 20 : 20, refs: [120, 80], print: print, w: print ? 520 : 340, h: print ? 160 : 210,
-      aria: 'Gráfica de presión arterial. ' + bp.length + ' mediciones entre ' + shortDate(r.from) + ' y ' + shortDate(r.to) + '.',
-      label: function (p) { return shortDate(p.date) + ' ' + p.time + ': ' + p.sys + ' sobre ' + p.dia + ' mmHg'; },
+      aria: L('Gráfica de presión arterial. ' + bp.length + ' mediciones entre ' + shortDate(r.from) + ' y ' + shortDate(r.to) + '.', 'Blood pressure chart. ' + bp.length + ' readings from ' + shortDate(r.from) + ' to ' + shortDate(r.to) + '.'),
+      label: function (p) { return shortDate(p.date) + ' ' + p.time + ': ' + p.sys + L(' sobre ', ' over ') + p.dia + ' mmHg'; },
       series: [
         { id: 'sys', pts: bp, val: function (p) { return p.sys; }, color: '#2a56e8', mark: function () { return 'ci'; } },
         { id: 'dia', pts: bp, val: function (p) { return p.dia; }, color: '#0e7f86', dash: '5 4', mark: function () { return 'sq'; } }
@@ -6619,8 +6906,8 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
     var v = gl.map(function (x) { return x.value; });
     var lo = Math.min(60, Math.floor((Math.min.apply(0, v) - 10) / 10) * 10), hi = Math.max(180, Math.ceil((Math.max.apply(0, v) + 10) / 10) * 10);
     return chart({ key: 'gl', from: r.from, to: r.to, yMin: lo, yMax: hi, step: 40, bands: [[70, 99, '#cdeedd']], print: print, w: print ? 520 : 340, h: print ? 160 : 210,
-      aria: 'Gráfica de glucosa. ' + gl.length + ' mediciones entre ' + shortDate(r.from) + ' y ' + shortDate(r.to) + '.',
-      label: function (p) { return shortDate(p.date) + ' ' + p.time + ': ' + p.value + ' mg/dL ' + p.when; },
+      aria: L('Gráfica de glucosa. ' + gl.length + ' mediciones entre ' + shortDate(r.from) + ' y ' + shortDate(r.to) + '.', 'Glucose chart. ' + gl.length + ' readings from ' + shortDate(r.from) + ' to ' + shortDate(r.to) + '.'),
+      label: function (p) { return shortDate(p.date) + ' ' + p.time + ': ' + p.value + ' mg/dL ' + whenTxt(p.when); },
       series: [{ id: 'g', pts: gl, val: function (p) { return p.value; }, color: '#2a56e8', sw: 1.6,
         mark: function (p) { var k = glCat(p.value, p.when).k; return k === 'low' ? 'tr' : (k === 'elev' || k === 's2') ? 'di' : 'ci'; } }] });
   }
@@ -6628,8 +6915,8 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
   /* ---------- Render del panel ---------- */
   function kpiTrend(cur, prev, unit, lowerBetter) {
     if (cur == null || prev == null) return '';
-    var d = R(cur) - R(prev); if (d === 0) return '<span class="pn-trend">= Igual que el periodo anterior</span>';
-    return '<span class="pn-trend">' + (d > 0 ? '▲ +' : '▼ ') + d + ' ' + unit + ' vs periodo anterior</span>';
+    var d = R(cur) - R(prev); if (d === 0) return '<span class="pn-trend">' + L('= Igual que el periodo anterior', '= Same as previous period') + '</span>';
+    return '<span class="pn-trend">' + (d > 0 ? '▲ +' : '▼ ') + d + ' ' + unit + L(' vs periodo anterior', ' vs previous period') + '</span>';
   }
   function renderPanel() {
     if (!$p('panel')) return;
@@ -6640,34 +6927,34 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
     var pst = stats(bpIn(pr), glIn(pr));
     document.querySelectorAll('#panel .pn-chip').forEach(function (b) { b.classList.toggle('on', String(b.dataset.days) === String(S.days)); b.setAttribute('aria-pressed', String(b.dataset.days) === String(S.days)); });
     $p('pnFrom').value = r.from; $p('pnTo').value = r.to;
-    $p('pnRangeInfo').textContent = fmtDate(r.from) + ' al ' + fmtDate(r.to) + ' · ' + len + (len === 1 ? ' día' : ' días') + ' · ' + st.bp.n + ' de presión · ' + st.gl.n + ' de glucosa';
+    $p('pnRangeInfo').textContent = L(fmtDate(r.from) + ' al ' + fmtDate(r.to) + ' · ' + len + (len === 1 ? ' día' : ' días') + ' · ' + st.bp.n + ' de presión · ' + st.gl.n + ' de glucosa', fmtDate(r.from) + ' to ' + fmtDate(r.to) + ' · ' + len + (len === 1 ? ' day' : ' days') + ' · ' + st.bp.n + ' blood pressure · ' + st.gl.n + ' glucose');
 
     var bpC = st.bp.n ? bpCat(st.bp.s, st.bp.d) : null, glC = st.gl.n ? glCat(st.gl.a, st.gl.fast != null && st.gl.nFast === st.gl.n ? 'Ayunas' : '') : null;
     $p('pnKpis').innerHTML =
-      '<article class="pn-kpi pn-kpi-bp"><span class="pn-kl">Presión promedio</span>' + (st.bp.n ?
-        '<b class="pn-kv">' + R(st.bp.s) + '<i>/</i>' + R(st.bp.d) + '<small> mmHg</small></b>' + pill(bpC) + '<span class="pn-km">' + st.bp.n + ' mediciones · pulso ' + (st.bp.p ? R(st.bp.p) + ' lpm' : '—') + '</span>' + kpiTrend(st.bp.s, pst.bp.s, 'mmHg')
-        : '<b class="pn-kv pn-none">—</b><span class="pn-km">Sin mediciones en este periodo</span>') + '</article>' +
-      '<article class="pn-kpi pn-kpi-gl"><span class="pn-kl">Glucosa promedio</span>' + (st.gl.n ?
-        '<b class="pn-kv">' + R(st.gl.a) + '<small> mg/dL</small></b>' + (st.gl.fast != null ? pill(glCat(st.gl.fast, 'Ayunas')) : pill({ k: 'ctx', label: 'Según contexto' })) + '<span class="pn-km">' + st.gl.n + ' mediciones' + (st.gl.fast != null ? ' · ayunas ' + R(st.gl.fast) : '') + '</span>' + kpiTrend(st.gl.a, pst.gl.a, 'mg/dL')
-        : '<b class="pn-kv pn-none">—</b><span class="pn-km">Sin mediciones en este periodo</span>') + '</article>';
+      '<article class="pn-kpi pn-kpi-bp"><span class="pn-kl">' + L('Presión promedio', 'Average blood pressure') + '</span>' + (st.bp.n ?
+        '<b class="pn-kv">' + R(st.bp.s) + '<i>/</i>' + R(st.bp.d) + '<small> mmHg</small></b>' + pill(bpC) + '<span class="pn-km">' + st.bp.n + L(' mediciones · pulso ', ' readings · pulse ') + (st.bp.p ? R(st.bp.p) + L(' lpm', ' bpm') : '—') + '</span>' + kpiTrend(st.bp.s, pst.bp.s, 'mmHg')
+        : '<b class="pn-kv pn-none">—</b><span class="pn-km">' + L('Sin mediciones en este periodo', 'No readings in this period') + '</span>') + '</article>' +
+      '<article class="pn-kpi pn-kpi-gl"><span class="pn-kl">' + L('Glucosa promedio', 'Average glucose') + '</span>' + (st.gl.n ?
+        '<b class="pn-kv">' + R(st.gl.a) + '<small> mg/dL</small></b>' + (st.gl.fast != null ? pill(glCat(st.gl.fast, 'Ayunas')) : pill({ k: 'ctx', label: L('Según contexto', 'By context') })) + '<span class="pn-km">' + st.gl.n + L(' mediciones', ' readings') + (st.gl.fast != null ? L(' · ayunas ', ' · fasting ') + R(st.gl.fast) : '') + '</span>' + kpiTrend(st.gl.a, pst.gl.a, 'mg/dL')
+        : '<b class="pn-kv pn-none">—</b><span class="pn-km">' + L('Sin mediciones en este periodo', 'No readings in this period') + '</span>') + '</article>';
 
-    var empty = function (what, go) { return '<div class="pn-empty"><p>No hay mediciones de ' + what + ' en este periodo.</p><button type="button" class="pn-btn pn-btn-ghost" onclick="showView(\'' + go + '\')">Registrar ' + what + '</button></div>'; };
-    $p('pnBpChart').innerHTML = bp.length ? bpChart(bp, r) : empty('presión', 'presion');
-    $p('pnGlChart').innerHTML = gl.length ? glChart(gl, r) : empty('glucosa', 'glucosa');
+    var empty = function (what, go) { return '<div class="pn-empty"><p>' + L('No hay mediciones de ' + what + ' en este periodo.', 'No ' + what + ' readings in this period.') + '</p><button type="button" class="pn-btn pn-btn-ghost" onclick="showView(\'' + go + '\')">' + L('Registrar ', 'Log ') + what + '</button></div>'; };
+    $p('pnBpChart').innerHTML = bp.length ? bpChart(bp, r) : empty(L('presión', 'blood pressure'), 'presion');
+    $p('pnGlChart').innerHTML = gl.length ? glChart(gl, r) : empty(L('glucosa', 'glucose'), 'glucosa');
     $p('pnBpRead').hidden = !bp.length; $p('pnGlRead').hidden = !gl.length;
-    $p('pnBpRead').textContent = 'Toca un punto para ver la medición.'; $p('pnGlRead').textContent = 'Toca un punto para ver la medición.';
+    $p('pnBpRead').textContent = $p('pnGlRead').textContent = L('Toca un punto para ver la medición.', 'Tap a point to see the reading.');
     document.querySelector('#panel .pn-legend').hidden = !bp.length; document.querySelectorAll('#panel .pn-legend')[1].hidden = !gl.length;
-    $p('pnBpSum').textContent = bp.length ? 'Resumen: ' + bp.length + ' mediciones. Sistólica entre ' + st.bp.sMin + ' y ' + st.bp.sMax + ', diastólica entre ' + st.bp.dMin + ' y ' + st.bp.dMax + ' mmHg. Se muestra el brazo con la lectura más alta.' : '';
-    $p('pnGlSum').textContent = gl.length ? 'Resumen: ' + gl.length + ' mediciones. Mínima ' + st.gl.min + ', máxima ' + st.gl.max + ' mg/dL.' : '';
+    $p('pnBpSum').textContent = bp.length ? L('Resumen: ' + bp.length + ' mediciones. Sistólica entre ' + st.bp.sMin + ' y ' + st.bp.sMax + ', diastólica entre ' + st.bp.dMin + ' y ' + st.bp.dMax + ' mmHg. Se muestra el brazo con la lectura más alta.', 'Summary: ' + bp.length + ' readings. Systolic from ' + st.bp.sMin + ' to ' + st.bp.sMax + ', diastolic from ' + st.bp.dMin + ' to ' + st.bp.dMax + ' mmHg. The arm with the higher reading is shown.') : '';
+    $p('pnGlSum').textContent = gl.length ? L('Resumen: ' + gl.length + ' mediciones. Mínima ' + st.gl.min + ', máxima ' + st.gl.max + ' mg/dL.', 'Summary: ' + gl.length + ' readings. Lowest ' + st.gl.min + ', highest ' + st.gl.max + ' mg/dL.') : '';
 
     var seg = function (items, total) {
       return '<div class="pn-bar" role="img" aria-label="' + items.map(function (i) { return i[0] + ' ' + i[1]; }).join(', ') + '">' + items.map(function (i) { return i[1] ? '<i class="pn-' + i[2] + '" style="width:' + (i[1] / total * 100) + '%"></i>' : ''; }).join('') + '</div>' +
         '<ul class="pn-keys">' + items.map(function (i) { return '<li><i class="pn-' + i[2] + '"></i><span>' + i[0] + '</span><b>' + i[1] + '</b><em>' + (total ? R(i[1] / total * 100) : 0) + '%</em></li>'; }).join('') + '</ul>';
     };
     var d = '';
-    d += '<h4 class="pn-sub">Presión arterial</h4>' + (st.bp.n ? seg([['Normal', st.bp.cats.ok, 'ok'], ['Elevada', st.bp.cats.elev, 'elev'], ['Etapa 1', st.bp.cats.s1, 's1'], ['Etapa 2', st.bp.cats.s2, 's2'], ['Crisis', st.bp.cats.crisis, 'crisis']], st.bp.n) : '<p class="pn-p">Sin datos.</p>');
-    d += '<h4 class="pn-sub">Glucosa</h4>' + (st.gl.n ? seg([['En rango', st.gl.cats.ok, 'ok'], ['Elevada', st.gl.cats.elev, 'elev'], ['Alta', st.gl.cats.s2, 's2'], ['Baja', st.gl.cats.low, 'low'], ['Según contexto', st.gl.cats.ctx, 'ctx']], st.gl.n) : '<p class="pn-p">Sin datos.</p>');
-    d += '<p class="pn-fine">Clasificación orientativa para adultos (AHA para presión; referencias en ayunas y 2 h después de comer para glucosa). No es un diagnóstico.</p>';
+    d += '<h4 class="pn-sub">' + L('Presión arterial', 'Blood pressure') + '</h4>' + (st.bp.n ? seg([['Normal', st.bp.cats.ok, 'ok'], [L('Elevada', 'Elevated'), st.bp.cats.elev, 'elev'], [L('Etapa 1', 'Stage 1'), st.bp.cats.s1, 's1'], [L('Etapa 2', 'Stage 2'), st.bp.cats.s2, 's2'], ['Crisis', st.bp.cats.crisis, 'crisis']], st.bp.n) : '<p class="pn-p">' + L('Sin datos.', 'No data.') + '</p>');
+    d += '<h4 class="pn-sub">' + L('Glucosa', 'Glucose') + '</h4>' + (st.gl.n ? seg([[L('En rango', 'In range'), st.gl.cats.ok, 'ok'], [L('Elevada', 'Elevated'), st.gl.cats.elev, 'elev'], [L('Alta', 'High'), st.gl.cats.s2, 's2'], [L('Baja', 'Low'), st.gl.cats.low, 'low'], [L('Según contexto', 'By context'), st.gl.cats.ctx, 'ctx']], st.gl.n) : '<p class="pn-p">' + L('Sin datos.', 'No data.') + '</p>');
+    d += '<p class="pn-fine">' + L('Clasificación orientativa para adultos (AHA para presión; referencias en ayunas y 2 h después de comer para glucosa). No es un diagnóstico.', 'Guidance classification for adults (AHA for blood pressure; fasting and 2-hours-after-eating references for glucose). Not a diagnosis.') + '</p>';
     $p('pnDist').innerHTML = d;
     renderLog(bp, gl);
   }
@@ -6678,59 +6965,63 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
     $p('pnLog').innerHTML = dates.length ? shown.map(function (dt) {
       var e = by[dt];
       return '<div class="pn-day"><div class="pn-date">' + esc(longDate(dt)) + '</div><div class="pn-rows">' +
-        e.bp.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-bp" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><b>' + x.sys + '/' + x.dia + '</b><small>mmHg' + (x.pulse ? ' · ' + R(x.pulse) + ' lpm' : '') + '</small>' + pill(bpCat(x.sys, x.dia)) + '</div>'; }).join('') +
-        e.gl.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-gl" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><b>' + x.value + '</b><small>mg/dL' + (x.when ? ' · ' + esc(x.when.toLowerCase()) : '') + '</small>' + pill(glCat(x.value, x.when)) + '</div>'; }).join('') + '</div></div>';
-    }).join('') : '<div class="pn-empty"><p>Aún no hay mediciones en este periodo.</p></div>';
-    var more = $p('pnMore'); more.hidden = dates.length <= 7; more.textContent = logAll ? 'Ver menos' : 'Ver todas las fechas (' + dates.length + ')';
+        e.bp.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-bp" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><b>' + x.sys + '/' + x.dia + '</b><small>mmHg' + (x.pulse ? ' · ' + R(x.pulse) + L(' lpm', ' bpm') : '') + '</small>' + pill(bpCat(x.sys, x.dia)) + '</div>'; }).join('') +
+        e.gl.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-gl" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><b>' + x.value + '</b><small>mg/dL' + (x.when ? ' · ' + esc(whenTxt(x.when).toLowerCase()) : '') + '</small>' + pill(glCat(x.value, x.when)) + '</div>'; }).join('') + '</div></div>';
+    }).join('') : '<div class="pn-empty"><p>' + L('Aún no hay mediciones en este periodo.', 'No readings in this period yet.') + '</p></div>';
+    var more = $p('pnMore'); more.hidden = dates.length <= 7; more.textContent = logAll ? L('Ver menos', 'Show less') : L('Ver todas las fechas (', 'View all dates (') + dates.length + ')';
   }
 
   /* ---------- Reporte para el médico ---------- */
   function buildDoctorReport() {
     var r = currentRange(), bp = bpIn(r), gl = glIn(r), st = stats(bp, gl), p = data.patient || {}, v = function (x) { return esc(x || '—'); };
-    var age = ''; if (p.birthDate) { var b = new Date(p.birthDate + 'T00:00:00'), n = new Date(), y = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) y--; if (y >= 0 && y < 130) age = ' (' + y + ' años)'; }
-    var now = new Date(), stamp = now.toLocaleDateString('es-SV', { day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + now.toLocaleTimeString('es-SV', { hour: '2-digit', minute: '2-digit' });
+    var loc = isEN() ? 'en-US' : 'es-SV';
+    var age = ''; if (p.birthDate) { var b = new Date(p.birthDate + 'T00:00:00'), n = new Date(), y = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) y--; if (y >= 0 && y < 130) age = ' (' + y + L(' años)', ' years)'); }
+    var now = new Date(), stamp = now.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' }) + ', ' + now.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit' });
     var note = ($p('pnNote').value || '').trim();
-    var alerts = (p.medAllergies || p.otherAllergies) ? '<div class="pr-alert"><b>Alergias:</b> ' + esc([p.medAllergies, p.otherAllergies].filter(Boolean).join(' · ')) + '</div>' : '';
+    var alerts = (p.medAllergies || p.otherAllergies) ? '<div class="pr-alert"><b>' + L('Alergias:', 'Allergies:') + '</b> ' + esc([p.medAllergies, p.otherAllergies].filter(Boolean).join(' · ')) + '</div>' : '';
     var cells = function (arr) { return arr.map(function (c) { return '<div class="dr-cell"><span>' + c[0] + '</span><b>' + c[1] + '</b>' + (c[2] ? '<small>' + c[2] + '</small>' : '') + '</div>'; }).join(''); };
     var pct = function (a, t) { return t ? R(a / t * 100) + '%' : '—'; };
+    var rd = L(' lecturas', ' readings'), ms = L(' mediciones', ' readings');
+    var s1n = st.bp.cats.s1 + st.bp.cats.s2 + st.bp.cats.crisis, s2n = st.bp.cats.s2 + st.bp.cats.crisis;
     var bpSum = cells([
-      ['Mediciones', st.bp.n, st.bp.days + ' días con registro'],
-      ['Promedio', st.bp.n ? R(st.bp.s) + '/' + R(st.bp.d) + ' mmHg' : '—', st.bp.n ? bpCat(st.bp.s, st.bp.d).label : ''],
-      ['Pulso promedio', st.bp.p ? R(st.bp.p) + ' lpm' : '—', ''],
-      ['Sistólica mín – máx', st.bp.n ? st.bp.sMin + ' – ' + st.bp.sMax : '—', 'mmHg'],
-      ['Diastólica mín – máx', st.bp.n ? st.bp.dMin + ' – ' + st.bp.dMax : '—', 'mmHg'],
-      ['Lecturas normales', pct(st.bp.cats.ok, st.bp.n), st.bp.cats.ok + ' de ' + st.bp.n],
-      ['≥130/80 (Etapa 1 o más)', pct(st.bp.cats.s1 + st.bp.cats.s2 + st.bp.cats.crisis, st.bp.n), (st.bp.cats.s1 + st.bp.cats.s2 + st.bp.cats.crisis) + ' lecturas'],
-      ['≥140/90 (Etapa 2 o más)', pct(st.bp.cats.s2 + st.bp.cats.crisis, st.bp.n), (st.bp.cats.s2 + st.bp.cats.crisis) + ' lecturas']
+      [L('Mediciones', 'Readings'), st.bp.n, st.bp.days + L(' días con registro', ' days with readings')],
+      [L('Promedio', 'Average'), st.bp.n ? R(st.bp.s) + '/' + R(st.bp.d) + ' mmHg' : '—', st.bp.n ? bpCat(st.bp.s, st.bp.d).label : ''],
+      [L('Pulso promedio', 'Average pulse'), st.bp.p ? R(st.bp.p) + L(' lpm', ' bpm') : '—', ''],
+      [L('Sistólica mín – máx', 'Systolic min – max'), st.bp.n ? st.bp.sMin + ' – ' + st.bp.sMax : '—', 'mmHg'],
+      [L('Diastólica mín – máx', 'Diastolic min – max'), st.bp.n ? st.bp.dMin + ' – ' + st.bp.dMax : '—', 'mmHg'],
+      [L('Lecturas normales', 'Normal readings'), pct(st.bp.cats.ok, st.bp.n), st.bp.cats.ok + L(' de ', ' of ') + st.bp.n],
+      [L('≥130/80 (Etapa 1 o más)', '≥130/80 (Stage 1 or higher)'), pct(s1n, st.bp.n), s1n + rd],
+      [L('≥140/90 (Etapa 2 o más)', '≥140/90 (Stage 2 or higher)'), pct(s2n, st.bp.n), s2n + rd]
     ]);
     var glSum = cells([
-      ['Mediciones', st.gl.n, st.gl.days + ' días con registro'],
-      ['Promedio general', st.gl.n ? R(st.gl.a) + ' mg/dL' : '—', ''],
-      ['Promedio en ayunas', st.gl.fast != null ? R(st.gl.fast) + ' mg/dL' : '—', st.gl.nFast + ' mediciones'],
-      ['Promedio 2 h después de comer', st.gl.post != null ? R(st.gl.post) + ' mg/dL' : '—', st.gl.nPost + ' mediciones'],
-      ['Mínima – máxima', st.gl.n ? st.gl.min + ' – ' + st.gl.max : '—', 'mg/dL'],
-      ['En rango', pct(st.gl.cats.ok, st.gl.n - st.gl.cats.ctx), 'de las clasificables'],
-      ['Elevadas o altas', String(st.gl.cats.elev + st.gl.cats.s2), 'lecturas'],
-      ['Bajas (&lt;70)', String(st.gl.cats.low), 'lecturas']
+      [L('Mediciones', 'Readings'), st.gl.n, st.gl.days + L(' días con registro', ' days with readings')],
+      [L('Promedio general', 'Overall average'), st.gl.n ? R(st.gl.a) + ' mg/dL' : '—', ''],
+      [L('Promedio en ayunas', 'Fasting average'), st.gl.fast != null ? R(st.gl.fast) + ' mg/dL' : '—', st.gl.nFast + ms],
+      [L('Promedio 2 h después de comer', 'Average 2 h after eating'), st.gl.post != null ? R(st.gl.post) + ' mg/dL' : '—', st.gl.nPost + ms],
+      [L('Mínima – máxima', 'Lowest – highest'), st.gl.n ? st.gl.min + ' – ' + st.gl.max : '—', 'mg/dL'],
+      [L('En rango', 'In range'), pct(st.gl.cats.ok, st.gl.n - st.gl.cats.ctx), L('de las clasificables', 'of classifiable readings')],
+      [L('Elevadas o altas', 'Elevated or high'), String(st.gl.cats.elev + st.gl.cats.s2), rd],
+      [L('Bajas (&lt;70)', 'Low (&lt;70)'), String(st.gl.cats.low), rd]
     ]);
-    var bpRows = bp.map(function (x) { var c = bpCat(x.sys, x.dia); return '<tr><td>' + esc(fmtDate(x.date)) + '</td><td>' + esc(x.time || '—') + '</td><td class="num"><b>' + x.sys + '</b></td><td class="num"><b>' + x.dia + '</b></td><td class="num">' + (x.pulse ? R(x.pulse) : '—') + '</td><td>' + esc(x.arm) + '</td><td><span class="dr-tag dr-' + c.k + '">' + c.label + '</span></td><td>' + esc(x.notes) + '</td></tr>'; }).join('');
-    var glRows = gl.map(function (x) { var c = glCat(x.value, x.when); return '<tr><td>' + esc(fmtDate(x.date)) + '</td><td>' + esc(x.time || '—') + '</td><td class="num"><b>' + x.value + '</b></td><td>' + esc(x.when || '—') + '</td><td><span class="dr-tag dr-' + c.k + '">' + c.label + '</span></td><td>' + esc(x.notes) + '</td></tr>'; }).join('');
-    var meds = ($p('pnMeds').checked && data.meds && data.meds.length) ? '<section class="dr-sec"><h2>Medicamentos actuales</h2><table class="dr-t"><thead><tr><th>Medicamento</th><th>Dosis</th><th>Horario</th><th>Indicaciones</th></tr></thead><tbody>' + data.meds.map(function (m) { return '<tr><td><b>' + esc(m.name) + '</b></td><td>' + esc(m.dose || '—') + '</td><td>' + esc(m.time || '—') + '</td><td>' + esc(m.instructions || '') + '</td></tr>'; }).join('') + '</tbody></table></section>' : '';
+    var arm = function (a) { return isEN() ? (a === 'Izquierdo' ? 'Left' : a === 'Derecho' ? 'Right' : a) : a; };
+    var bpRows = bp.map(function (x) { var c = bpCat(x.sys, x.dia); return '<tr><td>' + esc(fmtDate(x.date)) + '</td><td>' + esc(x.time || '—') + '</td><td class="num"><b>' + x.sys + '</b></td><td class="num"><b>' + x.dia + '</b></td><td class="num">' + (x.pulse ? R(x.pulse) : '—') + '</td><td>' + esc(arm(x.arm)) + '</td><td><span class="dr-tag dr-' + c.k + '">' + c.label + '</span></td><td>' + esc(x.notes) + '</td></tr>'; }).join('');
+    var glRows = gl.map(function (x) { var c = glCat(x.value, x.when); return '<tr><td>' + esc(fmtDate(x.date)) + '</td><td>' + esc(x.time || '—') + '</td><td class="num"><b>' + x.value + '</b></td><td>' + esc(whenTxt(x.when) || '—') + '</td><td><span class="dr-tag dr-' + c.k + '">' + c.label + '</span></td><td>' + esc(x.notes) + '</td></tr>'; }).join('');
+    var meds = ($p('pnMeds').checked && data.meds && data.meds.length) ? '<section class="dr-sec"><h2>' + L('Medicamentos actuales', 'Current medications') + '</h2><table class="dr-t"><thead><tr><th>' + L('Medicamento', 'Medication') + '</th><th>' + L('Dosis', 'Dose') + '</th><th>' + L('Horario', 'Time') + '</th><th>' + L('Indicaciones', 'Instructions') + '</th></tr></thead><tbody>' + data.meds.map(function (m) { return '<tr><td><b>' + esc(m.name) + '</b></td><td>' + esc(m.dose || '—') + '</td><td>' + esc(m.time || '—') + '</td><td>' + esc(m.instructions || '') + '</td></tr>'; }).join('') + '</tbody></table></section>' : '';
     var pr = $p('printRecord'); if (!pr) { pr = document.createElement('div'); pr.id = 'printRecord'; document.body.appendChild(pr); }
     pr.className = 'dr-doc';
     pr.innerHTML =
-      '<header class="pr-head"><img src="saludplus-logo.svg" alt="" class="pr-logo" onerror="this.style.display=\'none\'"><div class="pr-titles"><h1>REPORTE PARA EL MÉDICO</h1><p>Registro de presión arterial y glucosa por fechas</p></div><div class="pr-meta"><span>Periodo</span><b>' + esc(fmtDate(r.from)) + ' – ' + esc(fmtDate(r.to)) + '</b><span style="margin-top:4px">Emitido</span><b>' + esc(stamp) + '</b></div></header>' +
-      '<section class="pr-patient"><h2>Datos del paciente</h2><div class="pr-grid">' +
-      '<div><span>Nombre completo</span><b>' + v(p.name) + '</b></div><div><span>Fecha de nacimiento</span><b>' + (p.birthDate ? esc(fmtDate(p.birthDate)) + esc(age) : '—') + '</b></div><div><span>Sexo</span><b>' + v(p.sex) + '</b></div>' +
-      '<div><span>Grupo sanguíneo</span><b>' + v(p.blood) + '</b></div><div><span>Teléfono</span><b>' + v(p.phone) + '</b></div><div><span>Padecimientos</span><b>' + v(p.conditions) + '</b></div></div>' + alerts + '</section>' +
-      (note ? '<section class="dr-note"><b>Nota del paciente:</b> ' + esc(note) + '</section>' : '') +
-      '<section class="dr-sec"><h2>Presión arterial</h2><div class="dr-grid">' + bpSum + '</div>' + (bp.length ? '<div class="dr-chart">' + bpChart(bp, r, true) + '<p class="dr-leg"><b style="color:#2a56e8">●</b> Sistólica &nbsp; <b style="color:#0e7f86">■</b> Diastólica (línea punteada) &nbsp; <b style="color:#17744c">···</b> Límite normal 120 / 80 mmHg</p></div>' : '') + '</section>' +
-      '<section class="dr-sec"><h2>Glucosa</h2><div class="dr-grid">' + glSum + '</div>' + (gl.length ? '<div class="dr-chart">' + glChart(gl, r, true) + '<p class="dr-leg"><b style="color:#2a56e8">●</b> En rango o según contexto &nbsp; <b style="color:#c26a00">◆</b> Elevada o alta &nbsp; <b style="color:#b3122a">▲</b> Baja &nbsp; Banda verde: ayunas normal 70–99 mg/dL</p></div>' : '') + '</section>' +
-      '<section class="dr-sec"><h2>Detalle de presión arterial por fecha</h2>' + (bp.length ? '<table class="dr-t"><thead><tr><th>Fecha</th><th>Hora</th><th>Sistólica</th><th>Diastólica</th><th>Pulso</th><th>Brazo</th><th>Clasificación</th><th>Notas</th></tr></thead><tbody>' + bpRows + '</tbody></table><p class="dr-small">Cuando se midieron ambos brazos se muestra el de la lectura más alta. Valores en mmHg; pulso en latidos por minuto.</p>' : '<p class="dr-empty">Sin mediciones de presión en este periodo.</p>') + '</section>' +
-      '<section class="dr-sec"><h2>Detalle de glucosa por fecha</h2>' + (gl.length ? '<table class="dr-t"><thead><tr><th>Fecha</th><th>Hora</th><th>Glucosa (mg/dL)</th><th>Momento</th><th>Interpretación</th><th>Notas</th></tr></thead><tbody>' + glRows + '</tbody></table>' : '<p class="dr-empty">Sin mediciones de glucosa en este periodo.</p>') + '</section>' +
+      '<header class="pr-head"><img src="saludplus-logo.svg" alt="" class="pr-logo" onerror="this.style.display=\'none\'"><div class="pr-titles"><h1>' + L('REPORTE PARA EL MÉDICO', 'REPORT FOR THE DOCTOR') + '</h1><p>' + L('Registro de presión arterial y glucosa por fechas', 'Blood pressure and glucose log by date') + '</p></div><div class="pr-meta"><span>' + L('Periodo', 'Period') + '</span><b>' + esc(fmtDate(r.from)) + ' – ' + esc(fmtDate(r.to)) + '</b><span style="margin-top:4px">' + L('Emitido', 'Issued') + '</span><b>' + esc(stamp) + '</b></div></header>' +
+      '<section class="pr-patient"><h2>' + L('Datos del paciente', 'Patient details') + '</h2><div class="pr-grid">' +
+      '<div><span>' + L('Nombre completo', 'Full name') + '</span><b>' + v(p.name) + '</b></div><div><span>' + L('Fecha de nacimiento', 'Date of birth') + '</span><b>' + (p.birthDate ? esc(fmtDate(p.birthDate)) + esc(age) : '—') + '</b></div><div><span>' + L('Sexo', 'Sex') + '</span><b>' + v(p.sex) + '</b></div>' +
+      '<div><span>' + L('Grupo sanguíneo', 'Blood type') + '</span><b>' + v(p.blood) + '</b></div><div><span>' + L('Teléfono', 'Phone') + '</span><b>' + v(p.phone) + '</b></div><div><span>' + L('Padecimientos', 'Conditions') + '</span><b>' + v(p.conditions) + '</b></div></div>' + alerts + '</section>' +
+      (note ? '<section class="dr-note"><b>' + L('Nota del paciente:', 'Patient note:') + '</b> ' + esc(note) + '</section>' : '') +
+      '<section class="dr-sec"><h2>' + L('Presión arterial', 'Blood pressure') + '</h2><div class="dr-grid">' + bpSum + '</div>' + (bp.length ? '<div class="dr-chart">' + bpChart(bp, r, true) + '<p class="dr-leg"><b style="color:#2a56e8">●</b> ' + L('Sistólica', 'Systolic') + ' &nbsp; <b style="color:#0e7f86">■</b> ' + L('Diastólica (línea punteada)', 'Diastolic (dashed line)') + ' &nbsp; <b style="color:#17744c">···</b> ' + L('Límite normal 120 / 80 mmHg', 'Normal limit 120 / 80 mmHg') + '</p></div>' : '') + '</section>' +
+      '<section class="dr-sec"><h2>' + L('Glucosa', 'Glucose') + '</h2><div class="dr-grid">' + glSum + '</div>' + (gl.length ? '<div class="dr-chart">' + glChart(gl, r, true) + '<p class="dr-leg"><b style="color:#2a56e8">●</b> ' + L('En rango o según contexto', 'In range or by context') + ' &nbsp; <b style="color:#c26a00">◆</b> ' + L('Elevada o alta', 'Elevated or high') + ' &nbsp; <b style="color:#b3122a">▲</b> ' + L('Baja', 'Low') + ' &nbsp; ' + L('Banda verde: ayunas normal 70–99 mg/dL', 'Green band: normal fasting 70–99 mg/dL') + '</p></div>' : '') + '</section>' +
+      '<section class="dr-sec"><h2>' + L('Detalle de presión arterial por fecha', 'Blood pressure readings by date') + '</h2>' + (bp.length ? '<table class="dr-t"><thead><tr><th>' + L('Fecha', 'Date') + '</th><th>' + L('Hora', 'Time') + '</th><th>' + L('Sistólica', 'Systolic') + '</th><th>' + L('Diastólica', 'Diastolic') + '</th><th>' + L('Pulso', 'Pulse') + '</th><th>' + L('Brazo', 'Arm') + '</th><th>' + L('Clasificación', 'Category') + '</th><th>' + L('Notas', 'Notes') + '</th></tr></thead><tbody>' + bpRows + '</tbody></table><p class="dr-small">' + L('Cuando se midieron ambos brazos se muestra el de la lectura más alta. Valores en mmHg; pulso en latidos por minuto.', 'When both arms were measured, the arm with the higher reading is shown. Values in mmHg; pulse in beats per minute.') + '</p>' : '<p class="dr-empty">' + L('Sin mediciones de presión en este periodo.', 'No blood pressure readings in this period.') + '</p>') + '</section>' +
+      '<section class="dr-sec"><h2>' + L('Detalle de glucosa por fecha', 'Glucose readings by date') + '</h2>' + (gl.length ? '<table class="dr-t"><thead><tr><th>' + L('Fecha', 'Date') + '</th><th>' + L('Hora', 'Time') + '</th><th>' + L('Glucosa (mg/dL)', 'Glucose (mg/dL)') + '</th><th>' + L('Momento', 'Timing') + '</th><th>' + L('Interpretación', 'Interpretation') + '</th><th>' + L('Notas', 'Notes') + '</th></tr></thead><tbody>' + glRows + '</tbody></table>' : '<p class="dr-empty">' + L('Sin mediciones de glucosa en este periodo.', 'No glucose readings in this period.') + '</p>') + '</section>' +
       meds +
-      '<section class="dr-sign"><div class="dr-box"><b>Observaciones del médico</b><i></i><i></i><i></i></div><div class="dr-line"><span>Nombre, firma y sello</span></div></section>' +
-      '<footer class="pr-foot">Documento generado desde SaludPlus con datos ingresados por el paciente; no sustituye el expediente clínico oficial ni el criterio profesional. Referencias orientativas para adultos: presión normal &lt;120/80 mmHg, elevada 120–129/&lt;80, etapa 1 130–139/80–89, etapa 2 ≥140/≥90, crisis ≥180/≥120 (AHA); glucosa en ayunas 70–99 mg/dL y &lt;140 mg/dL a las 2 h de comer. Contiene información médica privada.</footer>';
+      '<section class="dr-sign"><div class="dr-box"><b>' + L('Observaciones del médico', 'Doctor’s notes') + '</b><i></i><i></i><i></i></div><div class="dr-line"><span>' + L('Nombre, firma y sello', 'Name, signature and stamp') + '</span></div></section>' +
+      '<footer class="pr-foot">' + L('Documento generado desde SaludPlus con datos ingresados por el paciente; no sustituye el expediente clínico oficial ni el criterio profesional. Referencias orientativas para adultos: presión normal &lt;120/80 mmHg, elevada 120–129/&lt;80, etapa 1 130–139/80–89, etapa 2 ≥140/≥90, crisis ≥180/≥120 (AHA); glucosa en ayunas 70–99 mg/dL y &lt;140 mg/dL a las 2 h de comer. Contiene información médica privada.', 'Document created in SaludPlus from data entered by the patient; it does not replace the official medical record or professional judgment. Guidance references for adults: normal blood pressure &lt;120/80 mmHg, elevated 120–129/&lt;80, stage 1 130–139/80–89, stage 2 ≥140/≥90, crisis ≥180/≥120 (AHA); fasting glucose 70–99 mg/dL and &lt;140 mg/dL 2 h after eating. Contains private medical information.') + '</footer>';
     return pr;
   }
 
@@ -6738,8 +7029,8 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
   function showTip(el) {
     var k = el.getAttribute('data-k'), i = +el.getAttribute('data-i'), out = $p(k === 'bp' ? 'pnBpRead' : 'pnGlRead');
     document.querySelectorAll('#panel .pn-hit.sel').forEach(function (e) { e.classList.remove('sel'); }); el.classList.add('sel');
-    if (k === 'bp') { var x = cache.bp[i], c = bpCat(x.sys, x.dia); out.innerHTML = '<b>' + esc(longDate(x.date)) + ' · ' + esc(x.time || '') + '</b> — ' + x.sys + '/' + x.dia + ' mmHg' + (x.pulse ? ', pulso ' + R(x.pulse) : '') + ' · ' + esc(c.label); }
-    else { var g = cache.gl[i], gc = glCat(g.value, g.when); out.innerHTML = '<b>' + esc(longDate(g.date)) + ' · ' + esc(g.time || '') + '</b> — ' + g.value + ' mg/dL' + (g.when ? ' (' + esc(g.when.toLowerCase()) + ')' : '') + ' · ' + esc(gc.label); }
+    if (k === 'bp') { var x = cache.bp[i], c = bpCat(x.sys, x.dia); out.innerHTML = '<b>' + esc(longDate(x.date)) + ' · ' + esc(x.time || '') + '</b> — ' + x.sys + '/' + x.dia + ' mmHg' + (x.pulse ? L(', pulso ', ', pulse ') + R(x.pulse) : '') + ' · ' + esc(c.label); }
+    else { var g = cache.gl[i], gc = glCat(g.value, g.when); out.innerHTML = '<b>' + esc(longDate(g.date)) + ' · ' + esc(g.time || '') + '</b> — ' + g.value + ' mg/dL' + (g.when ? ' (' + esc(whenTxt(g.when).toLowerCase()) + ')' : '') + ' · ' + esc(gc.label); }
   }
   function init() {
     var root = $p('panel'); if (!root || root.dataset.bound) return; root.dataset.bound = '1';

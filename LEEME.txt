@@ -1,4 +1,4 @@
 SaludPlus v68 - Panel de salud
 Sube TODO el contenido de esta carpeta a tu repositorio de GitHub Pages (reemplaza los archivos).
-Novedades: pestaña "Panel" (presión y glucosa por fechas, gráficas, registro) y "Reporte para el médico" (imprimir / guardar PDF).
+Novedades: pestaña "Panel" (presión y glucosa por fechas) y "Reporte para el médico". Traducción completa al inglés (botón EN).
 El asistente de IA sigue desactivado. Tus datos guardados no se pierden.
