@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="icon-192.png">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Instalar SaludPlus</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap">
+<style>
+/* Una columna estrecha tipo guía de app: pestañas iPhone/Android, pasos con maqueta del teléfono al lado */
+:root{
+  --bg:#eef4fd; --surface:#ffffff; --soft:#e4ecfb; --ink:#0b1f4d; --ink-2:#31456f; --muted:#4a5f8a;
+  --line:#c5d4f2; --accent:#2a56e8; --accent-2:#3d9bff; --hl:#ff3d6a; --ok:#17744c; --ok-bg:#dff4ea; --warn:#7a5600; --warn-bg:#fff3d1;
+  --phone:#0b1f4d; --screen:#f7faff; --bar:#e9eef8;
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif; --display:"Space Grotesk","Inter",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1428;--surface:#13203c;--soft:#1b2c50;--ink:#eaf1ff;--ink-2:#c3d1ee;--muted:#9fb1d6;--line:#2c406b;--accent:#7aa2ff;--accent-2:#5bb0ff;--hl:#ff6b8b;--ok:#7ee0ac;--ok-bg:#123a28;--warn:#ffd27a;--warn-bg:#3a2e10;--phone:#cfdcf7;--screen:#0f1a33;--bar:#1b2a4c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1428;--surface:#13203c;--soft:#1b2c50;--ink:#eaf1ff;--ink-2:#c3d1ee;--muted:#9fb1d6;--line:#2c406b;--accent:#7aa2ff;--accent-2:#5bb0ff;--hl:#ff6b8b;--ok:#7ee0ac;--ok-bg:#123a28;--warn:#ffd27a;--warn-bg:#3a2e10;--phone:#cfdcf7;--screen:#0f1a33;--bar:#1b2a4c;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--font)}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand img{width:52px;height:52px;border-radius:14px;box-shadow:0 4px 12px rgba(30,70,150,.18);flex:none}
+.brand b{display:block;font:700 1.15rem/1.2 var(--display)}
+.brand small{color:var(--muted);font-size:.85rem}
+.lang{display:inline-flex;padding:3px;border-radius:99px;background:var(--soft)}
+.lang button{border:0;background:none;min-width:44px;min-height:36px;border-radius:99px;font:700 .8rem var(--font);color:var(--ink-2);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--accent);color:#fff}
+h1{margin:6px 0 0;font:700 clamp(1.6rem,5vw,2.2rem)/1.15 var(--display);text-wrap:balance;letter-spacing:-.01em}
+.lead{margin:0;color:var(--ink-2);max-width:60ch}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:18px;background:var(--soft)}
+.tabs button{min-height:50px;border:0;border-radius:14px;background:none;font:700 1rem var(--font);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,color .2s}
+.tabs button[aria-selected="true"]{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#fff;box-shadow:0 6px 14px rgba(42,86,232,.3)}
+.tabs svg{width:20px;height:20px}
+.detect{margin:0;font-size:.85rem;color:var(--muted)}
+.panel{display:grid;gap:12px}
+.note{margin:0;padding:12px 14px;border-radius:14px;background:var(--surface);border:1.5px solid var(--line);color:var(--ink-2);font-size:.92rem}
+.note b{color:var(--ink)}
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:s}
+.step{counter-increment:s;display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:14px;align-items:center;padding:16px;border-radius:22px;background:var(--surface);box-shadow:0 8px 22px rgba(30,70,150,.10)}
+.step h3{margin:0 0 4px;font:700 1.05rem/1.3 var(--display);display:flex;gap:10px;align-items:flex-start}
+.step h3::before{content:counter(s);flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#fff;font:700 .85rem var(--font);margin-top:-2px}
+.step p{margin:0;color:var(--ink-2);font-size:.94rem;padding-left:38px}
+.step p+p{margin-top:6px}
+.k{display:inline;padding:1px 6px;border-radius:7px;background:var(--soft);color:var(--ink);font-weight:700;font-size:.88rem;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.k svg{width:15px;height:15px}
+.mock{width:150px;max-width:100%;height:auto;display:block;justify-self:center}
+.mock .ph{fill:var(--phone)} .mock .sc{fill:var(--screen)} .mock .br{fill:var(--bar)} .mock .tx{fill:var(--ink-2);font:600 9px var(--font)} .mock .tx2{fill:var(--muted);font:500 7.5px var(--font)}
+.mock .ln{stroke:var(--ink-2);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round} .mock .row{fill:var(--surface);stroke:var(--line)} .mock .ac{fill:var(--accent)} .mock .acs{stroke:var(--accent);fill:none;stroke-width:1.6}
+.mock .hl{fill:none;stroke:var(--hl);stroke-width:2.5} .mock .tile{fill:var(--soft)}
+@media (prefers-reduced-motion:no-preference){.mock .hl{animation:pulse 1.6s cubic-bezier(.23,1,.32,1) infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (max-width:520px){.step{grid-template-columns:minmax(0,1fr) 112px;gap:10px;padding:14px}.mock{width:112px}.step p{padding-left:0}}
+.tips{display:grid;gap:10px}
+.tip{padding:14px 16px;border-radius:18px;background:var(--surface);border-left:4px solid var(--accent)}
+.tip.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+.tip h4{margin:0 0 4px;font:700 1rem var(--display)}
+.tip p{margin:0;color:var(--ink-2);font-size:.92rem}
+.tip.warn h4,.tip.warn p{color:var(--warn)}
+.done{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:18px;background:var(--ok-bg);color:var(--ok);font-weight:600}
+.done img{width:40px;height:40px;border-radius:11px;flex:none}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:16px;background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#fff;text-decoration:none;font:700 1rem var(--font);box-shadow:0 8px 18px rgba(42,86,232,.3)}
+.cta:active{transform:scale(.98)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+footer{color:var(--muted);font-size:.8rem;text-align:center}
+</style>
+
+<div class="wrap">
+ <div class="top">
+  <div class="brand"><img id="appIcon" alt=""><div><b>SaludPlus</b><small data-es="Control de salud" data-en="Health tracker">Control de salud</small></div></div>
+  <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" id="lgES" aria-pressed="true">ES</button><button type="button" id="lgEN" aria-pressed="false">EN</button></div>
+ </div>
+ <div>
+  <h1 data-es="Pon SaludPlus en la pantalla de inicio de tu teléfono" data-en="Add SaludPlus to your phone’s home screen">Pon SaludPlus en la pantalla de inicio de tu teléfono</h1>
+ </div>
+ <p class="lead" data-es="Así la abres con un toque, a pantalla completa y sin buscarla en el navegador. Elige tu teléfono:" data-en="Then you open it with one tap, full screen, without looking for it in the browser. Choose your phone:">Así la abres con un toque, a pantalla completa y sin buscarla en el navegador. Elige tu teléfono:</p>
+
+ <div class="tabs" role="tablist" aria-label="Tipo de teléfono">
+  <button type="button" role="tab" id="tabIOS" aria-controls="pIOS" aria-selected="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.5-3.8zM14.1 5.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></svg><span>iPhone</span></button>
+  <button type="button" role="tab" id="tabAND" aria-controls="pAND" aria-selected="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.5l1.7-2.9a.4.4 0 00-.7-.4l-1.7 2.9a10.5 10.5 0 00-9.8 0L5.4 6.2a.4.4 0 00-.7.4l1.7 2.9A9.6 9.6 0 001.5 17h21a9.6 9.6 0 00-4.9-7.5zM7 14.4a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2z"/></svg><span>Android</span></button>
+ </div>
+ <p class="detect" id="detect" hidden></p>
+
+ <section class="panel" id="pIOS" role="tabpanel" aria-labelledby="tabIOS">
+  <p class="note" data-es-html="Usa <b>Safari</b> (la brújula azul). En iPhone con iOS 16.4 o más reciente también funciona desde Chrome con el mismo botón Compartir." data-en-html="Use <b>Safari</b> (the blue compass). On iOS 16.4 or later it also works from Chrome with the same Share button.">Usa <b>Safari</b> (la brújula azul). En iPhone con iOS 16.4 o más reciente también funciona desde Chrome con el mismo botón Compartir.</p>
+  <ol class="steps">
+   <li class="step"><div><h3 data-es="Abre SaludPlus en Safari" data-en="Open SaludPlus in Safari">Abre SaludPlus en Safari</h3><p data-es="Toca el enlace que te compartieron o escribe la dirección de la app." data-en="Tap the link you received or type the app’s address.">Toca el enlace que te compartieron o escribe la dirección de la app.</p></div><svg class="mock" data-mock="ios-open" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es-html="Toca el botón Compartir" data-en-html="Tap the Share button">Toca el botón Compartir</h3><p data-es-html="Es el <span class='k'>cuadro con una flecha hacia arriba</span>, en la barra de abajo." data-en-html="It’s the <span class='k'>square with an arrow pointing up</span>, in the bottom bar.">Es el cuadro con una flecha hacia arriba, en la barra de abajo.</p><p data-es-html="Si no lo ves, toca primero <span class='k'>•••</span> en la barra y luego <b>Compartir</b>." data-en-html="If you don’t see it, first tap <span class='k'>•••</span> in the bar, then <b>Share</b>.">Si no lo ves, toca primero ••• en la barra y luego Compartir.</p></div><svg class="mock" data-mock="ios-share" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Elige “Agregar a pantalla de inicio”" data-en="Choose “Add to Home Screen”">Elige “Agregar a pantalla de inicio”</h3><p data-es-html="Desliza la lista hacia arriba. Si no aparece, toca <b>Ver más</b> o <b>Editar acciones</b>." data-en-html="Scroll the list up. If it isn’t there, tap <b>View More</b> or <b>Edit Actions</b>.">Desliza la lista hacia arriba. Si no aparece, toca Ver más o Editar acciones.</p></div><svg class="mock" data-mock="ios-list" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Confirma con “Agregar”" data-en="Confirm with “Add”">Confirma con “Agregar”</h3><p data-es-html="Deja el nombre <b>SaludPlus</b>. Si ves la opción <b>Abrir como app web</b>, déjala activada. Luego toca <b>Agregar</b> arriba a la derecha." data-en-html="Keep the name <b>SaludPlus</b>. If you see <b>Open as Web App</b>, leave it on. Then tap <b>Add</b> in the top right.">Deja el nombre SaludPlus. Si ves Abrir como app web, déjala activada. Luego toca Agregar arriba a la derecha.</p></div><svg class="mock" data-mock="ios-add" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Ábrela desde tu pantalla de inicio" data-en="Open it from your home screen">Ábrela desde tu pantalla de inicio</h3><p data-es="El ícono de SaludPlus aparece junto a tus otras apps. Úsala siempre desde ahí." data-en="The SaludPlus icon appears next to your other apps. Always open it from there.">El ícono de SaludPlus aparece junto a tus otras apps. Úsala siempre desde ahí.</p></div><svg class="mock" data-mock="home" viewBox="0 0 120 200" role="img"></svg></li>
+  </ol>
+  <div class="tips">
+   <div class="tip warn"><h4 data-es="Importante en iPhone: tus datos" data-en="Important on iPhone: your data">Importante en iPhone: tus datos</h4><p data-es-html="En iPhone, la app de la pantalla de inicio guarda sus datos aparte de Safari. Si ya registraste mediciones en Safari, ve a <b>Reportes › Respaldo › Exportar respaldo</b> en Safari, y luego <b>Restaurar</b> ese archivo dentro de la app instalada." data-en-html="On iPhone, the home screen app keeps its data separate from Safari. If you already logged readings in Safari, go to <b>Reports › Backup › Export backup</b> in Safari, then <b>Restore</b> that file inside the installed app.">En iPhone, la app de la pantalla de inicio guarda sus datos aparte de Safari.</p></div>
+  </div>
+ </section>
+
+ <section class="panel" id="pAND" role="tabpanel" aria-labelledby="tabAND" hidden>
+  <p class="note" data-es-html="Usa <b>Google Chrome</b>. Si tienes un Samsung con <b>Samsung Internet</b>, mira la nota al final." data-en-html="Use <b>Google Chrome</b>. If you have a Samsung with <b>Samsung Internet</b>, see the note at the end.">Usa Google Chrome.</p>
+  <ol class="steps">
+   <li class="step"><div><h3 data-es="Abre SaludPlus en Chrome" data-en="Open SaludPlus in Chrome">Abre SaludPlus en Chrome</h3><p data-es-html="Toca el enlace de la app. Si abajo aparece <b>Instalar app</b> o <b>Agregar SaludPlus a la pantalla principal</b>, tócalo y salta al paso 4." data-en-html="Tap the app link. If <b>Install app</b> or <b>Add SaludPlus to Home screen</b> appears at the bottom, tap it and skip to step 4.">Toca el enlace de la app.</p></div><svg class="mock" data-mock="and-open" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Toca el menú de tres puntos" data-en="Tap the three-dot menu">Toca el menú de tres puntos</h3><p data-es-html="Es el botón <span class='k'>⋮</span> arriba a la derecha, junto a la dirección." data-en-html="It’s the <span class='k'>⋮</span> button in the top right, next to the address.">Es el botón ⋮ arriba a la derecha.</p></div><svg class="mock" data-mock="and-menu" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Elige “Instalar app”" data-en="Choose “Install app”">Elige “Instalar app”</h3><p data-es-html="En algunos teléfonos se llama <b>Agregar a la pantalla principal</b>." data-en-html="On some phones it’s called <b>Add to Home screen</b>.">En algunos teléfonos se llama Agregar a la pantalla principal.</p></div><svg class="mock" data-mock="and-list" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Confirma con “Instalar”" data-en="Confirm with “Install”">Confirma con “Instalar”</h3><p data-es="Espera unos segundos mientras Android crea el ícono." data-en="Wait a few seconds while Android creates the icon.">Espera unos segundos mientras Android crea el ícono.</p></div><svg class="mock" data-mock="and-install" viewBox="0 0 120 200" role="img"></svg></li>
+   <li class="step"><div><h3 data-es="Ábrela desde tu pantalla de inicio" data-en="Open it from your home screen">Ábrela desde tu pantalla de inicio</h3><p data-es-html="El ícono aparece en la pantalla principal o en el cajón de apps. Mantenlo presionado para ver los accesos rápidos: <b>Presión</b>, <b>Glucosa</b> y <b>Panel</b>." data-en-html="The icon appears on your home screen or in the app drawer. Press and hold it for shortcuts: <b>Blood pressure</b>, <b>Glucose</b> and <b>Dashboard</b>.">El ícono aparece en la pantalla principal.</p></div><svg class="mock" data-mock="home" viewBox="0 0 120 200" role="img"></svg></li>
+  </ol>
+  <div class="tips">
+   <div class="tip"><h4 data-es="Samsung Internet" data-en="Samsung Internet">Samsung Internet</h4><p data-es-html="Toca el menú <span class='k'>≡</span> abajo a la derecha › <b>Agregar página a</b> › <b>Pantalla de inicio</b>." data-en-html="Tap the <span class='k'>≡</span> menu at the bottom right › <b>Add page to</b> › <b>Home screen</b>.">Toca el menú ≡ › Agregar página a › Pantalla de inicio.</p></div>
+   <div class="tip"><h4 data-es="¿Tienes el archivo APK?" data-en="Do you have the APK file?">¿Tienes el archivo APK?</h4><p data-es-html="Ábrelo y permite <b>Instalar apps de fuentes desconocidas</b> cuando el teléfono lo pida. Se instala como cualquier app." data-en-html="Open it and allow <b>Install unknown apps</b> when the phone asks. It installs like any other app.">Ábrelo y permite instalar apps de fuentes desconocidas.</p></div>
+  </div>
+ </section>
+
+ <div class="done"><img id="appIcon2" alt=""><span data-es="Listo. Tus datos se guardan solo en tu teléfono; usa Reportes › Respaldo de vez en cuando." data-en="Done. Your data stays only on your phone; use Reports › Backup from time to time.">Listo. Tus datos se guardan solo en tu teléfono; usa Reportes › Respaldo de vez en cuando.</span></div>
+ <a class="cta" id="openApp" href="./index.html" data-es="Abrir SaludPlus" data-en="Open SaludPlus">Abrir SaludPlus</a>
+ <footer data-es="SaludPlus · herramienta de registro personal; no sustituye la atención médica." data-en="SaludPlus · personal tracking tool; it does not replace medical care.">SaludPlus · herramienta de registro personal; no sustituye la atención médica.</footer>
+</div>
+
+<script>
+(function(){
+ var ICON='data:image/png;base64,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';
+ document.getElementById('appIcon').src=ICON; document.getElementById('appIcon2').src=ICON;
+ var lang='es'; try{ if(localStorage.getItem('saludplus_language_v13')==='en') lang='en'; }catch(e){}
+ if(!/^es/i.test(navigator.language||'es') && lang!=='en'){ try{ if(localStorage.getItem('saludplus_language_v13')===null) lang='en'; }catch(e){} }
+ var T={es:{'ios-open':'Safari','ios-share':'Compartir','ios-list':['Copiar','Agregar a favoritos','Agregar a pantalla de inicio'],'ios-add':['Cancelar','Agregar','Abrir como app web'],'and-list':['Nueva pestaña','Favoritos','Instalar app','Descargas'],'and-install':['¿Instalar app?','Cancelar','Instalar'],home:'SaludPlus',aria:{'ios-open':'Safari con la app abierta','ios-share':'Barra de Safari con el botón Compartir resaltado','ios-list':'Menú Compartir con Agregar a pantalla de inicio resaltado','ios-add':'Pantalla para confirmar con Agregar resaltado','home':'Pantalla de inicio con el ícono de SaludPlus','and-open':'Chrome con la app abierta','and-menu':'Chrome con el menú de tres puntos resaltado','and-list':'Menú de Chrome con Instalar app resaltado','and-install':'Ventana para confirmar con Instalar resaltado'}},
+  en:{'ios-open':'Safari','ios-share':'Share','ios-list':['Copy','Add to Favorites','Add to Home Screen'],'ios-add':['Cancel','Add','Open as Web App'],'and-list':['New tab','Bookmarks','Install app','Downloads'],'and-install':['Install app?','Cancel','Install'],home:'SaludPlus',aria:{'ios-open':'Safari with the app open','ios-share':'Safari bar with the Share button highlighted','ios-list':'Share menu with Add to Home Screen highlighted','ios-add':'Confirmation screen with Add highlighted','home':'Home screen with the SaludPlus icon','and-open':'Chrome with the app open','and-menu':'Chrome with the three-dot menu highlighted','and-list':'Chrome menu with Install app highlighted','and-install':'Confirmation window with Install highlighted'}}};
+ function phone(inner){return '<rect class="ph" x="4" y="2" width="112" height="196" rx="18"/><rect class="sc" x="9" y="8" width="102" height="184" rx="13"/>'+inner;}
+ function app(y){ // contenido simplificado de la app
+  return '<rect x="16" y="'+y+'" width="88" height="26" rx="7" class="ac" opacity=".9"/><rect x="16" y="'+(y+32)+'" width="42" height="30" rx="7" class="tile"/><rect x="62" y="'+(y+32)+'" width="42" height="30" rx="7" class="tile"/><rect x="16" y="'+(y+66)+'" width="42" height="30" rx="7" class="tile"/><rect x="62" y="'+(y+66)+'" width="42" height="30" rx="7" class="tile"/>';}
+ function mock(k){var t=T[lang],s='';
+  var safBar='<rect class="br" x="9" y="160" width="102" height="32" rx="0"/><path class="br" d="M9 160h102v19a13 13 0 01-13 13H22a13 13 0 01-13-13z"/>';
+  var shareIc=function(x,y){return '<g class="ln" transform="translate('+x+' '+y+')"><path d="M-5 -1v8h10v-8"/><path d="M0 -8v11M-3.5 -4.5L0 -8l3.5 3.5"/></g>';};
+  if(k==='ios-open'||k==='ios-share'){
+   s=app(16)+safBar+'<rect x="22" y="164" width="76" height="11" rx="5.5" class="row"/><text class="tx2" x="60" y="172" text-anchor="middle">saludplus</text>'+
+     '<g class="ln"><path d="M24 184l-3-3 3-3"/><path d="M37 178l3 3-3 3"/><rect x="77" y="178" width="9" height="9" rx="2"/></g><text class="tx" x="96" y="186" text-anchor="middle">•••</text>'+shareIc(58,183);
+   if(k==='ios-share') s+='<circle class="hl" cx="58" cy="182" r="9"/><text class="tx" x="58" y="156" text-anchor="middle">'+t['ios-share']+'</text>';
+   else s+='<rect class="hl" x="20" y="162" width="80" height="15" rx="7.5"/>';
+  } else if(k==='ios-list'){
+   var L=t['ios-list'];
+   s='<rect x="9" y="70" width="102" height="122" rx="13" class="br"/><rect x="50" y="76" width="20" height="3" rx="1.5" class="row"/>'+
+     [0,1,2].map(function(i){var y=88+i*24;return '<rect x="16" y="'+y+'" width="88" height="19" rx="6" class="row"/><text class="tx2" x="21" y="'+(y+12.5)+'">'+L[i]+'</text>';}).join('')+
+     '<g class="ln" transform="translate(97 146) scale(.8)"><rect x="-4.5" y="-4.5" width="9" height="9" rx="2"/><path d="M0 -2.5v5M-2.5 0h5"/></g>'+
+     '<rect class="hl" x="14" y="134" width="92" height="23" rx="8"/>';
+   s=app(16)+s;
+  } else if(k==='ios-add'){
+   var A=t['ios-add'];
+   s='<rect x="9" y="8" width="102" height="22" class="br"/><text class="tx2" x="16" y="23">'+A[0]+'</text><text class="tx" x="104" y="23" text-anchor="end" style="fill:var(--accent)">'+A[1]+'</text>'+
+     '<rect class="hl" x="80" y="13" width="28" height="15" rx="6"/>'+
+     '<image href="'+ICON+'" x="18" y="40" width="26" height="26"/><rect x="50" y="44" width="54" height="16" rx="5" class="row"/><text class="tx" x="54" y="55">SaludPlus</text>'+
+     '<rect x="16" y="78" width="88" height="20" rx="6" class="row"/><text class="tx2" x="21" y="91">'+A[2]+'</text><rect x="88" y="83" width="13" height="9" rx="4.5" style="fill:var(--ok)"/><circle cx="97" cy="87.5" r="3.4" fill="#fff"/>';
+  } else if(k==='home'){
+   for(var r=0;r<4;r++)for(var c=0;c<4;c++){var x=17+c*23,y=24+r*28; if(r===2&&c===1){continue;} s+='<rect x="'+x+'" y="'+y+'" width="17" height="17" rx="5" class="tile"/>';}
+   s+='<image href="'+ICON+'" x="40" y="80" width="17" height="17"/><rect class="hl" x="37" y="77" width="23" height="23" rx="7"/><text class="tx2" x="48.5" y="107" text-anchor="middle">'+t.home+'</text>'+
+     '<rect x="14" y="166" width="92" height="22" rx="9" class="br"/>'+[0,1,2,3].map(function(i){return '<rect x="'+(20+i*22)+'" y="169" width="16" height="16" rx="5" class="tile"/>';}).join('');
+  } else if(k==='and-open'||k==='and-menu'){
+   s='<rect class="br" x="9" y="8" width="102" height="22"/><rect x="15" y="12" width="74" height="13" rx="6.5" class="row"/><text class="tx2" x="52" y="21" text-anchor="middle">saludplus</text>'+
+     '<g class="ac"><circle cx="101" cy="13.5" r="1.4"/><circle cx="101" cy="18.5" r="1.4"/><circle cx="101" cy="23.5" r="1.4"/></g>'+app(36);
+   if(k==='and-menu') s+='<circle class="hl" cx="101" cy="18.5" r="8"/>';
+   else s+='<rect x="14" y="160" width="92" height="24" rx="8" class="row"/><image href="'+ICON+'" x="19" y="164" width="16" height="16"/><text class="tx2" x="40" y="175">'+(lang==='en'?'Install app':'Instalar app')+'</text><rect class="hl" x="12" y="158" width="96" height="28" rx="9"/>';
+  } else if(k==='and-list'){
+   var M=t['and-list'];
+   s='<rect class="br" x="9" y="8" width="102" height="22"/>'+app(36)+'<rect x="44" y="14" width="64" height="98" rx="8" class="row"/>'+
+     M.map(function(m,i){return '<text class="tx2" x="51" y="'+(30+i*22)+'">'+m+'</text>';}).join('')+'<rect class="hl" x="46" y="61" width="60" height="20" rx="6"/>';
+  } else if(k==='and-install'){
+   var I=t['and-install'];
+   s=app(16)+'<rect x="9" y="8" width="102" height="184" rx="13" fill="#000" opacity=".35"/><rect x="16" y="70" width="88" height="64" rx="10" class="row"/><image href="'+ICON+'" x="24" y="78" width="18" height="18"/><text class="tx" x="48" y="90">'+I[0]+'</text><text class="tx2" x="48" y="100">SaludPlus</text>'+
+     '<text class="tx2" x="60" y="124" text-anchor="end">'+I[1]+'</text><rect x="68" y="114" width="30" height="14" rx="7" class="ac"/><text class="tx2" x="83" y="124" text-anchor="middle" style="fill:#fff">'+I[2]+'</text><rect class="hl" x="65" y="111" width="36" height="20" rx="9"/>';
+  }
+  return phone(s);}
+ function render(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-es]').forEach(function(el){el.textContent=el.getAttribute('data-'+lang);});
+  document.querySelectorAll('[data-es-html]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+lang+'-html');});
+  document.querySelectorAll('svg[data-mock]').forEach(function(sv){var k=sv.getAttribute('data-mock');sv.innerHTML=mock(k);sv.setAttribute('aria-label',T[lang].aria[k]||'');});
+  document.getElementById('lgES').setAttribute('aria-pressed',lang==='es');document.getElementById('lgEN').setAttribute('aria-pressed',lang==='en');
+  var d=document.getElementById('detect'); if(dev){d.hidden=false;d.textContent=lang==='en'?('We detected '+(dev==='ios'?'an iPhone':'an Android phone')+'.'):('Detectamos '+(dev==='ios'?'un iPhone':'un teléfono Android')+'.');}
+ }
+ function tab(which){var ios=which==='ios';document.getElementById('tabIOS').setAttribute('aria-selected',ios);document.getElementById('tabAND').setAttribute('aria-selected',!ios);document.getElementById('pIOS').hidden=!ios;document.getElementById('pAND').hidden=ios;}
+ var ua=navigator.userAgent||'',dev=/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)?'ios':(/Android/i.test(ua)?'android':'');
+ document.getElementById('tabIOS').onclick=function(){tab('ios')};document.getElementById('tabAND').onclick=function(){tab('android')};
+ document.querySelector('.tabs').addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var ios=document.getElementById('tabIOS').getAttribute('aria-selected')==='true';tab(ios?'android':'ios');document.getElementById(ios?'tabAND':'tabIOS').focus();}});
+ document.getElementById('lgES').onclick=function(){lang='es';render()};document.getElementById('lgEN').onclick=function(){lang='en';render()};
+ if(dev==='android')tab('android');
+ if(location.hash==='#android')tab('android'); if(location.hash==='#iphone')tab('ios');
+ render();
+})();
+</script>
+
+</body>
+</html>

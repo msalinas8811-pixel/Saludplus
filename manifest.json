@@ -1,17 +1,34 @@
 {
-  "name": "SaludPlus",
+  "id": "./",
+  "name": "SaludPlus · Control de salud",
   "short_name": "SaludPlus",
-  "description": "Seguimiento de presión arterial, glucosa, agua, medicamentos y consultas, con asistente de salud con IA.",
+  "description": "Registra tu presión arterial, glucosa, agua, medicamentos, citas y exámenes. Panel por fechas y reporte para tu médico. Tus datos se guardan en tu teléfono.",
   "lang": "es",
-  "start_url": "./index.html",
+  "dir": "ltr",
+  "start_url": "./index.html?source=app",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#f3f8fb",
-  "theme_color": "#0879c9",
+  "theme_color": "#2c5fc7",
+  "categories": ["health", "medical", "lifestyle"],
+  "prefer_related_applications": false,
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "saludplus-logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+    { "src": "icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Registrar presión", "short_name": "Presión", "url": "./index.html?view=presion", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Registrar glucosa", "short_name": "Glucosa", "url": "./index.html?view=glucosa", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Panel de salud", "short_name": "Panel", "url": "./index.html?view=panel", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "screenshots/inicio.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Inicio con accesos a cada control" },
+    { "src": "screenshots/panel.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Panel de presión y glucosa por fechas" },
+    { "src": "screenshots/presion.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Registro de presión arterial" },
+    { "src": "screenshots/guia.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Guía para medir la presión" }
   ]
 }
