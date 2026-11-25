@@ -3076,8 +3076,8 @@ body #inicio .hello .hl-line{height:32px}
        <button type="button" class="pn-chip" data-days="all">Todo</button>
       </div>
       <div class="pn-dates">
-       <div class="pn-field"><label for="pnFrom">Desde</label><input id="pnFrom" type="date"></div>
-       <div class="pn-field"><label for="pnTo">Hasta</label><input id="pnTo" type="date"></div>
+       <div class="pn-field"><label for="pnFrom">Desde</label><div class="pn-datebox"><span class="pn-dateshow" id="pnFromShow" aria-hidden="true"></span><input id="pnFrom" type="date"></div></div>
+       <div class="pn-field"><label for="pnTo">Hasta</label><div class="pn-datebox"><span class="pn-dateshow" id="pnToShow" aria-hidden="true"></span><input id="pnTo" type="date"></div></div>
       </div>
       <p class="pn-rangeinfo" id="pnRangeInfo" aria-live="polite"></p>
      </div>
@@ -6500,6 +6500,29 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
   #printRecord .dr-line{border-top:1.5px solid #0b1f4d;text-align:center;font-size:8.5pt;padding-top:4px;color:#31456f}
 }
 
+/* v69 · fechas alineadas en teléfonos */
+body #panel .pn-chip{white-space:nowrap;padding:0 4px}
+body #panel .pn-dates{grid-template-columns:repeat(2,minmax(0,1fr))}
+body #panel .pn-field{min-width:0}
+body #panel .pn-datebox{position:relative;display:flex;align-items:center;height:48px;padding:0 34px 0 12px;border-radius:14px;border:1.5px solid #c5d4f2;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%232a56e8' stroke-width='2' stroke-linecap='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2.5'/%3E%3Cpath d='M3.5 10h17M8 3v4M16 3v4'/%3E%3C/svg%3E") no-repeat right 10px center;overflow:hidden}
+body #panel .pn-dateshow{font-size:.92rem;font-weight:700;color:#0b1f4d;font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none}
+body #panel .pn-datebox input[type=date]{position:absolute;inset:0;width:100%;height:100%;min-height:0;margin:0;padding:0;border:0;opacity:0;-webkit-appearance:none;appearance:none;cursor:pointer;font-size:16px}
+body #panel .pn-datebox input[type=date]::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:100%;height:100%;cursor:pointer}
+body #panel .pn-datebox:focus-within{outline:3px solid rgba(42,86,232,.3);border-color:#2a56e8}
+body #panel .pn-rangeinfo{line-height:1.45}
+@media (max-width:359px){body #panel .pn-dates{grid-template-columns:1fr}body #panel .pn-chip{font-size:.78rem}}
+/* Registro por fecha: fecha como encabezado y columnas fijas */
+body #panel .pn-day{display:block;padding:12px 0}
+body #panel .pn-date{display:inline-block;margin:0 0 8px;padding:4px 10px;border-radius:99px;background:#e4ecfb;color:#0b1f4d;font-size:.8rem;font-weight:800;text-transform:capitalize}
+body #panel .pn-rows{gap:8px}
+body #panel .pn-row{display:grid;grid-template-columns:10px 42px minmax(0,1fr) auto;align-items:center;column-gap:8px}
+body #panel .pn-ico{justify-self:center}
+body #panel .pn-val{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:5px;min-width:0}
+body #panel .pn-val b{font-size:1.05rem;font-variant-numeric:tabular-nums}
+body #panel .pn-val small{color:#4a5f8a;font-size:.74rem}
+body #panel .pn-val em{flex-basis:100%;font-style:normal;color:#4a5f8a;font-size:.74rem;line-height:1.3}
+body #panel .pn-row .pn-pill{justify-self:end;white-space:nowrap}
+
 </style>
 <script id="panel-js">
 /* SaludPlus · traducción completa al inglés (complemento de i18n) */
@@ -6926,7 +6949,7 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
     var len = dayIdx(r.from, r.to) + 1, pr = { from: addDays(r.from, -len), to: addDays(r.from, -1) };
     var pst = stats(bpIn(pr), glIn(pr));
     document.querySelectorAll('#panel .pn-chip').forEach(function (b) { b.classList.toggle('on', String(b.dataset.days) === String(S.days)); b.setAttribute('aria-pressed', String(b.dataset.days) === String(S.days)); });
-    $p('pnFrom').value = r.from; $p('pnTo').value = r.to;
+    $p('pnFrom').value = r.from; $p('pnTo').value = r.to; $p('pnFromShow').textContent = fmtDate(r.from); $p('pnToShow').textContent = fmtDate(r.to);
     $p('pnRangeInfo').textContent = L(fmtDate(r.from) + ' al ' + fmtDate(r.to) + ' · ' + len + (len === 1 ? ' día' : ' días') + ' · ' + st.bp.n + ' de presión · ' + st.gl.n + ' de glucosa', fmtDate(r.from) + ' to ' + fmtDate(r.to) + ' · ' + len + (len === 1 ? ' day' : ' days') + ' · ' + st.bp.n + ' blood pressure · ' + st.gl.n + ' glucose');
 
     var bpC = st.bp.n ? bpCat(st.bp.s, st.bp.d) : null, glC = st.gl.n ? glCat(st.gl.a, st.gl.fast != null && st.gl.nFast === st.gl.n ? 'Ayunas' : '') : null;
@@ -6965,8 +6988,8 @@ body .pn-home-cta .pn-go{margin-left:auto;font-size:1.6rem;color:#2a56e8}
     $p('pnLog').innerHTML = dates.length ? shown.map(function (dt) {
       var e = by[dt];
       return '<div class="pn-day"><div class="pn-date">' + esc(longDate(dt)) + '</div><div class="pn-rows">' +
-        e.bp.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-bp" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><b>' + x.sys + '/' + x.dia + '</b><small>mmHg' + (x.pulse ? ' · ' + R(x.pulse) + L(' lpm', ' bpm') : '') + '</small>' + pill(bpCat(x.sys, x.dia)) + '</div>'; }).join('') +
-        e.gl.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-gl" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><b>' + x.value + '</b><small>mg/dL' + (x.when ? ' · ' + esc(whenTxt(x.when).toLowerCase()) : '') + '</small>' + pill(glCat(x.value, x.when)) + '</div>'; }).join('') + '</div></div>';
+        e.bp.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-bp" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><span class="pn-val"><b>' + x.sys + '/' + x.dia + '</b><small>mmHg</small>' + (x.pulse ? '<em>' + L('Pulso ', 'Pulse ') + R(x.pulse) + L(' lpm', ' bpm') + '</em>' : '') + '</span>' + pill(bpCat(x.sys, x.dia)) + '</div>'; }).join('') +
+        e.gl.map(function (x) { return '<div class="pn-row"><span class="pn-ico pn-ico-gl" aria-hidden="true"></span><span class="pn-time">' + esc(x.time || '—') + '</span><span class="pn-val"><b>' + x.value + '</b><small>mg/dL</small>' + (x.when ? '<em>' + esc(whenTxt(x.when)) + '</em>' : '') + '</span>' + pill(glCat(x.value, x.when)) + '</div>'; }).join('') + '</div></div>';
     }).join('') : '<div class="pn-empty"><p>' + L('Aún no hay mediciones en este periodo.', 'No readings in this period yet.') + '</p></div>';
     var more = $p('pnMore'); more.hidden = dates.length <= 7; more.textContent = logAll ? L('Ver menos', 'Show less') : L('Ver todas las fechas (', 'View all dates (') + dates.length + ')';
   }
